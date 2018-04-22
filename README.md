@@ -1,13 +1,13 @@
 # vLite.js
 
-## The new Javascript video library
+## The new smallest Javascript video library
 
 See [https://vlite.bitbucket.io](https://vlite.bitbucket.io) for complete docs and demos.<br />
 
 vLite.js is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **4Kb** on production with Gzip, vLite.js has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
 
 <center style="image-rendering: -webkit-optimize-contrast;">
-<img src="https://vlite.bitbucket.io/img/demo.jpg" alt="vLite on desktop" />
+<a href="https://vlite.bitbucket.io/demo" title="vLitejs demo" target="_blank"><img src="https://vlite.bitbucket.io/img/demo.jpg" alt="vLite on desktop" /></a>
 </center><br />
 
 This module is fully writen in Javascript native. No need to import an additional librairy like jQuery or Handlebars. #YouMightNotNeedJquery<br />
@@ -67,5 +67,5 @@ var player = new vLite({
 ```
 <br />
 
-More information in the [https://vlite.bitbucket.io](vLite website).<br />
+More information in the [vLite website](https://vlite.bitbucket.io).<br />
 If you like the project, like it on Github please :)
