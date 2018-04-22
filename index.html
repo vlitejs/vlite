@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>vLite.js</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <style>
+            *{box-sizing:border-box;outline:none}html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}html,body{margin:0;font-family:Roboto, arial, sans-serif}#app{max-width:1000px;margin:0 auto;padding-bottom:70px}#app .title{font-weight:700;font-size:25px;text-align:center;padding-top:50px}#app a{font-family:Roboto, arial, sans-serif;color:#000;text-decoration:none;display:block}#app .page{-ms-flex-direction:row;flex-direction:row;display:-ms-flexbox;display:flex;-ms-flex-line-pack:center;align-content:center}#app .content{width:50%;text-align:center;padding-top:30px}#app .content:nth-child(odd){padding-right:15px}#app .content:nth-child(even){padding-left:15px}#app .content .wrapper-vlite{margin-top:15px}#app .content .sub-title{font-weight:700;font-size:20px}@media screen and (max-width: 767px){#app .title{padding-top:30px}#app .page{-ms-flex-direction:column;flex-direction:column}#app .content{width:100%}#app .content:nth-child(odd),#app .content:nth-child(even){padding-left:0;padding-right:0}}
+        </style>
+        <link rel="stylesheet" href="css/vlite.css" />
+    </head>
+    <body>
+
+        <main id="app" role="main">
+
+            <h1 class="title">vLite.js</h1>
+
+            <div class="page">
+
+                <div class="content">
+                    <h2 class="sub-title">Youtube video player</h2>
+                    <video id="player-yt-1" class="vlite-js" data-youtube-id="aqz-KE-bpKQ" data-options='{"autoplay": false, "controls": true, "playPause": true, "time": true, "timeline": true, "volume": true, "fullscreen": true, "poster": "img/poster.jpg", "bigPlay": true, "nativeControlsForTouch": true}'></video>
+                </div>
+
+                <div class="content">
+                    <h2 class="sub-title">Native HTML5 video player</h2>
+                    <video id="player-html5-1" class="vlite-js" src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4"></video>
+                </div>
+
+            </div>
+
+        </main>
+
+        <script src="js/vlite-html5+youtube.min.js"></script>
+        <script src="js/example.js"></script>
+    </body>
+</html>
