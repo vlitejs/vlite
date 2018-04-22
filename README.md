@@ -1,3 +1,5 @@
+![vLitejs](https://img.shields.io/badge/vLitejs-v1.0.1-ffb300.svg?style=flat-square)
+
 # vLite.js
 
 ## The new smallest Javascript video library
