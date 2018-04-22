@@ -8,7 +8,7 @@ vLite.js is a **fast** and **lightweight** Javascript library to customize and s
 
 <center style="image-rendering: -webkit-optimize-contrast;">
 <a href="https://vlite.bitbucket.io/demo" title="vLitejs demo" target="_blank"><img src="https://vlite.bitbucket.io/img/demo.jpg" alt="vLite on desktop" /></a>
-</center><br />
+</center><br /><br />
 
 This module is fully writen in Javascript native. No need to import an additional librairy like jQuery or Handlebars. #YouMightNotNeedJquery<br />
 
