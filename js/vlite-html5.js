@@ -1,15 +1,14 @@
 /**
 * @license MIT
 * @name vLitejs
-* @version 1.1.0
+* @version 1.1.1
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
 * @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
 * {@link https://vlite.bitbucket.io}
 * @copyright 2018 Joris DANIEL <https://vlite.bitbucket.io>
 **/
 
-(function(modules){var installedModules={};function __webpack_require__(moduleId){if(installedModules[moduleId]){return installedModules[moduleId].exports}var module=installedModules[moduleId]={i:moduleId,l:false,exports:{}};modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.l=true;return module.exports}__webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.d=function(exports,name,getter){if(!__webpack_require__.o(exports,name)){Object.defineProperty(exports,name,{configurable:false,enumerable:true,get:getter})}};__webpack_require__.n=function(module){var getter=module&&module.__esModule?function getDefault(){return module['default']}:function getModuleExports(){return module};__webpack_require__.d(getter,'a',getter);return getter};__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)};__webpack_require__.p="/js//";return __webpack_require__(__webpack_require__.s=0)})
-
+(function webpackUniversalModuleDefinition(root, factory) {if(typeof exports==='object'&&typeof module==='object')module.exports=factory();else if(typeof define==='function'&&define.amd)define([],factory);else if(typeof exports==='object')exports.vLite=factory();else root.vLite=factory()})(typeof self !== 'undefined' ? self : this, function() {return (function(modules){var installedModules={};function __webpack_require__(moduleId){if(installedModules[moduleId]){return installedModules[moduleId].exports}var module=installedModules[moduleId]={i:moduleId,l:!1,exports:{}};modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.l=!0;return module.exports}__webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.d=function(exports,name,getter){if(!__webpack_require__.o(exports,name)){Object.defineProperty(exports,name,{configurable:!1,enumerable:!0,get:getter})}};__webpack_require__.n=function(module){var getter=module&&module.__esModule?function getDefault(){return module['default']}:function getModuleExports(){return module};__webpack_require__.d(getter,'a',getter);return getter};__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)};__webpack_require__.p="/js//";return __webpack_require__(__webpack_require__.s=0)})
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -38,14 +37,14 @@ var _VliteYoutube = {
     apiReadyQueue: []
 };
 
-var Vlite = function () {
-    function Vlite(_ref) {
+var vLite = function () {
+    function vLite(_ref) {
         var selector = _ref.selector,
             _ref$options = _ref.options,
             options = _ref$options === undefined ? undefined : _ref$options,
             callback = _ref.callback;
 
-        _classCallCheck(this, Vlite);
+        _classCallCheck(this, vLite);
 
         this.player = null;
         if (typeof selector === 'string') {
@@ -64,7 +63,7 @@ var Vlite = function () {
         this.initPlayer();
     }
 
-    _createClass(Vlite, [{
+    _createClass(vLite, [{
         key: 'initPlayer',
         value: function initPlayer() {
 
@@ -131,11 +130,14 @@ var Vlite = function () {
         }
     }]);
 
-    return Vlite;
+    return vLite;
 }();
 
-window.vLite = Vlite;
-exports.default = Vlite;
+exports.default = vLite;
+
+//Fix Babel 6 which has removes the line "module.exports = exports['default'];"
+
+module.exports = vLite;
 
 /***/ }),
 /* 1 */
@@ -813,3 +815,4 @@ exports.default = Player;
 
 /***/ })
 /******/ ]);
+});

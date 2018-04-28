@@ -1,0 +1,25 @@
+{
+  "name": "vlitejs",
+  "version": "1.1.1",
+  "description": "vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin",
+  "main": "js/vlite-html5+youtube.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoriiis/vlitejs.git"
+  },
+  "keywords": [
+    "player",
+    "video",
+    "html5",
+    "youtube",
+    "youtube api",
+    "vanilla javascript",
+    "lightweight"
+  ],
+  "author": "Yoriiis aka Joris Daniel (joris.daniel@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yoriiis/vlitejs/issues"
+  },
+  "homepage": "https://vlite.bitbucket.io"
+}
