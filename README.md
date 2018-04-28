@@ -1,4 +1,4 @@
-![vLitejs](https://img.shields.io/badge/vLitejs-v1.1.0-ffb300.svg?style=flat-square)
+![vLitejs](https://img.shields.io/badge/vLitejs-v1.1.1-ffb300.svg?style=flat-square)
 
 # vLite.js
 
@@ -20,12 +20,11 @@ Online demo is available on the [vLite website](https://vlite.bitbucket.io/demo)
 
 ## Download
 
-Download vLite.js on Github [https://github.com/yoriiis/vlitejs](https://github.com/yoriiis/vlitejs)
+vLitejs is available as the `vlitejs` package on [npm](https://www.npmjs.com/package/vlitejs) and [Github](https://github.com/yoriiis/vlitejs).
 
 ## Browser support
 
 The project is fully compatible with the most popular web browser. More information about the HTML5 video support <a href="https://caniuse.com/#feat=video" target="_blank" title="Browser support">here</a>.
-
 
 ## Licences
 
