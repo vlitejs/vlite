@@ -1,4 +1,4 @@
-![vLitejs](https://img.shields.io/badge/vLitejs-v1.1.1-ffb300.svg?style=flat-square)
+![vLitejs](https://img.shields.io/badge/vLitejs-v1.1.2-ffb300.svg?style=flat-square)
 
 # vLite.js
 
