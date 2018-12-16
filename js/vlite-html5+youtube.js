@@ -1,16 +1,16 @@
 /**
 * @license MIT
 * @name vLitejs
-* @version 1.1.1
+* @version 1.1.2
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
 * @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
 * {@link https://vlite.bitbucket.io}
-* @copyright 2018 Joris DANIEL <https://vlite.bitbucket.io>
+* @copyright 2019 Joris DANIEL <https://vlite.bitbucket.io>
 **/
 
-(function webpackUniversalModuleDefinition(root, factory) {if(typeof exports==='object'&&typeof module==='object')
-module.exports=factory();else if(typeof define==='function'&&define.amd)define([],factory);else if(typeof exports==='object')
-exports.vLite=factory();else root.vLite=factory()})(typeof self !== 'undefined' ? self : this, function() { return (function(modules){var installedModules={};function __webpack_require__(moduleId){if(installedModules[moduleId]){return installedModules[moduleId].exports} var module=installedModules[moduleId]={i:moduleId,l:!1,exports:{}};modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.l=!0;return module.exports} __webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.d=function(exports,name,getter){if(!__webpack_require__.o(exports,name)){Object.defineProperty(exports,name,{configurable:!1,enumerable:!0,get:getter})}};__webpack_require__.n=function(module){var getter=module&&module.__esModule?function getDefault(){return module['default']}:function getModuleExports(){return module};__webpack_require__.d(getter,'a',getter);return getter};__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)};__webpack_require__.p="/js//";return __webpack_require__(__webpack_require__.s=1)})
+(function webpackUniversalModuleDefinition(root,factory){if(typeof exports==='object'&&typeof module==='object')
+module.exports=factory();else if(typeof define==='function'&&define.amd)define([],factory);else if(typeof exports==='object')exports.vLite=factory();else root.vLite=factory()})(this,function(){return(function(modules){var installedModules={};function __webpack_require__(moduleId){if(installedModules[moduleId]){return installedModules[moduleId].exports}var module=installedModules[moduleId]={i:moduleId,l:!1,exports:{}};modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.l=!0;return module.exports}
+__webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.d=function(exports,name,getter){if(!__webpack_require__.o(exports,name)){Object.defineProperty(exports,name,{configurable:!1,enumerable:!0,get:getter})}};__webpack_require__.n=function(module){var getter=module&&module.__esModule?function getDefault(){return module['default']}:function getModuleExports(){return module};__webpack_require__.d(getter,'a',getter);return getter};__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)};__webpack_require__.p="/js//";return __webpack_require__(__webpack_require__.s=1)})
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -101,7 +101,7 @@ var Player = function () {
 
             var cssstylePoster = this.options.poster !== null ? 'background-image: url(' + this.options.poster + ');' : '';
 
-            var htmlControls = '<div class="wrapper-loader">\n                                <div class="loader">\n                                    <div class="loader-bounce-1"></div>\n                                    <div class="loader-bounce-2"></div>\n                                    <div class="loader-bounce-3"></div>\n                                </div>\n                            </div>\n                            <div class="poster toggle-play-pause-js active" style="' + cssstylePoster + '"></div>\n                            ' + (this.options.bigPlay ? '<div class="big-play-button toggle-play-pause-js">\n                                     <span class="player-icon icon-play2"></span>\n                                </div>' : '') + '\n                            ' + (this.options.controls ? '<div class="control-bar">\n                                    ' + (this.options.timeline ? '<div class="progress-bar">\n                                            <div class="progress-seek"></div>\n                                            <input type="range" class="progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />\n                                        </div>' : '') + '\n                                    <div class="control-bar-inner">\n                                        ' + (this.options.playPause ? '<div class="play-pause-button toggle-play-pause-js">\n                                                <span class="player-icon icon-play3"></span>\n                                                <span class="player-icon icon-pause2"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.time ? '<div class="time">\n                                                <span class="current-time">00:00</span>&nbsp;/&nbsp;<span class="duration"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.volume ? '<div class="volume">\n                                                <span class="player-icon icon-volume-high"></span>\n                                                <span class="player-icon icon-volume-mute"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.fullscreen ? '<div class="fullscreen">\n                                                <span class="player-icon icon-fullscreen"></span>\n                                                <span class="player-icon icon-shrink"></span>\n                                            </div>' : '') + '\n                                    </div>\n                                </div>' : '');
+            var htmlControls = '<div class="overlay-video toggle-play-pause-js"></div>\n                            <div class="wrapper-loader">\n                                <div class="loader">\n                                    <div class="loader-bounce-1"></div>\n                                    <div class="loader-bounce-2"></div>\n                                    <div class="loader-bounce-3"></div>\n                                </div>\n                            </div>\n                            <div class="poster toggle-play-pause-js active" style="' + cssstylePoster + '"></div>\n                            ' + (this.options.bigPlay ? '<div class="big-play-button toggle-play-pause-js">\n                                     <span class="player-icon icon-play2"></span>\n                                </div>' : '') + '\n                            ' + (this.options.controls ? '<div class="control-bar">\n                                    ' + (this.options.timeline ? '<div class="progress-bar">\n                                            <div class="progress-seek"></div>\n                                            <input type="range" class="progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />\n                                        </div>' : '') + '\n                                    <div class="control-bar-inner">\n                                        ' + (this.options.playPause ? '<div class="play-pause-button toggle-play-pause-js">\n                                                <span class="player-icon icon-play3"></span>\n                                                <span class="player-icon icon-pause2"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.time ? '<div class="time">\n                                                <span class="current-time">00:00</span>&nbsp;/&nbsp;<span class="duration"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.volume ? '<div class="volume">\n                                                <span class="player-icon icon-volume-high"></span>\n                                                <span class="player-icon icon-volume-mute"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.fullscreen ? '<div class="fullscreen">\n                                                <span class="player-icon icon-fullscreen"></span>\n                                                <span class="player-icon icon-shrink"></span>\n                                            </div>' : '') + '\n                                    </div>\n                                </div>' : '');
 
             wrapper.insertAdjacentHTML('beforeend', htmlControls);
         }
@@ -496,6 +496,17 @@ exports.default = Player;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+* @license MIT
+* @name vLitejs
+* @version 1.1.2
+* @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
+* @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
+* {@link https://vlite.bitbucket.io}
+* @copyright 2019 Joris DANIEL <https://vlite.bitbucket.io>
+**/
+
+
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -882,9 +893,11 @@ var PlayerYoutube = function (_Player) {
                 playerVars: {
                     'showinfo': 0,
                     'modestbranding': 0,
-                    'autohide': 0,
+                    'autohide': 1,
                     'rel': 0,
+                    'fs': this.options.fullscreen ? 1 : 0,
                     'wmode': 'transparent',
+                    'playsinline': 0,
                     'controls': this.skinDisabled ? 1 : 0
                 },
                 events: {
@@ -915,7 +928,7 @@ var PlayerYoutube = function (_Player) {
 
             switch (e.data) {
                 case YT.PlayerState.UNSTARTED:
-                    if (this.options.time) {
+                    if (this.options.controls && this.options.time) {
                         _get(PlayerYoutube.prototype.__proto__ || Object.getPrototypeOf(PlayerYoutube.prototype), 'updateDuration', this).call(this);
                     }
                     break;
@@ -926,9 +939,11 @@ var PlayerYoutube = function (_Player) {
 
                 case YT.PlayerState.PLAYING:
 
-                    setInterval(function () {
-                        _get(PlayerYoutube.prototype.__proto__ || Object.getPrototypeOf(PlayerYoutube.prototype), 'updateCurrentTime', _this3).call(_this3);
-                    }, 100);
+                    if (this.options.controls) {
+                        setInterval(function () {
+                            _get(PlayerYoutube.prototype.__proto__ || Object.getPrototypeOf(PlayerYoutube.prototype), 'updateCurrentTime', _this3).call(_this3);
+                        }, 100);
+                    }
 
                     _get(PlayerYoutube.prototype.__proto__ || Object.getPrototypeOf(PlayerYoutube.prototype), 'afterPlayPause', this).call(this, 'play');
                     break;

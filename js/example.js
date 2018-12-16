@@ -19,7 +19,7 @@ var playerHtml5 = new vLite({
         "fullscreen": true,
         "poster": "img/poster.jpg",
         "bigPlay": true,
-        "nativeControlsForTouch": true
+        "nativeControlsForTouch": false
     },
     callback: (player) => {
         //Ready
