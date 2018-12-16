@@ -5,7 +5,7 @@
   font-style: normal;
 }
 
-.player-icon {
+.vl-player-icon {
   font-family: 'vlite' !important;
   speak: none;
   font-style: normal;
@@ -43,7 +43,7 @@
   height: 100%;
 }
 
-.wrapper-vlite {
+.vl-wrapper-vlite {
   font-family: 'Roboto', arial, sans-serif;
   position: relative;
   height: 0;
@@ -52,45 +52,46 @@
   overflow: hidden;
 }
 
-.wrapper-vlite::full-screen {
+.vl-wrapper-vlite::full-screen {
   width: 100%;
   height: 100%;
 }
 
-.wrapper-vlite:not(.force-controls) video::-webkit-media-controls-enclosure {
+.vl-wrapper-vlite:not(.vl-force-controls) video::-webkit-media-controls-enclosure {
   display: none !important;
 }
 
-.wrapper-vlite::-webkit-full-screen {
+.vl-wrapper-vlite::-webkit-full-screen {
   width: 100%;
   height: 100%;
 }
 
-::-moz-full-screen .wrapper-vlite {
+::-moz-full-screen .vl-wrapper-vlite {
   width: 100%;
   height: 100%;
 }
 
-.wrapper-vlite::-moz-full-screen {
+.vl-wrapper-vlite::-moz-full-screen {
   width: 100%;
   height: 100%;
 }
 
-.wrapper-vlite.fullscreen-display .control-bar,
-.wrapper-vlite.fullscreen-display .big-play-button {
+.vl-wrapper-vlite.vl-fullscreen-display .vl-control-bar,
+.vl-wrapper-vlite.vl-fullscreen-display .vl-big-play-button {
+  position: fixed;
   z-index: 2147483647;
 }
 
-.wrapper-vlite.loading .wrapper-loader {
+.vl-wrapper-vlite.vl-loading .vl-wrapper-loader {
   opacity: 1;
   visibility: visible;
 }
 
-.wrapper-vlite.loading .big-play-button {
+.vl-wrapper-vlite.vl-loading .vl-big-play-button {
   opacity: 0;
 }
 
-.wrapper-vlite .wrapper-loader {
+.vl-wrapper-vlite .vl-wrapper-loader {
   position: absolute;
   top: 0;
   left: 0;
@@ -106,13 +107,13 @@
   transition: opacity 200ms ease-in, visibility 200ms ease-in;
 }
 
-.wrapper-vlite .wrapper-loader .loader {
+.vl-wrapper-vlite .vl-wrapper-loader .vl-loader {
   margin: 0 auto;
   width: 70px;
   text-align: center;
 }
 
-.wrapper-vlite .wrapper-loader .loader > div {
+.vl-wrapper-vlite .vl-wrapper-loader .vl-loader > div {
   width: 18px;
   height: 18px;
   background-color: #fff;
@@ -121,11 +122,11 @@
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
 
-.wrapper-vlite .wrapper-loader .loader .loader-bounce-1 {
+.vl-wrapper-vlite .vl-wrapper-loader .vl-loader .vl-loader-bounce-1 {
   animation-delay: -0.32s;
 }
 
-.wrapper-vlite .wrapper-loader .loader .loader-bounce-2 {
+.vl-wrapper-vlite .vl-wrapper-loader .vl-loader .vl-loader-bounce-2 {
   animation-delay: -0.16s;
 }
 
@@ -138,7 +139,7 @@
   }
 }
 
-.wrapper-vlite .vlite-js {
+.vl-wrapper-vlite .vlite-js {
   position: absolute;
   top: 0;
   left: 0;
@@ -147,29 +148,33 @@
   object-fit: cover;
 }
 
-.wrapper-vlite iframe.vlite-js {
+.vl-wrapper-vlite iframe.vlite-js {
   pointer-events: none;
 }
 
-.wrapper-vlite.playing .poster, .wrapper-vlite.paused:not(.first-start) .poster {
+.vl-wrapper-vlite.vl-playing .vl-poster, .vl-wrapper-vlite.vl-paused:not(.vl-first-start) .vl-poster {
   visibility: hidden;
   opacity: 0;
 }
 
-.wrapper-vlite.playing .big-play-button {
+.vl-wrapper-vlite.vl-playing .vl-big-play-button {
   visibility: hidden;
   opacity: 0;
 }
 
-.wrapper-vlite.playing .play-pause-button .icon-pause2 {
+.vl-wrapper-vlite.vl-playing .vl-play-pause-button .vl-icon-pause2 {
   display: block;
 }
 
-.wrapper-vlite.paused .play-pause-button .icon-play3 {
+.vl-wrapper-vlite.vl-paused .vl-play-pause-button .vl-icon-play3 {
   display: block;
 }
 
-.wrapper-vlite .overlay-video {
+.vl-wrapper-vlite.vl-paused .vl-control-bar.hidden {
+  opacity: 1;
+}
+
+.vl-wrapper-vlite .vl-overlay-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -177,7 +182,7 @@
   height: 100%;
 }
 
-.wrapper-vlite .poster {
+.vl-wrapper-vlite .vl-poster {
   position: absolute;
   top: 0;
   left: 0;
@@ -193,12 +198,12 @@
   z-index: 2;
 }
 
-.wrapper-vlite .poster.active {
+.vl-wrapper-vlite .vl-poster.vl-active {
   opacity: 1;
   visibility: visible;
 }
 
-.wrapper-vlite .big-play-button {
+.vl-wrapper-vlite .vl-big-play-button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -211,7 +216,7 @@
   transition-delay: 100ms;
 }
 
-.wrapper-vlite .big-play-button .player-icon {
+.vl-wrapper-vlite .vl-big-play-button .vl-player-icon {
   display: block;
   position: absolute;
   top: 50%;
@@ -221,11 +226,11 @@
   font-size: 60px;
 }
 
-.wrapper-vlite .big-play-button .icon-play2:before {
+.vl-wrapper-vlite .vl-big-play-button .vl-icon-play2:before {
   content: "\ea15";
 }
 
-.wrapper-vlite .control-bar {
+.vl-wrapper-vlite .vl-control-bar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -236,19 +241,28 @@
   padding-left: 0;
   padding-right: 0;
   background-color: rgba(0, 0, 0, 0.3);
+  transition: 250ms ease-in;
 }
 
-.wrapper-vlite .control-bar:hover .progress-bar {
+.vl-wrapper-vlite .vl-control-bar:hover {
+  opacity: 1 !important;
+}
+
+.vl-wrapper-vlite .vl-control-bar:hover .vl-progress-bar {
   height: 8px;
 }
 
-.wrapper-vlite .control-bar .control-bar-inner {
+.vl-wrapper-vlite .vl-control-bar.hidden {
+  opacity: 0;
+}
+
+.vl-wrapper-vlite .vl-control-bar .vl-control-bar-inner {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.wrapper-vlite .progress-bar {
+.vl-wrapper-vlite .vl-progress-bar {
   position: absolute;
   top: 0;
   left: 0;
@@ -259,7 +273,7 @@
   z-index: 1;
 }
 
-.wrapper-vlite .progress-bar .progress-input {
+.vl-wrapper-vlite .vl-progress-bar .vl-progress-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -270,7 +284,7 @@
   opacity: 0;
 }
 
-.wrapper-vlite .progress-bar .progress-seek {
+.vl-wrapper-vlite .vl-progress-bar .vl-progress-seek {
   position: absolute;
   top: 0;
   left: 0;
@@ -281,7 +295,7 @@
   transition: all 100ms ease-out;
 }
 
-.wrapper-vlite .play-pause-button {
+.vl-wrapper-vlite .vl-play-pause-button {
   position: relative;
   float: left;
   width: 40px;
@@ -289,7 +303,7 @@
   cursor: pointer;
 }
 
-.wrapper-vlite .play-pause-button .player-icon {
+.vl-wrapper-vlite .vl-play-pause-button .vl-player-icon {
   display: none;
   position: absolute;
   top: 50%;
@@ -299,15 +313,15 @@
   color: #fff;
 }
 
-.wrapper-vlite .play-pause-button .icon-play3:before {
+.vl-wrapper-vlite .vl-play-pause-button .vl-icon-play3:before {
   content: "\ea1c";
 }
 
-.wrapper-vlite .play-pause-button .icon-pause2:before {
+.vl-wrapper-vlite .vl-play-pause-button .vl-icon-pause2:before {
   content: "\ea1d";
 }
 
-.wrapper-vlite .time {
+.vl-wrapper-vlite .vl-time {
   color: #fff;
   font-size: 13px;
   float: left;
@@ -318,7 +332,7 @@
       align-items: center;
 }
 
-.wrapper-vlite .volume {
+.vl-wrapper-vlite .vl-volume {
   position: relative;
   display: inline-block;
   width: 40px;
@@ -326,7 +340,7 @@
   cursor: pointer;
 }
 
-.wrapper-vlite .volume .player-icon {
+.vl-wrapper-vlite .vl-volume .vl-player-icon {
   display: none;
   position: absolute;
   top: 50%;
@@ -336,23 +350,23 @@
   color: #fff;
 }
 
-.wrapper-vlite .volume:not(.muted) .icon-volume-high {
+.vl-wrapper-vlite .vl-volume:not(.vl-muted) .vl-icon-volume-high {
   display: block;
 }
 
-.wrapper-vlite .volume.muted .icon-volume-mute {
+.vl-wrapper-vlite .vl-volume.vl-muted .vl-icon-volume-mute {
   display: block;
 }
 
-.wrapper-vlite .volume .icon-volume-high:before {
+.vl-wrapper-vlite .vl-volume .vl-icon-volume-high:before {
   content: "\ea26";
 }
 
-.wrapper-vlite .volume .icon-volume-mute:before {
+.vl-wrapper-vlite .vl-volume .vl-icon-volume-mute:before {
   content: "\ea29";
 }
 
-.wrapper-vlite .fullscreen {
+.vl-wrapper-vlite .vl-fullscreen {
   position: relative;
   display: inline-block;
   width: 40px;
@@ -360,7 +374,7 @@
   cursor: pointer;
 }
 
-.wrapper-vlite .fullscreen .player-icon {
+.vl-wrapper-vlite .vl-fullscreen .vl-player-icon {
   display: none;
   position: absolute;
   top: 50%;
@@ -370,18 +384,18 @@
   font-size: 18px;
 }
 
-.wrapper-vlite .fullscreen:not(.exit) .icon-fullscreen {
+.vl-wrapper-vlite .vl-fullscreen:not(.vl-exit) .vl-icon-fullscreen {
   display: block;
 }
 
-.wrapper-vlite .fullscreen.exit .icon-shrink {
+.vl-wrapper-vlite .vl-fullscreen.vl-exit .vl-icon-shrink {
   display: block;
 }
 
-.wrapper-vlite .fullscreen .icon-shrink:before {
+.vl-wrapper-vlite .vl-fullscreen .vl-icon-shrink:before {
   content: "\e900";
 }
 
-.wrapper-vlite .fullscreen .icon-fullscreen:before {
+.vl-wrapper-vlite .vl-fullscreen .vl-icon-fullscreen:before {
   content: "\e901";
 }
