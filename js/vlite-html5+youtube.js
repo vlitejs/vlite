@@ -1,7 +1,7 @@
 /**
 * @license MIT
 * @name vLitejs
-* @version 1.1.2
+* @version 2.0.0
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
 * @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
 * {@link https://vlite.bitbucket.io}
@@ -25,6 +25,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var DELAY_AUTO_HIDE = 3000;
+
 var Player = function () {
     function Player(_ref) {
         var selector = _ref.selector,
@@ -35,6 +37,7 @@ var Player = function () {
 
         this.callback = callback;
         this.isFullScreen = false;
+        this.isPaused = null;
         this.player = selector;
         this.touchSupport = 'ontouchstart' in window || window.DocumentTouch && document instanceof DocumentTouch ? true : false;
         this.skinDisabled = false;
@@ -51,6 +54,7 @@ var Player = function () {
             fullscreen: true,
             poster: null,
             bigPlay: true,
+            autoHide: false,
             nativeControlsForTouch: false
         };
 
@@ -89,19 +93,20 @@ var Player = function () {
 
             //Wrap player
             var wrapper = document.createElement('div');
-            wrapper.setAttribute('class', 'wrapper-vlite first-start paused loading');
+            wrapper.setAttribute('class', 'vl-wrapper-vlite vl-first-start vl-paused vl-loading');
+            wrapper.setAttribute('tabindex', 0);
             this.player.parentNode.insertBefore(wrapper, this.player);
             wrapper.appendChild(this.player);
             this.wrapperPlayer = this.player.parentNode;
-            this.player.classList.add('toggle-play-pause-js');
+            this.player.classList.add('vl-toggle-play-pause-js');
 
             if (this.skinDisabled) {
-                this.wrapperPlayer.classList.add('force-controls');
+                this.wrapperPlayer.classList.add('vl-force-controls');
             }
 
             var cssstylePoster = this.options.poster !== null ? 'background-image: url(' + this.options.poster + ');' : '';
 
-            var htmlControls = '<div class="overlay-video toggle-play-pause-js"></div>\n                            <div class="wrapper-loader">\n                                <div class="loader">\n                                    <div class="loader-bounce-1"></div>\n                                    <div class="loader-bounce-2"></div>\n                                    <div class="loader-bounce-3"></div>\n                                </div>\n                            </div>\n                            <div class="poster toggle-play-pause-js active" style="' + cssstylePoster + '"></div>\n                            ' + (this.options.bigPlay ? '<div class="big-play-button toggle-play-pause-js">\n                                     <span class="player-icon icon-play2"></span>\n                                </div>' : '') + '\n                            ' + (this.options.controls ? '<div class="control-bar">\n                                    ' + (this.options.timeline ? '<div class="progress-bar">\n                                            <div class="progress-seek"></div>\n                                            <input type="range" class="progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />\n                                        </div>' : '') + '\n                                    <div class="control-bar-inner">\n                                        ' + (this.options.playPause ? '<div class="play-pause-button toggle-play-pause-js">\n                                                <span class="player-icon icon-play3"></span>\n                                                <span class="player-icon icon-pause2"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.time ? '<div class="time">\n                                                <span class="current-time">00:00</span>&nbsp;/&nbsp;<span class="duration"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.volume ? '<div class="volume">\n                                                <span class="player-icon icon-volume-high"></span>\n                                                <span class="player-icon icon-volume-mute"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.fullscreen ? '<div class="fullscreen">\n                                                <span class="player-icon icon-fullscreen"></span>\n                                                <span class="player-icon icon-shrink"></span>\n                                            </div>' : '') + '\n                                    </div>\n                                </div>' : '');
+            var htmlControls = '<div class="vl-overlay-video vl-toggle-play-pause-js"></div>\n                            <div class="vl-wrapper-loader">\n                                <div class="vl-loader">\n                                    <div class="vl-loader-bounce-1"></div>\n                                    <div class="vl-loader-bounce-2"></div>\n                                    <div class="vl-loader-bounce-3"></div>\n                                </div>\n                            </div>\n                            <div class="vl-poster vl-toggle-play-pause-js vl-active" style="' + cssstylePoster + '"></div>\n                            ' + (this.options.bigPlay ? '<div class="vl-big-play-button vl-toggle-play-pause-js">\n                                     <span class="vl-player-icon vl-icon-play2"></span>\n                                </div>' : '') + '\n                            ' + (this.options.controls ? '<div class="vl-control-bar">\n                                    ' + (this.options.timeline ? '<div class="vl-progress-bar">\n                                            <div class="vl-progress-seek"></div>\n                                            <input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />\n                                        </div>' : '') + '\n                                    <div class="vl-control-bar-inner">\n                                        ' + (this.options.playPause ? '<div class="vl-play-pause-button vl-toggle-play-pause-js">\n                                                <span class="vl-player-icon vl-icon-play3"></span>\n                                                <span class="vl-player-icon vl-icon-pause2"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.time ? '<div class="vl-time">\n                                                <span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.volume ? '<div class="vl-volume">\n                                                <span class="vl-player-icon vl-icon-volume-high"></span>\n                                                <span class="vl-player-icon vl-icon-volume-mute"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.fullscreen ? '<div class="vl-fullscreen">\n                                                <span class="vl-player-icon vl-icon-fullscreen"></span>\n                                                <span class="vl-player-icon vl-icon-shrink"></span>\n                                            </div>' : '') + '\n                                    </div>\n                                </div>' : '');
 
             wrapper.insertAdjacentHTML('beforeend', htmlControls);
         }
@@ -111,54 +116,72 @@ var Player = function () {
             var _this = this;
 
             if (this.options.controls && this.options.timeline) {
-                //Add callback function to remove them on destroy event
+
+                //Create progress bar event listener
                 this.onChangeProgressBar = function (e) {
                     _this.onProgressChanged(e);
                 };
-                //Create progress bar event listener
-                this.wrapperPlayer.querySelector('.progress-input').addEventListener('change', this.onChangeProgressBar, false);
+                this.wrapperPlayer.querySelector('.vl-progress-input').addEventListener('change', this.onChangeProgressBar, false);
             }
 
-            //Add callback function to remove them on destroy event
+            //Create play/pause button event listener
             this.onClickTogglePlayPause = function (e) {
                 e.preventDefault();
                 _this.togglePlayPause();
             };
-            //Create play/pause button event listener
-            [].forEach.call(this.wrapperPlayer.querySelectorAll('.toggle-play-pause-js'), function (button) {
+            [].forEach.call(this.wrapperPlayer.querySelectorAll('.vl-toggle-play-pause-js'), function (button) {
                 button.addEventListener('click', _this.onClickTogglePlayPause, false);
             });
 
             if (this.options.controls && this.options.volume) {
-                //Add callback function to remove them on destroy event
+
+                //Create volume button event listener
                 this.onCLickToggleVolume = function (e) {
                     e.preventDefault();
                     _this.toggleVolume();
                 };
-                //Create volume button event listener
-                this.wrapperPlayer.querySelector('.volume').addEventListener('click', this.onCLickToggleVolume, false);
+                this.wrapperPlayer.querySelector('.vl-volume').addEventListener('click', this.onCLickToggleVolume, false);
             }
 
             if (this.options.controls && this.options.fullscreen) {
-                //Add callback function to remove them on destroy event
+
+                //Create fullscreen button event listener
                 this.onClickToggleFullscreen = function (e) {
                     e.preventDefault();
                     _this.toggleFullscreen();
                 };
-                //Create fullscreen button event listener
-                this.wrapperPlayer.querySelector('.fullscreen').addEventListener('click', this.onClickToggleFullscreen, false);
+                this.wrapperPlayer.querySelector('.vl-fullscreen').addEventListener('click', this.onClickToggleFullscreen, false);
+
+                //Create double click event to trigger fullscreen change
+                this.onDblclickVideo = function (e) {
+                    e.preventDefault();
+                    _this.toggleFullscreen();
+                };
+                this.wrapperPlayer.querySelector('.vl-overlay-video').addEventListener('dblclick', this.onDblclickVideo, false);
             }
 
-            //Add callback function to remove them on destroy event
+            if (this.options.controls) {
+
+                this.onKeyupEvent = function (e) {
+                    _this.onKeyup(e);
+                };
+                this.wrapperPlayer.addEventListener('keyup', this.onKeyupEvent, false);
+
+                this.onMousemoveEvent = function (e) {
+                    _this.onMousemove(e);
+                };
+                this.wrapperPlayer.addEventListener('mousemove', this.onMousemoveEvent, false);
+            }
+
+            //Create fullscreen button event listener
+            //Detect fullscreen change, particulary util for esc key because state is not updated
+            //More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
             this.onChangeFullScreen = function (e) {
 
                 if (!document[_this.supportFullScreen.isFullScreen] && _this.isFullScreen) {
                     _this.exitFullscreen(e.target);
                 }
             };
-            //Create fullscreen button event listener
-            //Detect fullscreen change, particulary util for esc key because state is not updated
-            //More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
             window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen, false);
         }
     }, {
@@ -181,35 +204,35 @@ var Player = function () {
         value: function loading(state) {
 
             if (state) {
-                this.wrapperPlayer.classList.add('loading');
+                this.wrapperPlayer.classList.add('vl-loading');
             } else {
-                this.wrapperPlayer.classList.remove('loading');
+                this.wrapperPlayer.classList.remove('vl-loading');
             }
         }
     }, {
         key: 'updateDuration',
         value: function updateDuration() {
-            this.wrapperPlayer.querySelector('.duration').innerHTML = this.constructor.formatVideoTime(this.getDuration());
+            this.wrapperPlayer.querySelector('.vl-duration').innerHTML = this.constructor.formatVideoTime(this.getDuration());
         }
     }, {
         key: 'onVideoEnded',
         value: function onVideoEnded() {
 
-            this.wrapperPlayer.classList.replace('playing', 'paused');
-            this.wrapperPlayer.classList.add('first-start');
-            this.wrapperPlayer.querySelector('.poster').classList.add('active');
+            this.wrapperPlayer.classList.replace('vl-playing', 'vl-paused');
+            this.wrapperPlayer.classList.add('vl-first-start');
+            this.wrapperPlayer.querySelector('.vl-poster').classList.add('vl-active');
 
             if (this.options.constrols) {
-                this.wrapperPlayer.querySelector('.progress-seek').style.width = '0%';
-                this.wrapperPlayer.querySelector('.progress-input').setAttribute('value', 0);
-                this.wrapperPlayer.querySelector('.current-time').innerHTML = '00:00';
+                this.wrapperPlayer.querySelector('.vl-progress-seek').style.width = '0%';
+                this.wrapperPlayer.querySelector('.vl-progress-input').setAttribute('value', 0);
+                this.wrapperPlayer.querySelector('.vl-current-time').innerHTML = '00:00';
             }
         }
     }, {
         key: 'togglePlayPause',
         value: function togglePlayPause() {
 
-            if (this.wrapperPlayer.classList.contains('paused')) {
+            if (this.wrapperPlayer.classList.contains('vl-paused')) {
                 this.play();
             } else {
                 this.pause();
@@ -219,28 +242,43 @@ var Player = function () {
         key: 'play',
         value: function play() {
 
-            if (this.wrapperPlayer.classList.contains('first-start')) {
-                this.wrapperPlayer.classList.remove('first-start');
-                this.wrapperPlayer.querySelector('.poster').classList.remove('active');
+            if (this.wrapperPlayer.classList.contains('vl-first-start')) {
+                this.wrapperPlayer.classList.remove('vl-first-start');
+                this.wrapperPlayer.querySelector('.vl-poster').classList.remove('vl-active');
             }
 
             this.methodPlay();
-            this.afterPlayPause('play');
+            this.isPaused = false;
+            this.afterPlayPause();
         }
     }, {
         key: 'pause',
         value: function pause() {
+
             this.methodPause();
-            this.afterPlayPause('pause');
+            this.isPaused = true;
+            this.afterPlayPause();
         }
     }, {
         key: 'afterPlayPause',
-        value: function afterPlayPause(status) {
+        value: function afterPlayPause() {
+            var _this2 = this;
 
-            if (status === 'play') {
-                this.wrapperPlayer.classList.replace('paused', 'playing');
+            if (this.isPaused) {
+                this.wrapperPlayer.classList.replace('vl-playing', 'vl-paused');
             } else {
-                this.wrapperPlayer.classList.replace('playing', 'paused');
+                this.wrapperPlayer.classList.replace('vl-paused', 'vl-playing');
+            }
+
+            if (this.options.autoHide && this.options.controls) {
+
+                if (this.isPaused) {
+                    this.wrapperPlayer.querySelector('.vl-control-bar').classList.remove('hidden');
+                } else {
+                    this.timerAutoHide = setTimeout(function () {
+                        _this2.wrapperPlayer.querySelector('.vl-control-bar').classList.add('hidden');
+                    }, DELAY_AUTO_HIDE);
+                }
             }
         }
 
@@ -250,9 +288,9 @@ var Player = function () {
         key: 'toggleVolume',
         value: function toggleVolume() {
 
-            var volumeButton = this.wrapperPlayer.querySelector('.volume');
+            var volumeButton = this.wrapperPlayer.querySelector('.vl-volume');
 
-            if (volumeButton.classList.contains('muted')) {
+            if (volumeButton.classList.contains('vl-muted')) {
                 this.unMute();
             } else {
                 this.mute();
@@ -262,13 +300,13 @@ var Player = function () {
         key: 'mute',
         value: function mute() {
             this.methodMute();
-            this.wrapperPlayer.querySelector('.volume').classList.add('muted');
+            this.wrapperPlayer.querySelector('.vl-volume').classList.add('vl-muted');
         }
     }, {
         key: 'unMute',
         value: function unMute() {
             this.methodUnMute();
-            this.wrapperPlayer.querySelector('.volume').classList.remove('muted');
+            this.wrapperPlayer.querySelector('.vl-volume').classList.remove('vl-muted');
         }
     }, {
         key: 'seekTo',
@@ -297,15 +335,11 @@ var Player = function () {
 
 
             if (this.player[requestFn]) {
-                //On Firefox, request fullscreen on parentNode player, to display custom controls
-                if (requestFn === 'mozRequestFullScreen') {
-                    this.player.parentNode[requestFn]();
-                } else {
-                    this.player[requestFn]();
-                }
+                //Request fullscreen on parentNode player, to display custom controls
+                this.player.parentNode[requestFn]();
                 this.isFullScreen = true;
-                this.wrapperPlayer.classList.add('fullscreen-display');
-                this.wrapperPlayer.querySelector('.fullscreen').classList.add('exit');
+                this.wrapperPlayer.classList.add('vl-fullscreen-display');
+                this.wrapperPlayer.querySelector('.vl-fullscreen').classList.add('vl-exit');
             }
         }
 
@@ -321,10 +355,34 @@ var Player = function () {
 
                 document[cancelFn]();
 
-                this.wrapperPlayer.classList.remove('fullscreen-display');
-                this.wrapperPlayer.querySelector('.fullscreen').classList.remove('exit');
+                this.wrapperPlayer.classList.remove('vl-fullscreen-display');
+                this.wrapperPlayer.querySelector('.vl-fullscreen').classList.remove('vl-exit');
 
                 this.isFullScreen = false;
+            }
+        }
+    }, {
+        key: 'onKeyup',
+        value: function onKeyup(e) {
+
+            //Toggle play pause the video on spacebar press
+            if (e.keyCode === 32) {
+                this.togglePlayPause();
+            }
+        }
+    }, {
+        key: 'onMousemove',
+        value: function onMousemove(e) {
+            var _this3 = this;
+
+            if (this.isPaused === false && this.options.autoHide && this.options.controls) {
+
+                this.wrapperPlayer.querySelector('.vl-control-bar').classList.remove('hidden');
+                clearTimeout(this.timerAutoHide);
+
+                this.timerAutoHide = setTimeout(function () {
+                    _this3.wrapperPlayer.querySelector('.vl-control-bar').classList.add('hidden');
+                }, DELAY_AUTO_HIDE);
             }
         }
 
@@ -337,9 +395,9 @@ var Player = function () {
             var currentTime = Math.round(this.getCurrentTime()),
                 duration = this.getDuration(),
                 width = currentTime * 100 / duration,
-                timeElement = this.wrapperPlayer.querySelector('.current-time');
+                timeElement = this.wrapperPlayer.querySelector('.vl-current-time');
 
-            this.wrapperPlayer.querySelector('.progress-seek').style.width = width + '%';
+            this.wrapperPlayer.querySelector('.vl-progress-seek').style.width = width + '%';
 
             if (timeElement !== null) {
                 timeElement.innerHTML = this.constructor.formatVideoTime(currentTime);
@@ -348,22 +406,28 @@ var Player = function () {
     }, {
         key: 'unBindEvents',
         value: function unBindEvents() {
-            var _this2 = this;
+            var _this4 = this;
 
-            [].forEach.call(this.wrapperPlayer.querySelectorAll('.toggle-play-pause-js'), function (button) {
-                button.removeEventListener('click', _this2.onClickTogglePlayPause);
+            [].forEach.call(this.wrapperPlayer.querySelectorAll('.vl-toggle-play-pause-js'), function (button) {
+                button.removeEventListener('click', _this4.onClickTogglePlayPause);
             });
 
-            if (this.options.timeline) {
-                this.wrapperPlayer.querySelector('.progress-input').removeEventListener('change', this.onChangeProgressBar, false);
+            if (this.options.controls && this.options.timeline) {
+                this.wrapperPlayer.querySelector('.vl-progress-input').removeEventListener('change', this.onChangeProgressBar, false);
             }
 
-            if (this.options.volume) {
-                this.wrapperPlayer.querySelector('.volume').removeEventListener('click', this.onCLickToggleVolume);
+            if (this.options.controls && this.options.volume) {
+                this.wrapperPlayer.querySelector('.vl-volume').removeEventListener('click', this.onCLickToggleVolume);
             }
 
-            if (this.options.fullscreen) {
-                this.wrapperPlayer.querySelector('.fullscreen').removeEventListener('click', this.onClickToggleFullscreen);
+            if (this.options.controls) {
+                this.wrapperPlayer.removeEventListener('keyup', this.onKeyupEvent);
+                this.wrapperPlayer.removeEventListener('mousemove', this.onMousemoveEvent);
+            }
+
+            if (this.options.controls && this.options.fullscreen) {
+                this.wrapperPlayer.querySelector('.vl-fullscreen').removeEventListener('click', this.onClickToggleFullscreen);
+                this.wrapperPlayer.querySelector('.vl-overlay-video').removeEventListener('dblclick', this.onDblclickVideo);
             }
 
             window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen);
@@ -448,7 +512,7 @@ var Player = function () {
     }, {
         key: 'extend',
         value: function extend() {
-            var _this3 = this;
+            var _this5 = this;
 
             var extended = {};
             var deep = false;
@@ -468,7 +532,7 @@ var Player = function () {
                     if (Object.prototype.hasOwnProperty.call(obj, prop)) {
                         // If deep merge and property is an object, merge properties
                         if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
-                            extended[prop] = _this3.constructor.extend(true, extended[prop], obj[prop]);
+                            extended[prop] = _this5.constructor.extend(true, extended[prop], obj[prop]);
                         } else {
                             extended[prop] = obj[prop];
                         }
@@ -516,13 +580,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _playerHtml = __webpack_require__(2);
-
-var _playerHtml2 = _interopRequireDefault(_playerHtml);
-
-var _playerYoutube = __webpack_require__(3);
+var _playerYoutube = __webpack_require__(2);
 
 var _playerYoutube2 = _interopRequireDefault(_playerYoutube);
+
+var _playerHtml = __webpack_require__(3);
+
+var _playerHtml2 = _interopRequireDefault(_playerHtml);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -663,199 +727,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PlayerHtml5 = function (_Player) {
-    _inherits(PlayerHtml5, _Player);
-
-    function PlayerHtml5(_ref) {
-        var selector = _ref.selector,
-            options = _ref.options,
-            callback = _ref.callback;
-
-        _classCallCheck(this, PlayerHtml5);
-
-        //Create Promise to check when the video is ready
-        var _this = _possibleConstructorReturn(this, (PlayerHtml5.__proto__ || Object.getPrototypeOf(PlayerHtml5)).call(this, {
-            selector: selector,
-            options: options,
-            callback: callback
-        }));
-
-        //Init Player class
-
-
-        _this.waitUntilVideoIsReady().then(_this.onPlayerReady.bind(_this));
-
-        if (!_this.skinDisabled) {
-            _this.bindSpecificEvents();
-        }
-
-        return _this;
-    }
-
-    _createClass(PlayerHtml5, [{
-        key: 'onPlayerReady',
-        value: function onPlayerReady() {
-            _get(PlayerHtml5.prototype.__proto__ || Object.getPrototypeOf(PlayerHtml5.prototype), 'playerIsReady', this).call(this);
-        }
-    }, {
-        key: 'waitUntilVideoIsReady',
-        value: function waitUntilVideoIsReady() {
-            var _this2 = this;
-
-            return new Promise(function (resolve, reject) {
-
-                //Check if the video is ready
-                if (typeof _this2.player.duration === "number" && isNaN(_this2.player.duration) === false) {
-
-                    resolve();
-                } else {
-
-                    //Add callback function to remove them on event listener
-                    _this2.onDurationChange = function () {
-
-                        _this2.player.removeEventListener('durationchange', _this2.onDurationChange);
-                        _this2.player.removeEventListener('error', _this2.onError);
-
-                        resolve();
-                    };
-
-                    //Add callback function to remove them on event listener
-                    _this2.onError = function (error) {
-
-                        _this2.player.removeEventListener('error', _this2.onError);
-                        _this2.player.removeEventListener('durationchange', _this2.onDurationChange);
-
-                        reject(error);
-                    };
-
-                    //Listen error or durationchange events to detect when the video is ready
-                    _this2.player.addEventListener('durationchange', _this2.onDurationChange, false);
-                    _this2.player.addEventListener('error', _this2.onError, false);
-                }
-            });
-        }
-    }, {
-        key: 'bindSpecificEvents',
-        value: function bindSpecificEvents() {
-            var _this3 = this;
-
-            if (this.options.controls) {
-
-                if (this.options.time) {
-
-                    //Load video metadata and update state duration
-                    this.player.addEventListener('loadedmetadata', function (e) {
-                        return _this3.updateDuration(e);
-                    }, false);
-
-                    //On durationchange event, update duration if value is different
-                    this.player.addEventListener('durationchange', function (e) {
-                        return _this3.updateDuration(e);
-                    }, false);
-                }
-
-                //On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-                this.player.addEventListener('timeupdate', function (e) {
-                    return _this3.updateCurrentTime(e);
-                }, false);
-            }
-
-            //On ended event, show poster and reset timeline and time
-            this.player.addEventListener('ended', function (e) {
-                return _this3.onVideoEnded(e);
-            }, false);
-        }
-    }, {
-        key: 'getInstance',
-        value: function getInstance() {
-            return this.player;
-        }
-    }, {
-        key: 'getCurrentTime',
-        value: function getCurrentTime() {
-            return this.player.currentTime;
-        }
-    }, {
-        key: 'setCurrentTime',
-        value: function setCurrentTime(newTime) {
-            this.player.currentTime = newTime;
-        }
-    }, {
-        key: 'getDuration',
-        value: function getDuration() {
-            return this.player.duration;
-        }
-    }, {
-        key: 'onProgressChanged',
-        value: function onProgressChanged(e) {
-            this.setCurrentTime(e.target.value * this.getDuration() / 100);
-        }
-    }, {
-        key: 'methodPlay',
-        value: function methodPlay() {
-            this.player.play();
-        }
-    }, {
-        key: 'methodPause',
-        value: function methodPause() {
-            this.player.pause();
-        }
-    }, {
-        key: 'methodMute',
-        value: function methodMute() {
-            this.player.muted = true;
-        }
-    }, {
-        key: 'methodUnMute',
-        value: function methodUnMute() {
-            this.player.muted = false;
-        }
-    }, {
-        key: 'unBindSpecificEvents',
-        value: function unBindSpecificEvents() {
-
-            if (this.options.time) {
-                this.player.removeEventListener('loadedmetadata', this.updateDuration);
-                this.player.removeEventListener('durationchange', this.updateDuration);
-            }
-            this.player.removeEventListener('timeupdate', this.updateCurrentTime);
-            this.player.removeEventListener('play', this.onPlay);
-            this.player.removeEventListener('ended', this.onVideoEnded);
-        }
-    }]);
-
-    return PlayerHtml5;
-}(_player2.default);
-
-exports.default = PlayerHtml5;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _player = __webpack_require__(0);
-
-var _player2 = _interopRequireDefault(_player);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var PlayerYoutube = function (_Player) {
     _inherits(PlayerYoutube, _Player);
 
@@ -939,6 +810,8 @@ var PlayerYoutube = function (_Player) {
 
                 case YT.PlayerState.PLAYING:
 
+                    this.loading(false);
+
                     if (this.options.controls) {
                         setInterval(function () {
                             _get(PlayerYoutube.prototype.__proto__ || Object.getPrototypeOf(PlayerYoutube.prototype), 'updateCurrentTime', _this3).call(_this3);
@@ -953,6 +826,7 @@ var PlayerYoutube = function (_Player) {
                     break;
 
                 case YT.PlayerState.BUFFERING:
+                    this.loading(true);
                     break;
             }
         }
@@ -1007,6 +881,243 @@ var PlayerYoutube = function (_Player) {
 }(_player2.default);
 
 exports.default = PlayerYoutube;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(0);
+
+var _player2 = _interopRequireDefault(_player);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PlayerHtml5 = function (_Player) {
+    _inherits(PlayerHtml5, _Player);
+
+    function PlayerHtml5(_ref) {
+        var selector = _ref.selector,
+            options = _ref.options,
+            callback = _ref.callback;
+
+        _classCallCheck(this, PlayerHtml5);
+
+        //Create Promise to check when the video is ready
+        var _this = _possibleConstructorReturn(this, (PlayerHtml5.__proto__ || Object.getPrototypeOf(PlayerHtml5)).call(this, {
+            selector: selector,
+            options: options,
+            callback: callback
+        }));
+
+        //Init Player class
+
+
+        _this.waitUntilVideoIsReady().then(_this.onPlayerReady.bind(_this));
+
+        if (!_this.skinDisabled) {
+            _this.bindSpecificEvents();
+        }
+
+        return _this;
+    }
+
+    _createClass(PlayerHtml5, [{
+        key: 'onPlayerReady',
+        value: function onPlayerReady() {
+            _get(PlayerHtml5.prototype.__proto__ || Object.getPrototypeOf(PlayerHtml5.prototype), 'playerIsReady', this).call(this);
+            this.updateDuration();
+        }
+    }, {
+        key: 'waitUntilVideoIsReady',
+        value: function waitUntilVideoIsReady() {
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+
+                //Check if the video is ready
+                if (typeof _this2.player.duration === "number" && isNaN(_this2.player.duration) === false) {
+
+                    resolve();
+                } else {
+
+                    _this2.onDurationChange = function () {
+
+                        _this2.player.removeEventListener('durationchange', _this2.onDurationChange);
+                        _this2.player.removeEventListener('error', _this2.onError);
+
+                        resolve();
+                    };
+
+                    _this2.onError = function (error) {
+
+                        _this2.player.removeEventListener('error', _this2.onError);
+                        _this2.player.removeEventListener('durationchange', _this2.onDurationChange);
+
+                        reject(error);
+                    };
+
+                    //Listen error or durationchange events to detect when the video is ready
+                    _this2.player.addEventListener('durationchange', _this2.onDurationChange, false);
+                    _this2.player.addEventListener('error', _this2.onError, false);
+                }
+            });
+        }
+    }, {
+        key: 'bindSpecificEvents',
+        value: function bindSpecificEvents() {
+            var _this3 = this;
+
+            if (this.options.controls) {
+
+                if (this.options.time) {
+
+                    //On durationchange event, update duration if value is different
+                    this.player.addEventListener('durationchange', function (e) {
+                        return _this3.updateDuration(e);
+                    }, false);
+                }
+
+                //On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
+                this.player.addEventListener('timeupdate', function (e) {
+                    return _this3.updateCurrentTime(e);
+                }, false);
+            }
+
+            //On ended event, show poster and reset timeline and time
+            this.player.addEventListener('ended', function (e) {
+                return _this3.onVideoEnded(e);
+            }, false);
+
+            this.onPlayingEvent = function () {
+                _this3.onPlaying();
+            };
+            this.player.addEventListener('playing', function (e) {
+                return _this3.onPlayingEvent(e);
+            }, false);
+
+            this.onWaitingEvent = function () {
+                _this3.onWaiting();
+            };
+            this.player.addEventListener('waiting', function (e) {
+                return _this3.onWaitingEvent(e);
+            }, false);
+
+            this.onSeekingEvent = function () {
+                _this3.onSeeking();
+            };
+            this.player.addEventListener('seeking', function (e) {
+                return _this3.onSeekingEvent(e);
+            }, false);
+
+            this.onSeekedEvent = function () {
+                _this3.onSeeked();
+            };
+            this.player.addEventListener('seeked', function (e) {
+                return _this3.onSeekedEvent(e);
+            }, false);
+        }
+    }, {
+        key: 'getInstance',
+        value: function getInstance() {
+            return this.player;
+        }
+    }, {
+        key: 'getCurrentTime',
+        value: function getCurrentTime() {
+            return this.player.currentTime;
+        }
+    }, {
+        key: 'setCurrentTime',
+        value: function setCurrentTime(newTime) {
+            this.player.currentTime = newTime;
+        }
+    }, {
+        key: 'getDuration',
+        value: function getDuration() {
+            return this.player.duration;
+        }
+    }, {
+        key: 'onProgressChanged',
+        value: function onProgressChanged(e) {
+            this.setCurrentTime(e.target.value * this.getDuration() / 100);
+        }
+    }, {
+        key: 'methodPlay',
+        value: function methodPlay() {
+            this.player.play();
+        }
+    }, {
+        key: 'methodPause',
+        value: function methodPause() {
+            this.player.pause();
+        }
+    }, {
+        key: 'methodMute',
+        value: function methodMute() {
+            this.player.muted = true;
+        }
+    }, {
+        key: 'methodUnMute',
+        value: function methodUnMute() {
+            this.player.muted = false;
+        }
+    }, {
+        key: 'onWaiting',
+        value: function onWaiting() {
+            this.loading(true);
+        }
+    }, {
+        key: 'onPlaying',
+        value: function onPlaying() {
+            this.loading(false);
+        }
+    }, {
+        key: 'onSeeking',
+        value: function onSeeking() {
+            this.loading(true);
+        }
+    }, {
+        key: 'onSeeked',
+        value: function onSeeked() {
+            this.loading(false);
+        }
+    }, {
+        key: 'unBindSpecificEvents',
+        value: function unBindSpecificEvents() {
+
+            if (this.options.time) {
+                this.player.removeEventListener('durationchange', this.updateDuration);
+            }
+            this.player.removeEventListener('timeupdate', this.updateCurrentTime);
+            this.player.removeEventListener('playing', this.onPlaying);
+            this.player.removeEventListener('waiting', this.onWaiting);
+            this.player.removeEventListener('seeking', this.onSeeking);
+            this.player.removeEventListener('seeked', this.onSeeked);
+            this.player.removeEventListener('ended', this.onVideoEnded);
+        }
+    }]);
+
+    return PlayerHtml5;
+}(_player2.default);
+
+exports.default = PlayerHtml5;
 
 /***/ })
 /******/ ]);
