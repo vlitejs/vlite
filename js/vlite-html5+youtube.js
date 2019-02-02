@@ -1,19 +1,14 @@
 /**
 * @license MIT
 * @name vLitejs
-* @version 2.0.0
+* @version 2.0.1
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
 * @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
 * {@link https://vlite.bitbucket.io}
 * @copyright 2019 Joris DANIEL <https://vlite.bitbucket.io>
 **/
 
-(function webpackUniversalModuleDefinition(root,factory){if(typeof exports==='object'&&typeof module==='object')
-module.exports=factory();else if(typeof define==='function'&&define.amd)define([],factory);else if(typeof exports==='object')exports.vLite=factory();else root.vLite=factory()})(this,function(){return(function(modules){var installedModules={};function __webpack_require__(moduleId){if(installedModules[moduleId]){return installedModules[moduleId].exports}var module=installedModules[moduleId]={i:moduleId,l:!1,exports:{}};modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.l=!0;return module.exports}
-__webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.d=function(exports,name,getter){if(!__webpack_require__.o(exports,name)){Object.defineProperty(exports,name,{configurable:!1,enumerable:!0,get:getter})}};__webpack_require__.n=function(module){var getter=module&&module.__esModule?function getDefault(){return module['default']}:function getModuleExports(){return module};__webpack_require__.d(getter,'a',getter);return getter};__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)};__webpack_require__.p="/js//";return __webpack_require__(__webpack_require__.s=1)})
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+(function webpackUniversalModuleDefinition(root,factory){if(typeof exports==='object'&&typeof module==='object')module.exports=factory();else if(typeof define==='function'&&define.amd)define([],factory);else if(typeof exports==='object')exports.vLite=factory();else root.vLite=factory()})(this,function(){return(function(modules){var installedModules={};function __webpack_require__(moduleId){if(installedModules[moduleId]){return installedModules[moduleId].exports}var module=installedModules[moduleId]={i:moduleId,l:!1,exports:{}};modules[moduleId].call(module.exports,module,module.exports,__webpack_require__);module.l=!0;return module.exports}__webpack_require__.m=modules;__webpack_require__.c=installedModules;__webpack_require__.d=function(exports,name,getter){if(!__webpack_require__.o(exports,name)){Object.defineProperty(exports,name,{configurable:!1,enumerable:!0,get:getter})}};__webpack_require__.n=function(module){var getter=module&&module.__esModule?function getDefault(){return module['default']}:function getModuleExports(){return module};__webpack_require__.d(getter,'a',getter);return getter};__webpack_require__.o=function(object,property){return Object.prototype.hasOwnProperty.call(object,property)};__webpack_require__.p="/js//";return __webpack_require__(__webpack_require__.s=1)})([(function(module,exports,__webpack_require__){
 
 "use strict";
 
@@ -55,7 +50,8 @@ var Player = function () {
             poster: null,
             bigPlay: true,
             autoHide: false,
-            nativeControlsForTouch: false
+            nativeControlsForTouch: false,
+            playsinline: true
         };
 
         //Check if options have gone through DOM with data attribute
@@ -74,10 +70,15 @@ var Player = function () {
 
         this.options = this.constructor.extend(true, DEFAULT_OPTIONS, customOptions);
 
-        if (this.touchSupport && this.options.nativeControlsForTouch) {
+        if (this.options.nativeControlsForTouch) {
             this.skinDisabled = true;
             this.player.setAttribute('controls', 'controls');
             this.options.controls = false;
+        }
+
+        if (this.options.playsinline) {
+            this.player.setAttribute('playsinline', true);
+            this.player.setAttribute('webkit-playsinline', true);
         }
 
         //Check fullscreen support API on different browsers and cached prefixs
@@ -106,7 +107,7 @@ var Player = function () {
 
             var cssstylePoster = this.options.poster !== null ? 'background-image: url(' + this.options.poster + ');' : '';
 
-            var htmlControls = '<div class="vl-overlay-video vl-toggle-play-pause-js"></div>\n                            <div class="vl-wrapper-loader">\n                                <div class="vl-loader">\n                                    <div class="vl-loader-bounce-1"></div>\n                                    <div class="vl-loader-bounce-2"></div>\n                                    <div class="vl-loader-bounce-3"></div>\n                                </div>\n                            </div>\n                            <div class="vl-poster vl-toggle-play-pause-js vl-active" style="' + cssstylePoster + '"></div>\n                            ' + (this.options.bigPlay ? '<div class="vl-big-play-button vl-toggle-play-pause-js">\n                                     <span class="vl-player-icon vl-icon-play2"></span>\n                                </div>' : '') + '\n                            ' + (this.options.controls ? '<div class="vl-control-bar">\n                                    ' + (this.options.timeline ? '<div class="vl-progress-bar">\n                                            <div class="vl-progress-seek"></div>\n                                            <input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />\n                                        </div>' : '') + '\n                                    <div class="vl-control-bar-inner">\n                                        ' + (this.options.playPause ? '<div class="vl-play-pause-button vl-toggle-play-pause-js">\n                                                <span class="vl-player-icon vl-icon-play3"></span>\n                                                <span class="vl-player-icon vl-icon-pause2"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.time ? '<div class="vl-time">\n                                                <span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.volume ? '<div class="vl-volume">\n                                                <span class="vl-player-icon vl-icon-volume-high"></span>\n                                                <span class="vl-player-icon vl-icon-volume-mute"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.fullscreen ? '<div class="vl-fullscreen">\n                                                <span class="vl-player-icon vl-icon-fullscreen"></span>\n                                                <span class="vl-player-icon vl-icon-shrink"></span>\n                                            </div>' : '') + '\n                                    </div>\n                                </div>' : '');
+            var htmlControls = (!this.options.nativeControlsForTouch ? '<div class="vl-overlay-video vl-toggle-play-pause-js">\n                                    ' + (!this.touchSupport ? '<div class="vl-overlay-left vl-fast-forward-js" data-direction="left"></div>\n                                        <div class="vl-overlay-right vl-fast-forward-js" data-direction="right"></div>' : '') + '\n                                </div>' : '') + '\n                            <div class="vl-wrapper-loader">\n                                <div class="vl-loader">\n                                    <div class="vl-loader-bounce-1"></div>\n                                    <div class="vl-loader-bounce-2"></div>\n                                    <div class="vl-loader-bounce-3"></div>\n                                </div>\n                            </div>\n                            <div class="vl-poster vl-toggle-play-pause-js vl-active" style="' + cssstylePoster + '"></div>\n                            ' + (this.options.bigPlay ? '<div class="vl-big-play-button vl-toggle-play-pause-js">\n                                     <span class="vl-player-icon vl-icon-play2"></span>\n                                </div>' : '') + '\n                            ' + (this.options.controls ? '<div class="vl-control-bar">\n                                    ' + (this.options.timeline ? '<div class="vl-progress-bar">\n                                            <div class="vl-progress-seek"></div>\n                                            <input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />\n                                        </div>' : '') + '\n                                    <div class="vl-control-bar-inner">\n                                        ' + (this.options.playPause ? '<div class="vl-play-pause-button vl-toggle-play-pause-js">\n                                                <span class="vl-player-icon vl-icon-play3"></span>\n                                                <span class="vl-player-icon vl-icon-pause2"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.time ? '<div class="vl-time">\n                                                <span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.volume ? '<div class="vl-volume">\n                                                <span class="vl-player-icon vl-icon-volume-high"></span>\n                                                <span class="vl-player-icon vl-icon-volume-mute"></span>\n                                            </div>' : '') + '\n                                        ' + (this.options.fullscreen ? '<div class="vl-fullscreen">\n                                                <span class="vl-player-icon vl-icon-fullscreen"></span>\n                                                <span class="vl-player-icon vl-icon-shrink"></span>\n                                            </div>' : '') + '\n                                    </div>\n                                </div>' : '');
 
             wrapper.insertAdjacentHTML('beforeend', htmlControls);
         }
@@ -133,6 +134,17 @@ var Player = function () {
                 button.addEventListener('click', _this.onClickTogglePlayPause, false);
             });
 
+            //Create double click to fast-forward video current time (only on desktop, mobile doesn't support event)
+            if (!this.touchSupport) {
+                this.onDblclickFastForward = function (e) {
+                    e.preventDefault();
+                    _this.fastForward(e);
+                };
+                [].forEach.call(this.wrapperPlayer.querySelectorAll('.vl-fast-forward-js'), function (button) {
+                    button.addEventListener('dblclick', _this.onDblclickFastForward, false);
+                });
+            }
+
             if (this.options.controls && this.options.volume) {
 
                 //Create volume button event listener
@@ -155,6 +167,8 @@ var Player = function () {
                 //Create double click event to trigger fullscreen change
                 this.onDblclickVideo = function (e) {
                     e.preventDefault();
+                    //Prevent double click to fast-forward video current time
+                    if (e.target.classList.contains('vl-fast-forward-js')) return;
                     _this.toggleFullscreen();
                 };
                 this.wrapperPlayer.querySelector('.vl-overlay-video').addEventListener('dblclick', this.onDblclickVideo, false);
@@ -236,6 +250,16 @@ var Player = function () {
                 this.play();
             } else {
                 this.pause();
+            }
+        }
+    }, {
+        key: 'fastForward',
+        value: function fastForward(e) {
+
+            if (e.target.getAttribute('data-direction') === 'left') {
+                this.seekTo(this.getCurrentTime() - 10);
+            } else {
+                this.seekTo(this.getCurrentTime() + 10);
             }
         }
     }, {
@@ -411,23 +435,37 @@ var Player = function () {
             [].forEach.call(this.wrapperPlayer.querySelectorAll('.vl-toggle-play-pause-js'), function (button) {
                 button.removeEventListener('click', _this4.onClickTogglePlayPause);
             });
+            this.onClickTogglePlayPause = null;
+
+            if (!this.touchSupport) {
+                [].forEach.call(this.wrapperPlayer.querySelectorAll('.vl-fast-forward-js'), function (button) {
+                    button.removeEventListener('dblclick', _this4.onDblclickFastForward);
+                });
+                this.onDblclickFastForward = null;
+            }
 
             if (this.options.controls && this.options.timeline) {
                 this.wrapperPlayer.querySelector('.vl-progress-input').removeEventListener('change', this.onChangeProgressBar, false);
+                this.onChangeProgressBar = null;
             }
 
             if (this.options.controls && this.options.volume) {
                 this.wrapperPlayer.querySelector('.vl-volume').removeEventListener('click', this.onCLickToggleVolume);
+                this.onCLickToggleVolume = null;
             }
 
             if (this.options.controls) {
                 this.wrapperPlayer.removeEventListener('keyup', this.onKeyupEvent);
                 this.wrapperPlayer.removeEventListener('mousemove', this.onMousemoveEvent);
+                this.onKeyupEvent = null;
+                this.onMousemoveEvent = null;
             }
 
             if (this.options.controls && this.options.fullscreen) {
                 this.wrapperPlayer.querySelector('.vl-fullscreen').removeEventListener('click', this.onClickToggleFullscreen);
                 this.wrapperPlayer.querySelector('.vl-overlay-video').removeEventListener('dblclick', this.onDblclickVideo);
+                this.onClickToggleFullscreen = null;
+                this.onDblclickVideo = null;
             }
 
             window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen);
@@ -563,7 +601,7 @@ exports.default = Player;
 /**
 * @license MIT
 * @name vLitejs
-* @version 1.1.2
+* @version 2.0.1
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
 * @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
 * {@link https://vlite.bitbucket.io}
@@ -768,7 +806,7 @@ var PlayerYoutube = function (_Player) {
                     'rel': 0,
                     'fs': this.options.fullscreen ? 1 : 0,
                     'wmode': 'transparent',
-                    'playsinline': 0,
+                    'playsinline': this.options.playsinline ? 1 : 0,
                     'controls': this.skinDisabled ? 1 : 0
                 },
                 events: {

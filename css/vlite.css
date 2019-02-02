@@ -61,6 +61,10 @@
   display: none !important;
 }
 
+.vl-wrapper-vlite:not(.vl-force-controls) iframe.vlite-js {
+  pointer-events: none;
+}
+
 .vl-wrapper-vlite::-webkit-full-screen {
   width: 100%;
   height: 100%;
@@ -148,10 +152,6 @@
   object-fit: cover;
 }
 
-.vl-wrapper-vlite iframe.vlite-js {
-  pointer-events: none;
-}
-
 .vl-wrapper-vlite.vl-playing .vl-poster, .vl-wrapper-vlite.vl-paused:not(.vl-first-start) .vl-poster {
   visibility: hidden;
   opacity: 0;
@@ -179,7 +179,23 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: calc(100% - 50px);
+}
+
+.vl-wrapper-vlite .vl-overlay-video .vl-overlay-left,
+.vl-wrapper-vlite .vl-overlay-video .vl-overlay-right {
+  position: absolute;
+  top: 0;
+  width: 30%;
   height: 100%;
+}
+
+.vl-wrapper-vlite .vl-overlay-video .vl-overlay-left {
+  left: 0;
+}
+
+.vl-wrapper-vlite .vl-overlay-video .vl-overlay-right {
+  right: 0;
 }
 
 .vl-wrapper-vlite .vl-poster {
