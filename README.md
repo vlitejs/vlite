@@ -1,4 +1,4 @@
-![vLitejs](https://img.shields.io/badge/vLitejs-v2.0.0-ffb300.svg?style=flat-square)
+![vLitejs](https://img.shields.io/badge/vLitejs-v2.0.1-ffb300.svg?style=flat-square)
 
 # vLite.js
 
@@ -6,7 +6,7 @@
 
 See [https://vlite.bitbucket.io](https://vlite.bitbucket.io) for complete docs and demos.<br />
 
-vLite.js is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **4Kb** on production with Gzip, vLite.js has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
+vLite.js is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with Gzip, vLite.js has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
 
 <center style="image-rendering: -webkit-optimize-contrast;">
 <a href="https://vlite.bitbucket.io/demo" title="vLitejs demo" target="_blank"><img src="https://vlite.bitbucket.io/img/demo.jpg" alt="vLite on desktop" /></a>
