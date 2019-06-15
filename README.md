@@ -2,6 +2,8 @@
 
 # vLite.js
 
+[![Join the chat at https://gitter.im/vlitejs/community](https://badges.gitter.im/vlitejs/community.svg)](https://gitter.im/vlitejs/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## The new smallest Javascript video library
 
 See [https://vlite.bitbucket.io](https://vlite.bitbucket.io) for complete docs and demos.<br />
