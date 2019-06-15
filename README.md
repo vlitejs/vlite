@@ -1,4 +1,5 @@
 ![vLitejs](https://img.shields.io/badge/vLitejs-v2.0.1-ffb300.svg?style=flat-square)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/vlitejs/vlitejs)
 
 # vLite.js
 
