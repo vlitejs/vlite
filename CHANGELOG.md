@@ -1,3 +1,34 @@
+# 3.0.0
+
+#### New features
+
+* Add all sources of `vLitejs` project including:
+    * CSS
+    * JS
+    * Documentation
+    * Webpack configuration for build
+    * Example
+* New folder structure
+* Add `ESLint` on the project and add npm scripts
+* Add `StyleLint` on the project and add npm scripts
+* Add `Babel` on the project
+* Add `postCSS` on the project
+* Add `browserslistrc` files for browsers support
+* Add Travis builds: `stylelint`, `eslint` and `mkdocs build`
+* Add `JSDoc` configuration file and all code comments
+* Add `Material for MkDocs` to build the documentation website
+* Add `Webpack` configuration for builds
+* Add `./examples` folder with `vLite` examples
+* Add `.github` folder with `ISSUE_TEMPLATE` and `PULL_REQUEST_TEMPLATE`
+* Add `./build` folder with `vLitejs` assets build
+* Add `CHANGELOG` file
+* Add `.editorconfig` file
+
+#### Removed
+
+* Remove specific build file for `html5` player only or `youtube` player only. We keep only one bundle compatible with `html5` and `youtube`
+
+
 # 2.0.1
 
 #### New features

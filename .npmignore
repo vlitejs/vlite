@@ -1,0 +1,14 @@
+.github/
+.vscode/
+docs/
+jsdocs/
+sites/
+src/
+.editorconfig
+.stylelintrc
+.travis.yml
+babel.config.js
+jsdoc.json
+mkdocs.yml
+postcss.config.js
+webpack.config.js
