@@ -1,10 +1,19 @@
 os: linux
-language: node_js
+
+language: python
+
+python: 3.6
+
+branches: develop
+
+cache:
+  npm: false
+  pip: false
 
 install:
-  - pip install --upgrade pip --user
-  - pip install mkdocs --user
-  - pip install mkdocs-material
+  - pip install --upgrade pip --ignore-installed
+  - pip install mkdocs --ignore-installed
+  - pip install mkdocs-material ----ignore-installed
 
 matrix:
   include:
@@ -15,7 +24,7 @@ matrix:
         - npm install
 
     - language: python
-      python: "3.7.0"
+      python: "3.6"
       stage: "build"
       script:
         - mkdocs build
