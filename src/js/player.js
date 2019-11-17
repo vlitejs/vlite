@@ -107,55 +107,55 @@ export default class Player {
 									: ``}
 								</div>`
 							: ``}
-                            <div class="vl-wrapper-loader">
-                                <div class="vl-loader">
-                                    <div class="vl-loader-bounce-1"></div>
-                                    <div class="vl-loader-bounce-2"></div>
-                                    <div class="vl-loader-bounce-3"></div>
-                                </div>
-                            </div>
-                            <div class="vl-poster vl-toggle-play-pause-js vl-active" style="${cssstylePoster}"></div>
-                            ${this.options.bigPlay ?
+							<div class="vl-wrapper-loader">
+								<div class="vl-loader">
+									<div class="vl-loader-bounce-1"></div>
+									<div class="vl-loader-bounce-2"></div>
+									<div class="vl-loader-bounce-3"></div>
+								</div>
+							</div>
+							<div class="vl-poster vl-toggle-play-pause-js vl-active" style="${cssstylePoster}"></div>
+							${this.options.bigPlay ?
 								`<div class="vl-big-play-button vl-toggle-play-pause-js">
-                                     <span class="vl-player-icon vl-icon-big-play">${svgBigPlay}</span>
-                                </div>`
-                            : ``}
-                            ${this.options.controls ?
+									 <span class="vl-player-icon vl-icon-big-play">${svgBigPlay}</span>
+								</div>`
+							: ``}
+							${this.options.controls ?
 								`<div class="vl-control-bar">
-                                    ${this.options.timeline ?
+									${this.options.timeline ?
 										`<div class="vl-progress-bar">
-                                            <div class="vl-progress-seek"></div>
-                                            <input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />
-                                        </div>`
-                                     : ``}
-                                    <div class="vl-control-bar-inner">
-                                        ${this.options.playPause ?
+											<div class="vl-progress-seek"></div>
+											<input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />
+										</div>`
+									: ``}
+									<div class="vl-control-bar-inner">
+										${this.options.playPause ?
 											`<div class="vl-play-pause-button vl-toggle-play-pause-js">
-                                                <span class="vl-player-icon vl-icon-play">${svgPlay}</span>
-                                                <span class="vl-player-icon vl-icon-pause">${svgPause}</span>
-                                            </div>`
-                                        : ``}
-                                        ${this.options.time ?
+												<span class="vl-player-icon vl-icon-play">${svgPlay}</span>
+												<span class="vl-player-icon vl-icon-pause">${svgPause}</span>
+											</div>`
+										: ``}
+										${this.options.time ?
 											`<div class="vl-time">
-                                                <span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>
-                                            </div>`
-                                        : ``}
-                                        ${this.options.volume ?
+												<span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>
+											</div>`
+										: ``}
+										${this.options.volume ?
 											`<div class="vl-volume">
-                                                <span class="vl-player-icon vl-icon-volume-high">${svgVolumeHigh}</span>
-                                                <span class="vl-player-icon vl-icon-volume-mute">${svgVolumeMute}</span>
-                                            </div>`
-                                        : ``}
-                                        ${this.options.fullscreen ?
+												<span class="vl-player-icon vl-icon-volume-high">${svgVolumeHigh}</span>
+												<span class="vl-player-icon vl-icon-volume-mute">${svgVolumeMute}</span>
+											</div>`
+										: ``}
+										${this.options.fullscreen ?
 											`<div class="vl-fullscreen">
-                                                <span class="vl-player-icon vl-icon-fullscreen">${svgFullscreen}</span>
-                                                <span class="vl-player-icon vl-icon-shrink">${svgFullscreenExit}</span>
-                                            </div>`
-                                        : ``}
-                                    </div>
-                                </div>`
-                                : ``
-                            }`;
+												<span class="vl-player-icon vl-icon-fullscreen">${svgFullscreen}</span>
+												<span class="vl-player-icon vl-icon-shrink">${svgFullscreenExit}</span>
+											</div>`
+										: ``}
+									</div>
+								</div>`
+								: ``
+							}`;
 
 		wrapper.insertAdjacentHTML('beforeend', htmlControls);
 	}

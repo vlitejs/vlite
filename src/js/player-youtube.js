@@ -28,8 +28,8 @@ export default class PlayerYoutube extends Player {
 	}
 
 	/**
-     * Initialize the Youtube player
-     */
+	 * Initialize the Youtube player
+	 */
 	initYoutubePlayer() {
 
 		this.instancePlayer = new window.YT.Player(this.player.getAttribute('id'), {
@@ -56,7 +56,7 @@ export default class PlayerYoutube extends Player {
 
 	/**
 	 * Function executed when the player is ready
-     * @param {Object} data Youtube datas from the player API
+	 * @param {Object} data Youtube datas from the player API
 	 */
 	onPlayerReady(data) {
 		this.player = data.target.getIframe();

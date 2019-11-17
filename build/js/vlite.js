@@ -481,8 +481,8 @@ class PlayerYoutube extends _player__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.initYoutubePlayer();
   }
   /**
-      * Initialize the Youtube player
-      */
+   * Initialize the Youtube player
+   */
 
 
   initYoutubePlayer() {
@@ -508,7 +508,7 @@ class PlayerYoutube extends _player__WEBPACK_IMPORTED_MODULE_0__["default"] {
   }
   /**
    * Function executed when the player is ready
-      * @param {Object} data Youtube datas from the player API
+   * @param {Object} data Youtube datas from the player API
    */
 
 
@@ -774,40 +774,40 @@ class Player {
 									${!this.touchSupport ? `<div class="vl-overlay-left vl-fast-forward-js" data-direction="left"></div>
 										<div class="vl-overlay-right vl-fast-forward-js" data-direction="right"></div>` : ``}
 								</div>` : ``}
-                            <div class="vl-wrapper-loader">
-                                <div class="vl-loader">
-                                    <div class="vl-loader-bounce-1"></div>
-                                    <div class="vl-loader-bounce-2"></div>
-                                    <div class="vl-loader-bounce-3"></div>
-                                </div>
-                            </div>
-                            <div class="vl-poster vl-toggle-play-pause-js vl-active" style="${cssstylePoster}"></div>
-                            ${this.options.bigPlay ? `<div class="vl-big-play-button vl-toggle-play-pause-js">
-                                     <span class="vl-player-icon vl-icon-big-play">${_svg_big_play_svg__WEBPACK_IMPORTED_MODULE_0___default.a}</span>
-                                </div>` : ``}
-                            ${this.options.controls ? `<div class="vl-control-bar">
-                                    ${this.options.timeline ? `<div class="vl-progress-bar">
-                                            <div class="vl-progress-seek"></div>
-                                            <input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />
-                                        </div>` : ``}
-                                    <div class="vl-control-bar-inner">
-                                        ${this.options.playPause ? `<div class="vl-play-pause-button vl-toggle-play-pause-js">
-                                                <span class="vl-player-icon vl-icon-play">${_svg_play_svg__WEBPACK_IMPORTED_MODULE_1___default.a}</span>
-                                                <span class="vl-player-icon vl-icon-pause">${_svg_pause_svg__WEBPACK_IMPORTED_MODULE_2___default.a}</span>
-                                            </div>` : ``}
-                                        ${this.options.time ? `<div class="vl-time">
-                                                <span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>
-                                            </div>` : ``}
-                                        ${this.options.volume ? `<div class="vl-volume">
-                                                <span class="vl-player-icon vl-icon-volume-high">${_svg_volume_high_svg__WEBPACK_IMPORTED_MODULE_3___default.a}</span>
-                                                <span class="vl-player-icon vl-icon-volume-mute">${_svg_volume_mute_svg__WEBPACK_IMPORTED_MODULE_4___default.a}</span>
-                                            </div>` : ``}
-                                        ${this.options.fullscreen ? `<div class="vl-fullscreen">
-                                                <span class="vl-player-icon vl-icon-fullscreen">${_svg_fullscreen_svg__WEBPACK_IMPORTED_MODULE_5___default.a}</span>
-                                                <span class="vl-player-icon vl-icon-shrink">${_svg_fullscreen_exit_svg__WEBPACK_IMPORTED_MODULE_6___default.a}</span>
-                                            </div>` : ``}
-                                    </div>
-                                </div>` : ``}`;
+							<div class="vl-wrapper-loader">
+								<div class="vl-loader">
+									<div class="vl-loader-bounce-1"></div>
+									<div class="vl-loader-bounce-2"></div>
+									<div class="vl-loader-bounce-3"></div>
+								</div>
+							</div>
+							<div class="vl-poster vl-toggle-play-pause-js vl-active" style="${cssstylePoster}"></div>
+							${this.options.bigPlay ? `<div class="vl-big-play-button vl-toggle-play-pause-js">
+									 <span class="vl-player-icon vl-icon-big-play">${_svg_big_play_svg__WEBPACK_IMPORTED_MODULE_0___default.a}</span>
+								</div>` : ``}
+							${this.options.controls ? `<div class="vl-control-bar">
+									${this.options.timeline ? `<div class="vl-progress-bar">
+											<div class="vl-progress-seek"></div>
+											<input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />
+										</div>` : ``}
+									<div class="vl-control-bar-inner">
+										${this.options.playPause ? `<div class="vl-play-pause-button vl-toggle-play-pause-js">
+												<span class="vl-player-icon vl-icon-play">${_svg_play_svg__WEBPACK_IMPORTED_MODULE_1___default.a}</span>
+												<span class="vl-player-icon vl-icon-pause">${_svg_pause_svg__WEBPACK_IMPORTED_MODULE_2___default.a}</span>
+											</div>` : ``}
+										${this.options.time ? `<div class="vl-time">
+												<span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>
+											</div>` : ``}
+										${this.options.volume ? `<div class="vl-volume">
+												<span class="vl-player-icon vl-icon-volume-high">${_svg_volume_high_svg__WEBPACK_IMPORTED_MODULE_3___default.a}</span>
+												<span class="vl-player-icon vl-icon-volume-mute">${_svg_volume_mute_svg__WEBPACK_IMPORTED_MODULE_4___default.a}</span>
+											</div>` : ``}
+										${this.options.fullscreen ? `<div class="vl-fullscreen">
+												<span class="vl-player-icon vl-icon-fullscreen">${_svg_fullscreen_svg__WEBPACK_IMPORTED_MODULE_5___default.a}</span>
+												<span class="vl-player-icon vl-icon-shrink">${_svg_fullscreen_exit_svg__WEBPACK_IMPORTED_MODULE_6___default.a}</span>
+											</div>` : ``}
+									</div>
+								</div>` : ``}`;
     wrapper.insertAdjacentHTML('beforeend', htmlControls);
   }
   /**
