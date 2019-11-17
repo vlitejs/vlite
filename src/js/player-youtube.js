@@ -1,127 +1,182 @@
 import Player from './player';
 
-class PlayerYoutube extends Player {
+/**
+ * vLite Player Youtube
+ * @module vLite/Player/PlayerYoutube
+ */
+export default class PlayerYoutube extends Player {
 
-    constructor({selector, options, callback}) {
+	/**
+	 * Instanciate the constructor
+	 * @constructor
+	 * @param {String|Object} selector CSS selector or query selector
+	 * @param {Object} options Player options
+	 * @param {Function} callback Callback function executed when the player is ready
+	 */
+	constructor({selector, options, callback}) {
 
-        //Init Player class
-        super({
-            selector: selector,
-            options: options,
-            callback: callback
-        });
+		// Init Player class
+		super({
+			selector: selector,
+			options: options,
+			callback: callback
+		});
 
-        //Init Youtube player with API
-        this.initYoutubePlayer();
+		// Init Youtube player with API
+		this.initYoutubePlayer();
 
-    }
+	}
 
-    initYoutubePlayer() {
+	/**
+     * Initialize the Youtube player
+     */
+	initYoutubePlayer() {
 
-        this.instancePlayer = new YT.Player(this.player.getAttribute('id'), {
-            videoId: this.player.getAttribute('data-youtube-id'),
-            height: '100%',
-            width: '100%',
-            playerVars: {
-                'showinfo': 0,
-                'modestbranding': 0,
-                'autohide': 1,
-                'rel': 0,
-                'fs': this.options.fullscreen ? 1 : 0,
-                'wmode': 'transparent',
-                'playsinline': this.options.playsinline ? 1 : 0,
-                'controls': this.skinDisabled ? 1 : 0
-            },
-            events: {
-                'onReady': data => this.onPlayerReady(data),
-                'onStateChange': state => this.onPlayerStateChange(state)
-            }
-        });
+		this.instancePlayer = new window.YT.Player(this.player.getAttribute('id'), {
+			videoId: this.player.getAttribute('data-youtube-id'),
+			height: '100%',
+			width: '100%',
+			playerVars: {
+				'showinfo': 0,
+				'modestbranding': 0,
+				'autohide': 1,
+				'rel': 0,
+				'fs': this.options.fullscreen ? 1 : 0,
+				'wmode': 'transparent',
+				'playsinline': this.options.playsinline ? 1 : 0,
+				'controls': this.skinDisabled ? 1 : 0
+			},
+			events: {
+				'onReady': data => this.onPlayerReady(data),
+				'onStateChange': state => this.onPlayerStateChange(state)
+			}
+		});
 
-    }
+	}
 
-    onPlayerReady(data) {
-        this.player = data.target.getIframe();
-        super.playerIsReady();
-    }
+	/**
+	 * Function executed when the player is ready
+     * @param {Object} data Youtube datas from the player API
+	 */
+	onPlayerReady(data) {
+		this.player = data.target.getIframe();
+		super.playerIsReady();
+	}
 
-    getInstance() {
-        return this.instancePlayer;
-    }
+	/**
+	 * Get the player instance
+	 * @returns {Object} Youtube API instance
+	 */
+	getInstance() {
+		return this.instancePlayer;
+	}
 
-    onPlayerStateChange(e) {
+	/**
+	 * Function executed when the player state changed
+	 * @param {Object} e Event listener datas
+	 */
+	onPlayerStateChange(e) {
 
-        switch (e.data) {
-            case YT.PlayerState.UNSTARTED:
-                if (this.options.controls && this.options.time) {
-                    super.updateDuration();
-                }
-                break;
+		switch (e.data) {
+		case window.YT.PlayerState.UNSTARTED:
+			if (this.options.controls && this.options.time) {
+				super.updateDuration();
+			}
+			break;
 
-            case YT.PlayerState.ENDED:
-                super.onVideoEnded();
-                break;
+		case window.YT.PlayerState.ENDED:
+			super.onVideoEnded();
+			break;
 
-            case YT.PlayerState.PLAYING:
+		case window.YT.PlayerState.PLAYING:
 
-                this.loading(false);
+			this.loading(false);
 
-                if (this.options.controls) {
-                    setInterval(() => {
-                        super.updateCurrentTime();
-                    }, 100);
-                }
+			if (this.options.controls) {
+				setInterval(() => {
+					super.updateCurrentTime();
+				}, 100);
+			}
 
-                super.afterPlayPause('play');
-                break;
+			super.afterPlayPause('play');
+			break;
 
-            case YT.PlayerState.PAUSED:
-                super.afterPlayPause('pause');
-                break;
+		case window.YT.PlayerState.PAUSED:
+			super.afterPlayPause('pause');
+			break;
 
-            case YT.PlayerState.BUFFERING:
-                this.loading(true);
-                break;
-        }
+		case window.YT.PlayerState.BUFFERING:
+			this.loading(true);
+			break;
+		}
 
-    }
+	}
 
-    setCurrentTime(newTime) {
-        this.instancePlayer.seekTo(newTime);
-    }
+	/**
+	 * Set the new current time for the player
+	 * @param {Float|Integer} Current time video
+	 */
+	setCurrentTime(newTime) {
+		this.instancePlayer.seekTo(newTime);
+	}
 
-    getCurrentTime() {
-        return this.instancePlayer.getCurrentTime();
-    }
+	/**
+	 * Get the player current time
+	 * @returns {Float|Integer} Current time of the video
+	 */
+	getCurrentTime() {
+		return this.instancePlayer.getCurrentTime();
+	}
 
-    getDuration() {
-        return this.instancePlayer.getDuration();
-    }
+	/**
+	 * Get the player duration
+	 * @returns {Float|Integer} Duration of the video
+	 */
+	getDuration() {
+		return this.instancePlayer.getDuration();
+	}
 
-    onProgressChanged(e) {
-        this.setCurrentTime((e.target.value * this.getDuration()) / 100);
-    }
+	/**
+	 * Function executed on the video progress changed
+	 * @param {Object} e Event listener datas
+	 */
+	onProgressChanged(e) {
+		this.setCurrentTime((e.target.value * this.getDuration()) / 100);
+	}
 
-    methodPlay() {
-        this.instancePlayer.playVideo();
-    }
+	/**
+	 * Play method of the player
+	 */
+	methodPlay() {
+		this.instancePlayer.playVideo();
+	}
 
-    methodPause() {
-        this.instancePlayer.pauseVideo();
-    }
+	/**
+	 * Pause method of the player
+	 */
+	methodPause() {
+		this.instancePlayer.pauseVideo();
+	}
 
-    methodMute() {
-        this.instancePlayer.mute();
-    }
+	/**
+	 * Mute method of the player
+	 */
+	methodMute() {
+		this.instancePlayer.mute();
+	}
 
-    methodUnMute() {
-        this.instancePlayer.unMute();
-    }
+	/**
+	 * Unmute method of the player
+	 */
+	methodUnMute() {
+		this.instancePlayer.unMute();
+	}
 
-    removeInstance() {
-        this.instancePlayer.destroy();
-    }
+	/**
+	 * Remove the Youtube instance
+	 */
+	removeInstance() {
+		this.instancePlayer.destroy();
+	}
 
 }
-
-export default PlayerYoutube;

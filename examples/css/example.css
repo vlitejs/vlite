@@ -1,22 +1,24 @@
+html,
+body {
+    margin: 0;
+    font-family: Roboto, arial, sans-serif;
+}
 
 #app {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-bottom: 70px;
 }
 
 .page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 70px;
     flex-direction: row;
     display: flex;
     align-content: center;
+    justify-content: space-between;
 }
 
 .content {
-    width: 50%;
+    width: calc(50% - 20px);
     text-align: center;
     padding-top: 30px;
-}
-
-.vl-wrapper-vlite{
-    margin-top: 15px;
 }
