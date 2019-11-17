@@ -3,8 +3,8 @@ language: node_js
 
 install:
   - pip install --upgrade pip --user
-  - pip install mkdocs --user
-  - pip install mkdocs-material --user
+  - pip install mkdocs
+  - pip install mkdocs-material
 
 matrix:
   include:
@@ -15,7 +15,7 @@ matrix:
         - npm install
 
     - language: python
-      python: "2.7.17"
+      python: "23.7.0"
       stage: "build"
       script:
         - mkdocs build
