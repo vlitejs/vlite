@@ -6,50 +6,30 @@
         margin: 0;
         padding: 0;
         border: 0;
-        font-size: 100%;
         font: inherit;
         vertical-align: baseline;
-    }
-.wrapper-vlite body {
-        line-height: 1;
-    }
-.wrapper-vlite ul {
-        list-style: none;
     }
 
 
 @-webkit-keyframes loader {
     0%, 80%, 100% {
         -webkit-transform: scale(0);
-        transform: scale(0);
+                transform: scale(0);
     } 40% {
         -webkit-transform: scale(1.0);
-        transform: scale(1.0);
+                transform: scale(1.0);
     }
 }
-
 
 @keyframes loader {
     0%, 80%, 100% {
         -webkit-transform: scale(0);
-        transform: scale(0);
+                transform: scale(0);
     } 40% {
         -webkit-transform: scale(1.0);
-        transform: scale(1.0);
+                transform: scale(1.0);
     }
 }
-
-
-.vl-wrapper-vlite.vl-loading .vl-wrapper-loader{
-            opacity: 1;
-            visibility: visible;
-        }
-
-
-.vl-wrapper-vlite.vl-loading .vl-big-play-button{
-            opacity: 0;
-        }
-
 
 .vl-wrapper-vlite .vl-wrapper-loader{
         position: absolute;
@@ -60,21 +40,16 @@
         opacity: 0;
         visibility: hidden;
         z-index: 5;
-        display: -webkit-box;
         display: flex;
-        -webkit-box-align: center;
-                align-items: center;
-        -webkit-transition: opacity 200ms ease-in, visibility 200ms ease-in;
+        align-items: center;
         transition: opacity 200ms ease-in, visibility 200ms ease-in;
     }
-
 
 .vl-wrapper-vlite .vl-wrapper-loader .vl-loader {
             margin: 0 auto;
             width: 70px;
             text-align: center;
         }
-
 
 .vl-wrapper-vlite .vl-wrapper-loader .vl-loader > div {
                 width: 18px;
@@ -86,17 +61,24 @@
                         animation: loader 1.4s infinite ease-in-out both;
             }
 
-
 .vl-wrapper-vlite .vl-wrapper-loader .vl-loader .vl-loader-bounce-1 {
                 -webkit-animation-delay: -0.32s;
                         animation-delay: -0.32s;
             }
 
-
 .vl-wrapper-vlite .vl-wrapper-loader .vl-loader .vl-loader-bounce-2 {
                 -webkit-animation-delay: -0.16s;
                         animation-delay: -0.16s;
             }
+
+.vl-wrapper-vlite.vl-loading .vl-wrapper-loader{
+            opacity: 1;
+            visibility: visible;
+        }
+
+.vl-wrapper-vlite.vl-loading .vl-big-play-button{
+            opacity: 0;
+        }
 
 .vl-wrapper-vlite .vl-big-play-button {
         position: absolute;
@@ -108,10 +90,8 @@
                 transform: translateX(-50%) translateY(-50%);
         cursor: pointer;
         z-index: 2;
-        -webkit-transition: opacity 200ms ease-in;
         transition: opacity 200ms ease-in;
-        -webkit-transition-delay: 100ms;
-                transition-delay: 100ms;
+        transition-delay: 100ms;
     }
 
         .vl-wrapper-vlite .vl-big-play-button .vl-icon-big-play {
@@ -129,39 +109,6 @@
             height: 60px;
         }
 
-    .vl-wrapper-vlite .vl-control-bar{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: undefined;
-        padding-top: undefined;
-        text-align: right;
-        padding-left: undefined;
-        padding-right: undefined;
-        background-color: undefined;
-        -webkit-transition: 250ms ease-in;
-        transition: 250ms ease-in;
-    }
-
-    .vl-wrapper-vlite .vl-control-bar:hover{
-            opacity: 1 !important;
-        }
-
-    .vl-wrapper-vlite .vl-control-bar:hover .vl-progress-bar{
-                height: undefined;
-            }
-
-    .vl-wrapper-vlite .vl-control-bar.hidden{
-            opacity: 0;
-        }
-
-    .vl-wrapper-vlite .vl-control-bar .vl-control-bar-inner{
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
     .vl-wrapper-vlite .vl-progress-bar{
         position: absolute;
         top: 0;
@@ -169,7 +116,6 @@
         right: undefined;
         height: undefined;
         background-color: rgba(0, 0, 0, 0.2);
-        -webkit-transition: height 100ms ease-out;
         transition: height 100ms ease-out;
         z-index: 1;
     }
@@ -193,8 +139,39 @@
             height: 100%;
             background-color: undefined;
             border-radius: 0px 4px 4px 0px;
-            -webkit-transition: all 100ms ease-out;
             transition: all 100ms ease-out;
+        }
+
+    .vl-wrapper-vlite .vl-control-bar{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: undefined;
+        padding-top: undefined;
+        text-align: right;
+        padding-left: undefined;
+        padding-right: undefined;
+        background-color: undefined;
+        transition: 250ms ease-in;
+    }
+
+    .vl-wrapper-vlite .vl-control-bar:hover{
+            opacity: 1 !important;
+        }
+
+    .vl-wrapper-vlite .vl-control-bar:hover .vl-progress-bar{
+                height: undefined;
+            }
+
+    .vl-wrapper-vlite .vl-control-bar.hidden{
+            opacity: 0;
+        }
+
+    .vl-wrapper-vlite .vl-control-bar .vl-control-bar-inner{
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
     .vl-wrapper-vlite .vl-play-pause-button{
@@ -225,10 +202,8 @@
         font-size: 13px;
         float: left;
         height: 100%;
-        display: -webkit-box;
         display: flex;
-        -webkit-box-align: center;
-                align-items: center;
+        align-items: center;
     }
 
     .vl-wrapper-vlite .vl-volume{
@@ -307,21 +282,6 @@
     overflow: hidden;
 }
 
-.vl-wrapper-vlite::full-screen {
-        width: 100%;
-        height: 100%;
-    }
-
-/* Chrome fullscreen config */
-
-.vl-wrapper-vlite:not(.vl-force-controls) video::-webkit-media-controls-enclosure {
-            display: none !important;
-        }
-
-.vl-wrapper-vlite:not(.vl-force-controls) iframe.vlite-js{
-            pointer-events: none;
-        }
-
 .vl-wrapper-vlite::-webkit-full-screen {
         width: 100%;
         height: 100%;
@@ -338,6 +298,16 @@
         width: 100%;
         height: 100%;
     }
+
+/* Chrome fullscreen config */
+
+.vl-wrapper-vlite:not(.vl-force-controls) video::-webkit-media-controls-enclosure {
+            display: none !important;
+        }
+
+.vl-wrapper-vlite:not(.vl-force-controls) iframe.vlite-js{
+            pointer-events: none;
+        }
 
 .vl-wrapper-vlite.vl-fullscreen-display .vl-control-bar,
         .vl-wrapper-vlite.vl-fullscreen-display .vl-big-play-button{
@@ -357,6 +327,35 @@
 
 /* Skin */
 
+.vl-wrapper-vlite.vl-paused .vl-play-pause-button .vl-icon-play{
+                display: block;
+            }
+
+.vl-wrapper-vlite.vl-paused .vl-control-bar.hidden{
+            opacity: 1;
+        }
+
+.vl-wrapper-vlite .vl-poster {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: cover;
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
+        z-index: 2;
+    }
+
+.vl-wrapper-vlite .vl-poster.vl-active{
+            opacity: 1;
+            visibility: visible;
+        }
+
 .vl-wrapper-vlite.vl-playing .vl-poster,.vl-wrapper-vlite.vl-paused:not(.vl-first-start) .vl-poster{
             visibility: hidden;
             opacity: 0;
@@ -370,14 +369,6 @@
 .vl-wrapper-vlite.vl-playing .vl-play-pause-button .vl-icon-pause{
                 display: block;
             }
-
-.vl-wrapper-vlite.vl-paused .vl-play-pause-button .vl-icon-play{
-                display: block;
-            }
-
-.vl-wrapper-vlite.vl-paused .vl-control-bar.hidden{
-            opacity: 1;
-        }
 
 .vl-wrapper-vlite .vl-overlay-video{
         position: absolute;
@@ -401,27 +392,6 @@
 
 .vl-wrapper-vlite .vl-overlay-video .vl-overlay-right{
             right: 0;
-        }
-
-.vl-wrapper-vlite .vl-poster {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-        background-size: cover;
-        cursor: pointer;
-        visibility: hidden;
-        opacity: 0;
-        z-index: 2;
-    }
-
-.vl-wrapper-vlite .vl-poster.vl-active{
-            opacity: 1;
-            visibility: visible;
         }
 
 /*# sourceMappingURL=vlite.css.map*/

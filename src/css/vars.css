@@ -1,9 +1,12 @@
 :root {
     --heightHeaderTopbar: 60px;
-    --backgroundControlBar: rgba(0, 0, 0, 0.3);
-    --colorControl: #fff;
     --heightControlBar: 50px;
     --heightProgressBar: 3px;
     --heightProgressBarHover: 8px;
+
     --offsetLeftRightControlBar: 0;
+
+    --backgroundControlBar: rgba(0, 0, 0, 0.3);
+
+    --colorControl: #fff;
 }

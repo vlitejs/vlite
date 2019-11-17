@@ -1,4 +1,11 @@
 node_modules/
+
+# Editor config
 .vscode/
+
+# JSDoc build
 jsdocs/*
 !jsdocs/.gitkeep
+
+# Mkdocs build
+site/

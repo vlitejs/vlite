@@ -5,14 +5,14 @@ site_author: 'Joris DANIEL aka Yoriiis'
 site_url: 'https://vlite.bitbucket.io'
 
 # Pages
-pages:
-    - Overview: index.md
-    - Getting started: getting-started.md
-    - How it works: how-it-works.md
-    - Available methods: available-methods.md
-    - Demo: demo.md
-    - Download: download.md
-    - Releases notes: releases-notes.md
+nav:
+  - Overview: index.md
+  - Getting started: getting-started.md
+  - How it works: how-it-works.md
+  - Available methods: available-methods.md
+  - Demo: demo.md
+  - Download: download.md
+  - Releases notes: releases-notes.md
 
 # Copyright
 copyright: 'Copyright &copy; 2019 - Joris DANIEL aka Yoriiis'
