@@ -16,7 +16,7 @@ cache:
 install:
   - pip install --upgrade pip --user
   - pip install mkdocs --user
-  - pip install mkdocs-material
+  - pip install mkdocs-material --user
 
 matrix:
   include:
