@@ -2,8 +2,9 @@ os: linux
 language: node_js
 
 install:
-  - pip install mkdocs
-  - pip install mkdocs-material
+  - pip install --upgrade pip --user
+  - pip install mkdocs --user
+  - pip install mkdocs-material --user
 
 matrix:
   include:
@@ -14,7 +15,7 @@ matrix:
         - npm install
 
     - language: python
-      python: 2.7
+      python: "2.7.17"
       stage: "build"
       script:
         - mkdocs build
