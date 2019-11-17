@@ -1,22 +1,17 @@
 os: linux
 language: node_js
 
+install:
+  - pip install mkdocs
+  - pip install mkdocs-material
+
 matrix:
   include:
-    - language: python
-      python: 2.7
-      stage: "prepare"
-      script:
-        - pip install mkdocs && mkdocs --version
-        - pip install mkdocs-material
-
     - language: node_js
       node_js: "8.11.2"
       stage: "prepare"
       script:
-        - npm run test:eslint
-        - npm run test:stylelint
-        - npm run build
+        - npm install
 
     - language: python
       python: 2.7
