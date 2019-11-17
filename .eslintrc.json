@@ -4,19 +4,17 @@
 		"ecmaVersion": 6,
 		"ecmaFeatures": {
 			"impliedStrict": true,
-			"experimentalObjectRestSpread": true,
-			"jsx": true
+			"experimentalObjectRestSpread": true
 		},
 		"sourceType": "module"
 	},
 
 	"env": {
 		"browser": true,
-		"node": true,
-		"jest": true
+		"node": true
 	},
 
-	"extends": "airbnb",
+	"extends": "eslint:recommended",
 
 	"rules": {
 		"indent": ["error", "tab", {

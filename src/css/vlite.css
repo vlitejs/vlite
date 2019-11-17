@@ -8,13 +8,6 @@
     --offsetLeftRightControlBar: 0;
 }
 
-@font-face {
-    font-family: 'vlite';
-    src: url('../fonts/vlite.woff?') format('woff'),
-         url('../fonts/vlite.woff2') format('woof2');
-    font-weight: normal;
-    font-style: normal;
-}
 .vl-player-icon {
     /* Use !important to prevent issues with browser extensions that change fonts */
     font-family: 'vlite' !important;
@@ -183,7 +176,7 @@
             opacity: 0;
         }
         .vl-play-pause-button{
-            .vl-icon-pause2{
+            .vl-icon-pause{
                 display: block;
             }
         }
@@ -191,7 +184,7 @@
 
     &.vl-paused{
         .vl-play-pause-button{
-            .vl-icon-play3{
+            .vl-icon-play{
                 display: block;
             }
         }
@@ -255,17 +248,19 @@
         z-index: 2;
         transition: opacity 200ms ease-in;
         transition-delay: 100ms;
-        .vl-player-icon {
+
+        .vl-icon-big-play {
             display: block;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
-            color: var(--colorControl);
-            font-size: 60px;
         }
-        .vl-icon-play2:before {
-            content: "\ea15";
+
+        svg {
+            fill: var(--colorControl);
+            width: 60px;
+            height: 60px;
         }
     }
 
@@ -338,20 +333,19 @@
         width: 40px;
         height: 100%;
         cursor: pointer;
+
         .vl-player-icon {
             display: none;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
-            font-size: 18px;
-            color: var(--colorControl);
         }
-        .vl-icon-play3:before {
-          content: "\ea1c";
-        }
-        .vl-icon-pause2:before {
-          content: "\ea1d";
+
+        svg {
+            fill: var(--colorControl);
+            width: 18px;
+            height: 18px;
         }
     }
 
@@ -372,14 +366,13 @@
         width: 40px;
         height: 100%;
         cursor: pointer;
+
         .vl-player-icon{
             display: none;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
-            font-size: 18px;
-            color: var(--colorControl);
         }
         &:not(.vl-muted){
             .vl-icon-volume-high{
@@ -391,11 +384,11 @@
                 display: block;
             }
         }
-        .vl-icon-volume-high:before {
-            content: "\ea26";
-        }
-        .vl-icon-volume-mute:before {
-            content: "\ea29";
+
+        svg {
+            fill: var(--colorControl);
+            width: 18px;
+            height: 18px;
         }
     }
 
@@ -411,8 +404,6 @@
             top: 50%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
-            color: var(--colorControl);
-            font-size: 18px;
         }
         &:not(.vl-exit){
             .vl-icon-fullscreen{
@@ -424,11 +415,11 @@
                 display: block;
             }
         }
-        .vl-icon-shrink:before {
-            content: "\e900";
-        }
-        .vl-icon-fullscreen:before {
-            content: "\e901";
+
+        svg {
+            fill: var(--colorControl);
+            width: 18px;
+            height: 18px;
         }
     }
 
