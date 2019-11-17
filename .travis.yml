@@ -16,6 +16,9 @@ matrix:
         - npm run test:stylelint
         - npm run build
 
+before_deploy:
+  - cd site
+
 deploy:
   provider: pages
   skip_cleanup: true
