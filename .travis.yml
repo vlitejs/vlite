@@ -17,24 +17,18 @@ install:
 
 matrix:
   include:
-    - language: node_js
-      node_js: "8.11.2"
-      stage: "prepare"
-      script:
-        - npm install
-
-    - stage: "build"
+    - stage: "docs"
+      before_script:
+        - pip install mkdocs && mkdocs --version
+        - pip install mkdocs-material
       script:
         - mkdocs build
 
     - language: node_js
       node_js: "8.11.2"
-      stage: "build"
+      stage: "npm"
+      before_script:
+        - npm install
       script:
         - npm run build
-
-    - language: node_js
-      node_js: "8.11.2"
-      stage: "test"
-      script:
         - npm run test:eslint && npm run test:stylelint
