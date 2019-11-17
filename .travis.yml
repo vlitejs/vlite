@@ -14,7 +14,7 @@ cache:
   pip: false
 
 install:
-  - pip install --upgrade pip
+  - pip install --upgrade pip --user
   - pip install mkdocs
   - pip install mkdocs-material
 
