@@ -6,9 +6,6 @@ python: 3.6
 
 branches: develop
 
-virtualenv:
-  system_site_packages: true
-
 cache:
   npm: false
   pip: false
