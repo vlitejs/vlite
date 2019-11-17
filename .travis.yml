@@ -1,8 +1,6 @@
 os: linux
 
-language: python
-
-python: 3.6
+language: node_js
 
 branches: develop
 
@@ -10,16 +8,13 @@ cache:
   npm: false
   pip: false
 
-install:
-  - pip install --upgrade pip --user
-  - pip install mkdocs --user
-  - pip install mkdocs-material --user
-
 matrix:
   include:
     - stage: "docs"
+      language: python
+      python: 3.6
       before_script:
-        - pip install mkdocs && mkdocs --version
+        - pip install mkdocs
         - pip install mkdocs-material
       script:
         - mkdocs build
