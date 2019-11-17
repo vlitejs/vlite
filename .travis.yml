@@ -1,0 +1,6 @@
+language: node_js
+
+script:
+  - npm run test:eslint
+  - npm run test:stylelint
+  - npm run build
