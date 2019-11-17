@@ -11,9 +11,6 @@
 		"youtube",
 		"youtube api"
 	],
-	"engines": {
-		"node": ">=8.11.2"
-	},
 	"homepage": "https://vlite.bitbucket.io",
 	"bugs": "https://github.com/yoriiis/vlitejs/issues",
 	"repository": "https://github.com/yoriiis/vlitejs.git",
@@ -22,6 +19,7 @@
 	"main": "build/js/vlite.js",
 	"scripts": {
 		"build": "rm -rf ./build/ && webpack --mode=production",
+		"jsdoc": "jsdoc --configure ./jsdoc.json",
 		"start": "rm -rf ./build/ && webpack --mode=development",
 		"test:eslint": "eslint -c ./.eslintrc.json ./src/js",
 		"test:stylelint": "stylelint './src/css/**/*.css' --config ./.stylelintrc"
@@ -39,7 +37,7 @@
 		"eslint-plugin-standard": "3.0.1",
 		"expose-loader": "0.7.5",
 		"file-loader": "1.1.11",
-		"jsdoc": "3.6.3",
+		"jsdoc": "^3.6.3",
 		"mini-css-extract-plugin": "0.4.1",
 		"optimize-css-assets-webpack-plugin": "5.0.1",
 		"postcss-css-variables": "0.13.0",
@@ -59,5 +57,8 @@
 		"webpack-bundle-analyzer": "3.3.2",
 		"webpack-cli": "3.2.3",
 		"webpack-manifest-plugin": "2.0.3"
+	},
+	"engines": {
+		"node": ">=8.11.2"
 	}
 }
