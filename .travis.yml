@@ -1,9 +1,25 @@
 language: node_js
 
-node_js:
-  - "8.11.2"
 
-script:
-  - npm run test:eslint
-  - npm run test:stylelint
-  - npm run build
+
+
+
+
+matrix:
+  include:
+    - language: python
+      python: 2.7
+      before_script:
+        - pip install mkdocs && mkdocs --version
+        - pip install mkdocs-material
+      script:
+        - cd docs
+        - mkdocs build
+
+    - language: node_js
+      node_js:
+        - "8.11.2"
+      script:
+        - npm run test:eslint
+        - npm run test:stylelint
+        - npm run build
