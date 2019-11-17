@@ -1,8 +1,9 @@
 const path = require('path');
-const webpack = require('webpack')
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = (env, argv) => {
 
@@ -13,20 +14,10 @@ module.exports = (env, argv) => {
 		entry: {
 			vlite: './src/config.js'
 		},
-		devtool: !isProduction ? 'source-map' : 'none',
-		stats: {
-			assets: true,
-			colors: true,
-			hash: false,
-			timings: true,
-			chunks: false,
-			chunkModules: false,
-			modules: false,
-			children: false,
-			entrypoints: false,
-			excludeAssets: /.map$/,
-			assetsSort: '!size'
+		watchOptions: {
+			ignored: /node_modules/
 		},
+		devtool: !isProduction ? 'source-map' : 'none',
 		output: {
 			path: path.resolve(__dirname, './build'),
 			publicPath: '/build/',
@@ -59,19 +50,32 @@ module.exports = (env, argv) => {
 						}
 					}
 				]
-			},
-			{
+			}, {
 				test: /\.svg$/,
 				loader: 'svg-inline-loader'
 			}]
 		},
 		plugins: [
+			new ProgressBarPlugin(),
 			new MiniCssExtractPlugin({
 				filename: `css/[name].css`,
 				chunkFilename: `css/[name].css`
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin()
 		],
+		stats: {
+			assets: true,
+			colors: true,
+			hash: false,
+			timings: true,
+			chunks: false,
+			chunkModules: false,
+			modules: false,
+			children: false,
+			entrypoints: false,
+			excludeAssets: /.map$/,
+			assetsSort: '!size'
+		},
 		optimization: {
 			minimizer: [
 				new TerserPlugin({
@@ -90,8 +94,8 @@ module.exports = (env, argv) => {
 				new OptimizeCSSAssetsPlugin({})
 			],
 			namedModules: true,
-			removeAvailableModules: false,
-			removeEmptyChunks: false,
+			removeAvailableModules: true,
+			removeEmptyChunks: true,
 			mergeDuplicateChunks: true,
 			occurrenceOrder: true,
 			providedExports: false,

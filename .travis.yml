@@ -6,7 +6,6 @@ matrix:
         - pip install mkdocs && mkdocs --version
         - pip install mkdocs-material
       script:
-        - cd docs
         - mkdocs build
 
     - language: node_js

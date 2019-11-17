@@ -1,8 +1,7 @@
-/* Small reset CSS based on Eric Meyer */
 .wrapper-vlite, .wrapper-vlite * {
         box-sizing: border-box;
     }
-.wrapper-vlite div, .wrapper-vlite span, .wrapper-vlite p, .wrapper-vlite a, .wrapper-vlite ul, .wrapper-vlite li, .wrapper-vlite form, .wrapper-vlite label {
+    .wrapper-vlite div, .wrapper-vlite span, .wrapper-vlite p, .wrapper-vlite a, .wrapper-vlite ul, .wrapper-vlite li, .wrapper-vlite form, .wrapper-vlite label {
         margin: 0;
         padding: 0;
         border: 0;
