@@ -1,25 +1,64 @@
 {
-  "name": "vlitejs",
-  "version": "2.0.1",
-  "description": "vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin",
-  "main": "js/vlite-html5+youtube.min.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yoriiis/vlitejs.git"
-  },
-  "keywords": [
-    "player",
-    "video",
-    "html5",
-    "youtube",
-    "youtube api",
-    "vanilla javascript",
-    "lightweight"
-  ],
-  "author": "Yoriiis aka Joris Daniel (joris.daniel@gmail.com)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yoriiis/vlitejs/issues"
-  },
-  "homepage": "https://vlite.bitbucket.io"
+	"name": "vlitejs",
+	"version": "2.0.1",
+	"description": "vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin",
+	"main": "js/vlite-html5+youtube.min.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/yoriiis/vlitejs.git"
+	},
+	"keywords": [
+		"player",
+		"video",
+		"html5",
+		"youtube",
+		"youtube api",
+		"vanilla javascript",
+		"lightweight"
+	],
+	"devDependencies": {
+		"@babel/core": "7.4.5",
+		"@babel/preset-env": "7.4.5",
+		"babel-eslint": "8.0.1",
+		"babel-loader": "8.0.6",
+		"css-loader": "1.0.0",
+		"eslint": "4.10.0",
+		"eslint-config-airbnb": "^18.0.1",
+		"eslint-config-standard": "10.2.1",
+		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-jsx-a11y": "^6.2.3",
+		"eslint-plugin-node": "5.2.1",
+		"eslint-plugin-promise": "3.6.0",
+		"eslint-plugin-standard": "3.0.1",
+		"expose-loader": "0.7.5",
+		"file-loader": "1.1.11",
+		"jsdoc": "3.6.3",
+		"mini-css-extract-plugin": "0.4.1",
+		"optimize-css-assets-webpack-plugin": "5.0.1",
+		"postcss-css-variables": "0.13.0",
+		"postcss-import": "11.0.0",
+		"postcss-loader": "2.1.6",
+		"postcss-nested": "3.0.0",
+		"postcss-preset-env": "6.7.0",
+		"progress-bar-webpack-plugin": "1.11.0",
+		"style-loader": "0.21.0",
+		"stylefmt": "6.0.3",
+		"stylelint": "10.0.1",
+		"stylelint-config-standard": "18.3.0",
+		"terser-webpack-plugin": "2.2.1",
+		"webpack": "4.41.2",
+		"webpack-bundle-analyzer": "3.3.2",
+		"webpack-cli": "3.2.3",
+		"webpack-manifest-plugin": "2.0.3"
+	},
+	"scripts": {
+		"start": "rm -rf ./build/ && webpack --env.development",
+		"build": "webpack --env.production"
+	},
+	"author": "Yoriiis aka Joris Daniel (joris.daniel@gmail.com)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/yoriiis/vlitejs/issues"
+	},
+	"homepage": "https://vlite.bitbucket.io"
 }

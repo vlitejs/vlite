@@ -1,0 +1,22 @@
+
+#app {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 70px;
+}
+
+.page {
+    flex-direction: row;
+    display: flex;
+    align-content: center;
+}
+
+.content {
+    width: 50%;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.vl-wrapper-vlite{
+    margin-top: 15px;
+}
