@@ -6,14 +6,17 @@ python: 3.6
 
 branches: develop
 
+virtualenv:
+  system_site_packages: true
+
 cache:
   npm: false
   pip: false
 
 install:
-  - pip install --upgrade pip --ignore-installed
-  - pip install mkdocs --ignore-installed
-  - pip install mkdocs-material ----ignore-installed
+  - pip install --upgrade pip
+  - pip install mkdocs
+  - pip install mkdocs-material
 
 matrix:
   include:
@@ -23,9 +26,7 @@ matrix:
       script:
         - npm install
 
-    - language: python
-      python: "3.6"
-      stage: "build"
+    - stage: "build"
       script:
         - mkdocs build
 
