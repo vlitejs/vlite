@@ -1,66 +1,37 @@
-stages:
-  - prepare
-  - build
-  - test
-  - deploy
+os: linux
+language: node_js
 
-prepare:npm:
-  stage: prepare
-  language: node_js
-  node_js:
-    - "8.11.2"
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules
+matrix:
+  include:
+    - language: python
+      python: 2.7
+      stage: "prepare"
+      script:
+        - pip install mkdocs && mkdocs --version
+        - pip install mkdocs-material
 
-prepare:mkdocs:
-  stage: prepare
-  language: python
-  python: 2.7
-  script:
-    - pip install mkdocs && mkdocs --version
-    - pip install mkdocs-material
+    - language: node_js
+      node_js: "8.11.2"
+      stage: "prepare"
+      script:
+        - npm run test:eslint
+        - npm run test:stylelint
+        - npm run build
 
-build:npm:
-  stage: build
-  language: node_js
-  node_js:
-    - "8.11.2"
-  dependencies:
-    - prepare:npm
-  script:
-    - npm run build
+    - language: python
+      python: 2.7
+      stage: "build"
+      script:
+        - mkdocs build
 
-build:mkdocs:
-  stage: build
-  language: python
-  python: 2.7
-  dependencies:
-    - prepare:mkdocs
-  script:
-    - mkdocs build
+    - language: node_js
+      node_js: "8.11.2"
+      stage: "build"
+      script:
+        - npm run build
 
-test:npm:
-  stage: test
-  language: node_js
-  node_js:
-    - "8.11.2"
-  dependencies:
-    - prepare:npm
-    - build:npm
-  script:
-    - npm run test:eslint && npm run test:stylelint
-
-before_deploy:
-  - cd site
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  edge: true
-  on:
-    branch: develop
+    - language: node_js
+      node_js: "8.11.2"
+      stage: "test"
+      script:
+        - npm run test:eslint && npm run test:stylelint
