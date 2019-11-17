@@ -24,7 +24,9 @@
 	"main": "build/js/vlite.js",
 	"scripts": {
 		"build": "rm -rf ./build/ && webpack --mode=production",
-		"start": "rm -rf ./build/ && webpack --mode=development"
+		"start": "rm -rf ./build/ && webpack --mode=development",
+		"test:eslint": "eslint -c ./.eslintrc.json ./src/js",
+		"test:stylelint": "stylelint './src/css/**/*.css' --config ./.stylelintrc"
 	},
 	"devDependencies": {
 		"@babel/core": "7.4.5",
@@ -33,7 +35,7 @@
 		"babel-loader": "8.0.6",
 		"css-loader": "1.0.0",
 		"eslint": "4.10.0",
-		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-import": "2.8.0",
 		"eslint-plugin-node": "5.2.1",
 		"eslint-plugin-promise": "3.6.0",
 		"eslint-plugin-standard": "3.0.1",
@@ -41,7 +43,7 @@
 		"file-loader": "1.1.11",
 		"jsdoc": "3.6.3",
 		"mini-css-extract-plugin": "0.4.1",
-		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"optimize-css-assets-webpack-plugin": "5.0.1",
 		"postcss-css-variables": "0.13.0",
 		"postcss-import": "11.0.0",
 		"postcss-loader": "2.1.6",
@@ -51,9 +53,10 @@
 		"style-loader": "0.21.0",
 		"stylefmt": "6.0.3",
 		"stylelint": "10.0.1",
+		"stylelint-config-recommended": "3.0.0",
 		"stylelint-config-standard": "18.3.0",
-		"svg-inline-loader": "^0.8.0",
-		"terser-webpack-plugin": "^2.2.1",
+		"svg-inline-loader": "0.8.0",
+		"terser-webpack-plugin": "2.2.1",
 		"webpack": "4.41.2",
 		"webpack-bundle-analyzer": "3.3.2",
 		"webpack-cli": "3.2.3",

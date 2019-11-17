@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
 	return {
 		watch: !isProduction,
 		entry: {
-			vlite: './src/js/vlite.js'
+			vlite: './src/config.js'
 		},
 		devtool: !isProduction ? 'source-map' : 'none',
 		stats: {

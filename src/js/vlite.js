@@ -10,7 +10,6 @@
 
 'use strict';
 
-import '../css/vlite.css';
 import PlayerYoutube from './player-youtube';
 import PlayerHtml5 from './player-html5';
 

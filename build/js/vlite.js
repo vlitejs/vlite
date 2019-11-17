@@ -91,15 +91,92 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/vlite.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/config.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/css/vlite.css":
+/***/ "./src/config.js":
+/*!***********************!*\
+  !*** ./src/config.js ***!
+  \***********************/
+/*! ModuleConcatenation bailout: Module exports are unknown */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_vlite_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/vlite.js */ "./src/js/vlite.js");
+/* harmony import */ var _css_reset_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/reset.css */ "./src/css/reset.css");
+/* harmony import */ var _css_reset_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_reset_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_vars_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/vars.css */ "./src/css/vars.css");
+/* harmony import */ var _css_vars_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_vars_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _css_loader_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/loader.css */ "./src/css/loader.css");
+/* harmony import */ var _css_loader_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_css_loader_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _css_controls_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./css/controls.css */ "./src/css/controls.css");
+/* harmony import */ var _css_controls_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_css_controls_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _css_player_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./css/player.css */ "./src/css/player.css");
+/* harmony import */ var _css_player_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_css_player_css__WEBPACK_IMPORTED_MODULE_5__);
+// Import JS
+
+
+// Import CSS
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/css/controls.css":
+/*!******************************!*\
+  !*** ./src/css/controls.css ***!
+  \******************************/
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/css/loader.css":
+/*!****************************!*\
+  !*** ./src/css/loader.css ***!
+  \****************************/
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/css/player.css":
+/*!****************************!*\
+  !*** ./src/css/player.css ***!
+  \****************************/
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/css/reset.css":
 /*!***************************!*\
-  !*** ./src/css/vlite.css ***!
+  !*** ./src/css/reset.css ***!
   \***************************/
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/css/vars.css":
+/*!**************************!*\
+  !*** ./src/css/vars.css ***!
+  \**************************/
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1226,10 +1303,8 @@ class Player {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return vLite; });
-/* harmony import */ var _css_vlite_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/vlite.css */ "./src/css/vlite.css");
-/* harmony import */ var _css_vlite_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_vlite_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _player_youtube__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./player-youtube */ "./src/js/player-youtube.js");
-/* harmony import */ var _player_html5__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./player-html5 */ "./src/js/player-html5.js");
+/* harmony import */ var _player_youtube__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player-youtube */ "./src/js/player-youtube.js");
+/* harmony import */ var _player_html5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./player-html5 */ "./src/js/player-html5.js");
 /**
 * @license MIT
 * @name vLitejs
@@ -1239,7 +1314,6 @@ __webpack_require__.r(__webpack_exports__);
 * {@link https://vlite.bitbucket.io}
 * @copyright 2019 Joris DANIEL <https://vlite.bitbucket.io>
 **/
-
 
 
 
@@ -1309,7 +1383,7 @@ class vLite {
         });
       } else {
         // Youtube API is already available, initialize the Youtube player
-        this.instancePlayer = new _player_youtube__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        this.instancePlayer = new _player_youtube__WEBPACK_IMPORTED_MODULE_0__["default"]({
           selector: this.player,
           options: this.options,
           callback: this.callback
@@ -1317,7 +1391,7 @@ class vLite {
       }
     } else {
       // Initialize the HTML5 Player
-      this.instancePlayer = new _player_html5__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      this.instancePlayer = new _player_html5__WEBPACK_IMPORTED_MODULE_1__["default"]({
         selector: this.player,
         options: this.options,
         callback: this.callback
@@ -1339,7 +1413,7 @@ class vLite {
       _VliteYoutube.apiReady = true; // Initialize the player queue
 
       _VliteYoutube.apiReadyQueue.forEach(element => {
-        this.instancePlayer = new _player_youtube__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        this.instancePlayer = new _player_youtube__WEBPACK_IMPORTED_MODULE_0__["default"]({
           selector: element.player,
           options: element.options,
           callback: element.callback
