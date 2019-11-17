@@ -28,14 +28,12 @@ matrix:
         - npm run build
         - npm run test:eslint && npm run test:stylelint
 
-before_deploy:
-  - cd site
-
 deploy:
   provider: pages
-  cleanup: false
+  skip_cleanup: true
   github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep_history: true
   edge: true
+  local-dir: site
   on:
     branch: develop
