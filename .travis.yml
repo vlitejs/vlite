@@ -12,6 +12,7 @@ jobs:
   include:
     - language: node_js
       node_js: "8.11.2"
+      python: 3.6
       before_script:
         - pip install mkdocs
         - pip install mkdocs-material
