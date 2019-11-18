@@ -8,7 +8,7 @@ cache:
   npm: true
   pip: true
 
-matrix:
+jobs:
   include:
     - language: node_js
       node_js: "8.11.2"
@@ -30,8 +30,8 @@ matrix:
         - cd site
       deploy:
         provider: pages
-        skip_cleanup: true
-        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        cleanup: false
+        token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
         keep_history: true
         edge: true
         on:
