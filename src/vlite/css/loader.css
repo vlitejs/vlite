@@ -1,15 +1,19 @@
 @import "./vars";
 
 @keyframes loader {
-    0%, 80%, 100% {
+    0%,
+    80%,
+    100% {
         transform: scale(0);
-    } 40% {
-        transform: scale(1.0);
+    }
+
+    40% {
+        transform: scale(1);
     }
 }
 
-.vl-wrapper-vlite{
-    .vl-wrapper-loader{
+.vl-wrapper-vlite {
+    .vl-wrapper-loader {
         position: absolute;
         top: 0;
         left: 0;
@@ -21,10 +25,12 @@
         display: flex;
         align-items: center;
         transition: opacity 200ms ease-in, visibility 200ms ease-in;
+
         .vl-loader {
             margin: 0 auto;
             width: 70px;
             text-align: center;
+
             & > div {
                 width: 18px;
                 height: 18px;
@@ -33,9 +39,11 @@
                 display: inline-block;
                 animation: loader 1.4s infinite ease-in-out both;
             }
+
             .vl-loader-bounce-1 {
                 animation-delay: -0.32s;
             }
+
             .vl-loader-bounce-2 {
                 animation-delay: -0.16s;
             }
@@ -43,12 +51,12 @@
     }
 
     &.vl-loading {
-        .vl-wrapper-loader{
+        .vl-wrapper-loader {
             opacity: 1;
             visibility: visible;
         }
 
-        .vl-big-play-button{
+        .vl-big-play-button {
             opacity: 0;
         }
     }

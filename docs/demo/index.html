@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Demo - vLite.js</title>
+        <meta name="description" content="Example of the framework vlite.js started with Youtube API and HTML5 video" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="./assets/build/demo/css/demo.css" />
+        <link rel="stylesheet" href="./assets/build/vlite/css/vlite.css" />
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108758282-2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-108758282-2');
+        </script>
+    </head>
+    <body>
+
+        <div class="sticky-menu">
+            <div class="wrapper-nav">
+                <ul>
+                    <li>
+                        <a href="https://vlite.bitbucket.io/" title="Documentation">Documentation</a>
+                    </li>
+                    <li>
+                        <a href="https://vlite.bitbucket.io/download" title="Download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <main id="app" role="main">
+
+            <h1 class="title">vLite.js</h1>
+
+            <div class="page">
+
+                <div class="content">
+                    <h2 class="sub-title">Youtube video player</h2>
+                    <video id="player-yt" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></video>
+                </div>
+
+                <div class="content">
+                    <h2 class="sub-title">Native HTML5 video player</h2>
+                    <video id="player-html5" class="vlite-js" src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4"></video>
+                </div>
+
+            </div>
+
+        </main>
+
+        <script src="./assets/build/vlite/js/vlite.js"></script>
+        <script>
+            //Youtube example
+            var playerYT = new vLite.default({
+                selector: '#player-yt',
+                options: {
+                    "poster": "./assets/poster.jpg"
+                },
+                callback: (player) => {
+                    //Ready
+                }
+            });
+
+            //HTML5 example
+            var playerHtml5 = new vLite.default({
+                selector: '#player-html5',
+                options: {
+                    "poster": "./assets/poster.jpg"
+                },
+                callback: (player) => {
+                    //Ready
+                }
+            });
+        </script>
+    </body>
+</html>

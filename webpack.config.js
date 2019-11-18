@@ -12,7 +12,8 @@ module.exports = (env, argv) => {
 	return {
 		watch: !isProduction,
 		entry: {
-			vlite: './src/config.js'
+			vlite: './src/vlite/config.js',
+			demo: './src/demo/config.js'
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -21,7 +22,7 @@ module.exports = (env, argv) => {
 		output: {
 			path: path.resolve(__dirname, './build'),
 			publicPath: '/build/',
-			filename: 'js/vlite.js',
+			filename: '[name]/js/[name].js',
 			library: 'vLite',
 			libraryTarget: 'umd',
 			sourceMapFilename: '[file].map'
@@ -29,7 +30,7 @@ module.exports = (env, argv) => {
 		module: {
 			rules: [{
 				test: /\.js$/,
-				include: path.resolve(__dirname, './src/js'),
+				include: path.resolve(__dirname, './src'),
 				use: [
 					{
 						loader: 'babel-loader'
@@ -37,7 +38,7 @@ module.exports = (env, argv) => {
 				]
 			}, {
 				test: /\.css$/,
-				include: path.resolve(__dirname, './src/css'),
+				include: path.resolve(__dirname, './src'),
 				use: [
 					MiniCssExtractPlugin.loader, {
 						loader: 'css-loader'
@@ -58,8 +59,8 @@ module.exports = (env, argv) => {
 		plugins: [
 			new ProgressBarPlugin(),
 			new MiniCssExtractPlugin({
-				filename: `css/[name].css`,
-				chunkFilename: `css/[name].css`
+				filename: `[name]/css/[name].css`,
+				chunkFilename: `[name]/css/[name].css`
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin()
 		],

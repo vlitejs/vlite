@@ -20,9 +20,10 @@
 	"scripts": {
 		"build": "rm -rf ./build/ && webpack --mode=production",
 		"jsdoc": "jsdoc --configure ./jsdoc.json",
+		"mkdocs": "npm run build && mkdocs build && cp -r ./docs/demo/ ./site/demo/ && cp -r ./build/ ./site/demo/assets/build/",
 		"start": "rm -rf ./build/ && webpack --mode=development",
 		"test:eslint": "eslint -c ./.eslintrc.js ./src/js",
-		"test:stylelint": "stylelint './src/css/**/*.css' --config ./stylelint.config.js"
+		"test:stylelint": "stylelint './src/**/*.css' --config ./stylelint.config.js"
 	},
 	"devDependencies": {
 		"@babel/core": "7.4.5",
