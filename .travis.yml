@@ -22,8 +22,8 @@ jobs:
         - npm run build
         - npm run test:eslint && npm run test:stylelint
         - npm run build:mkdocs
-        - cp -r ./build/* ./docs/demo/build/
-        - cp -r ./docs/demo/* ./site/demo/
+        - cp -rv "./build/*" "./docs/demo/build/"
+        - cp -rv "./docs/demo/*" "./site/demo/"
         # - cp ./docs/demo/index.html ./site/demo/index.html
         - cd site
       deploy:
