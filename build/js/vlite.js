@@ -126,6 +126,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* harmony default export */ __webpack_exports__["default"] = (_js_vlite_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -243,7 +244,7 @@ class PlayerHtml5 extends _player__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 
   waitUntilVideoIsReady() {
-    return new window.romise((resolve, reject) => {
+    return new window.Promise((resolve, reject) => {
       // Check if the video is ready
       if (typeof this.player.duration === 'number' && isNaN(this.player.duration) === false) {
         resolve();

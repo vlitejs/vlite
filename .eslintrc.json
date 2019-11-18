@@ -22,5 +22,11 @@
 		}],
 		"no-tabs": 0,
 		"no-console": 0
-	}
+	},
+
+	"globals": {
+        "document": false,
+        "navigator": false,
+        "window": false
+    }
 }

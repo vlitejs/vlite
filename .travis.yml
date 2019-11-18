@@ -5,8 +5,8 @@ language: node_js
 branches: develop
 
 cache:
-  npm: false
-  pip: false
+  npm: true
+  pip: true
 
 matrix:
   include:

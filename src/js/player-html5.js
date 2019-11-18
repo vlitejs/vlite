@@ -44,7 +44,7 @@ export default class PlayerHtml5 extends Player {
 	 */
 	waitUntilVideoIsReady() {
 
-		return new window.romise((resolve, reject) => {
+		return new window.Promise((resolve, reject) => {
 
 			// Check if the video is ready
 			if (typeof this.player.duration === 'number' && isNaN(this.player.duration) === false) {

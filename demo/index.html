@@ -5,11 +5,31 @@
 	<title>vLite.js</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link rel="stylesheet" href="./css/example.css" />
+	<link rel="stylesheet" href="./css/demo.css" />
 	<link rel="stylesheet" href="../build/css/vlite.css" />
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108758282-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-108758282-2');
+	</script>
 </head>
 
 <body>
+
+	<div class="sticky-menu">
+		<div class="wrapper-nav">
+			<ul>
+				<li>
+					<a href="https://vlite.bitbucket.io/" title="Documentation">Documentation</a>
+				</li>
+				<li>
+					<a href="https://vlite.bitbucket.io/download" title="Download">Download</a>
+				</li>
+			</ul>
+		</div>
+	</div>
 
 	<div class="page">
 
@@ -25,37 +45,8 @@
 
 	</div>
 
-	<script src="../build/js/vlite.js"></script>
-	<script>
-		// Youtube example
-		var playerYT = new vLite.default({
-			selector: '#player-yt-1',
-			callback: (player) => {
-				//Ready
-			}
-		});
+		<script src="../build/js/vlite.js"></script>
 
-		//HTML5 example
-		var playerHtml5 = new vLite.default({
-			selector: '#player-html5-1',
-			options: {
-				"autoplay": false,
-				"controls": true,
-				"playPause": true,
-				"timeline": true,
-				"time": true,
-				"volume": true,
-				"fullscreen": true,
-				"poster": "img/poster.jpg",
-				"bigPlay": true,
-				"autoHide": true,
-				"nativeControlsForTouch": false,
-				"playsinline": true
-			},
-			callback: (player) => {
-				//Ready
-			}
-		});
-	</script>
+	<script src="./js/main.js"></script>
 </body>
 </html>

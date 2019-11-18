@@ -1,5 +1,6 @@
 .wrapper-vlite, .wrapper-vlite * {
-        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
     }
     .wrapper-vlite div, .wrapper-vlite span, .wrapper-vlite p, .wrapper-vlite a, .wrapper-vlite ul, .wrapper-vlite li, .wrapper-vlite form, .wrapper-vlite label {
         margin: 0;
@@ -39,8 +40,13 @@
         opacity: 0;
         visibility: hidden;
         z-index: 5;
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
-        align-items: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+                align-items: center;
+        -webkit-transition: opacity 200ms ease-in, visibility 200ms ease-in;
         transition: opacity 200ms ease-in, visibility 200ms ease-in;
     }
 
@@ -53,7 +59,8 @@
 .vl-wrapper-vlite .vl-wrapper-loader .vl-loader > div {
                 width: 18px;
                 height: 18px;
-                background-color: undefined;
+                background-color: #fff;
+                background-color: #fff;
                 border-radius: 100%;
                 display: inline-block;
                 -webkit-animation: loader 1.4s infinite ease-in-out both;
@@ -89,11 +96,13 @@
                 transform: translateX(-50%) translateY(-50%);
         cursor: pointer;
         z-index: 2;
+        -webkit-transition: opacity 200ms ease-in;
         transition: opacity 200ms ease-in;
-        transition-delay: 100ms;
+        -webkit-transition-delay: 100ms;
+                transition-delay: 100ms;
     }
 
-        .vl-wrapper-vlite .vl-big-play-button .vl-icon-big-play {
+.vl-wrapper-vlite .vl-big-play-button .vl-icon-big-play {
             display: block;
             position: absolute;
             top: 50%;
@@ -102,24 +111,29 @@
                     transform: translateX(-50%) translateY(-50%);
         }
 
-        .vl-wrapper-vlite .vl-big-play-button svg {
-            fill: undefined;
+.vl-wrapper-vlite .vl-big-play-button svg {
+            fill: #fff;
+            fill: #fff;
             width: 60px;
             height: 60px;
         }
 
-    .vl-wrapper-vlite .vl-progress-bar{
+.vl-wrapper-vlite .vl-progress-bar{
         position: absolute;
         top: 0;
-        left: undefined;
-        right: undefined;
-        height: undefined;
+        left: 0;
+        left: 0;
+        right: 0;
+        right: 0;
+        height: 3px;
+        height: 3px;
         background-color: rgba(0, 0, 0, 0.2);
+        -webkit-transition: height 100ms ease-out;
         transition: height 100ms ease-out;
         z-index: 1;
     }
 
-    .vl-wrapper-vlite .vl-progress-bar .vl-progress-input{
+.vl-wrapper-vlite .vl-progress-bar .vl-progress-input{
             position: absolute;
             top: 0;
             left: 0;
@@ -130,50 +144,59 @@
             opacity: 0;
         }
 
-    .vl-wrapper-vlite .vl-progress-bar .vl-progress-seek{
+.vl-wrapper-vlite .vl-progress-bar .vl-progress-seek{
             position: absolute;
             top: 0;
             left: 0;
             width: 0;
             height: 100%;
-            background-color: undefined;
+            background-color: #fff;
+            background-color: #fff;
             border-radius: 0px 4px 4px 0px;
+            -webkit-transition: all 100ms ease-out;
             transition: all 100ms ease-out;
         }
 
-    .vl-wrapper-vlite .vl-control-bar{
+.vl-wrapper-vlite .vl-control-bar{
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        height: undefined;
-        padding-top: undefined;
+        height: 50px;
+        height: 50px;
+        padding-top: 3px;
+        padding-top: 3px;
         text-align: right;
-        padding-left: undefined;
-        padding-right: undefined;
-        background-color: undefined;
+        padding-left: 0;
+        padding-left: 0;
+        padding-right: 0;
+        padding-right: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+        -webkit-transition: 250ms ease-in;
         transition: 250ms ease-in;
     }
 
-    .vl-wrapper-vlite .vl-control-bar:hover{
+.vl-wrapper-vlite .vl-control-bar:hover{
             opacity: 1 !important;
         }
 
-    .vl-wrapper-vlite .vl-control-bar:hover .vl-progress-bar{
-                height: undefined;
+.vl-wrapper-vlite .vl-control-bar:hover .vl-progress-bar{
+                height: 8px;
+                height: 8px;
             }
 
-    .vl-wrapper-vlite .vl-control-bar.hidden{
+.vl-wrapper-vlite .vl-control-bar.hidden{
             opacity: 0;
         }
 
-    .vl-wrapper-vlite .vl-control-bar .vl-control-bar-inner{
+.vl-wrapper-vlite .vl-control-bar .vl-control-bar-inner{
             position: relative;
             width: 100%;
             height: 100%;
         }
 
-    .vl-wrapper-vlite .vl-play-pause-button{
+.vl-wrapper-vlite .vl-play-pause-button{
         position: relative;
         float: left;
         width: 40px;
@@ -181,7 +204,7 @@
         cursor: pointer;
     }
 
-    .vl-wrapper-vlite .vl-play-pause-button .vl-player-icon {
+.vl-wrapper-vlite .vl-play-pause-button .vl-player-icon {
             display: none;
             position: absolute;
             top: 50%;
@@ -190,22 +213,28 @@
                     transform: translateX(-50%) translateY(-50%);
         }
 
-    .vl-wrapper-vlite .vl-play-pause-button svg {
-            fill: undefined;
+.vl-wrapper-vlite .vl-play-pause-button svg {
+            fill: #fff;
+            fill: #fff;
             width: 18px;
             height: 18px;
         }
 
-    .vl-wrapper-vlite .vl-time{
-        color: undefined;
+.vl-wrapper-vlite .vl-time{
+        color: #fff;
+        color: #fff;
         font-size: 13px;
         float: left;
         height: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
-        align-items: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+                align-items: center;
     }
 
-    .vl-wrapper-vlite .vl-volume{
+.vl-wrapper-vlite .vl-volume{
         position: relative;
         display: inline-block;
         width: 40px;
@@ -213,7 +242,7 @@
         cursor: pointer;
     }
 
-    .vl-wrapper-vlite .vl-volume .vl-player-icon{
+.vl-wrapper-vlite .vl-volume .vl-player-icon{
             display: none;
             position: absolute;
             top: 50%;
@@ -222,21 +251,22 @@
                     transform: translateX(-50%) translateY(-50%);
         }
 
-    .vl-wrapper-vlite .vl-volume:not(.vl-muted) .vl-icon-volume-high{
+.vl-wrapper-vlite .vl-volume:not(.vl-muted) .vl-icon-volume-high{
                 display: block;
             }
 
-    .vl-wrapper-vlite .vl-volume.vl-muted .vl-icon-volume-mute{
+.vl-wrapper-vlite .vl-volume.vl-muted .vl-icon-volume-mute{
                 display: block;
             }
 
-    .vl-wrapper-vlite .vl-volume svg {
-            fill: undefined;
+.vl-wrapper-vlite .vl-volume svg {
+            fill: #fff;
+            fill: #fff;
             width: 18px;
             height: 18px;
         }
 
-    .vl-wrapper-vlite .vl-fullscreen{
+.vl-wrapper-vlite .vl-fullscreen{
         position: relative;
         display: inline-block;
         width: 40px;
@@ -244,7 +274,7 @@
         cursor: pointer;
     }
 
-    .vl-wrapper-vlite .vl-fullscreen .vl-player-icon{
+.vl-wrapper-vlite .vl-fullscreen .vl-player-icon{
             display: none;
             position: absolute;
             top: 50%;
@@ -253,16 +283,17 @@
                     transform: translateX(-50%) translateY(-50%);
         }
 
-    .vl-wrapper-vlite .vl-fullscreen:not(.vl-exit) .vl-icon-fullscreen{
+.vl-wrapper-vlite .vl-fullscreen:not(.vl-exit) .vl-icon-fullscreen{
                 display: block;
             }
 
-    .vl-wrapper-vlite .vl-fullscreen.vl-exit .vl-icon-shrink{
+.vl-wrapper-vlite .vl-fullscreen.vl-exit .vl-icon-shrink{
                 display: block;
             }
 
-    .vl-wrapper-vlite .vl-fullscreen svg {
-            fill: undefined;
+.vl-wrapper-vlite .vl-fullscreen svg {
+            fill: #fff;
+            fill: #fff;
             width: 18px;
             height: 18px;
         }
@@ -374,7 +405,10 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: undefined;
+        height: -webkit-calc(100% - 50px);
+        height: calc(100% - 50px);
+        height: -webkit-calc(100% - 50px);
+        height: calc(100% - 50px);
     }
 
 .vl-wrapper-vlite .vl-overlay-video .vl-overlay-left,
