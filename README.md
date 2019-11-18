@@ -20,6 +20,8 @@
     <strong>Visit <a href="https://yoriiis.github.io/vlitejs" title="yoriiis.github.io/vlitejs">yoriiis.github.io/vlitejs</a> to get started with vLitejs.</strong>
 </p>
 
+---
+
 # vLitejs
 
 ## The new smallest Javascript video library
