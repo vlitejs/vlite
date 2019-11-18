@@ -12,20 +12,13 @@ jobs:
   include:
     - language: node_js
       node_js: "8.11.2"
-      stage: "npm"
       before_script:
+        - pip install mkdocs
+        - pip install mkdocs-material
         - npm install
       script:
         - npm run build
         - npm run test:eslint && npm run test:stylelint
-
-    - stage: "docs"
-      language: python
-      python: 3.6
-      before_script:
-        - pip install mkdocs
-        - pip install mkdocs-material
-      script:
         - npm run build:mkdocs
         - cd site
       deploy:
