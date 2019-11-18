@@ -1,6 +1,7 @@
 node_modules/
 
 build/**/*.map
+docs/demo/build/
 
 # Editor config
 .vscode/
