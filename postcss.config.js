@@ -6,9 +6,14 @@ module.exports = {
 			path: path.resolve(__dirname, `./src`)
 		}),
 		require('postcss-preset-env')({
-			stage: 2
+			stage: 2,
+			features: {
+				'custom-properties': {
+					warnings: true,
+					preserve: false
+				}
+			}
 		}),
-		require('postcss-nested')(),
-		require('postcss-css-variables')
+		require('postcss-nested')()
 	]
 };
