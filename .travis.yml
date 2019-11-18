@@ -1,8 +1,8 @@
 os: linux
 
-language: python
+language: node_js
 
-python: 3.6
+node_js: "8.11.2"
 
 branches: develop
 
@@ -12,8 +12,8 @@ cache:
 
 jobs:
   include:
-    - language: node_js
-      node_js: "8.11.2"
+    - language: python
+      python: 3.6
       before_script:
         - pip install mkdocs
         - pip install mkdocs-material
