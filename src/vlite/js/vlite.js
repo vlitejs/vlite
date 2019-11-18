@@ -140,5 +140,4 @@ export default class vLite {
 	destroy() {
 		this.instancePlayer.destroy();
 	}
-
 }

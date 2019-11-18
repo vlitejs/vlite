@@ -1,14 +1,8 @@
+.DS_STORE
 node_modules/
-
 dist/**/*.map
 docs/demo/dist/
-
-# Editor config
 .vscode/
-
-# JSDoc build
 jsdocs/*
 !jsdocs/.gitkeep
-
-# Mkdocs build
 site/

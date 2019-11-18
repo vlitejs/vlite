@@ -178,5 +178,4 @@ export default class PlayerYoutube extends Player {
 	removeInstance() {
 		this.instancePlayer.destroy();
 	}
-
 }

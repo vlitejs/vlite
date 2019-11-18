@@ -5,10 +5,11 @@ jsdocs/
 sites/
 src/
 .editorconfig
-.stylelintrc
-.travis.yml
+.eslintrc.js
+stylelint.config.js
 babel.config.js
-jsdoc.json
-mkdocs.yml
 postcss.config.js
 webpack.config.js
+jsdoc.json
+.travis.yml
+mkdocs.yml

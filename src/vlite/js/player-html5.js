@@ -233,5 +233,4 @@ export default class PlayerHtml5 extends Player {
 		this.player.removeEventListener('ended', this.onVideoEnded);
 
 	}
-
 }
