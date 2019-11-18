@@ -4,8 +4,8 @@
 * @version 3.0.0
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
 * @description: vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
-* {@link https://vlite.bitbucket.io}
-* @copyright 2019 Joris DANIEL <https://vlite.bitbucket.io>
+* {@link https://yoriiis.github.io/vlitejs}
+* @copyright 2019 Joris DANIEL <https://yoriiis.github.io/vlitejs>
 **/
 
 'use strict';

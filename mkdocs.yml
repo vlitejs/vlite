@@ -2,7 +2,7 @@
 site_name: 'vLite.js'
 site_description: 'vLite is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native.'
 site_author: 'Joris DANIEL aka Yoriiis'
-site_url: 'https://vlite.bitbucket.io'
+site_url: 'https://yoriiis.github.io/vlitejs'
 
 # Pages
 nav:

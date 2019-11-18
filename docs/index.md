@@ -11,18 +11,16 @@ vLite.js is a **fast** and **lightweight** Javascript library to customize and s
     This module is fully writen in Javascript native. No need to import an additional librairy like jQuery. #YouMightNotNeedJquery
 
 <center>
-    <a href="/demo" title="Demo" class="custom-button">
+    <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
         ![Screenshot](img/demo.jpg)
     </a>
 </center><br />
 
 ## Github & npm
 
-vLite is available on his [Github page](https://github.com/yoriiis/vlitejs)<br />
+The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs.com/package/vlitejs) and [Github](https://github.com/yoriiis/vlitejs).<br />
 If you like the project, like it on Github please :) <br /><br />
-<a class="github-button" href="https://github.com/yoriiis/vlitejs" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star yoriiis/vlitejs on GitHub">Star</a><br />
-vLite is available as the `vlitejs` package on [npm](https://www.npmjs.com/package/vlitejs)<br />
-
+<a class="github-button" href="https://github.com/yoriiis/vlitejs" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star yoriiis/vlitejs on GitHub">Star</a>
 ## Browser support
 
 The project is fully compatible with the most popular web browser. More information about the HTML5 video support <a href="https://caniuse.com/#feat=video" target="_blank" title="Browser support">here</a>.

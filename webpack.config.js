@@ -20,8 +20,8 @@ module.exports = (env, argv) => {
 		},
 		devtool: !isProduction ? 'source-map' : 'none',
 		output: {
-			path: path.resolve(__dirname, './build'),
-			publicPath: '/build/',
+			path: path.resolve(__dirname, './dist'),
+			publicPath: '/dist/',
 			filename: '[name]/js/[name].js',
 			library: 'vLite',
 			libraryTarget: 'umd',
