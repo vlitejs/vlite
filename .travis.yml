@@ -23,14 +23,15 @@ jobs:
         - npm run test:eslint && npm run test:stylelint
         - npm run build:mkdocs && npm run build
         - rm ./site/demo/index.html
-        - cp -r ./docs/demo/ ./site/demo/
-        - cp -r ./build/ ./site/demo/assets/build/
+        # - cp -r ./docs/demo/ ./site/demo/
+        # - cp -r ./build/ ./site/demo/assets/build/
         - cd site
       deploy:
         provider: pages
         cleanup: false
         token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-        keep_history: true
+        keep_history: false
         edge: true
+        commit_message: Deploy Travis CI to %{target_branch} branch
         on:
           branch: develop
