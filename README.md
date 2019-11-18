@@ -1,17 +1,36 @@
-<img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.0-ffb300.svg?style=flat-square"> <a href="https://travis-ci.com/yoriiis/vlitejs"><img alt="TravisCI" src="https://travis-ci.org/yoriiis/vlitejs.svg?branch=develop"></a> <img alt="Support" src="https://img.shields.io/npm/v/vlitejs"> <img alt="Support" src="https://img.shields.io/node/v/vlitejs"> <a href="https://gitter.im/vlitejs/vlitejs"><img alt="Support" src="https://badges.gitter.im/gitterHQ/gitter.png"></a>
-<a href="https://bundlephobia.com/result?p=fela@latest"><img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/vlitejs"></a> <a href="https://npmjs.com/package/chunks-webpack-plugin"><img alt="Npm downloads" src="https://img.shields.io/npm/dm/vlitejs?color=fb3e44&label=npm%20downloads&style=flat-square"></a>
+<p align="center">
+    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.0-ffb300.svg?style=for-the-badge">
+    <a href="https://travis-ci.com/yoriiis/vlitejs">
+        <img alt="TravisCI" src="https://img.shields.io/travis/yoriiis/vlitejs?style=for-the-badge">
+    </a>
+    <img alt="Support" src="https://img.shields.io/npm/v/vlitejs?style=for-the-badge">
+    <img alt="Support" src="https://img.shields.io/node/v/vlitejs?style=for-the-badge">
+    <a href="https://gitter.im/vlitejs/vlitejs">
+        <img alt="Support" src="https://img.shields.io/gitter/room/vlitejs/vlitejs?style=for-the-badge">
+    </a>
+    <a href="https://bundlephobia.com/result?p=fela@latest">
+        <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/vlitejs?style=for-the-badge">
+    </a>
+    <a href="https://npmjs.com/package/chunks-webpack-plugin">
+        <img alt="Npm downloads" src="https://img.shields.io/npm/dm/vlitejs?color=fb3e44&label=npm%20downloads&style=for-the-badge">
+    </a>
+</p>
+
+<p align="center">
+    <strong>Visit <a href="https://yoriiis.github.io/vlitejs" title="yoriiis.github.io/vlitejs">yoriiis.github.io/vlitejs</a> to get started with vLitejs.</strong>
+</p>
 
 # vLitejs
 
 ## The new smallest Javascript video library
 
-See [yoriiis.github.io/vlitejs](https://yoriiis.github.io/vlitejs) for complete docs and demos.<br />
-
 vLite.js is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with Gzip, vLite.js has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
 
-<center style="image-rendering: -webkit-optimize-contrast;">
-<a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo" target="_blank"><img src="https://yoriiis.github.io/vlitejs/img/demo.jpg" alt="vLite on desktop" /></a>
-</center><br /><br />
+<p align="center">
+    <a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo" target="_blank">
+        <img src="https://yoriiis.github.io/vlitejs/img/demo.jpg" alt="vLite on desktop" />
+    </a>
+</p>
 
 ## Installation
 

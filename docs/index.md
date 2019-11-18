@@ -7,9 +7,6 @@ description: vLite.js is a fast and lightweight Javascript library to customize 
 
 vLite.js is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with Gzip, vLite.js has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
 
-!!! info "vanillaJS"
-    This module is fully writen in Javascript native. No need to import an additional librairy like jQuery. #YouMightNotNeedJquery
-
 <center>
     <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
         ![Screenshot](img/demo.jpg)
