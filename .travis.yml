@@ -21,7 +21,10 @@ jobs:
       script:
         - npm run build
         - npm run test:eslint && npm run test:stylelint
-        - npm run build:mkdocs
+        - npm run build:mkdocs && npm run build
+        - rm ./site/demo/index.html
+        - cp -r ./docs/demo/ ./site/demo/
+        - cp -r ./build/ ./site/demo/assets/build/
         - cd site
       deploy:
         provider: pages
