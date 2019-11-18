@@ -20,7 +20,7 @@
 	"scripts": {
 		"build": "rm -rf ./build/ && webpack --mode=production",
 		"build:jsdoc": "jsdoc --configure ./jsdoc.json",
-		"build:mkdocs": "npm run build && mkdocs build && cp -r ./docs/demo/ ./site/demo/ && cp -r ./build/ ./site/demo/assets/build/",
+		"build:mkdocs": "mkdocs build && npm run build && rm ./site/demo/index.html && cp -r ./docs/demo/ ./site/demo/ && cp -r ./build/ ./site/demo/assets/build/",
 		"start": "rm -rf ./build/ && webpack --mode=development",
 		"test:eslint": "eslint -c ./.eslintrc.js ./src/js",
 		"test:stylelint": "stylelint './src/**/*.css' --config ./stylelint.config.js"
