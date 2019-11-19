@@ -5,7 +5,7 @@
     height: 100%;
 }
 
-.vl-wrapper-vlite {
+.v-vlite {
     font-family: 'Roboto', arial, sans-serif;
     position: relative;
     height: 0;
@@ -29,7 +29,7 @@
         height: 100%;
     }
 
-    &:not(.vl-force-controls) {
+    &:not(.v-forceControls) {
         /* Chrome fullscreen config */
         video::-webkit-media-controls-enclosure {
             display: none !important;
@@ -40,9 +40,9 @@
         }
     }
 
-    &.vl-fullscreen-display {
-        .vl-control-bar,
-        .vl-big-play-button {
+    &.v-fullscreen-display {
+        .v-controlBar,
+        .v-bigPlayButton {
             position: fixed;
             z-index: 2147483647;
         }
@@ -58,19 +58,19 @@
     }
 
     /* Skin */
-    &.vl-paused {
-        .vl-play-pause-button {
-            .vl-icon-play {
+    &.v-paused {
+        .v-playPauseButton {
+            .v-iconPlay {
                 display: block;
             }
         }
 
-        .vl-control-bar.hidden {
+        .v-controlBar.hidden {
             opacity: 1;
         }
     }
 
-    .vl-poster {
+    .v-poster {
         position: absolute;
         top: 0;
         left: 0;
@@ -85,53 +85,53 @@
         opacity: 0;
         z-index: 2;
 
-        &.vl-active {
+        &.v-active {
             opacity: 1;
             visibility: visible;
         }
     }
 
-    &.vl-playing,
-    &.vl-paused:not(.vl-first-start) {
-        .vl-poster {
+    &.v-playing,
+    &.v-paused:not(.v-firstStart) {
+        .v-poster {
             visibility: hidden;
             opacity: 0;
         }
     }
 
-    &.vl-playing {
-        .vl-big-play-button {
+    &.v-playing {
+        .v-bigPlayButton {
             visibility: hidden;
             opacity: 0;
         }
 
-        .vl-play-pause-button {
-            .vl-icon-pause {
+        .v-playPauseButton {
+            .v-iconPause {
                 display: block;
             }
         }
     }
 
-    .vl-overlay-video {
+    .v-overlayVideo {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: calc(100% - var(--heightControlBar));
 
-        .vl-overlay-left,
-        .vl-overlay-right {
+        .v-overlayLeft,
+        .v-overlayRight {
             position: absolute;
             top: 0;
             width: 30%;
             height: 100%;
         }
 
-        .vl-overlay-left {
+        .v-overlayLeft {
             left: 0;
         }
 
-        .vl-overlay-right {
+        .v-overlayRight {
             right: 0;
         }
     }

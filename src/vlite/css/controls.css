@@ -1,7 +1,7 @@
 @import "./vars";
 
-.vl-wrapper-vlite {
-    .vl-big-play-button {
+.v-vlite {
+    .v-bigPlayButton {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -13,7 +13,7 @@
         transition: opacity 200ms ease-in;
         transition-delay: 100ms;
 
-        .vl-icon-big-play {
+        .v-iconBigPlay {
             display: block;
             position: absolute;
             top: 50%;
@@ -28,7 +28,7 @@
         }
     }
 
-    .vl-progress-bar {
+    .v-progressBar {
         position: absolute;
         top: 0;
         left: var(--offsetLeftRightControlBar);
@@ -38,7 +38,7 @@
         transition: height 100ms ease-out;
         z-index: 1;
 
-        .vl-progress-input {
+        .v-progressInput {
             position: absolute;
             top: 0;
             left: 0;
@@ -49,7 +49,7 @@
             opacity: 0;
         }
 
-        .vl-progress-seek {
+        .v-progressSeek {
             position: absolute;
             top: 0;
             left: 0;
@@ -61,7 +61,7 @@
         }
     }
 
-    .vl-control-bar {
+    .v-controlBar {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -75,7 +75,7 @@
         transition: 250ms ease-in;
 
         &:hover {
-            .vl-progress-bar {
+            .v-progressBar {
                 height: var(--heightProgressBarHover);
             }
 
@@ -86,21 +86,21 @@
             opacity: 0;
         }
 
-        .vl-control-bar-inner {
+        .v-controlBarContent {
             position: relative;
             width: 100%;
             height: 100%;
         }
     }
 
-    .vl-play-pause-button {
+    .v-playPauseButton {
         position: relative;
         float: left;
         width: 40px;
         height: 100%;
         cursor: pointer;
 
-        .vl-player-icon {
+        .v-playerIcon {
             display: none;
             position: absolute;
             top: 50%;
@@ -115,7 +115,7 @@
         }
     }
 
-    .vl-time {
+    .v-time {
         color: var(--colorControl);
         font-size: 13px;
         float: left;
@@ -124,14 +124,14 @@
         align-items: center;
     }
 
-    .vl-volume {
+    .v-volume {
         position: relative;
         display: inline-block;
         width: 40px;
         height: 100%;
         cursor: pointer;
 
-        .vl-player-icon {
+        .v-playerIcon {
             display: none;
             position: absolute;
             top: 50%;
@@ -139,14 +139,14 @@
             transform: translateX(-50%) translateY(-50%);
         }
 
-        &:not(.vl-muted) {
-            .vl-icon-volume-high {
+        &:not(.v-muted) {
+            .v-iconVolumeHigh {
                 display: block;
             }
         }
 
-        &.vl-muted {
-            .vl-icon-volume-mute {
+        &.v-muted {
+            .v-iconVolumeMute {
                 display: block;
             }
         }
@@ -158,14 +158,14 @@
         }
     }
 
-    .vl-fullscreen {
+    .v-fullscreen {
         position: relative;
         display: inline-block;
         width: 40px;
         height: 100%;
         cursor: pointer;
 
-        .vl-player-icon {
+        .v-playerIcon {
             display: none;
             position: absolute;
             top: 50%;
@@ -173,14 +173,14 @@
             transform: translateX(-50%) translateY(-50%);
         }
 
-        &:not(.vl-exit) {
-            .vl-icon-fullscreen {
+        &:not(.v-exit) {
+            .v-iconFullscreen {
                 display: block;
             }
         }
 
-        &.vl-exit {
-            .vl-icon-shrink {
+        &.v-exit {
+            .v-iconShrink {
                 display: block;
             }
         }

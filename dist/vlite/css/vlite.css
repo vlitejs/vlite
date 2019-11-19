@@ -47,7 +47,7 @@
     }
 }
 
-.vl-wrapper-vlite .vl-wrapper-loader {
+.v-vlite .v-loader {
         position: absolute;
         top: 0;
         left: 0;
@@ -61,13 +61,13 @@
         transition: opacity 200ms ease-in, visibility 200ms ease-in;
     }
 
-.vl-wrapper-vlite .vl-wrapper-loader .vl-loader {
+.v-vlite .v-loader .v-loaderContent {
             margin: 0 auto;
             width: 70px;
             text-align: center;
         }
 
-.vl-wrapper-vlite .vl-wrapper-loader .vl-loader > div {
+.v-vlite .v-loader .v-loaderContent > div {
                 width: 18px;
                 height: 18px;
                 background-color: #fff;
@@ -77,26 +77,26 @@
                         animation: loader 1.4s infinite ease-in-out both;
             }
 
-.vl-wrapper-vlite .vl-wrapper-loader .vl-loader .vl-loader-bounce-1 {
+.v-vlite .v-loader .v-loaderContent .v-loaderBounce1 {
                 -webkit-animation-delay: -0.32s;
                         animation-delay: -0.32s;
             }
 
-.vl-wrapper-vlite .vl-wrapper-loader .vl-loader .vl-loader-bounce-2 {
+.v-vlite .v-loader .v-loaderContent .v-loaderBounce2 {
                 -webkit-animation-delay: -0.16s;
                         animation-delay: -0.16s;
             }
 
-.vl-wrapper-vlite.vl-loading .vl-wrapper-loader {
+.v-vlite.v-loading .v-loader {
             opacity: 1;
             visibility: visible;
         }
 
-.vl-wrapper-vlite.vl-loading .vl-big-play-button {
+.v-vlite.v-loading .v-bigPlayButton {
             opacity: 0;
         }
 
-.vl-wrapper-vlite .vl-big-play-button {
+.v-vlite .v-bigPlayButton {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -110,7 +110,7 @@
         transition-delay: 100ms;
     }
 
-        .vl-wrapper-vlite .vl-big-play-button .vl-icon-big-play {
+        .v-vlite .v-bigPlayButton .v-iconBigPlay {
             display: block;
             position: absolute;
             top: 50%;
@@ -119,12 +119,12 @@
                     transform: translateX(-50%) translateY(-50%);
         }
 
-        .vl-wrapper-vlite .vl-big-play-button svg {
+        .v-vlite .v-bigPlayButton svg {
             fill: #fff;
             width: 60px;
             height: 60px;
         }
-    .vl-wrapper-vlite .vl-progress-bar {
+    .v-vlite .v-progressBar {
         position: absolute;
         top: 0;
         left: 0;
@@ -134,7 +134,7 @@
         transition: height 100ms ease-out;
         z-index: 1;
     }
-    .vl-wrapper-vlite .vl-progress-bar .vl-progress-input {
+    .v-vlite .v-progressBar .v-progressInput {
             position: absolute;
             top: 0;
             left: 0;
@@ -144,7 +144,7 @@
             cursor: pointer;
             opacity: 0;
         }
-    .vl-wrapper-vlite .vl-progress-bar .vl-progress-seek {
+    .v-vlite .v-progressBar .v-progressSeek {
             position: absolute;
             top: 0;
             left: 0;
@@ -154,7 +154,7 @@
             border-radius: 0 4px 4px 0;
             transition: all 100ms ease-out;
         }
-    .vl-wrapper-vlite .vl-control-bar {
+    .v-vlite .v-controlBar {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -167,29 +167,29 @@
         background-color: rgba(0, 0, 0, 0.3);
         transition: 250ms ease-in;
     }
-    .vl-wrapper-vlite .vl-control-bar:hover {
+    .v-vlite .v-controlBar:hover {
 
             opacity: 1 !important;
         }
-    .vl-wrapper-vlite .vl-control-bar:hover .vl-progress-bar {
+    .v-vlite .v-controlBar:hover .v-progressBar {
                 height: 8px;
             }
-    .vl-wrapper-vlite .vl-control-bar.hidden {
+    .v-vlite .v-controlBar.hidden {
             opacity: 0;
         }
-    .vl-wrapper-vlite .vl-control-bar .vl-control-bar-inner {
+    .v-vlite .v-controlBar .v-controlBarContent {
             position: relative;
             width: 100%;
             height: 100%;
         }
-    .vl-wrapper-vlite .vl-play-pause-button {
+    .v-vlite .v-playPauseButton {
         position: relative;
         float: left;
         width: 40px;
         height: 100%;
         cursor: pointer;
     }
-    .vl-wrapper-vlite .vl-play-pause-button .vl-player-icon {
+    .v-vlite .v-playPauseButton .v-playerIcon {
             display: none;
             position: absolute;
             top: 50%;
@@ -197,12 +197,12 @@
             -webkit-transform: translateX(-50%) translateY(-50%);
                     transform: translateX(-50%) translateY(-50%);
         }
-    .vl-wrapper-vlite .vl-play-pause-button svg {
+    .v-vlite .v-playPauseButton svg {
             fill: #fff;
             width: 18px;
             height: 18px;
         }
-    .vl-wrapper-vlite .vl-time {
+    .v-vlite .v-time {
         color: #fff;
         font-size: 13px;
         float: left;
@@ -210,14 +210,14 @@
         display: flex;
         align-items: center;
     }
-    .vl-wrapper-vlite .vl-volume {
+    .v-vlite .v-volume {
         position: relative;
         display: inline-block;
         width: 40px;
         height: 100%;
         cursor: pointer;
     }
-    .vl-wrapper-vlite .vl-volume .vl-player-icon {
+    .v-vlite .v-volume .v-playerIcon {
             display: none;
             position: absolute;
             top: 50%;
@@ -225,25 +225,25 @@
             -webkit-transform: translateX(-50%) translateY(-50%);
                     transform: translateX(-50%) translateY(-50%);
         }
-    .vl-wrapper-vlite .vl-volume:not(.vl-muted) .vl-icon-volume-high {
+    .v-vlite .v-volume:not(.v-muted) .v-iconVolumeHigh {
                 display: block;
             }
-    .vl-wrapper-vlite .vl-volume.vl-muted .vl-icon-volume-mute {
+    .v-vlite .v-volume.v-muted .v-iconVolumeMute {
                 display: block;
             }
-    .vl-wrapper-vlite .vl-volume svg {
+    .v-vlite .v-volume svg {
             fill: #fff;
             width: 18px;
             height: 18px;
         }
-    .vl-wrapper-vlite .vl-fullscreen {
+    .v-vlite .v-fullscreen {
         position: relative;
         display: inline-block;
         width: 40px;
         height: 100%;
         cursor: pointer;
     }
-    .vl-wrapper-vlite .vl-fullscreen .vl-player-icon {
+    .v-vlite .v-fullscreen .v-playerIcon {
             display: none;
             position: absolute;
             top: 50%;
@@ -251,13 +251,13 @@
             -webkit-transform: translateX(-50%) translateY(-50%);
                     transform: translateX(-50%) translateY(-50%);
         }
-    .vl-wrapper-vlite .vl-fullscreen:not(.vl-exit) .vl-icon-fullscreen {
+    .v-vlite .v-fullscreen:not(.v-exit) .v-iconFullscreen {
                 display: block;
             }
-    .vl-wrapper-vlite .vl-fullscreen.vl-exit .vl-icon-shrink {
+    .v-vlite .v-fullscreen.v-exit .v-iconShrink {
                 display: block;
             }
-    .vl-wrapper-vlite .vl-fullscreen svg {
+    .v-vlite .v-fullscreen svg {
             fill: #fff;
             width: 18px;
             height: 18px;
@@ -268,7 +268,7 @@
     height: 100%;
 }
 
-.vl-wrapper-vlite {
+.v-vlite {
     font-family: 'Roboto', arial, sans-serif;
     position: relative;
     height: 0;
@@ -277,40 +277,40 @@
     overflow: hidden;
 }
 
-.vl-wrapper-vlite::-webkit-full-screen {
+.v-vlite::-webkit-full-screen {
         width: 100%;
         height: 100%;
     }
 
 /* Firefox fullscreen config */
 
-::-moz-full-screen .vl-wrapper-vlite {
+::-moz-full-screen .v-vlite {
         width: 100%;
         height: 100%;
     }
 
-.vl-wrapper-vlite::-moz-full-screen {
+.v-vlite::-moz-full-screen {
         width: 100%;
         height: 100%;
     }
 
 /* Chrome fullscreen config */
 
-.vl-wrapper-vlite:not(.vl-force-controls) video::-webkit-media-controls-enclosure {
+.v-vlite:not(.v-forceControls) video::-webkit-media-controls-enclosure {
             display: none !important;
         }
 
-.vl-wrapper-vlite:not(.vl-force-controls) iframe.vlite-js {
+.v-vlite:not(.v-forceControls) iframe.vlite-js {
             pointer-events: none;
         }
 
-.vl-wrapper-vlite.vl-fullscreen-display .vl-control-bar,
-        .vl-wrapper-vlite.vl-fullscreen-display .vl-big-play-button {
+.v-vlite.v-fullscreen-display .v-controlBar,
+        .v-vlite.v-fullscreen-display .v-bigPlayButton {
             position: fixed;
             z-index: 2147483647;
         }
 
-.vl-wrapper-vlite .vlite-js {
+.v-vlite .vlite-js {
         position: absolute;
         top: 0;
         left: 0;
@@ -322,15 +322,15 @@
 
 /* Skin */
 
-.vl-wrapper-vlite.vl-paused .vl-play-pause-button .vl-icon-play {
+.v-vlite.v-paused .v-playPauseButton .v-iconPlay {
                 display: block;
             }
 
-.vl-wrapper-vlite.vl-paused .vl-control-bar.hidden {
+.v-vlite.v-paused .v-controlBar.hidden {
             opacity: 1;
         }
 
-.vl-wrapper-vlite .vl-poster {
+.v-vlite .v-poster {
         position: absolute;
         top: 0;
         left: 0;
@@ -346,26 +346,26 @@
         z-index: 2;
     }
 
-.vl-wrapper-vlite .vl-poster.vl-active {
+.v-vlite .v-poster.v-active {
             opacity: 1;
             visibility: visible;
         }
 
-.vl-wrapper-vlite.vl-playing .vl-poster, .vl-wrapper-vlite.vl-paused:not(.vl-first-start) .vl-poster {
+.v-vlite.v-playing .v-poster, .v-vlite.v-paused:not(.v-firstStart) .v-poster {
             visibility: hidden;
             opacity: 0;
         }
 
-.vl-wrapper-vlite.vl-playing .vl-big-play-button {
+.v-vlite.v-playing .v-bigPlayButton {
             visibility: hidden;
             opacity: 0;
         }
 
-.vl-wrapper-vlite.vl-playing .vl-play-pause-button .vl-icon-pause {
+.v-vlite.v-playing .v-playPauseButton .v-iconPause {
                 display: block;
             }
 
-.vl-wrapper-vlite .vl-overlay-video {
+.v-vlite .v-overlayVideo {
         position: absolute;
         top: 0;
         left: 0;
@@ -373,19 +373,19 @@
         height: calc(100% - 50px);
     }
 
-.vl-wrapper-vlite .vl-overlay-video .vl-overlay-left,
-        .vl-wrapper-vlite .vl-overlay-video .vl-overlay-right {
+.v-vlite .v-overlayVideo .v-overlayLeft,
+        .v-vlite .v-overlayVideo .v-overlayRight {
             position: absolute;
             top: 0;
             width: 30%;
             height: 100%;
         }
 
-.vl-wrapper-vlite .vl-overlay-video .vl-overlay-left {
+.v-vlite .v-overlayVideo .v-overlayLeft {
             left: 0;
         }
 
-.vl-wrapper-vlite .vl-overlay-video .vl-overlay-right {
+.v-vlite .v-overlayVideo .v-overlayRight {
             right: 0;
         }
 

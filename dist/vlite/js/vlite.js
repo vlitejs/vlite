@@ -775,53 +775,53 @@ class Player {
   buildPlayer() {
     // Create a wrapper for each player
     const wrapper = document.createElement('div');
-    wrapper.setAttribute('class', 'vl-wrapper-vlite vl-first-start vl-paused vl-loading');
+    wrapper.setAttribute('class', 'v-vlite v-firstStart v-paused v-loading');
     wrapper.setAttribute('tabindex', 0);
     this.player.parentNode.insertBefore(wrapper, this.player);
     wrapper.appendChild(this.player);
     this.wrapperPlayer = this.player.parentNode;
-    this.player.classList.add('vl-toggle-play-pause-js');
+    this.player.setAttribute('data-v-togglePlayPause', '');
 
     if (this.skinDisabled) {
-      this.wrapperPlayer.classList.add('vl-force-controls');
+      this.wrapperPlayer.classList.add('v-forceControls');
     }
 
     const cssstylePoster = this.options.poster !== null ? `background-image: url(${this.options.poster});` : "";
-    const htmlControls = `${!this.options.nativeControlsForTouch ? `<div class="vl-overlay-video vl-toggle-play-pause-js">
-									${!this.touchSupport ? `<div class="vl-overlay-left vl-fast-forward-js" data-direction="left"></div>
-										<div class="vl-overlay-right vl-fast-forward-js" data-direction="right"></div>` : ``}
+    const htmlControls = `${!this.options.nativeControlsForTouch ? `<div class="v-overlayVideo" data-v-togglePlayPause>
+									${!this.touchSupport ? `<div class="v-overlayLeft" data-v-fastForward data-direction="left"></div>
+										<div class="v-overlayRight" data-v-fastForward data-direction="right"></div>` : ``}
 								</div>` : ``}
-							<div class="vl-wrapper-loader">
-								<div class="vl-loader">
-									<div class="vl-loader-bounce-1"></div>
-									<div class="vl-loader-bounce-2"></div>
-									<div class="vl-loader-bounce-3"></div>
+							<div class="v-loader">
+								<div class="v-loaderContent">
+									<div class="v-loaderBounce1"></div>
+									<div class="v-loaderBounce2"></div>
+									<div class="v-loaderBounce3"></div>
 								</div>
 							</div>
-							<div class="vl-poster vl-toggle-play-pause-js vl-active" style="${cssstylePoster}"></div>
-							${this.options.bigPlay ? `<div class="vl-big-play-button vl-toggle-play-pause-js">
-									 <span class="vl-player-icon vl-icon-big-play">${_svg_big_play_svg__WEBPACK_IMPORTED_MODULE_0___default.a}</span>
+							<div class="v-poster v-active" data-v-togglePlayPause style="${cssstylePoster}"></div>
+							${this.options.bigPlay ? `<div class="v-bigPlayButton" data-v-togglePlayPause>
+									 <span class="v-playerIcon v-iconBigPlay">${_svg_big_play_svg__WEBPACK_IMPORTED_MODULE_0___default.a}</span>
 								</div>` : ``}
-							${this.options.controls ? `<div class="vl-control-bar">
-									${this.options.timeline ? `<div class="vl-progress-bar">
-											<div class="vl-progress-seek"></div>
-											<input type="range" class="vl-progress-input" min="0" max="100" step="0.01" value="0" orient="horizontal" />
+							${this.options.controls ? `<div class="v-controlBar">
+									${this.options.timeline ? `<div class="v-progressBar">
+											<div class="v-progressSeek"></div>
+											<input type="range" class="v-progressInput" min="0" max="100" step="0.01" value="0" orient="horizontal" />
 										</div>` : ``}
-									<div class="vl-control-bar-inner">
-										${this.options.playPause ? `<div class="vl-play-pause-button vl-toggle-play-pause-js">
-												<span class="vl-player-icon vl-icon-play">${_svg_play_svg__WEBPACK_IMPORTED_MODULE_1___default.a}</span>
-												<span class="vl-player-icon vl-icon-pause">${_svg_pause_svg__WEBPACK_IMPORTED_MODULE_2___default.a}</span>
+									<div class="v-controlBarContent">
+										${this.options.playPause ? `<div class="v-playPauseButton" data-v-togglePlayPause>
+												<span class="v-playerIcon v-iconPlay">${_svg_play_svg__WEBPACK_IMPORTED_MODULE_1___default.a}</span>
+												<span class="v-playerIcon v-iconPause">${_svg_pause_svg__WEBPACK_IMPORTED_MODULE_2___default.a}</span>
 											</div>` : ``}
-										${this.options.time ? `<div class="vl-time">
-												<span class="vl-current-time">00:00</span>&nbsp;/&nbsp;<span class="vl-duration"></span>
+										${this.options.time ? `<div class="v-time">
+												<span class="v-currentTime">00:00</span>&nbsp;/&nbsp;<span class="v-duration"></span>
 											</div>` : ``}
-										${this.options.volume ? `<div class="vl-volume">
-												<span class="vl-player-icon vl-icon-volume-high">${_svg_volume_high_svg__WEBPACK_IMPORTED_MODULE_3___default.a}</span>
-												<span class="vl-player-icon vl-icon-volume-mute">${_svg_volume_mute_svg__WEBPACK_IMPORTED_MODULE_4___default.a}</span>
+										${this.options.volume ? `<div class="v-volume">
+												<span class="v-playerIcon v-iconVolumeHigh">${_svg_volume_high_svg__WEBPACK_IMPORTED_MODULE_3___default.a}</span>
+												<span class="v-playerIcon v-iconVolumeMute">${_svg_volume_mute_svg__WEBPACK_IMPORTED_MODULE_4___default.a}</span>
 											</div>` : ``}
-										${this.options.fullscreen ? `<div class="vl-fullscreen">
-												<span class="vl-player-icon vl-icon-fullscreen">${_svg_fullscreen_svg__WEBPACK_IMPORTED_MODULE_5___default.a}</span>
-												<span class="vl-player-icon vl-icon-shrink">${_svg_fullscreen_exit_svg__WEBPACK_IMPORTED_MODULE_6___default.a}</span>
+										${this.options.fullscreen ? `<div class="v-fullscreen">
+												<span class="v-playerIcon v-iconFullscreen">${_svg_fullscreen_svg__WEBPACK_IMPORTED_MODULE_5___default.a}</span>
+												<span class="v-playerIcon v-iconShrink">${_svg_fullscreen_exit_svg__WEBPACK_IMPORTED_MODULE_6___default.a}</span>
 											</div>` : ``}
 									</div>
 								</div>` : ``}`;
@@ -840,7 +840,7 @@ class Player {
         this.onProgressChanged(e);
       };
 
-      this.wrapperPlayer.querySelector('.vl-progress-input').addEventListener('change', this.onChangeProgressBar, false);
+      this.wrapperPlayer.querySelector('.v-progressInput').addEventListener('change', this.onChangeProgressBar, false);
     } // Create play/pause button event listener
 
 
@@ -849,7 +849,7 @@ class Player {
       this.togglePlayPause();
     };
 
-    const playPauseButtons = this.wrapperPlayer.querySelectorAll('.vl-toggle-play-pause-js');
+    const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-togglePlayPause]');
     playPauseButtons.forEach(button => {
       button.addEventListener('click', this.onClickTogglePlayPause, false);
     }); // Create double click to fast-forward video current time (only on desktop, mobile doesn't support event)
@@ -860,7 +860,7 @@ class Player {
         this.fastForward(e);
       };
 
-      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('.vl-fast-forward-js')];
+      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fastForward]')];
       fastForwardButtons.forEach(button => {
         button.addEventListener('dblclick', this.onDblclickFastForward, false);
       });
@@ -873,7 +873,7 @@ class Player {
         this.toggleVolume();
       };
 
-      this.wrapperPlayer.querySelector('.vl-volume').addEventListener('click', this.onCLickToggleVolume, false);
+      this.wrapperPlayer.querySelector('.v-volume').addEventListener('click', this.onCLickToggleVolume, false);
     }
 
     if (this.options.controls && this.options.fullscreen) {
@@ -883,16 +883,16 @@ class Player {
         this.toggleFullscreen();
       };
 
-      this.wrapperPlayer.querySelector('.vl-fullscreen').addEventListener('click', this.onClickToggleFullscreen, false); // Create double click event to trigger fullscreen change
+      this.wrapperPlayer.querySelector('.v-fullscreen').addEventListener('click', this.onClickToggleFullscreen, false); // Create double click event to trigger fullscreen change
 
       this.onDblclickVideo = e => {
         e.preventDefault(); // Prevent double click to fast-forward video current time
 
-        if (e.target.classList.contains('vl-fast-forward-js')) return;
+        if (e.target.classList.contains('[data-v-fastForward]')) return;
         this.toggleFullscreen();
       };
 
-      this.wrapperPlayer.querySelector('.vl-overlay-video').addEventListener('dblclick', this.onDblclickVideo, false);
+      this.wrapperPlayer.querySelector('.v-overlayVideo').addEventListener('dblclick', this.onDblclickVideo, false);
     }
 
     if (this.options.controls) {
@@ -951,9 +951,9 @@ class Player {
 
   loading(state) {
     if (state) {
-      this.wrapperPlayer.classList.add('vl-loading');
+      this.wrapperPlayer.classList.add('v-loading');
     } else {
-      this.wrapperPlayer.classList.remove('vl-loading');
+      this.wrapperPlayer.classList.remove('v-loading');
     }
   }
   /**
@@ -962,7 +962,7 @@ class Player {
 
 
   updateDuration() {
-    this.wrapperPlayer.querySelector('.vl-duration').innerHTML = this.constructor.formatVideoTime(this.getDuration());
+    this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(this.getDuration());
   }
   /**
    * Function executed when is video is ended
@@ -970,14 +970,14 @@ class Player {
 
 
   onVideoEnded() {
-    this.wrapperPlayer.classList.replace('vl-playing', 'vl-paused');
-    this.wrapperPlayer.classList.add('vl-first-start');
-    this.wrapperPlayer.querySelector('.vl-poster').classList.add('vl-active');
+    this.wrapperPlayer.classList.replace('v-playing', 'v-paused');
+    this.wrapperPlayer.classList.add('v-firstStart');
+    this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active');
 
     if (this.options.constrols) {
-      this.wrapperPlayer.querySelector('.vl-progress-seek').style.width = '0%';
-      this.wrapperPlayer.querySelector('.vl-progress-input').setAttribute('value', 0);
-      this.wrapperPlayer.querySelector('.vl-current-time').innerHTML = '00:00';
+      this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%';
+      this.wrapperPlayer.querySelector('.v-progressInput').setAttribute('value', 0);
+      this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = '00:00';
     }
   }
   /**
@@ -986,7 +986,7 @@ class Player {
 
 
   togglePlayPause() {
-    if (this.wrapperPlayer.classList.contains('vl-paused')) {
+    if (this.wrapperPlayer.classList.contains('v-paused')) {
       this.play();
     } else {
       this.pause();
@@ -1011,9 +1011,9 @@ class Player {
 
 
   play() {
-    if (this.wrapperPlayer.classList.contains('vl-first-start')) {
-      this.wrapperPlayer.classList.remove('vl-first-start');
-      this.wrapperPlayer.querySelector('.vl-poster').classList.remove('vl-active');
+    if (this.wrapperPlayer.classList.contains('v-firstStart')) {
+      this.wrapperPlayer.classList.remove('v-firstStart');
+      this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active');
     }
 
     this.methodPlay();
@@ -1037,17 +1037,17 @@ class Player {
 
   afterPlayPause() {
     if (this.isPaused) {
-      this.wrapperPlayer.classList.replace('vl-playing', 'vl-paused');
+      this.wrapperPlayer.classList.replace('v-playing', 'v-paused');
     } else {
-      this.wrapperPlayer.classList.replace('vl-paused', 'vl-playing');
+      this.wrapperPlayer.classList.replace('v-paused', 'v-playing');
     }
 
     if (this.options.autoHide && this.options.controls) {
       if (this.isPaused) {
-        this.wrapperPlayer.querySelector('.vl-control-bar').classList.remove('hidden');
+        this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden');
       } else {
         this.timerAutoHide = setTimeout(() => {
-          this.wrapperPlayer.querySelector('.vl-control-bar').classList.add('hidden');
+          this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden');
         }, this.delayAutoHide);
       }
     }
@@ -1058,9 +1058,9 @@ class Player {
 
 
   toggleVolume() {
-    const volumeButton = this.wrapperPlayer.querySelector('.vl-volume');
+    const volumeButton = this.wrapperPlayer.querySelector('.v-volume');
 
-    if (volumeButton.classList.contains('vl-muted')) {
+    if (volumeButton.classList.contains('v-muted')) {
       this.unMute();
     } else {
       this.mute();
@@ -1073,7 +1073,7 @@ class Player {
 
   mute() {
     this.methodMute();
-    this.wrapperPlayer.querySelector('.vl-volume').classList.add('vl-muted');
+    this.wrapperPlayer.querySelector('.v-volume').classList.add('v-muted');
   }
   /**
    * Toggle the volume on the video
@@ -1082,7 +1082,7 @@ class Player {
 
   unMute() {
     this.methodUnMute();
-    this.wrapperPlayer.querySelector('.vl-volume').classList.remove('vl-muted');
+    this.wrapperPlayer.querySelector('.v-volume').classList.remove('v-muted');
   }
   /**
    * Update the current time of the video
@@ -1155,8 +1155,8 @@ class Player {
       //Request fullscreen on parentNode player, to display custom controls
       this.player.parentNode[requestFn]();
       this.isFullScreen = true;
-      this.wrapperPlayer.classList.add('vl-fullscreen-display');
-      this.wrapperPlayer.querySelector('.vl-fullscreen').classList.add('vl-exit');
+      this.wrapperPlayer.classList.add('v-fullscreen-display');
+      this.wrapperPlayer.querySelector('.v-fullscreen').classList.add('v-exit');
     }
   }
   /**
@@ -1171,8 +1171,8 @@ class Player {
 
     if (document[cancelFn]) {
       document[cancelFn]();
-      this.wrapperPlayer.classList.remove('vl-fullscreen-display');
-      this.wrapperPlayer.querySelector('.vl-fullscreen').classList.remove('vl-exit');
+      this.wrapperPlayer.classList.remove('v-fullscreen-display');
+      this.wrapperPlayer.querySelector('.v-fullscreen').classList.remove('v-exit');
       this.isFullScreen = false;
     }
   }
@@ -1196,10 +1196,10 @@ class Player {
 
   onMousemove() {
     if (this.isPaused === false && this.options.autoHide && this.options.controls) {
-      this.wrapperPlayer.querySelector('.vl-control-bar').classList.remove('hidden');
+      this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden');
       clearTimeout(this.timerAutoHide);
       this.timerAutoHide = setTimeout(() => {
-        this.wrapperPlayer.querySelector('.vl-control-bar').classList.add('hidden');
+        this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden');
       }, this.delayAutoHide);
     }
   }
@@ -1212,8 +1212,8 @@ class Player {
     const currentTime = Math.round(this.getCurrentTime());
     const duration = this.getDuration();
     const width = currentTime * 100 / duration;
-    const timeElement = this.wrapperPlayer.querySelector('.vl-current-time');
-    this.wrapperPlayer.querySelector('.vl-progress-seek').style.width = `${width}%`;
+    const timeElement = this.wrapperPlayer.querySelector('.v-currentTime');
+    this.wrapperPlayer.querySelector('.v-progressSeek').style.width = `${width}%`;
 
     if (timeElement !== null) {
       timeElement.innerHTML = this.constructor.formatVideoTime(currentTime);
@@ -1225,14 +1225,14 @@ class Player {
 
 
   unBindEvents() {
-    const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('.vl-toggle-play-pause-js')];
+    const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-togglePlayPause]')];
     playPauseButtons.forEach(button => {
       button.removeEventListener('click', this.onClickTogglePlayPause);
     });
     this.onClickTogglePlayPause = null;
 
     if (!this.touchSupport) {
-      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('.vl-fast-forward-js')];
+      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fastForward]')];
       fastForwardButtons.forEach(button => {
         button.removeEventListener('dblclick', this.onDblclickFastForward);
       });
@@ -1240,12 +1240,12 @@ class Player {
     }
 
     if (this.options.controls && this.options.timeline) {
-      this.wrapperPlayer.querySelector('.vl-progress-input').removeEventListener('change', this.onChangeProgressBar, false);
+      this.wrapperPlayer.querySelector('.v-progressInput').removeEventListener('change', this.onChangeProgressBar, false);
       this.onChangeProgressBar = null;
     }
 
     if (this.options.controls && this.options.volume) {
-      this.wrapperPlayer.querySelector('.vl-volume').removeEventListener('click', this.onCLickToggleVolume);
+      this.wrapperPlayer.querySelector('.v-volume').removeEventListener('click', this.onCLickToggleVolume);
       this.onCLickToggleVolume = null;
     }
 
@@ -1257,8 +1257,8 @@ class Player {
     }
 
     if (this.options.controls && this.options.fullscreen) {
-      this.wrapperPlayer.querySelector('.vl-fullscreen').removeEventListener('click', this.onClickToggleFullscreen);
-      this.wrapperPlayer.querySelector('.vl-overlay-video').removeEventListener('dblclick', this.onDblclickVideo);
+      this.wrapperPlayer.querySelector('.v-fullscreen').removeEventListener('click', this.onClickToggleFullscreen);
+      this.wrapperPlayer.querySelector('.v-overlayVideo').removeEventListener('dblclick', this.onDblclickVideo);
       this.onClickToggleFullscreen = null;
       this.onDblclickVideo = null;
     }

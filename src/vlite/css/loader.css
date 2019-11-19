@@ -12,8 +12,8 @@
     }
 }
 
-.vl-wrapper-vlite {
-    .vl-wrapper-loader {
+.v-vlite {
+    .v-loader {
         position: absolute;
         top: 0;
         left: 0;
@@ -26,7 +26,7 @@
         align-items: center;
         transition: opacity 200ms ease-in, visibility 200ms ease-in;
 
-        .vl-loader {
+        .v-loaderContent {
             margin: 0 auto;
             width: 70px;
             text-align: center;
@@ -40,23 +40,23 @@
                 animation: loader 1.4s infinite ease-in-out both;
             }
 
-            .vl-loader-bounce-1 {
+            .v-loaderBounce1 {
                 animation-delay: -0.32s;
             }
 
-            .vl-loader-bounce-2 {
+            .v-loaderBounce2 {
                 animation-delay: -0.16s;
             }
         }
     }
 
-    &.vl-loading {
-        .vl-wrapper-loader {
+    &.v-loading {
+        .v-loader {
             opacity: 1;
             visibility: visible;
         }
 
-        .vl-big-play-button {
+        .v-bigPlayButton {
             opacity: 0;
         }
     }
