@@ -2,14 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>vLite.js</title>
+	<title>vLitejs</title>
 	<link rel="stylesheet" href="../../dist/vlite/css/vlite.css" />
 </head>
 <body>
 	<video id="player-yt" class="vlite-js" data-youtube-id="aqz-KE-bpKQ" data-options='{"autoplay": false, "controls": true, "playPause": true, "time": true, "timeline": true, "volume": true, "fullscreen": true, "poster": "../assets/poster.jpg", "bigPlay": true, "autoHide": true, "nativeControlsForTouch": false, "playsinline": true}'></video>
 	<script src="../../dist/vlite/js/vlite.js"></script>
 	<script>
-		const playerYT = new vLite({
+		new vlitejs({
 			selector: '#player-yt',
 			callback: (player) => {
 				//Ready

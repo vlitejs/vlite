@@ -3,24 +3,7 @@ description: Project includes CSS, font icons and Javascript files. The installa
 
 ## Installation
 
-<!-- The project contains HTML [examples](https://github.com/yoriiis/vlitejs/tree/master/examples), CSS files for minimalist design, SVG icons and Javascript files for the `vLite` library. -->
-
-Setup is easy with a minimalist markup:
-
-```html
-<!-- HTML5 video -->
-<video id="player"
-    class="vlite-js">
-</video>
-```
-
-```html
-<!-- Youtube video -->
-<video id="player"
-    class="vlite-js"
-    data-youtube-id="{{videoId}">
-</video>
-```
+### NPM
 
 Install `vlitejs` with npm:
 
@@ -32,18 +15,21 @@ npm install vlitejs
 import vlitejs from 'vlitejs';
 import 'vlitejs.css';
 
-var player = new vlitejs({
+new vlitejs({
     selector: '#player'
 });
 ```
 
-...or includes files manually in your project:
+### Manual import
+
+Includes files manually in your project:
 
 ```html
 <link rel="stylesheet" href="vlite.css" />
 <script src="vlitejs"></script>
+
 <script>
-    var player = new vlitejs({
+    new vlitejs({
         selector: '#player'
     });
 </script>

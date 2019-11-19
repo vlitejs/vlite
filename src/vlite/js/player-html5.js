@@ -1,8 +1,8 @@
 import Player from './player';
 
 /**
- * vLite Player HTML5
- * @module vLite/Player/PlayerHtml5
+ * vlitejs Player HTML5
+ * @module vlitejs/Player/PlayerHtml5
  */
 export default class PlayerHtml5 extends Player {
 

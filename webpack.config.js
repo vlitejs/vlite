@@ -23,7 +23,7 @@ module.exports = (env, argv) => {
 			path: path.resolve(__dirname, './dist'),
 			publicPath: '/dist/',
 			filename: '[name]/js/[name].js',
-			library: 'vLite',
+			library: 'vlitejs',
 			libraryTarget: 'umd',
 			sourceMapFilename: '[file].map',
 			libraryExport: 'default'

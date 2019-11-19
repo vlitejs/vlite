@@ -57,7 +57,7 @@ Object of options must be a valid JSON and write between single quote in data at
 Object of options passed to the constructor like the example below.
 
 ```javascript
-var player = new vlitejs({
+new vlitejs({
     selector: '#player',
     options: {
         'autoplay': false,
@@ -251,7 +251,7 @@ All default options are used except the `poster` was overwritten in the example 
 ```
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     selector: '#player'
 });
 ```
@@ -267,7 +267,7 @@ The callback function is called when the current player is instanciated and read
 ```
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     selector: '#player',
     options: {
         "poster": "poster.jpg"

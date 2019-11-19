@@ -26,7 +26,7 @@
 
 ## The new smallest Javascript video library
 
-vLite.js is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with Gzip, vLite.js has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
+vLitejs is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with Gzip, vLitejs has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
 
 <p align="center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo" target="_blank">
@@ -82,7 +82,7 @@ Each players has its own object of options. By default, vLitejs use default valu
 ```
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     selector: '#player'
 });
 ```
@@ -96,7 +96,7 @@ var player = new vLite({
 ```
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     selector: '#player',
     options: {
         "controls": true,

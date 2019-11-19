@@ -8,8 +8,8 @@ import svgFullscreen from '../svg/fullscreen.svg';
 import svgFullscreenExit from '../svg/fullscreen-exit.svg';
 
 /**
- * vLite Player
- * @module vLite/Player
+ * vlitejs Player
+ * @module vlitejs/Player
  */
 export default class Player {
 	/**

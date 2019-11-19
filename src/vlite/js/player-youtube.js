@@ -1,8 +1,8 @@
 import Player from './player';
 
 /**
- * vLite Player Youtube
- * @module vLite/Player/PlayerYoutube
+ * vlitejs Player Youtube
+ * @module vlitejs/Player/PlayerYoutube
  */
 export default class PlayerYoutube extends Player {
 

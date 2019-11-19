@@ -10,7 +10,7 @@ Below, the list of available methods to easily manipulate the player.
 Trigger a play event to the video.
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         player.play();
     }
@@ -22,7 +22,7 @@ var player = new vLite({
 Trigger a pause event to the video.
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         player.pause();
     }
@@ -36,7 +36,7 @@ var player = new vLite({
 Change the current time of the video. The function accept one parameter, the time in seconds.
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         player.seekTo(20);
     }
@@ -50,7 +50,7 @@ var player = new vLite({
 Return the current time of the video in seconds.
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         var currentTime = player.getCurrentTime();
     }
@@ -64,7 +64,7 @@ var player = new vLite({
 Return the duration of the video in seconds.
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         var duration = player.getDuration();
     }
@@ -81,7 +81,7 @@ Return the instance of the video.
 * `Youtube` - the function return the instance of Youtube API for the current player
 
 ```javascript
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         var instance = player.getInstance();
     }
@@ -98,7 +98,7 @@ Request the native fullscreen event for the brower. The function must be called 
 
 ```javascript
 var button = document.querySelector('.button');
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         button.addEventListener('click', function(e){
             e.preventDefault();
@@ -117,7 +117,7 @@ Request the native exit of the fullscreen event of the browser. The function mus
 
 ```javascript
 var button = document.querySelector('.button');
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         button.addEventListener('click', function(e){
             e.preventDefault();
@@ -137,7 +137,7 @@ Trigger a destroy event to remove all created events and instance (HTML5 video o
 
 ```javascript
 var button = document.querySelector('.button');
-var player = new vLite({
+new vlitejs({
     callback: (player) => {
         buton.addEventListener('click', function(e){
             e.preventDefault();

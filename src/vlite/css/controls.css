@@ -23,9 +23,15 @@
 
         svg {
             fill: var(--colorControl);
+            transition: all var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
             width: 60px;
             height: 60px;
         }
+    }
+
+    &:hover .v-bigPlayButton svg {
+        opacity: 1;
     }
 
     .v-progressBar {
@@ -35,7 +41,7 @@
         right: var(--offsetLeftRightControlBar);
         height: var(--heightProgressBar);
         background-color: rgba(0, 0, 0, 0.2);
-        transition: height 100ms ease-out;
+        transition: height 100ms ease-out, top 100ms ease-out;
         z-index: 1;
 
         .v-progressInput {
@@ -55,7 +61,7 @@
             left: 0;
             width: 0;
             height: 100%;
-            background-color: var(--colorControl);
+            background: var(--colorGradient);
             border-radius: 0 4px 4px 0;
             transition: all 100ms ease-out;
         }
@@ -77,6 +83,7 @@
         &:hover {
             .v-progressBar {
                 height: var(--heightProgressBarHover);
+                top: calc(((var(--heightProgressBarHover) - var(--heightProgressBar)) / 2) * -1);
             }
 
             opacity: 1 !important;
@@ -110,14 +117,20 @@
 
         svg {
             fill: var(--colorControl);
+            transition: all var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
             width: 18px;
             height: 18px;
+        }
+
+        &:hover svg {
+            opacity: 1;
         }
     }
 
     .v-time {
         color: var(--colorControl);
-        font-size: 13px;
+        font-size: 12px;
         float: left;
         height: 100%;
         display: flex;
@@ -153,8 +166,14 @@
 
         svg {
             fill: var(--colorControl);
+            transition: all var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
             width: 18px;
             height: 18px;
+        }
+
+        &:hover svg {
+            opacity: 1;
         }
     }
 
@@ -187,8 +206,14 @@
 
         svg {
             fill: var(--colorControl);
+            transition: all var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
             width: 18px;
             height: 18px;
+        }
+
+        &:hover svg {
+            opacity: 1;
         }
     }
 }

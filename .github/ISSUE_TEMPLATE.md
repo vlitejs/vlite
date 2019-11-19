@@ -30,9 +30,9 @@ Please include any additional information necessary here. Including the followin
 
 ### versions
 
-#### vLitejs
+#### vlitejs
 
-What version of `vLitejs` does this occur with?
+What version of `vlitejs` does this occur with?
 
 #### Browsers
 

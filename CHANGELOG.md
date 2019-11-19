@@ -2,7 +2,7 @@
 
 #### New features
 
-* Add all sources of `vLitejs` project including:
+* Add all sources of `vlitejs` project including:
     * CSS
     * JS
     * Documentation with MkDocs build
@@ -18,9 +18,9 @@
 * Add `JSDoc` configuration file and all code comments
 * Add `Material for MkDocs` to build the documentation website
 * Add `Webpack` configuration for builds
-* Add `./examples` folder with `vLite` examples
+* Add `./examples` folder with `vlitejs` examples
 * Add `.github` folder with `ISSUE_TEMPLATE` and `PULL_REQUEST_TEMPLATE`
-* Add `./build` folder with `vLitejs` assets build
+* Add `./build` folder with `vlitejs` assets build
 * Add `CHANGELOG` file
 * Add `.editorconfig` file
 
@@ -58,7 +58,7 @@
 
 #### New features
 
-* Add prefix `.vl-` before all CSS classes use by vLitejs to prevent conflicts
+* Add prefix `.vl-` before all CSS classes use by vlitejs to prevent conflicts
 * Add keyboard shortcut (spacebar) to control the video
 * Add option `autoHide` to hide the control bar if the user is inactive
 * Add loader linked to `seeking` and `seeked` events
@@ -87,5 +87,5 @@
 
 #### New features
 
-* First release of `vLitejs`
+* First release of `vlitejs`
 * Update README
