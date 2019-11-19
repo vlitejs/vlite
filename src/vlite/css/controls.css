@@ -65,6 +65,11 @@
             border-radius: 0 4px 4px 0;
             transition: all 100ms ease-out;
         }
+
+        &:hover {
+            height: var(--heightProgressBarHover);
+            top: calc(((var(--heightProgressBarHover) - var(--heightProgressBar)) / 2) * -1);
+        }
     }
 
     .v-controlBar {
@@ -81,11 +86,6 @@
         transition: 250ms ease-in;
 
         &:hover {
-            .v-progressBar {
-                height: var(--heightProgressBarHover);
-                top: calc(((var(--heightProgressBarHover) - var(--heightProgressBar)) / 2) * -1);
-            }
-
             opacity: 1 !important;
         }
 
