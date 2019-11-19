@@ -30,7 +30,7 @@ vLite.js is a **fast** and **lightweight** Javascript library to customize and s
 
 <p align="center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo" target="_blank">
-        <img src="https://yoriiis.github.io/vlitejs/img/demo.jpg" alt="vLite on desktop" />
+        <img src="https://yoriiis.github.io/vlitejs/img/demo.jpg" alt="vLitejs on desktop" />
     </a>
 </p>
 
@@ -64,13 +64,13 @@ Online demo is available on [vLitejs](https://yoriiis.github.io/vlitejs/demo).
 ```html
 <video id="{{idSelector}}"
     class="vlite-js"
-    data-youtube-id="{{idYoutube}">
+    data-youtube-id="{{videoId}">
 </video>
 ```
 
 ### Options
 
-Each players has its own object of options. By default, vLite use default value of these options like the list below. For more flexibility, vLite accepts two possibilities for passed them.
+Each players has its own object of options. By default, vLitejs use default value of these options like the list below. For more flexibility, vLitejs accepts two possibilities for passed them.
 
 #### Options in the HTML
 
@@ -83,7 +83,7 @@ Each players has its own object of options. By default, vLite use default value 
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1'
+    selector: '#player'
 });
 ```
 
@@ -97,7 +97,7 @@ var player = new vLite({
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
+    selector: '#player',
     options: {
         "controls": true,
         "poster": "poster.jpg"

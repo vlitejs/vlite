@@ -12,7 +12,12 @@ module.exports = function(api) {
 
 	api.cache(true);
 
+	const plugins = [
+		'@babel/plugin-transform-modules-commonjs'
+	];
+
 	return {
-		presets
+		presets,
+		plugins
 	}
 };

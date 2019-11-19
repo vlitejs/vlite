@@ -1,11 +1,11 @@
-title: Getting started - vLite.js
+title: Getting started - vLitejs
 description: Project includes CSS, font icons and Javascript files. The installation is fast and the video player is easily customizable. Youtube API is automatically loaded
 
 ## Installation
 
-The project contains HTML examples, CSS files for minimalist design, SVG icons and Javascript files for the `vLite` library.
+<!-- The project contains HTML [examples](https://github.com/yoriiis/vlitejs/tree/master/examples), CSS files for minimalist design, SVG icons and Javascript files for the `vLite` library. -->
 
-Setup is easy with minimalist markup:
+Setup is easy with a minimalist markup:
 
 ```html
 <!-- HTML5 video -->
@@ -18,21 +18,21 @@ Setup is easy with minimalist markup:
 <!-- Youtube video -->
 <video id="player"
     class="vlite-js"
-    data-youtube-id="{{idYoutube}">
+    data-youtube-id="{{videoId}">
 </video>
 ```
 
-Install `vlitejs` with npm
+Install `vlitejs` with npm:
 
 ```shell
 npm install vlitejs
 ```
 
 ```javascript
-import vLite from 'vlitejs';
+import vlitejs from 'vlitejs';
 import 'vlitejs.css';
 
-var player = new vLite({
+var player = new vlitejs({
     selector: '#player'
 });
 ```
@@ -41,9 +41,9 @@ var player = new vLite({
 
 ```html
 <link rel="stylesheet" href="vlite.css" />
-<script src="vlite.js"></script>
+<script src="vlitejs"></script>
 <script>
-    var player = new vLite.default({
+    var player = new vlitejs({
         selector: '#player'
     });
 </script>

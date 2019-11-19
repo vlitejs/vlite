@@ -25,7 +25,8 @@ module.exports = (env, argv) => {
 			filename: '[name]/js/[name].js',
 			library: 'vLite',
 			libraryTarget: 'umd',
-			sourceMapFilename: '[file].map'
+			sourceMapFilename: '[file].map',
+			libraryExport: 'default'
 		},
 		module: {
 			rules: [{

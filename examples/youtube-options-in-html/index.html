@@ -9,7 +9,7 @@
 	<video id="player-yt" class="vlite-js" data-youtube-id="aqz-KE-bpKQ" data-options='{"autoplay": false, "controls": true, "playPause": true, "time": true, "timeline": true, "volume": true, "fullscreen": true, "poster": "../assets/poster.jpg", "bigPlay": true, "autoHide": true, "nativeControlsForTouch": false, "playsinline": true}'></video>
 	<script src="../../dist/vlite/js/vlite.js"></script>
 	<script>
-		const playerYT = new vLite.default({
+		const playerYT = new vLite({
 			selector: '#player-yt',
 			callback: (player) => {
 				//Ready

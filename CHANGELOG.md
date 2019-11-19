@@ -5,9 +5,9 @@
 * Add all sources of `vLitejs` project including:
     * CSS
     * JS
-    * Documentation
-    * Webpack configuration for build
-    * Example
+    * Documentation with MkDocs build
+    * Webpack configuration for the build
+    * Examples
 * New folder structure
 * Add `ESLint` on the project and add npm scripts
 * Add `StyleLint` on the project and add npm scripts
@@ -27,6 +27,15 @@
 #### Removed
 
 * Remove specific build file for `html5` player only or `youtube` player only. We keep only one bundle compatible with `html5` and `youtube`
+
+##### Updates
+
+* Rename CSS class prefixes from `.vl-` to `.v-`
+* Rename all CSS class with [FUN](https://benfrain.com/enduring-css-writing-style-sheets-rapidly-changing-long-lived-projects/#h-H2_5) methodology
+
+#### Fixes
+
+* Fixed autoplay option that does not work with browser policy without user gesture. Muted option is forced to solved the problem.
 
 
 # 2.0.1
@@ -49,7 +58,7 @@
 
 #### New features
 
-* Add prefix `.vl-` before all CSS classes use by vLite to prevent conflicts
+* Add prefix `.vl-` before all CSS classes use by vLitejs to prevent conflicts
 * Add keyboard shortcut (spacebar) to control the video
 * Add option `autoHide` to hide the control bar if the user is inactive
 * Add loader linked to `seeking` and `seeked` events

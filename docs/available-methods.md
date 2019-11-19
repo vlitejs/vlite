@@ -1,98 +1,104 @@
-title: Available methods - vlite.js
+title: Available methods - vLitejs
 description: The framework includes multiple methods to controls the video such as play, pause, seekTo, getInstance, requestFullscreen, exitFullscreen and destroy
 
-Each players instanciation return the instance in parameter of the callback function __when the player is ready__ (Youtube and HTML5). There are available methods to easily manipulate the player.
+Each players instantiation return the player instance in parameter of the callback function __when the player is ready__ (Youtube and HTML5).
 
-## Play
+Below, the list of available methods to easily manipulate the player.
 
-The `play()` function trigger a play event to the video.
+## `play`
+
+Trigger a play event to the video.
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         player.play();
     }
 });
 ```
 
-## Pause
+## `pause`
 
-The `pause()` function trigger a pause event to the video.
+Trigger a pause event to the video.
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         player.pause();
     }
 });
 ```
 
-## Seek to
+## `seekTo`
 
-The `seekTo()` function change the current time of the video. The function accept one parameter, the time in seconds.
+`float || integer`
+
+Change the current time of the video. The function accept one parameter, the time in seconds.
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         player.seekTo(20);
     }
 });
 ```
 
-## Get the current time
+## `getCurrentTime`
 
-The `getCurrentTime()` function return the current time of the video in seconds.
+`float || integer`
+
+Return the current time of the video in seconds.
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         var currentTime = player.getCurrentTime();
     }
 });
 ```
 
-## Get the duration
+## `getDuration`
 
-The `getDuration()` function return the duration of the video in seconds.
+`float || integer`
+
+Return the duration of the video in seconds.
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         var duration = player.getDuration();
     }
 });
 ```
 
-## Get the instance
+## `getInstance`
 
-The `getInstance()` function return the instance of the video. With HTML5 native video, the function return the video element. With Youtube video, the function return the instance of Youtube API for the current player.
+`object`
+
+Return the instance of the video.
+
+* `HTML5` - the function return the video element
+* `Youtube` - the function return the instance of Youtube API for the current player
 
 ```javascript
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         var instance = player.getInstance();
     }
 });
 ```
 
-## Request fullscreen
+## `requestFullscreen`
 
-The `requestFullscreen()` function request the native fullscreen event for the brower. The function must be called on user event (click for example) to prevent error on touch devices that requires user action.
+Request the native fullscreen event for the brower. The function must be called on user event (click for example) to prevent error on touch devices that requires user action.
 
 !!! tip "Youtube fullscreen API ✔"
-    By default, Youtube do not make available fullscreen in their API, but vLite do it for you.<br />
-    Thanks to vLite framework, the native fullscreen API is available with Youtube and HTML5 video player.
+    By default, Youtube do not make available fullscreen in their API, but vLitejs do it for you.<br />
+    Thanks to vLitejs framework, the native fullscreen API is available with Youtube and HTML5 video player.
 
 ```javascript
 var button = document.querySelector('.button');
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         button.addEventListener('click', function(e){
             e.preventDefault();
@@ -102,9 +108,9 @@ var player = new vLite({
 });
 ```
 
-## Exit fullscreen
+## `exitFullscreen`
 
-The `exitFullscreen()` function request the native exit of the fullscreen event of the browser. The function must be called on user event (click for example).
+Request the native exit of the fullscreen event of the browser. The function must be called on user event (click for example).
 
 !!! tip "Youtube fullscreen API ✔"
     Also available with the Youtube video player.
@@ -112,7 +118,6 @@ The `exitFullscreen()` function request the native exit of the fullscreen event 
 ```javascript
 var button = document.querySelector('.button');
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         button.addEventListener('click', function(e){
             e.preventDefault();
@@ -122,18 +127,17 @@ var player = new vLite({
 });
 ```
 
-## Destroy
+## `destroy`
 
-The `destroy()` function trigger a destroy event to remove all created events and instance (HTML5 video and Youtube video) of the current video player.
+Trigger a destroy event to remove all created events and instance (HTML5 video or Youtube video) of the current video player.
 
 !!! tip "Optimized for your application ✔"
     Each Javascript framework should make available a destroy method to clean all events, variables and HTML created by himself when the user requests it.<br /><br />
-    vLite has its own destroy method which destroy everything that's necessary for each specific video player.
+    vLitejs has its own destroy method which destroy everything that's necessary for each specific video player.
 
 ```javascript
 var button = document.querySelector('.button');
 var player = new vLite({
-    selector: '#player-1',
     callback: (player) => {
         buton.addEventListener('click', function(e){
             e.preventDefault();
