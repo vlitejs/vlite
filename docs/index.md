@@ -35,11 +35,13 @@ HTML and CSS files are valid W3C
 
 ## Licence
 
-Available with the __MIT licence__.
+`vLitejs` is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
+Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
+Created with ♥ by [@yoriiis](http://github.com/yoriiis), If you like the project, like it on Github please :)
 
-## Contributor
+## Contributors
 
-!!! note "Contributor"
+!!! note "Contributors"
     Many thanks to Maxime LEROUGE for its contribution.
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>

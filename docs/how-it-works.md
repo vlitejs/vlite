@@ -3,9 +3,9 @@ description: The project includes a minimalist HTML structure example to start y
 
 ## HTML structure
 
-vLitejs use native HTML5 `video` tag. The syntax is the same between native HTML5 video and Youtube video, with the only difference that for Youtube, there is a data attribute `data-youtube-id` with the Youtube video ID.<br />
+vLitejs use native HTML5 `video` tag. The syntax is the same between HTML5 ad Youtube player, with only a data attribute `data-youtube-id` for Youtube, that's all.<br />
 
-Replace just `{{idSelector}}` with a unique id and `{{idYoutube}}` with the identifiant of the Youtube video.
+Replace `{{idSelector}}` with a unique id and `{{idYoutube}}` with the identifiant of the Youtube video.
 
 !!! warning "HTML"
     For information, each video players must have inevitably a __unique id__ in data attribute.
@@ -80,13 +80,12 @@ Example below list all options with default value, change them according to your
 
 ## Instanciation
 
-Instanciation of native HTML5 video and Youtube video is the same. The difference is made by the presence of the data attribute `data-youtube-id`.<br /><br />
+Instanciation of native HTML5 video and Youtube video is the same. The difference is made by the presence of the data attribute `data-youtube-id`.<br />
 vLite class accept an object parameter with three keys:
 
 * `selector` - Selector of the video element (mandatory)
 * `options` - Object of options (optional)
 * `callback` - Callback function (optional)
-
 
 !!! info "Selector"
     The selector can be a string with unique identifier or a HTML element with `document.querySelector('#player-1')` for example.
@@ -99,7 +98,7 @@ Default options are used and passed in the HTML. The `poster` was overrided with
 ```html
 <video id="{{idSelector}}"
     class="vlite-js"
-    data-options='{"poster": "img/poster.jpg"}'>
+    data-options='{"poster": "poster.jpg"}'>
 </video>
 ```
 
@@ -123,7 +122,7 @@ The callback function is called when the current player is instanciated and read
 var player = new vLite({
     selector: '#player-1',
     options: {
-        "poster": "img/poster.jpg"
+        "poster": "poster.jpg"
     },
     callback: (player) => {
         //Ready
@@ -152,7 +151,7 @@ var player = new vLite({
         timeline: true,
         volume: true,
         fullscreen: true,
-        poster: "img/poster.jpg",
+        poster: "poster.jpg",
         bigPlay: true,
         autoHide: false,
         nativeControlsForTouch: true
