@@ -49,7 +49,7 @@ export default class Player {
 		if (this.player.hasAttribute('data-options')) {
 			// Check if there is a conflict with the constructor options
 			if (options !== undefined) {
-				console.warn(`[vLite] - Option passed in '${selector}' by data attribute is priority over object in constructor.`);
+				console.warn(`vLitejs :: Option passed in '${selector}' by data attribute is priority over object in constructor.`);
 			}
 
 			customOptions = JSON.parse(this.player.getAttribute('data-options'));
@@ -258,6 +258,13 @@ export default class Player {
 
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
+
+			// Autoplay on video is authorize only when the video is muted
+			if(!this.player.muted){
+				this.mute();
+				console.warn(`vLitejs :: Video muted to authorize autoplay option`);
+			}
+
 			this.togglePlayPause();
 		}
 	}

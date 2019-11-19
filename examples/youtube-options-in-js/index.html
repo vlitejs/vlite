@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8" />
 	<title>vLite.js</title>
-	<link rel="stylesheet" href="../../dist/css/vlite.css" />
+	<link rel="stylesheet" href="../../dist/vlite/css/vlite.css" />
 </head>
 <body>
 	<video id="player-yt" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></video>
-	<script src="../../dist/js/vlite.js"></script>
+	<script src="../../dist/vlite/js/vlite.js"></script>
 	<script>
 		const playerYT = new vLite.default({
 			selector: '#player-yt',
 			options: {
-				"autoplay": false,
-				"controls": false,
+				"autoplay": true,
+				"controls": true,
 				"playPause": true,
 				"timeline": true,
 				"time": true,

@@ -3,16 +3,16 @@
 <head>
 	<meta charset="utf-8" />
 	<title>vLite.js</title>
-	<link rel="stylesheet" href="../../dist/css/vlite.css" />
+	<link rel="stylesheet" href="../../dist/vlite/css/vlite.css" />
 </head>
 <body>
 	<video id="player-html5" class="vlite-js" src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4"></video>
-	<script src="../../dist/js/vlite.js"></script>
+	<script src="../../dist/vlite/js/vlite.js"></script>
 	<script>
 		const playerHtml5 = new vLite.default({
 			selector: '#player-html5',
 			options: {
-				"autoplay": false,
+				"autoplay": true,
 				"controls": true,
 				"playPause": true,
 				"timeline": true,

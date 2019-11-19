@@ -7,6 +7,13 @@ import Player from './player';
 export default class PlayerYoutube extends Player {
 
 	/**
+	 * Get the type of the player
+	 */
+	get type () {
+		return 'youtube'
+	}
+
+	/**
 	 * Instanciate the constructor
 	 * @constructor
 	 * @param {String|Object} selector CSS selector or query selector

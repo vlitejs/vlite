@@ -5,6 +5,14 @@ import Player from './player';
  * @module vLite/Player/PlayerHtml5
  */
 export default class PlayerHtml5 extends Player {
+
+	/**
+	 * Get the type of the player
+	 */
+	get type () {
+		return 'html5'
+	}
+
 	/**
 	 * Instanciate the constructor
 	 * @constructor
@@ -179,6 +187,7 @@ export default class PlayerHtml5 extends Player {
 	 */
 	methodMute() {
 		this.player.muted = true;
+		this.player.setAttribute('muted', '');
 	}
 
 	/**
@@ -186,6 +195,7 @@ export default class PlayerHtml5 extends Player {
 	 */
 	methodUnMute() {
 		this.player.muted = false;
+		this.player.removeAttribute('muted');
 	}
 
 	/**
