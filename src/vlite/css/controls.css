@@ -23,7 +23,7 @@
 
         svg {
             fill: var(--colorControl);
-            transition: all var(--delayTransitionControlsHover);
+            transition: opacity var(--delayTransitionControlsHover);
             opacity: var(--defaultControlsOpacity);
             width: 60px;
             height: 60px;
@@ -82,7 +82,7 @@
         text-align: right;
         padding-left: var(--offsetLeftRightControlBar);
         padding-right: var(--offsetLeftRightControlBar);
-        background-color: var(--backgroundControlBar);
+        background: var(--backgroundControlBar);
         transition: 250ms ease-in;
 
         &:hover {
@@ -115,13 +115,15 @@
             transform: translateX(-50%) translateY(-50%);
         }
 
+        /* stylelint-disable no-descending-specificity */
         svg {
             fill: var(--colorControl);
-            transition: all var(--delayTransitionControlsHover);
+            transition: opacity var(--delayTransitionControlsHover);
             opacity: var(--defaultControlsOpacity);
             width: 18px;
             height: 18px;
         }
+        /* stylelint-enable */
 
         &:hover svg {
             opacity: 1;
@@ -164,13 +166,15 @@
             }
         }
 
+        /* stylelint-disable no-descending-specificity */
         svg {
             fill: var(--colorControl);
-            transition: all var(--delayTransitionControlsHover);
+            transition: opacity var(--delayTransitionControlsHover);
             opacity: var(--defaultControlsOpacity);
             width: 18px;
             height: 18px;
         }
+        /* stylelint-enable */
 
         &:hover svg {
             opacity: 1;
@@ -204,13 +208,15 @@
             }
         }
 
+        /* stylelint-disable no-descending-specificity */
         svg {
             fill: var(--colorControl);
-            transition: all var(--delayTransitionControlsHover);
+            transition: opacity var(--delayTransitionControlsHover);
             opacity: var(--defaultControlsOpacity);
             width: 18px;
             height: 18px;
         }
+        /* stylelint-enable */
 
         &:hover svg {
             opacity: 1;

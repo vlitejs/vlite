@@ -3,6 +3,6 @@ module.exports = {
 	rules: {
 		indentation: 4,
 		'unit-whitelist': ['em', 'rem', '%', 'px', 's', 'deg', 'fr', 'vh', 'ms'],
-		'no-descending-specificity': null
+		'no-descending-specificity': true
 	}
 }

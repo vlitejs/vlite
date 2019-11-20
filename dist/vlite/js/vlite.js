@@ -800,16 +800,16 @@ class Player {
     this.player.parentNode.insertBefore(wrapper, this.player);
     wrapper.appendChild(this.player);
     this.wrapperPlayer = this.player.parentNode;
-    this.player.setAttribute('data-v-togglePlayPause', '');
+    this.player.setAttribute('data-v-toggle-play-pause', '');
 
     if (this.skinDisabled) {
       this.wrapperPlayer.classList.add('v-forceControls');
     }
 
     const cssstylePoster = this.options.poster !== null ? `background-image: url(${this.options.poster});` : "";
-    const htmlControls = `${!this.options.nativeControlsForTouch ? `<div class="v-overlayVideo" data-v-togglePlayPause>
-									${!this.touchSupport ? `<div class="v-overlayLeft" data-v-fastForward data-direction="left"></div>
-										<div class="v-overlayRight" data-v-fastForward data-direction="right"></div>` : ``}
+    const htmlControls = `${!this.options.nativeControlsForTouch ? `<div class="v-overlayVideo" data-v-toggle-play-pause>
+									${!this.touchSupport ? `<div class="v-overlayLeft" data-v-fast-forward data-direction="left"></div>
+										<div class="v-overlayRight" data-v-fast-forward data-direction="right"></div>` : ``}
 								</div>` : ``}
 							<div class="v-loader">
 								<div class="v-loaderContent">
@@ -818,8 +818,8 @@ class Player {
 									<div class="v-loaderBounce3"></div>
 								</div>
 							</div>
-							<div class="v-poster v-active" data-v-togglePlayPause style="${cssstylePoster}"></div>
-							${this.options.bigPlay ? `<div class="v-bigPlayButton" data-v-togglePlayPause>
+							<div class="v-poster v-active" data-v-toggle-play-pause style="${cssstylePoster}"></div>
+							${this.options.bigPlay ? `<div class="v-bigPlayButton" data-v-toggle-play-pause>
 									 <span class="v-playerIcon v-iconBigPlay">${_bigPlay.default}</span>
 								</div>` : ``}
 							${this.options.controls ? `<div class="v-controlBar">
@@ -828,7 +828,7 @@ class Player {
 											<input type="range" class="v-progressInput" min="0" max="100" step="0.01" value="0" orient="horizontal" />
 										</div>` : ``}
 									<div class="v-controlBarContent">
-										${this.options.playPause ? `<div class="v-playPauseButton" data-v-togglePlayPause>
+										${this.options.playPause ? `<div class="v-playPauseButton" data-v-toggle-play-pause>
 												<span class="v-playerIcon v-iconPlay">${_play.default}</span>
 												<span class="v-playerIcon v-iconPause">${_pause.default}</span>
 											</div>` : ``}
@@ -869,7 +869,7 @@ class Player {
       this.togglePlayPause();
     };
 
-    const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-togglePlayPause]');
+    const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]');
     playPauseButtons.forEach(button => {
       button.addEventListener('click', this.onClickTogglePlayPause, false);
     }); // Create double click to fast-forward video current time (only on desktop, mobile doesn't support event)
@@ -880,7 +880,7 @@ class Player {
         this.fastForward(e);
       };
 
-      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fastForward]')];
+      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')];
       fastForwardButtons.forEach(button => {
         button.addEventListener('dblclick', this.onDblclickFastForward, false);
       });
@@ -908,7 +908,7 @@ class Player {
       this.onDblclickVideo = e => {
         e.preventDefault(); // Prevent double click to fast-forward video current time
 
-        if (e.target.classList.contains('[data-v-fastForward]')) return;
+        if (e.target.hasAttribute('data-v-fast-forward')) return;
         this.toggleFullscreen();
       };
 
@@ -994,7 +994,7 @@ class Player {
     this.wrapperPlayer.classList.add('v-firstStart');
     this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active');
 
-    if (this.options.constrols) {
+    if (this.options.controls) {
       this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%';
       this.wrapperPlayer.querySelector('.v-progressInput').setAttribute('value', 0);
       this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = '00:00';
@@ -1245,14 +1245,14 @@ class Player {
 
 
   unBindEvents() {
-    const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-togglePlayPause]')];
+    const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]')];
     playPauseButtons.forEach(button => {
       button.removeEventListener('click', this.onClickTogglePlayPause);
     });
     this.onClickTogglePlayPause = null;
 
     if (!this.touchSupport) {
-      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fastForward]')];
+      const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')];
       fastForwardButtons.forEach(button => {
         button.removeEventListener('dblclick', this.onDblclickFastForward);
       });
@@ -1497,7 +1497,7 @@ exports.default = vlitejs;
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM12 9l12 7-12 7z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 29C8.82 29 3 23.18 3 16S8.82 3 16 3s13 5.82 13 13-5.82 13-13 13zM12 9l12 7-12 7z\"></path></svg>"
 
 /***/ }),
 
@@ -1508,7 +1508,7 @@ module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" view
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M24.586 27.414l4.586 4.586 2.828-2.828-4.586-4.586 4.586-4.586h-12v12zM0 12h12v-12l-4.586 4.586-4.539-4.543-2.828 2.828 4.539 4.543zM0 29.172l2.828 2.828 4.586-4.586 4.586 4.586v-12h-12l4.586 4.586zM20 12h12l-4.586-4.586 4.547-4.543-2.828-2.828-4.547 4.543-4.586-4.586z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M24.586 27.414L29.172 32 32 29.172l-4.586-4.586L32 20H20v12zM0 12h12V0L7.414 4.586 2.875.043.047 2.871l4.539 4.543zm0 17.172L2.828 32l4.586-4.586L12 32V20H0l4.586 4.586zM20 12h12l-4.586-4.586 4.547-4.543L29.133.043l-4.547 4.543L20 0z\"></path></svg>"
 
 /***/ }),
 
@@ -1519,7 +1519,7 @@ module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" view
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M27.414 24.586l-4.586-4.586-2.828 2.828 4.586 4.586-4.586 4.586h12v-12zM12 0h-12v12l4.586-4.586 4.543 4.539 2.828-2.828-4.543-4.539zM12 22.828l-2.828-2.828-4.586 4.586-4.586-4.586v12h12l-4.586-4.586zM32 0h-12l4.586 4.586-4.543 4.539 2.828 2.828 4.543-4.539 4.586 4.586z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M27.414 24.586L22.828 20 20 22.828l4.586 4.586L20 32h12V20zM12 0H0v12l4.586-4.586 4.543 4.539 2.828-2.828-4.543-4.539zm0 22.828L9.172 20l-4.586 4.586L0 20v12h12l-4.586-4.586zM32 0H20l4.586 4.586-4.543 4.539 2.828 2.828 4.543-4.539L32 12z\"></path></svg>"
 
 /***/ }),
 
@@ -1530,7 +1530,7 @@ module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" view
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M4 4h10v24h-10zM18 4h10v24h-10z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M4 4h10v24H4zm14 0h10v24H18z\"></path></svg>"
 
 /***/ }),
 
@@ -1541,7 +1541,7 @@ module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" view
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M6 4l20 12-20 12z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M6 4l20 12L6 28z\"></path></svg>"
 
 /***/ }),
 
@@ -1552,7 +1552,7 @@ module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" view
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 34 32\"><path d=\"M27.814 28.814c-0.384 0-0.768-0.146-1.061-0.439-0.586-0.586-0.586-1.535 0-2.121 2.739-2.739 4.247-6.38 4.247-10.253s-1.508-7.514-4.247-10.253c-0.586-0.586-0.586-1.536 0-2.121s1.536-0.586 2.121 0c3.305 3.305 5.126 7.7 5.126 12.374s-1.82 9.069-5.126 12.374c-0.293 0.293-0.677 0.439-1.061 0.439zM22.485 25.985c-0.384 0-0.768-0.146-1.061-0.439-0.586-0.586-0.586-1.535 0-2.121 4.094-4.094 4.094-10.755 0-14.849-0.586-0.586-0.586-1.536 0-2.121s1.536-0.586 2.121 0c2.55 2.55 3.954 5.94 3.954 9.546s-1.404 6.996-3.954 9.546c-0.293 0.293-0.677 0.439-1.061 0.439v0zM17.157 23.157c-0.384 0-0.768-0.146-1.061-0.439-0.586-0.586-0.586-1.535 0-2.121 2.534-2.534 2.534-6.658 0-9.192-0.586-0.586-0.586-1.536 0-2.121s1.535-0.586 2.121 0c3.704 3.704 3.704 9.731 0 13.435-0.293 0.293-0.677 0.439-1.061 0.439zM13 30c-0.26 0-0.516-0.102-0.707-0.293l-7.707-7.707h-3.586c-0.552 0-1-0.448-1-1v-10c0-0.552 0.448-1 1-1h3.586l7.707-7.707c0.286-0.286 0.716-0.372 1.090-0.217s0.617 0.519 0.617 0.924v26c0 0.404-0.244 0.769-0.617 0.924-0.124 0.051-0.254 0.076-0.383 0.076z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 34 32\"><path d=\"M27.814 28.814a1.5 1.5 0 0 1-1.061-2.56C29.492 23.515 31 19.874 31 16.001s-1.508-7.514-4.247-10.253a1.5 1.5 0 1 1 2.121-2.121C32.179 6.932 34 11.327 34 16.001s-1.82 9.069-5.126 12.374a1.495 1.495 0 0 1-1.061.439zm-5.329-2.829a1.5 1.5 0 0 1-1.061-2.56c4.094-4.094 4.094-10.755 0-14.849a1.5 1.5 0 1 1 2.121-2.121c2.55 2.55 3.954 5.94 3.954 9.546s-1.404 6.996-3.954 9.546a1.495 1.495 0 0 1-1.061.439zm-5.328-2.828a1.5 1.5 0 0 1-1.061-2.56 6.508 6.508 0 0 0 0-9.192 1.5 1.5 0 1 1 2.121-2.121c3.704 3.704 3.704 9.731 0 13.435a1.495 1.495 0 0 1-1.061.439zM13 30a1 1 0 0 1-.707-.293L4.586 22H1a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h3.586l7.707-7.707A1 1 0 0 1 14 3v26a1.002 1.002 0 0 1-1 1z\"></path></svg>"
 
 /***/ }),
 
@@ -1563,7 +1563,7 @@ module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" view
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M13 30c-0.26 0-0.516-0.102-0.707-0.293l-7.707-7.707h-3.586c-0.552 0-1-0.448-1-1v-10c0-0.552 0.448-1 1-1h3.586l7.707-7.707c0.286-0.286 0.716-0.372 1.090-0.217s0.617 0.519 0.617 0.924v26c0 0.404-0.244 0.769-0.617 0.924-0.124 0.051-0.254 0.076-0.383 0.076z\"></path></svg>"
+module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path d=\"M13 30a1 1 0 0 1-.707-.293L4.586 22H1a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h3.586l7.707-7.707A1 1 0 0 1 14 3v26a1.002 1.002 0 0 1-1 1z\"></path></svg>"
 
 /***/ })
 

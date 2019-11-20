@@ -91,7 +91,7 @@ export default class Player {
 		this.player.parentNode.insertBefore(wrapper, this.player);
 		wrapper.appendChild(this.player);
 		this.wrapperPlayer = this.player.parentNode;
-		this.player.setAttribute('data-v-togglePlayPause', '');
+		this.player.setAttribute('data-v-toggle-play-pause', '');
 
 		if (this.skinDisabled) {
 			this.wrapperPlayer.classList.add('v-forceControls');
@@ -100,10 +100,10 @@ export default class Player {
 		const cssstylePoster = this.options.poster !== null ? `background-image: url(${this.options.poster});` : "";
 
 		const htmlControls = `${!this.options.nativeControlsForTouch ?
-								`<div class="v-overlayVideo" data-v-togglePlayPause>
+								`<div class="v-overlayVideo" data-v-toggle-play-pause>
 									${!this.touchSupport ?
-										`<div class="v-overlayLeft" data-v-fastForward data-direction="left"></div>
-										<div class="v-overlayRight" data-v-fastForward data-direction="right"></div>`
+										`<div class="v-overlayLeft" data-v-fast-forward data-direction="left"></div>
+										<div class="v-overlayRight" data-v-fast-forward data-direction="right"></div>`
 									: ``}
 								</div>`
 							: ``}
@@ -114,9 +114,9 @@ export default class Player {
 									<div class="v-loaderBounce3"></div>
 								</div>
 							</div>
-							<div class="v-poster v-active" data-v-togglePlayPause style="${cssstylePoster}"></div>
+							<div class="v-poster v-active" data-v-toggle-play-pause style="${cssstylePoster}"></div>
 							${this.options.bigPlay ?
-								`<div class="v-bigPlayButton" data-v-togglePlayPause>
+								`<div class="v-bigPlayButton" data-v-toggle-play-pause>
 									 <span class="v-playerIcon v-iconBigPlay">${svgBigPlay}</span>
 								</div>`
 							: ``}
@@ -130,7 +130,7 @@ export default class Player {
 									: ``}
 									<div class="v-controlBarContent">
 										${this.options.playPause ?
-											`<div class="v-playPauseButton" data-v-togglePlayPause>
+											`<div class="v-playPauseButton" data-v-toggle-play-pause>
 												<span class="v-playerIcon v-iconPlay">${svgPlay}</span>
 												<span class="v-playerIcon v-iconPause">${svgPause}</span>
 											</div>`
@@ -178,7 +178,7 @@ export default class Player {
 			e.preventDefault();
 			this.togglePlayPause();
 		};
-		const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-togglePlayPause]');
+		const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]');
 		playPauseButtons.forEach(button => {
 			button.addEventListener('click', this.onClickTogglePlayPause, false);
 		});
@@ -189,7 +189,7 @@ export default class Player {
 				e.preventDefault();
 				this.fastForward(e);
 			};
-			const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fastForward]')]
+			const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')]
 			fastForwardButtons.forEach(button => {
 				button.addEventListener('dblclick', this.onDblclickFastForward, false);
 			});
@@ -216,7 +216,7 @@ export default class Player {
 			this.onDblclickVideo = e => {
 				e.preventDefault();
 				// Prevent double click to fast-forward video current time
-				if (e.target.classList.contains('[data-v-fastForward]')) return;
+				if (e.target.hasAttribute('data-v-fast-forward')) return;
 				this.toggleFullscreen();
 			};
 			this.wrapperPlayer.querySelector('.v-overlayVideo').addEventListener('dblclick', this.onDblclickVideo, false);
@@ -296,7 +296,7 @@ export default class Player {
 		this.wrapperPlayer.classList.add('v-firstStart');
 		this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active');
 
-		if (this.options.constrols) {
+		if (this.options.controls) {
 			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%';
 			this.wrapperPlayer.querySelector('.v-progressInput').setAttribute('value', 0);
 			this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = '00:00';
@@ -531,14 +531,14 @@ export default class Player {
 	 * Unbind event listeners
 	 */
 	unBindEvents() {
-		const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-togglePlayPause]')]
+		const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]')]
 		playPauseButtons.forEach(button => {
 			button.removeEventListener('click', this.onClickTogglePlayPause);
 		});
 		this.onClickTogglePlayPause = null;
 
 		if (!this.touchSupport) {
-			const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fastForward]')]
+			const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')]
 			fastForwardButtons.forEach(button => {
 				button.removeEventListener('dblclick', this.onDblclickFastForward);
 			});

@@ -121,8 +121,8 @@
 
         .v-vlite .v-bigPlayButton svg {
             fill: #fff;
-            transition: all 100ms;
-            opacity: 0.8;
+            transition: opacity 250ms;
+            opacity: 0.85;
             width: 60px;
             height: 60px;
         }
@@ -132,8 +132,8 @@
     .v-vlite .v-progressBar {
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        left: 10px;
+        right: 10px;
         height: 3px;
         background-color: rgba(0, 0, 0, 0.2);
         transition: height 100ms ease-out, top 100ms ease-out;
@@ -171,9 +171,9 @@
         height: 50px;
         padding-top: 3px;
         text-align: right;
-        padding-left: 0;
-        padding-right: 0;
-        background-color: rgba(0, 0, 0, 0.3);
+        padding-left: 10px;
+        padding-right: 10px;
+        background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
         transition: 250ms ease-in;
     }
     .v-vlite .v-controlBar:hover {
@@ -193,10 +193,6 @@
         width: 40px;
         height: 100%;
         cursor: pointer;
-
-        /* &:hover svg {
-            opacity: 1;
-        } */
     }
     .v-vlite .v-playPauseButton .v-playerIcon {
             display: none;
@@ -206,12 +202,17 @@
             -webkit-transform: translateX(-50%) translateY(-50%);
                     transform: translateX(-50%) translateY(-50%);
         }
+    /* stylelint-disable no-descending-specificity */
     .v-vlite .v-playPauseButton svg {
             fill: #fff;
-            transition: all 100ms;
-            opacity: 0.8;
+            transition: opacity 250ms;
+            opacity: 0.85;
             width: 18px;
             height: 18px;
+        }
+    /* stylelint-enable */
+    .v-vlite .v-playPauseButton:hover svg {
+            opacity: 1;
         }
     .v-vlite .v-time {
         color: #fff;
@@ -227,10 +228,6 @@
         width: 40px;
         height: 100%;
         cursor: pointer;
-
-        /* &:hover svg {
-            opacity: 1;
-        } */
     }
     .v-vlite .v-volume .v-playerIcon {
             display: none;
@@ -246,12 +243,17 @@
     .v-vlite .v-volume.v-muted .v-iconVolumeMute {
                 display: block;
             }
+    /* stylelint-disable no-descending-specificity */
     .v-vlite .v-volume svg {
             fill: #fff;
-            transition: all 100ms;
-            opacity: 0.8;
+            transition: opacity 250ms;
+            opacity: 0.85;
             width: 18px;
             height: 18px;
+        }
+    /* stylelint-enable */
+    .v-vlite .v-volume:hover svg {
+            opacity: 1;
         }
     .v-vlite .v-fullscreen {
         position: relative;
@@ -259,10 +261,6 @@
         width: 40px;
         height: 100%;
         cursor: pointer;
-
-        /* &:hover svg {
-            opacity: 1;
-        } */
     }
     .v-vlite .v-fullscreen .v-playerIcon {
             display: none;
@@ -278,12 +276,17 @@
     .v-vlite .v-fullscreen.v-exit .v-iconShrink {
                 display: block;
             }
+    /* stylelint-disable no-descending-specificity */
     .v-vlite .v-fullscreen svg {
             fill: #fff;
-            transition: all 100ms;
-            opacity: 0.8;
+            transition: opacity 250ms;
+            opacity: 0.85;
             width: 18px;
             height: 18px;
+        }
+    /* stylelint-enable */
+    .v-vlite .v-fullscreen:hover svg {
+            opacity: 1;
         }
 
 .vlite-js {

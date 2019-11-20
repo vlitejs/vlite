@@ -4,6 +4,7 @@ docs/
 jsdocs/
 sites/
 src/
+dist/demo/
 .editorconfig
 .eslintrc.js
 stylelint.config.js
