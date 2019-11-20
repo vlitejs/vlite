@@ -22,8 +22,7 @@ jobs:
         - npm run build
         - npm run test:eslint && npm run test:stylelint
         - npm run build:mkdocs:only
-        - cp -rv ./dist/. ./docs/demo/dist/
-        - cp -rv ./docs/demo/. ./site/demo/
+        - npm run create:demo
         - cd site
       deploy:
         provider: pages
