@@ -11,10 +11,11 @@ module.exports = {
 
 	env: {
 		browser: true,
-		node: true
+		node: true,
+		es6: true
 	},
 
-	extends: 'eslint:recommended',
+	extends: 'standard',
 
 	rules: {
 		indent: ['error', 'tab', { ignoredNodes: ['TemplateLiteral > *'] }],

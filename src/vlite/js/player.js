@@ -1,11 +1,11 @@
 // Import SVG icons
-import svgBigPlay from '../svg/big-play.svg';
-import svgPlay from '../svg/play.svg';
-import svgPause from '../svg/pause.svg';
-import svgVolumeHigh from '../svg/volume-high.svg';
-import svgVolumeMute from '../svg/volume-mute.svg';
-import svgFullscreen from '../svg/fullscreen.svg';
-import svgFullscreenExit from '../svg/fullscreen-exit.svg';
+import svgBigPlay from '../svg/big-play.svg'
+import svgPlay from '../svg/play.svg'
+import svgPause from '../svg/pause.svg'
+import svgVolumeHigh from '../svg/volume-high.svg'
+import svgVolumeMute from '../svg/volume-mute.svg'
+import svgFullscreen from '../svg/fullscreen.svg'
+import svgFullscreenExit from '../svg/fullscreen-exit.svg'
 
 /**
  * vlitejs Player
@@ -19,16 +19,16 @@ export default class Player {
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ selector, options, onReady }) {
-		this.onReady = onReady;
-		this.isFullScreen = false;
-		this.isPaused = null;
-		this.player = selector;
-		this.touchSupport = this.isTouch();
-		this.skinDisabled = false;
-		this.delayAutoHide = 3000;
+	constructor ({ selector, options, onReady }) {
+		this.onReady = onReady
+		this.isFullScreen = false
+		this.isPaused = null
+		this.player = selector
+		this.touchSupport = this.isTouch()
+		this.skinDisabled = false
+		this.delayAutoHide = 3000
 
-		let customOptions = {};
+		let customOptions = {}
 
 		const DEFAULT_OPTIONS = {
 			autoplay: false,
@@ -43,66 +43,66 @@ export default class Player {
 			autoHide: false,
 			nativeControlsForTouch: false,
 			playsinline: true
-		};
+		}
 
 		// Check if options have gone through DOM with data attribute
 		if (this.player.hasAttribute('data-options')) {
 			// Check if there is a conflict with the constructor options
 			if (options !== undefined) {
-				console.warn(`vLitejs :: Option passed in '${selector}' by data attribute is priority over object in constructor.`);
+				console.warn(`vLitejs :: Option passed in '${selector}' by data attribute is priority over object in constructor.`)
 			}
 
-			customOptions = JSON.parse(this.player.getAttribute('data-options'));
+			customOptions = JSON.parse(this.player.getAttribute('data-options'))
 		} else {
 			// No conflict, we can use options in the constructor
-			customOptions = options;
+			customOptions = options
 		}
 
 		this.options = Object.assign({}, DEFAULT_OPTIONS, customOptions)
 
 		// Keep player native control and disable custom skin
 		if (this.options.nativeControlsForTouch) {
-			this.skinDisabled = true;
-			this.player.setAttribute('controls', 'controls');
-			this.options.controls = false;
+			this.skinDisabled = true
+			this.player.setAttribute('controls', 'controls')
+			this.options.controls = false
 		}
 
 		// Add play inline attribute
 		if (this.options.playsinline) {
-			this.player.setAttribute('playsinline', true);
-			this.player.setAttribute('webkit-playsinline', true);
+			this.player.setAttribute('playsinline', true)
+			this.player.setAttribute('webkit-playsinline', true)
 		}
 
 		// Check fullscreen support API on different browsers and cached prefixs
-		this.supportFullScreen = this.constructor.checkSupportFullScreen();
+		this.supportFullScreen = this.constructor.checkSupportFullScreen()
 
-		this.buildPlayer();
-		this.bindEvents();
+		this.buildPlayer()
+		this.bindEvents()
 	}
 
 	/**
 	 * Build the DOM of the player
 	 */
-	buildPlayer() {
+	buildPlayer () {
 		// Create a wrapper for each player
-		const wrapper = document.createElement('div');
-		wrapper.setAttribute('class', 'v-vlite v-firstStart v-paused v-loading');
-		wrapper.setAttribute('tabindex', 0);
-		this.player.parentNode.insertBefore(wrapper, this.player);
-		wrapper.appendChild(this.player);
-		this.wrapperPlayer = this.player.parentNode;
-		this.player.setAttribute('data-v-toggle-play-pause', '');
+		const wrapper = document.createElement('div')
+		wrapper.setAttribute('class', 'v-vlite v-firstStart v-paused v-loading')
+		wrapper.setAttribute('tabindex', 0)
+		this.player.parentNode.insertBefore(wrapper, this.player)
+		wrapper.appendChild(this.player)
+		this.wrapperPlayer = this.player.parentNode
+		this.player.setAttribute('data-v-toggle-play-pause', '')
 
 		if (this.skinDisabled) {
-			this.wrapperPlayer.classList.add('v-forceControls');
+			this.wrapperPlayer.classList.add('v-forceControls')
 		}
 
-		const cssstylePoster = this.options.poster !== null ? `background-image: url(${this.options.poster});` : "";
+		const cssstylePoster = this.options.poster !== null ? `background-image: url(${this.options.poster});` : ''
 
-		const htmlControls = `${!this.options.nativeControlsForTouch ?
-								`<div class="v-overlayVideo" data-v-toggle-play-pause>
-									${!this.touchSupport ?
-										`<div class="v-overlayLeft" data-v-fast-forward data-direction="left"></div>
+		const htmlControls = `${!this.options.nativeControlsForTouch
+								? `<div class="v-overlayVideo" data-v-toggle-play-pause>
+									${!this.touchSupport
+										? `<div class="v-overlayLeft" data-v-fast-forward data-direction="left"></div>
 										<div class="v-overlayRight" data-v-fast-forward data-direction="right"></div>`
 									: ``}
 								</div>`
@@ -115,39 +115,39 @@ export default class Player {
 								</div>
 							</div>
 							<div class="v-poster v-active" data-v-toggle-play-pause style="${cssstylePoster}"></div>
-							${this.options.bigPlay ?
-								`<div class="v-bigPlayButton" data-v-toggle-play-pause>
+							${this.options.bigPlay
+								? `<div class="v-bigPlayButton" data-v-toggle-play-pause>
 									 <span class="v-playerIcon v-iconBigPlay">${svgBigPlay}</span>
 								</div>`
 							: ``}
-							${this.options.controls ?
-								`<div class="v-controlBar">
-									${this.options.progressBar ?
-										`<div class="v-progressBar">
+							${this.options.controls
+								? `<div class="v-controlBar">
+									${this.options.progressBar
+										? `<div class="v-progressBar">
 											<div class="v-progressSeek"></div>
 											<input type="range" class="v-progressInput" min="0" max="100" step="0.01" value="0" orient="horizontal" />
 										</div>`
 									: ``}
 									<div class="v-controlBarContent">
-										${this.options.playPause ?
-											`<div class="v-playPauseButton" data-v-toggle-play-pause>
+										${this.options.playPause
+											? `<div class="v-playPauseButton" data-v-toggle-play-pause>
 												<span class="v-playerIcon v-iconPlay">${svgPlay}</span>
 												<span class="v-playerIcon v-iconPause">${svgPause}</span>
 											</div>`
 										: ``}
-										${this.options.time ?
-											`<div class="v-time">
+										${this.options.time
+											? `<div class="v-time">
 												<span class="v-currentTime">00:00</span>&nbsp;/&nbsp;<span class="v-duration"></span>
 											</div>`
 										: ``}
-										${this.options.volume ?
-											`<div class="v-volume">
+										${this.options.volume
+											? `<div class="v-volume">
 												<span class="v-playerIcon v-iconVolumeHigh">${svgVolumeHigh}</span>
 												<span class="v-playerIcon v-iconVolumeMute">${svgVolumeMute}</span>
 											</div>`
 										: ``}
-										${this.options.fullscreen ?
-											`<div class="v-fullscreen">
+										${this.options.fullscreen
+											? `<div class="v-fullscreen">
 												<span class="v-playerIcon v-iconFullscreen">${svgFullscreen}</span>
 												<span class="v-playerIcon v-iconShrink">${svgFullscreenExit}</span>
 											</div>`
@@ -155,83 +155,83 @@ export default class Player {
 									</div>
 								</div>`
 								: ``
-							}`;
+							}`
 
-		wrapper.insertAdjacentHTML('beforeend', htmlControls);
+		wrapper.insertAdjacentHTML('beforeend', htmlControls)
 	}
 
 	/**
 	 * Create event listeners
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
-	bindEvents() {
+	bindEvents () {
 		if (this.options.controls && this.options.progressBar) {
 			// Create progress bar event listener
 			this.onChangeProgressBar = e => {
-				this.onProgressChanged(e);
-			};
-			this.wrapperPlayer.querySelector('.v-progressInput').addEventListener('change', this.onChangeProgressBar, false);
+				this.onProgressChanged(e)
+			}
+			this.wrapperPlayer.querySelector('.v-progressInput').addEventListener('change', this.onChangeProgressBar, false)
 		}
 
 		// Create play/pause button event listener
 		this.onClickTogglePlayPause = e => {
-			e.preventDefault();
-			this.togglePlayPause();
-		};
-		const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]');
+			e.preventDefault()
+			this.togglePlayPause()
+		}
+		const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]')
 		playPauseButtons.forEach(button => {
-			button.addEventListener('click', this.onClickTogglePlayPause, false);
-		});
+			button.addEventListener('click', this.onClickTogglePlayPause, false)
+		})
 
 		// Create double click to fast-forward video current time (only on desktop, mobile doesn't support event)
 		if (!this.touchSupport) {
 			this.onDblclickFastForward = e => {
-				e.preventDefault();
-				this.fastForward(e);
-			};
+				e.preventDefault()
+				this.fastForward(e)
+			}
 			const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')]
 			fastForwardButtons.forEach(button => {
-				button.addEventListener('dblclick', this.onDblclickFastForward, false);
-			});
+				button.addEventListener('dblclick', this.onDblclickFastForward, false)
+			})
 		}
 
 		if (this.options.controls && this.options.volume) {
 			// Create volume button event listener
 			this.onCLickToggleVolume = e => {
-				e.preventDefault();
-				this.toggleVolume();
-			};
-			this.wrapperPlayer.querySelector('.v-volume').addEventListener('click', this.onCLickToggleVolume, false);
+				e.preventDefault()
+				this.toggleVolume()
+			}
+			this.wrapperPlayer.querySelector('.v-volume').addEventListener('click', this.onCLickToggleVolume, false)
 		}
 
 		if (this.options.controls && this.options.fullscreen) {
 			// Create fullscreen button event listener
 			this.onClickToggleFullscreen = e => {
-				e.preventDefault();
-				this.toggleFullscreen();
-			};
-			this.wrapperPlayer.querySelector('.v-fullscreen').addEventListener('click', this.onClickToggleFullscreen, false);
+				e.preventDefault()
+				this.toggleFullscreen()
+			}
+			this.wrapperPlayer.querySelector('.v-fullscreen').addEventListener('click', this.onClickToggleFullscreen, false)
 
 			// Create double click event to trigger fullscreen change
 			this.onDblclickVideo = e => {
-				e.preventDefault();
+				e.preventDefault()
 				// Prevent double click to fast-forward video current time
-				if (e.target.hasAttribute('data-v-fast-forward')) return;
-				this.toggleFullscreen();
-			};
-			this.wrapperPlayer.querySelector('.v-overlayVideo').addEventListener('dblclick', this.onDblclickVideo, false);
+				if (e.target.hasAttribute('data-v-fast-forward')) return
+				this.toggleFullscreen()
+			}
+			this.wrapperPlayer.querySelector('.v-overlayVideo').addEventListener('dblclick', this.onDblclickVideo, false)
 		}
 
 		if (this.options.controls) {
 			this.onKeyupEvent = e => {
-				this.onKeyup(e);
-			};
-			this.wrapperPlayer.addEventListener('keyup', this.onKeyupEvent, false);
+				this.onKeyup(e)
+			}
+			this.wrapperPlayer.addEventListener('keyup', this.onKeyupEvent, false)
 
 			this.onMousemoveEvent = e => {
-				this.onMousemove(e);
-			};
-			this.wrapperPlayer.addEventListener('mousemove', this.onMousemoveEvent, false);
+				this.onMousemove(e)
+			}
+			this.wrapperPlayer.addEventListener('mousemove', this.onMousemoveEvent, false)
 		}
 
 		// Create fullscreen button event listener
@@ -239,33 +239,32 @@ export default class Player {
 		// More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 		this.onChangeFullScreen = e => {
 			if (!document[this.supportFullScreen.isFullScreen] && this.isFullScreen) {
-				this.exitFullscreen(e.target);
+				this.exitFullscreen(e.target)
 			}
-		};
-		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen, false);
+		}
+		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen, false)
 	}
 
 	/**
 	 * Function executed when the player is ready
 	 */
-	playerIsReady() {
-		this.loading(false);
+	playerIsReady () {
+		this.loading(false)
 
 		// Execute the onReady function
 		if (typeof this.onReady === 'function') {
-			this.onReady(this);
+			this.onReady(this)
 		}
 
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
-
 			// Autoplay on video is authorize only when the video is muted
-			if(!this.player.muted){
-				this.mute();
-				console.warn(`vLitejs :: Video muted to authorize autoplay option`);
+			if (!this.player.muted) {
+				this.mute()
+				console.warn(`vLitejs :: Video muted to authorize autoplay option`)
 			}
 
-			this.togglePlayPause();
+			this.togglePlayPause()
 		}
 	}
 
@@ -273,44 +272,44 @@ export default class Player {
 	 * Update the loader status
 	 * @param {Boolean} state Status of the loader
 	 */
-	loading(state) {
+	loading (state) {
 		if (state) {
-			this.wrapperPlayer.classList.add('v-loading');
+			this.wrapperPlayer.classList.add('v-loading')
 		} else {
-			this.wrapperPlayer.classList.remove('v-loading');
+			this.wrapperPlayer.classList.remove('v-loading')
 		}
 	}
 
 	/**
 	 * Update player duration
 	 */
-	updateDuration() {
-		this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(this.getDuration());
+	updateDuration () {
+		this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(this.getDuration())
 	}
 
 	/**
 	 * Function executed when is video is ended
 	 */
-	onVideoEnded() {
-		this.wrapperPlayer.classList.replace('v-playing', 'v-paused');
-		this.wrapperPlayer.classList.add('v-firstStart');
-		this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active');
+	onVideoEnded () {
+		this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
+		this.wrapperPlayer.classList.add('v-firstStart')
+		this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active')
 
 		if (this.options.controls) {
-			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%';
-			this.wrapperPlayer.querySelector('.v-progressInput').setAttribute('value', 0);
-			this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = '00:00';
+			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%'
+			this.wrapperPlayer.querySelector('.v-progressInput').setAttribute('value', 0)
+			this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = '00:00'
 		}
 	}
 
 	/**
 	 * Function executed to toggle the video status (play, pause)
 	 */
-	togglePlayPause() {
+	togglePlayPause () {
 		if (this.wrapperPlayer.classList.contains('v-paused')) {
-			this.play();
+			this.play()
 		} else {
-			this.pause();
+			this.pause()
 		}
 	}
 
@@ -318,54 +317,54 @@ export default class Player {
 	 * Trigger the video fast forward (front and rear)
 	 * @param {Object} e Event listener datas
 	 */
-	fastForward(e) {
+	fastForward (e) {
 		if (e.target.getAttribute('data-direction') === 'left') {
-			this.seekTo(this.getCurrentTime() - 10);
+			this.seekTo(this.getCurrentTime() - 10)
 		} else {
-			this.seekTo(this.getCurrentTime() + 10);
+			this.seekTo(this.getCurrentTime() + 10)
 		}
 	}
 
 	/**
 	 * Play the video
 	 */
-	play() {
+	play () {
 		if (this.wrapperPlayer.classList.contains('v-firstStart')) {
-			this.wrapperPlayer.classList.remove('v-firstStart');
-			this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active');
+			this.wrapperPlayer.classList.remove('v-firstStart')
+			this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active')
 		}
 
-		this.methodPlay();
-		this.isPaused = false;
-		this.afterPlayPause();
+		this.methodPlay()
+		this.isPaused = false
+		this.afterPlayPause()
 	}
 
 	/**
 	 * Pause the video
 	 */
-	pause() {
-		this.methodPause();
-		this.isPaused = true;
-		this.afterPlayPause();
+	pause () {
+		this.methodPause()
+		this.isPaused = true
+		this.afterPlayPause()
 	}
 
 	/**
 	 * Function executed after the play or pause method
 	 */
-	afterPlayPause() {
+	afterPlayPause () {
 		if (this.isPaused) {
-			this.wrapperPlayer.classList.replace('v-playing', 'v-paused');
+			this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
 		} else {
-			this.wrapperPlayer.classList.replace('v-paused', 'v-playing');
+			this.wrapperPlayer.classList.replace('v-paused', 'v-playing')
 		}
 
 		if (this.options.autoHide && this.options.controls) {
 			if (this.isPaused) {
-				this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden');
+				this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
 			} else {
 				this.timerAutoHide = setTimeout(() => {
-					this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden');
-				}, this.delayAutoHide);
+					this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden')
+				}, this.delayAutoHide)
 			}
 		}
 	}
@@ -373,73 +372,73 @@ export default class Player {
 	/**
 	 * Toggle the volume on the video
 	 */
-	toggleVolume() {
-		const volumeButton = this.wrapperPlayer.querySelector('.v-volume');
+	toggleVolume () {
+		const volumeButton = this.wrapperPlayer.querySelector('.v-volume')
 
 		if (volumeButton.classList.contains('v-muted')) {
-			this.unMute();
+			this.unMute()
 		} else {
-			this.mute();
+			this.mute()
 		}
 	}
 
 	/**
 	 * Mute the volume on the video
 	 */
-	mute() {
-		this.methodMute();
-		this.wrapperPlayer.querySelector('.v-volume').classList.add('v-muted');
+	mute () {
+		this.methodMute()
+		this.wrapperPlayer.querySelector('.v-volume').classList.add('v-muted')
 	}
 
 	/**
 	 * Toggle the volume on the video
 	 */
-	unMute() {
-		this.methodUnMute();
-		this.wrapperPlayer.querySelector('.v-volume').classList.remove('v-muted');
+	unMute () {
+		this.methodUnMute()
+		this.wrapperPlayer.querySelector('.v-volume').classList.remove('v-muted')
 	}
 
 	/**
 	 * Update the current time of the video
 	 * @param {Float|Integer} newTime New current time of the video
 	 */
-	seekTo(newTime) {
-		this.setCurrentTime(newTime);
+	seekTo (newTime) {
+		this.setCurrentTime(newTime)
 	}
 
 	/**
 	 * Toggle the fullscreen of the video
 	 */
-	toggleFullscreen() {
+	toggleFullscreen () {
 		if (this.isFullScreen) {
-			this.exitFullscreen();
+			this.exitFullscreen()
 		} else {
-			this.requestFullscreen();
+			this.requestFullscreen()
 		}
 	}
 
 	/**
 	 * Check fullscreen support API on different browsers and cached prefixs
 	 */
-	static checkSupportFullScreen() {
-		let prefixs = ['', 'moz', 'webkit', 'ms', 'o'];
-		let lengthPrefixs = prefixs.length;
-		let requestFn;
-		let cancelFn;
-		let changeEvent;
-		let isFullScreen;
+	static checkSupportFullScreen () {
+		let prefixs = ['', 'moz', 'webkit', 'ms', 'o']
+		let lengthPrefixs = prefixs.length
+		let requestFn
+		let cancelFn
+		let changeEvent
+		let isFullScreen
 
 		if (document.cancelFullscreen !== undefined) {
-			requestFn = 'requestFullscreen';
-			cancelFn = 'exitFullscreen';
-			changeEvent = 'fullscreenchange';
+			requestFn = 'requestFullscreen'
+			cancelFn = 'exitFullscreen'
+			changeEvent = 'fullscreenchange'
 		} else {
 			while (lengthPrefixs--) {
 				if ((prefixs[lengthPrefixs] !== 'moz' || document.mozFullScreenEnabled) && document[prefixs[lengthPrefixs] + 'CancelFullScreen'] !== undefined) {
-					requestFn = prefixs[lengthPrefixs] + 'RequestFullScreen';
-					cancelFn = prefixs[lengthPrefixs] + 'CancelFullScreen';
-					changeEvent = prefixs[lengthPrefixs] + 'fullscreenchange';
-					isFullScreen = prefixs[lengthPrefixs] === 'webkit' ? prefixs[lengthPrefixs] + 'IsFullScreen' : prefixs[lengthPrefixs] + 'FullScreen';
+					requestFn = prefixs[lengthPrefixs] + 'RequestFullScreen'
+					cancelFn = prefixs[lengthPrefixs] + 'CancelFullScreen'
+					changeEvent = prefixs[lengthPrefixs] + 'fullscreenchange'
+					isFullScreen = prefixs[lengthPrefixs] === 'webkit' ? prefixs[lengthPrefixs] + 'IsFullScreen' : prefixs[lengthPrefixs] + 'FullScreen'
 				}
 			}
 		}
@@ -449,39 +448,39 @@ export default class Player {
 			cancelFn: cancelFn,
 			changeEvent: changeEvent,
 			isFullScreen: isFullScreen
-		};
+		}
 
-		return requestFn ? fullscreen : false;
+		return requestFn ? fullscreen : false
 	}
 
 	/**
 	 * Request fullscreen after user action
 	 */
-	requestFullscreen() {
-		const { requestFn } = this.supportFullScreen;
+	requestFullscreen () {
+		const { requestFn } = this.supportFullScreen
 
 		if (this.player[requestFn]) {
-			//Request fullscreen on parentNode player, to display custom controls
-			this.player.parentNode[requestFn]();
-			this.isFullScreen = true;
-			this.wrapperPlayer.classList.add('v-fullscreen-display');
-			this.wrapperPlayer.querySelector('.v-fullscreen').classList.add('v-exit');
+			// Request fullscreen on parentNode player, to display custom controls
+			this.player.parentNode[requestFn]()
+			this.isFullScreen = true
+			this.wrapperPlayer.classList.add('v-fullscreen-display')
+			this.wrapperPlayer.querySelector('.v-fullscreen').classList.add('v-exit')
 		}
 	}
 
 	/**
 	 * Exit fullscreen after user action
 	 */
-	exitFullscreen() {
-		const { cancelFn } = this.supportFullScreen;
+	exitFullscreen () {
+		const { cancelFn } = this.supportFullScreen
 
 		if (document[cancelFn]) {
-			document[cancelFn]();
+			document[cancelFn]()
 
-			this.wrapperPlayer.classList.remove('v-fullscreen-display');
-			this.wrapperPlayer.querySelector('.v-fullscreen').classList.remove('v-exit');
+			this.wrapperPlayer.classList.remove('v-fullscreen-display')
+			this.wrapperPlayer.querySelector('.v-fullscreen').classList.remove('v-exit')
 
-			this.isFullScreen = false;
+			this.isFullScreen = false
 		}
 	}
 
@@ -490,9 +489,9 @@ export default class Player {
 	 * Toggle the video on spacebar press
 	 * @param {Object} e Event listener datas
 	 */
-	onKeyup(e) {
+	onKeyup (e) {
 		if (e.keyCode === 32) {
-			this.togglePlayPause();
+			this.togglePlayPause()
 		}
 	}
 
@@ -500,120 +499,120 @@ export default class Player {
 	 * Function executed on mousemove event listener
 	 * Toggle controls display on mousemove event
 	 */
-	onMousemove() {
+	onMousemove () {
 		if (this.isPaused === false && this.options.autoHide && this.options.controls) {
-			this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden');
-			clearTimeout(this.timerAutoHide);
+			this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
+			clearTimeout(this.timerAutoHide)
 
 			this.timerAutoHide = setTimeout(() => {
-				this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden');
-			}, this.delayAutoHide);
+				this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden')
+			}, this.delayAutoHide)
 		}
 	}
 
 	/**
 	 * Update current time displaying in the control bar and the width of the progress bar
 	 */
-	updateCurrentTime() {
-		const currentTime = Math.round(this.getCurrentTime());
-		const duration = this.getDuration();
-		const width = (currentTime * 100) / duration;
-		const timeElement = this.wrapperPlayer.querySelector('.v-currentTime');
+	updateCurrentTime () {
+		const currentTime = Math.round(this.getCurrentTime())
+		const duration = this.getDuration()
+		const width = (currentTime * 100) / duration
+		const timeElement = this.wrapperPlayer.querySelector('.v-currentTime')
 
-		this.wrapperPlayer.querySelector('.v-progressSeek').style.width = `${width}%`;
+		this.wrapperPlayer.querySelector('.v-progressSeek').style.width = `${width}%`
 
 		if (timeElement !== null) {
-			timeElement.innerHTML = this.constructor.formatVideoTime(currentTime);
+			timeElement.innerHTML = this.constructor.formatVideoTime(currentTime)
 		}
 	}
 
 	/**
 	 * Unbind event listeners
 	 */
-	unBindEvents() {
+	unBindEvents () {
 		const playPauseButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]')]
 		playPauseButtons.forEach(button => {
-			button.removeEventListener('click', this.onClickTogglePlayPause);
-		});
-		this.onClickTogglePlayPause = null;
+			button.removeEventListener('click', this.onClickTogglePlayPause)
+		})
+		this.onClickTogglePlayPause = null
 
 		if (!this.touchSupport) {
 			const fastForwardButtons = [...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')]
 			fastForwardButtons.forEach(button => {
-				button.removeEventListener('dblclick', this.onDblclickFastForward);
-			});
-			this.onDblclickFastForward = null;
+				button.removeEventListener('dblclick', this.onDblclickFastForward)
+			})
+			this.onDblclickFastForward = null
 		}
 
 		if (this.options.controls && this.options.progressBar) {
-			this.wrapperPlayer.querySelector('.v-progressInput').removeEventListener('change', this.onChangeProgressBar, false);
-			this.onChangeProgressBar = null;
+			this.wrapperPlayer.querySelector('.v-progressInput').removeEventListener('change', this.onChangeProgressBar, false)
+			this.onChangeProgressBar = null
 		}
 
 		if (this.options.controls && this.options.volume) {
-			this.wrapperPlayer.querySelector('.v-volume').removeEventListener('click', this.onCLickToggleVolume);
-			this.onCLickToggleVolume = null;
+			this.wrapperPlayer.querySelector('.v-volume').removeEventListener('click', this.onCLickToggleVolume)
+			this.onCLickToggleVolume = null
 		}
 
 		if (this.options.controls) {
-			this.wrapperPlayer.removeEventListener('keyup', this.onKeyupEvent);
-			this.wrapperPlayer.removeEventListener('mousemove', this.onMousemoveEvent);
-			this.onKeyupEvent = null;
-			this.onMousemoveEvent = null;
+			this.wrapperPlayer.removeEventListener('keyup', this.onKeyupEvent)
+			this.wrapperPlayer.removeEventListener('mousemove', this.onMousemoveEvent)
+			this.onKeyupEvent = null
+			this.onMousemoveEvent = null
 		}
 
 		if (this.options.controls && this.options.fullscreen) {
-			this.wrapperPlayer.querySelector('.v-fullscreen').removeEventListener('click', this.onClickToggleFullscreen);
-			this.wrapperPlayer.querySelector('.v-overlayVideo').removeEventListener('dblclick', this.onDblclickVideo);
-			this.onClickToggleFullscreen = null;
-			this.onDblclickVideo = null;
+			this.wrapperPlayer.querySelector('.v-fullscreen').removeEventListener('click', this.onClickToggleFullscreen)
+			this.wrapperPlayer.querySelector('.v-overlayVideo').removeEventListener('dblclick', this.onDblclickVideo)
+			this.onClickToggleFullscreen = null
+			this.onDblclickVideo = null
 		}
 
-		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen);
+		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
 
 	/**
 	 * Destroy the player
 	 * Remove event listeners, player instance and player HTML
 	 */
-	destroy() {
-		this.pause();
-		this.unBindEvents();
+	destroy () {
+		this.pause()
+		this.unBindEvents()
 
 		if (typeof this.unBindSpecificEvents === 'function') {
-			this.unBindSpecificEvents();
+			this.unBindSpecificEvents()
 		}
 
 		if (typeof this.removeInstance === 'function') {
-			this.removeInstance();
+			this.removeInstance()
 		}
 
-		this.wrapperPlayer.remove();
+		this.wrapperPlayer.remove()
 	}
 
 	/**
 	 * Check if browser support touch event
 	 * @returns {Boolean} Touch event support
 	 */
-	isTouch() {
-		return 'ontouchstart' in window || (window.DocumentTouch && document instanceof window.DocumentTouch);
+	isTouch () {
+		return 'ontouchstart' in window || (window.DocumentTouch && document instanceof window.DocumentTouch)
 	}
 
 	/**
 	 * Convert video time second to 00:00 display
 	 * @param {Float|Integer} time Current time
 	 */
-	static formatVideoTime(time) {
-		const ms = time * 1000;
-		const min = (ms / 1000 / 60) << 0;
-		const sec = (ms / 1000) % 60 << 0;
-		let timeInString = '';
+	static formatVideoTime (time) {
+		const ms = time * 1000
+		const min = (ms / 1000 / 60) << 0
+		const sec = (ms / 1000) % 60 << 0
+		let timeInString = ''
 
-		timeInString += min < 10 ? '0' : '';
-		timeInString += min + ':';
-		timeInString += sec < 10 ? '0' : '';
-		timeInString += sec;
+		timeInString += min < 10 ? '0' : ''
+		timeInString += min + ':'
+		timeInString += sec < 10 ? '0' : ''
+		timeInString += sec
 
-		return timeInString;
+		return timeInString
 	}
 }

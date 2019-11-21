@@ -3,7 +3,6 @@ node_modules/
 dist/**/*.map
 dist/demo/
 docs/demo/dist/
-.vscode/
 jsdocs/*
 !jsdocs/.gitkeep
 site/

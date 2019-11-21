@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "alefragnani.project-manager",
+        "christian-kohler.npm-intellisense",
+        "CoenraadS.bracket-pair-colorizer",
+        "dbaeumer.vscode-eslint",
+        "eg2.vscode-npm-script",
+        "esbenp.prettier-vscode",
+        "ricard.postcss",
+        "shd101wyy.markdown-preview-enhanced",
+        "Tobermory.es6-string-html"
+    ]
+}

@@ -16,7 +16,7 @@
 	"repository": "https://github.com/yoriiis/vlitejs.git",
 	"license": "MIT",
 	"author": "Yoriiis aka Joris Daniel (joris.daniel@gmail.com)",
-	"main": "dist/js/vlite.js",
+	"main": "dist/vlite/js/vlite.js",
 	"scripts": {
 		"build": "rm -rf ./dist/ && webpack --mode=production",
 		"build:jsdoc": "jsdoc --configure ./jsdoc.json",
@@ -24,7 +24,7 @@
 		"build:mkdocs:only": "mkdocs build",
 		"create:demo": "cp -rv ./dist/. ./docs/demo/dist/ && cp -rv ./docs/demo/. ./site/demo/",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
-		"test:eslint": "eslint -c ./.eslintrc.js ./src/js",
+		"test:eslint": "eslint -c ./.eslintrc.js ./src/",
 		"test:stylelint": "stylelint './src/**/*.css' --config ./stylelint.config.js"
 	},
 	"devDependencies": {
@@ -35,6 +35,7 @@
 		"babel-loader": "8.0.6",
 		"css-loader": "1.0.0",
 		"eslint": "4.10.0",
+		"eslint-config-standard": "10.2.1",
 		"eslint-plugin-import": "2.8.0",
 		"eslint-plugin-node": "5.2.1",
 		"eslint-plugin-promise": "3.6.0",
