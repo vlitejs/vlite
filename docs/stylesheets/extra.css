@@ -1,3 +1,61 @@
-.custom-button{
-    display: block;
+/* Override theme color */
+
+.md-header {
+    height: 60px;
+}
+
+.md-header[data-md-state=shadow] {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.1), 0 0.01rem 0.3rem rgba(0, 0, 0, 0.2);
+}
+
+.md-header-nav__button.md-logo {
+    padding: 9px 0 0 9px;
+}
+
+.md-header-nav__button.md-logo img {
+    width: 35px;
+    height: 35px;
+}
+
+.logo-vlite {
+    text-align: center;
+}
+
+.logo-vlite img {
+    width: 350px;
+}
+
+.md-search__inner {
+    margin-top: 4px;
+}
+
+[data-md-color-primary] .md-header,
+[data-md-color-primary] .md-hero {
+    background-color: #fff;
+}
+
+[data-md-color-primary] .md-nav__link--active,
+[data-md-color-primary] .md-nav__link:active {
+    color: #EE8630;
+}
+
+[data-md-color-accent] .md-nav__link:focus,
+[data-md-color-accent] .md-nav__link:hover,
+[data-md-color-accent] .md-typeset .footnote li:hover .footnote-backref:hover,
+[data-md-color-accent] .md-typeset .footnote li:target .footnote-backref,
+[data-md-color-accent] .md-typeset .md-clipboard:active:before,
+[data-md-color-accent] .md-typeset .md-clipboard:hover:before,
+[data-md-color-accent] .md-typeset [id] .headerlink:focus,
+[data-md-color-accent] .md-typeset [id]:hover .headerlink:hover,
+[data-md-color-accent] .md-typeset [id]:target .headerlink {
+    color: #EE8630;
+}
+
+[data-md-color-accent] .md-search-result__link:hover,
+[data-md-color-accent] .md-search-result__link[data-md-state=active] {
+    background-color: rgba(255, 171, 0, .1);
+}
+
+[data-md-color-primary] .md-typeset a {
+    color: #EE8630;
 }

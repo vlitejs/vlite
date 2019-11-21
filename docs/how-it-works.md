@@ -241,7 +241,7 @@ The vLitejs class accept an object parameter with three keys:
 #### Simple example with options in HTML
 
 The simplest way to use vLitejs is like the example below.<br />
-All default options are used except the `poster` was overwritten in the example below:
+All default options are used except the `poster` was override in the example below:
 
 ```html
 <video id="{{idSelector}}"

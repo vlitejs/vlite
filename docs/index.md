@@ -1,7 +1,8 @@
-title: vLitejs - Customize HTML5 and Youtube video with Javascript and CSS | Yoriiis
-description: vLitejs is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
+<br /><p align="center" class="logo-vlite">
+  ![Screenshot](img/logo-vlite.svg)
+</p><br />
 
-# vLitejs
+# Overview
 
 ## The new smallest Javascript video library
 
