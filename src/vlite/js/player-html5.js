@@ -18,15 +18,15 @@ export default class PlayerHtml5 extends Player {
 	 * @constructor
 	 * @param {String|Object} selector CSS selector or query selector
 	 * @param {Object} options Player options
-	 * @param {Function} callback Callback function executed when the player is ready
+	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({selector, options, callback}) {
+	constructor({selector, options, onReady}) {
 
 		// Init Player class
 		super({
 			selector: selector,
 			options: options,
-			callback: callback
+			onReady: onReady
 		});
 
 		// Create Promise to check when the video is ready
@@ -103,7 +103,7 @@ export default class PlayerHtml5 extends Player {
 
 		}
 
-		//On ended event, show poster and reset timeline and time
+		//On ended event, show poster and reset progressBar and time
 		this.player.addEventListener('ended', (e) => this.onVideoEnded(e), false);
 
 		this.onPlayingEvent = () => {

@@ -30,12 +30,12 @@ export default class vlitejs {
 	 * @constructor
 	 * @param {String|Object} selector CSS selector or query selector
 	 * @param {Object} options Player options
-	 * @param {Function} callback Callback function executed when the player is ready
+	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
 	constructor({
 		selector,
 		options = undefined,
-		callback
+		onReady
 	}) {
 
 		this.player = null;
@@ -52,7 +52,7 @@ export default class vlitejs {
 		}
 
 		this.options = options;
-		this.callback = callback;
+		this.onReady = onReady;
 
 		this.initPlayer();
 
@@ -79,7 +79,7 @@ export default class vlitejs {
 				_VliteYoutube.apiReadyQueue.push({
 					player: this.player,
 					options: this.options,
-					callback: this.callback
+					onReady: this.onReady
 				});
 
 			} else {
@@ -87,7 +87,7 @@ export default class vlitejs {
 				this.instancePlayer = new PlayerYoutube({
 					selector: this.player,
 					options: this.options,
-					callback: this.callback
+					onReady: this.onReady
 				});
 			}
 
@@ -96,7 +96,7 @@ export default class vlitejs {
 			this.instancePlayer = new PlayerHtml5({
 				selector: this.player,
 				options: this.options,
-				callback: this.callback
+				onReady: this.onReady
 			});
 		}
 
@@ -123,7 +123,7 @@ export default class vlitejs {
 				this.instancePlayer = new PlayerYoutube({
 					selector: element.player,
 					options: element.options,
-					callback: element.callback
+					onReady: element.onReady
 				});
 			});
 			_VliteYoutube.apiReadyQueue = [];

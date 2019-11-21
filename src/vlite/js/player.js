@@ -17,10 +17,10 @@ export default class Player {
 	 * @constructor
 	 * @param {String|Object} selector CSS selector or query selector
 	 * @param {Object} options Player options
-	 * @param {Function} callback Callback function executed when the player is ready
+	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ selector, options, callback }) {
-		this.callback = callback;
+	constructor({ selector, options, onReady }) {
+		this.onReady = onReady;
 		this.isFullScreen = false;
 		this.isPaused = null;
 		this.player = selector;
@@ -34,7 +34,7 @@ export default class Player {
 			autoplay: false,
 			controls: true,
 			playPause: true,
-			timeline: true,
+			progressBar: true,
 			time: true,
 			volume: true,
 			fullscreen: true,
@@ -122,7 +122,7 @@ export default class Player {
 							: ``}
 							${this.options.controls ?
 								`<div class="v-controlBar">
-									${this.options.timeline ?
+									${this.options.progressBar ?
 										`<div class="v-progressBar">
 											<div class="v-progressSeek"></div>
 											<input type="range" class="v-progressInput" min="0" max="100" step="0.01" value="0" orient="horizontal" />
@@ -165,7 +165,7 @@ export default class Player {
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
 	bindEvents() {
-		if (this.options.controls && this.options.timeline) {
+		if (this.options.controls && this.options.progressBar) {
 			// Create progress bar event listener
 			this.onChangeProgressBar = e => {
 				this.onProgressChanged(e);
@@ -251,9 +251,9 @@ export default class Player {
 	playerIsReady() {
 		this.loading(false);
 
-		// Execute the constructor callback
-		if (typeof this.callback === 'function') {
-			this.callback(this);
+		// Execute the onReady function
+		if (typeof this.onReady === 'function') {
+			this.onReady(this);
 		}
 
 		// If player has autoplay option, play now
@@ -545,7 +545,7 @@ export default class Player {
 			this.onDblclickFastForward = null;
 		}
 
-		if (this.options.controls && this.options.timeline) {
+		if (this.options.controls && this.options.progressBar) {
 			this.wrapperPlayer.querySelector('.v-progressInput').removeEventListener('change', this.onChangeProgressBar, false);
 			this.onChangeProgressBar = null;
 		}

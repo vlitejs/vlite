@@ -30,6 +30,7 @@
 
 ##### Updates
 
+* Rename vLitejs `callback` function into `onReady`
 * Rename CSS class prefixes from `.vl-` to `.v-`
 * Rename all CSS class with [FUN](https://benfrain.com/enduring-css-writing-style-sheets-rapidly-changing-long-lived-projects/#h-H2_5) methodology
 

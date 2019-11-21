@@ -1,24 +1,29 @@
 title: How it works - vLitejs
-description: The project includes a minimalist HTML structure example to start your video player. All options are listed here and can be changed in the constructor
+description: vLitejs includes a minimalist HTML structure to start your video player. All available options are listed here and can be changed in the constructor
 
 ## HTML structure
 
-vLitejs use native HTML5 `video` tag. The syntax is the same between HTML5 and Youtube player, with only a data attribute `data-youtube-id` for Youtube, that's all.<br />
-
-Replace `{{idSelector}}` with a unique id and `{{videoId}}` with the identifiant of the Youtube video.
+HTML5 and Youtube video players use the same minimalist structure with native HTML5 `<video>` tag.
 
 !!! warning "HTML"
-    For information, each video players must have inevitably a __unique id__ in data attribute.
+    Each video players must have inevitably a __unique id__.
 
 ### HTML5 video
+
+* `{{idSelector}}` - Unique HTML id
+* `{{videoSource}}` - Video path
 
 ```html
 <video id="{{idSelector}}"
     class="vlite-js"
+    src="{{videoSource}}">
 </video>
 ```
 
 ### Youtube video
+
+* `{{idSelector}}` - Unique HTML id
+* `{{videoId}}` - Youtube video id
 
 ```html
 <video id="{{idSelector}}"
@@ -27,7 +32,9 @@ Replace `{{idSelector}}` with a unique id and `{{videoId}}` with the identifiant
 </video>
 ```
 
-<br /><p align="center">
+### Video skin
+
+<br /><p align="center" class="video-center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
         ![Screenshot](img/demo2.jpg)
     </a>
@@ -35,217 +42,211 @@ Replace `{{idSelector}}` with a unique id and `{{videoId}}` with the identifiant
 
 ## Options
 
-Each players has its own object of options. For more flexibility, vLitejs accepts two possibilities for passed them.
+Each video players has its own options object. For more flexibility, vLitejs accepts two possibilities for passed them.
 
-!!! warning "Only one or the other"
-    Don't pass options in the HTML in adition to the Javascript constructor. If you choose to do it, there will be a __conflict__, and the priority will be given to options pass by the data attribute `data-options` in the HTML.
+#### Options in HTML
 
-#### Options in the HTML
-
-Object of options must be a valid JSON and write between single quote in data attribute `data-options` to prevent conflict, like the example below:
+Options object must be a valid JSON and writes between single quotes in data attribute `data-options`.
 
 ```html
 <video id="player"
-    class="vlite-js"
-    src="video.mp4"
     data-options='{"autoplay": false, "controls": true}'>
 </video>
 ```
 
-#### Option in the Javascript constructor
+#### Option in Javascript constructor
 
-Object of options passed to the constructor like the example below.
+Options object passed to the constructor.
 
 ```javascript
 new vlitejs({
-    selector: '#player',
     options: {
-        'autoplay': false,
-        'controls': true
+        autoplay: false,
+        controls: true
     }
 });
 ```
 
+!!! warning "Only one or the other"
+    Don't pass options in the HTML in adition to Javascript constructor. If you choose to do it, there will be a __conflict__, and the priority will be given to options pass by the data attribute `data-options` in the HTML.
+
 #### Available options
 
-Example below list all options with default value, change them according to your needs for each video players.
-
+List of all options with their default values.
 
 #### `autoplay`
 
-`boolean = false`
+`default: boolean = false`
 
-Tells vLitejs whether to personalize the autoplay of the video.
+Tells vLitejs whether to enable the autoplay of the video.
 
 ```javascript
 new vlitejs({
     options: {
-        'autoplay': true
+        autoplay: true
     }
 });
 ```
 
 #### `controls`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the control bar of the video.
+Tells vLitejs whether to display the control bar of the video.
 
 ```javascript
 new vlitejs({
     options: {
-        'controls': false
+        controls: true
     }
 });
 ```
 
 #### `playPause`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the play/pause button on the control bar.
+Tells vLitejs whether to display the play/pause button on the control bar.
 
 ```javascript
 new vlitejs({
     options: {
-        'playPause': false
+        playPause: true
     }
 });
 ```
 
 #### `time`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the time information on the control bar.
+Tells vLitejs whether to display the time information on the control bar.
 
 ```javascript
 new vlitejs({
     options: {
-        'time': false
+        time: true
     }
 });
 ```
 
-#### `timeline`
+#### `progressBar`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the timeline on the control bar.
+Tells vLitejs whether to display the progress bar on the control bar.
 
 ```javascript
 new vlitejs({
     options: {
-        'timeline': false
+        progressBar: true
     }
 });
 ```
 
 #### `volume`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the volume button on the control bar.
+Tells vLitejs whether to display the volume button on the control bar.
 
 ```javascript
 new vlitejs({
     options: {
-        'volume': false
+        volume: true
     }
 });
 ```
 
 #### `fullscreen`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the fullscreen button on the control bar.
+Tells vLitejs whether to display the fullscreen button on the control bar.
 
 ```javascript
 new vlitejs({
     options: {
-        'fullscreen': false
+        fullscreen: true
     }
 });
 ```
 
 #### `poster`
 
-`null`
+`default: null`
 
 Tells vLitejs whether to personalize the poster url of the video.
 
 ```javascript
 new vlitejs({
     options: {
-        'poster': 'poster.jpg'
+        poster: 'poster.jpg'
     }
 });
 ```
 
 #### `bigPlay`
 
-`boolean = true`
+`default: boolean = true`
 
-Tells vLitejs whether to personalize the big play button on the control bar.
+Tells vLitejs whether to display the big play button on the video.
 
 ```javascript
 new vlitejs({
     options: {
-        'bigPlay': false
+        bigPlay: true
     }
 });
 ```
 
 #### `autoHide`
 
-`boolean = false`
+`default: boolean = false`
 
-Tells vLitejs whether to auto hide the control bar if the user is inactive.
+Tells vLitejs whether to hide the control bar if the user is inactive (delay 3000ms).
 
 ```javascript
 new vlitejs({
     options: {
-        'autoHide': true
+        autoHide: false
     }
 });
 ```
 
 #### `nativeControlsForTouch`
 
-`boolean = false`
+`default: boolean = false`
 
 Tells vLitejs whether to keep native controls for touch devices.
 
 ```javascript
 new vlitejs({
     options: {
-        'nativeControlsForTouch': true
+        nativeControlsForTouch: false
     }
 });
 ```
 
 ## Instantiation
 
-Instantiation of native HTML5 video and Youtube video is the same. The difference is made by the presence of the data attribute `data-youtube-id`.<br />
-
-The vLitejs class accept an object parameter with three keys:
+The vLitejs class accept an object as parameter with 3 keys:
 
 * `selector` - Selector of the video element (mandatory)
 * `options` - Object of options (optional)
-* `callback` - Callback function (optional)
+* `onReady` - Callback function (optional)
 
 !!! info "Selector"
     The selector can be a string with unique identifier or an HTML element with `document.querySelector('#player')`.
 
 #### Simple example with options in HTML
 
-The simplest way to use vLitejs is like the example below.<br />
-All default options are used except the `poster` was override in the example below:
+The simplest way to use vLitejs is like the example below. All default options are used except the `poster` was override by `data-options`.
 
 ```html
 <video id="{{idSelector}}"
     class="vlite-js"
+    src="{{videoSource}}"
     data-options='{"poster": "poster.jpg"}'>
 </video>
 ```
@@ -256,13 +257,14 @@ new vlitejs({
 });
 ```
 
-#### Example with the callback function and options in the constructor
+#### Example with the onReady function and options in the constructor
 
-The callback function is called when the current player is instanciated and ready. The function expose the `player` instance. See below for available methods.
+The `onReady` function is called when the current player is instanciated and ready. The function expose the `player` instance.
 
 ```html
 <video id="{{idSelector}}"
     class="vlite-js"
+    data-youtube-id="{{videoId}}">
 </video>
 ```
 
@@ -272,7 +274,7 @@ new vlitejs({
     options: {
         "poster": "poster.jpg"
     },
-    callback: (player) => {
+    onReady: (player) => {
         //Ready
     }
 });

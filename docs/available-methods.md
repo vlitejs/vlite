@@ -1,9 +1,9 @@
 title: Available methods - vLitejs
-description: The framework includes multiple methods to controls the video such as play, pause, seekTo, getInstance, requestFullscreen, exitFullscreen and destroy
+description: vLitejs includes multiple methods to controls the video such as play, pause, seekTo, getInstance, requestFullscreen, exitFullscreen and destroy
 
-Each players instantiation return the player instance in parameter of the callback function __when the player is ready__ (Youtube and HTML5).
+Each video players instantiation return the player instance in parameter of the onReady function __when the player is ready__ (Youtube and HTML5).
 
-Below, the list of available methods to easily manipulate the player.
+Below, the list of available methods to easily manipulate the video player.
 
 ## `play`
 
@@ -11,7 +11,7 @@ Trigger a play event to the video.
 
 ```javascript
 new vlitejs({
-    callback: (player) => {
+    onReady: (player) => {
         player.play();
     }
 });
@@ -23,7 +23,7 @@ Trigger a pause event to the video.
 
 ```javascript
 new vlitejs({
-    callback: (player) => {
+    onReady: (player) => {
         player.pause();
     }
 });
@@ -31,13 +31,13 @@ new vlitejs({
 
 ## `seekTo`
 
-`float || integer`
+`parameters: float || integer`
 
-Change the current time of the video. The function accept one parameter, the time in seconds.
+Change the current time of the video (seconds).
 
 ```javascript
 new vlitejs({
-    callback: (player) => {
+    onReady: (player) => {
         player.seekTo(20);
     }
 });
@@ -45,13 +45,13 @@ new vlitejs({
 
 ## `getCurrentTime`
 
-`float || integer`
+`@return float || integer`
 
-Return the current time of the video in seconds.
+Return the current time of the video (seconds).
 
 ```javascript
 new vlitejs({
-    callback: (player) => {
+    onReady: (player) => {
         var currentTime = player.getCurrentTime();
     }
 });
@@ -59,13 +59,13 @@ new vlitejs({
 
 ## `getDuration`
 
-`float || integer`
+`@return float || integer`
 
-Return the duration of the video in seconds.
+Return the duration of the video (seconds).
 
 ```javascript
 new vlitejs({
-    callback: (player) => {
+    onReady: (player) => {
         var duration = player.getDuration();
     }
 });
@@ -73,16 +73,16 @@ new vlitejs({
 
 ## `getInstance`
 
-`object`
+`@return object`
 
 Return the instance of the video.
 
-* `HTML5` - the function return the video element
-* `Youtube` - the function return the instance of Youtube API for the current player
+* `HTML5` - Return the video element
+* `Youtube` - Return the Youtube API instance of the current video player
 
 ```javascript
 new vlitejs({
-    callback: (player) => {
+    onReady: (player) => {
         var instance = player.getInstance();
     }
 });
@@ -90,17 +90,15 @@ new vlitejs({
 
 ## `requestFullscreen`
 
-Request the native fullscreen event for the brower. The function must be called on user event (click for example) to prevent error on touch devices that requires user action.
+Request the native fullscreen event for the browser. The function must be called on a user event to prevent error on touch devices that requires user action.
 
 !!! tip "Youtube fullscreen API ✔"
-    By default, Youtube do not make available fullscreen in their API, but vLitejs do it for you.<br />
-    Thanks to vLitejs framework, the native fullscreen API is available with Youtube and HTML5 video player.
+    By default, Youtube do not make available fullscreen in their API, but thanks to vLitejs framework, the native fullscreen API is available with HTML5 and Youtube video players.
 
 ```javascript
-var button = document.querySelector('.button');
 new vlitejs({
-    callback: (player) => {
-        button.addEventListener('click', function(e){
+    onReady: (player) => {
+        document.querySelector('.button').addEventListener('click', function(e) {
             e.preventDefault();
             player.requestFullscreen();
         });
@@ -110,16 +108,15 @@ new vlitejs({
 
 ## `exitFullscreen`
 
-Request the native exit of the fullscreen event of the browser. The function must be called on user event (click for example).
+Request the native exit of the fullscreen event of the browser. The function must be called on a user event to prevent error on touch devices that requires user action.
 
 !!! tip "Youtube fullscreen API ✔"
-    Also available with the Youtube video player.
+    By default, Youtube do not make available fullscreen in their API, but thanks to vLitejs framework, the native fullscreen API is available with HTML5 and Youtube video players.
 
 ```javascript
-var button = document.querySelector('.button');
 new vlitejs({
-    callback: (player) => {
-        button.addEventListener('click', function(e){
+    onReady: (player) => {
+        document.querySelector('.button').addEventListener('click', function(e) {
             e.preventDefault();
             player.exitFullscreen();
         });
@@ -129,17 +126,15 @@ new vlitejs({
 
 ## `destroy`
 
-Trigger a destroy event to remove all created events and instance (HTML5 video or Youtube video) of the current video player.
+Trigger a destroy event to remove all created events and the instance of the current video player (HTML5 or Youtube).
 
 !!! tip "Optimized for your application ✔"
-    Each Javascript framework should make available a destroy method to clean all events, variables and HTML created by himself when the user requests it.<br /><br />
-    vLitejs has its own destroy method which destroy everything that's necessary for each specific video player.
+    For better performance on a webapp, think about destroying the video instance when you no longer need it.
 
 ```javascript
-var button = document.querySelector('.button');
 new vlitejs({
-    callback: (player) => {
-        buton.addEventListener('click', function(e){
+    onReady: (player) => {
+        document.querySelector('.button').addEventListener('click', function(e) {
             e.preventDefault();
             player.destroy();
         });

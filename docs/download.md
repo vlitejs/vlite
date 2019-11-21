@@ -1,7 +1,7 @@
 title: Download - vLitejs
-description: vLitejs project will be available soon
+description: vLitejs is available on Github and npm
 
-The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs.com/package/vlitejs) and [Github](https://github.com/yoriiis/vlitejs).<br />
+vLitejs is available as the `vlitejs` package name on [Github](https://github.com/yoriiis/vlitejs) and [npm](https://www.npmjs.com/package/vlitejs).<br />
 
 <script>
   ((window.gitter = {}).chat = {}).options = {

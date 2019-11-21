@@ -18,15 +18,15 @@ export default class PlayerYoutube extends Player {
 	 * @constructor
 	 * @param {String|Object} selector CSS selector or query selector
 	 * @param {Object} options Player options
-	 * @param {Function} callback Callback function executed when the player is ready
+	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({selector, options, callback}) {
+	constructor({selector, options, onReady}) {
 
 		// Init Player class
 		super({
 			selector: selector,
 			options: options,
-			callback: callback
+			onReady: onReady
 		});
 
 		// Init Youtube player with API

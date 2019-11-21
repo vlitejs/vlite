@@ -1,11 +1,11 @@
 title: Getting started - vLitejs
-description: Project includes CSS, font icons and Javascript files. The installation is fast and the video player is easily customizable. Youtube API is automatically loaded
+description: Install vLitejs with npm or manual import. Installation is fast and the video player is easily customizable. Youtube API is automatically loaded
 
 ## Installation
 
 ### NPM
 
-Install `vlitejs` with npm:
+Install vLitejs with npm:
 
 ```shell
 npm install vlitejs

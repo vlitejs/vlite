@@ -23,8 +23,8 @@ theme:
   name: 'material'
   language: 'en'
   palette:
-    primary: 'amber'
-    accent: 'amber'
+    primary: 'white'
+    accent: 'white'
   font:
     text: 'Roboto'
     code: 'Ubuntu Mono'
