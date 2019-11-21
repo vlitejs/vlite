@@ -26,7 +26,7 @@
 }
 
 .logo-vlite img {
-    width: 350px;
+    width: 180px;
 }
 
 /* Links color */
@@ -44,7 +44,7 @@
 .md-typeset [id] .headerlink:focus,
 .md-typeset [id]:hover .headerlink:hover,
 .md-typeset [id]:target .headerlink {
-    color: #EE8630;
+    color: #ff7f15;
 }
 
 /* Research */

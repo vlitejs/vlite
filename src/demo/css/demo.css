@@ -15,10 +15,15 @@ body {
 }
 
 .title {
-    font-weight: 700;
     font-size: 25px;
     text-align: center;
-    padding-top: 50px;
+    padding: 50px 0;
+
+    a {
+        display: block;
+        max-width: 180px;
+        margin: 0 auto;
+    }
 }
 
 .wrapper-nav {
@@ -29,10 +34,11 @@ body {
     height: 50px;
     font-size: 0;
     z-index: 10;
-    background-color: #ffb300;
+    background-color: #ff7f15;
     border-radius: 25px 25px;
-    max-width: 230px;
+    max-width: 235px;
     width: 100%;
+    text-align: center;
 
     ul {
         padding: 0;
@@ -69,7 +75,7 @@ body {
         padding: 18px 20px 0 20px;
 
         &:hover {
-            opacity: 0.7;
+            opacity: 0.8;
         }
     }
 }
@@ -87,10 +93,9 @@ body {
 .content {
     width: 100%;
     text-align: center;
-    padding-top: 30px;
 
     .sub-title {
-        font-weight: 700;
+        font-weight: 400;
         font-size: 20px;
         margin-bottom: 20px;
     }
