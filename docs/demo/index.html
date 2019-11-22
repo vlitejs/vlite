@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Demo - vLitejs</title>
+        <meta name="description" content="Example of the Javascript library vLitejs started with HTML5 video and Youtube API" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="./dist/demo/css/demo.css" />
+        <link rel="stylesheet" href="./dist/vlite/css/vlite.css" />
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108758282-2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-108758282-2');
+        </script>
+    </head>
+    <body>
+
+        <main id="app" role="main">
+
+            <h1 class="title">
+                <a href="https://yoriiis.github.io/vlitejs/" title="vLitejs">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 162"><path d="M197 121.7V54.2c0-8.6 7-15.5 15.5-15.5h2.7v68.2h37.1c0 8.2-6.6 14.8-14.8 14.8H197zm85.5-86.9h5.7v16.6h-19v-3.3c0-7.4 6-13.3 13.3-13.3zm-12.6 86.9V78.3c0-8.7 7-15.7 15.7-15.7h1.9v59.1h-17.6zm31.1-46v-1.1c0-6.7 5.4-12.1 12.1-12.1h31.7v1.1c0 6.7-5.4 12-12 12H301zm45.8 31.7V121c-1.6.6-3.3 1-4.9 1.3-1.6.2-3.4.4-5.2.4-7.3 0-12.9-2.1-16.7-6.2-3.8-4.2-5.8-9.9-5.8-17.3V57.6c0-5.3 3.4-10.1 8.5-11.7l9.1-3v55.8c0 2.3.4 4.2 1.3 5.6.9 1.4 2 2.4 3.4 3 1.4.6 2.9.9 4.5.9.9 0 1.8-.1 2.7-.2.9-.1 1.9-.3 3.1-.6zm69.7-11.8H376l.2-11.8H406l-4.5 4.7c.1-5-.9-8.7-2.9-11.3-2-2.5-4.8-3.8-8.6-3.8-4 0-7.2 1.5-9.4 4.4-2.2 2.9-3.3 7.2-3.3 12.8 0 6.6 1.3 11.4 3.9 14.3 2.6 3 6.6 4.4 12 4.4 3.1 0 6.2-.5 9.2-1.5 3-1 5.8-2.4 8.4-4.3l4.7 11.9c-2.9 2.3-6.4 4-10.5 5.3-4.1 1.3-8.3 1.9-12.5 1.9-6.6 0-12.3-1.2-17.1-3.7-4.8-2.5-8.5-6-11-10.6-2.6-4.6-3.8-10-3.8-16.3 0-6.1 1.2-11.4 3.7-16.1 2.5-4.7 5.9-8.3 10.2-10.9 4.3-2.6 9.3-3.9 15.1-3.9 5.5 0 10.3 1.2 14.3 3.7 4 2.4 7.2 5.9 9.3 10.4.1-.1 3.3 6.6 3.3 20.4z" fill="#ff7f15"/><path d="M425.7 132.5c1.2.3 2.2.5 3 .6.9.1 1.7.2 2.7.2 1.6 0 3.1-.3 4.5-.9 1.4-.6 2.5-1.6 3.3-3 .8-1.4 1.2-3.3 1.2-5.6V77.7c0-8.4 6.8-15.2 15.2-15.2h2.4v61.7c0 7.4-1.9 13.2-5.7 17.3-3.8 4.2-9.3 6.2-16.6 6.2-1.7 0-3.4-.1-5.1-.3-1.7-.2-3.3-.6-4.9-1.2v-13.7zm30.1-97.7h2.9v16.6h-19V51c-.1-9 7.1-16.2 16.1-16.2zm47 87.8c-11.3 0-20.2-2.4-26.7-7.2l4.8-12.2c3.1 2.3 6.6 4 10.4 5.2 3.8 1.2 7.7 1.8 11.6 1.8 3 0 5.4-.5 7-1.5 1.6-1 2.4-2.3 2.4-4 0-1.5-.6-2.6-1.7-3.4-1.2-.8-3.2-1.6-6.2-2.3l-9.7-2.3c-5.8-1.2-10-3.1-12.7-5.8-2.7-2.7-4-6.3-4-10.8 0-3.7 1.1-6.9 3.2-9.7 2.1-2.8 5.1-5.1 8.9-6.7 3.8-1.6 8.2-2.4 13.3-2.4 4.3 0 8.4.6 12.4 1.9 4 1.3 7.6 3.1 10.8 5.4l-4.9 11.8c-3-2.1-6.1-3.7-9.3-4.8-3.1-1.1-6.2-1.6-9.2-1.6-2.9 0-5.1.5-6.8 1.5-1.6 1-2.4 2.4-2.4 4.2 0 1.3.5 2.4 1.5 3.1 1 .8 2.7 1.5 5.2 2.1l9.9 2.2c6.1 1.4 10.5 3.5 13.2 6.3 2.7 2.8 4.1 6.5 4.1 11.2 0 5.6-2.2 10-6.7 13.3-4.3 3.1-10.5 4.7-18.4 4.7z" fill="#ffb64d"/><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="13.493" y1="139.166" x2="136.155" y2="33.408"><stop offset="0" stop-color="#e94900"/><stop offset=".996" stop-color="#ffb100"/></linearGradient><path d="M109.5 162H0V52.4C0 23.5 23.5 0 52.4 0H162v109.5c0 29-23.5 52.5-52.5 52.5z" fill="url(#a)"/><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="100.079" y1="72.277" x2="83.67" y2="117.005"><stop offset="0" stop-color="#e9ed80"/><stop offset="1" stop-color="#ff9800"/></linearGradient><path d="M93 122.3l31.3-82.6H117c-9.8 0-18.7 6.1-22.2 15.3l-17.1 45.1c-4.1 10.7 3.8 22.2 15.3 22.2z" fill="url(#b)"/><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="59.876" y1="65.162" x2="77.705" y2="117.15"><stop offset="0" stop-color="#e9ed80"/><stop offset="1" stop-color="#ffcd00"/></linearGradient><path d="M92.8 122.3h-5.3c-11.1 0-21-6.8-24.9-17.2L37.8 39.7h7.3c9.8 0 18.7 6.1 22.2 15.3l25.5 67.3z" fill="url(#c)"/></svg>
+                </a>
+            </h1>
+
+            <div class="page">
+
+                <div class="content">
+                    <h2 class="sub-title">Youtube video player</h2>
+                    <video id="player-yt" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></video>
+                </div>
+
+                <div class="content">
+                    <h2 class="sub-title">Native HTML5 video player</h2>
+                    <video id="player-html5" class="vlite-js" src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4"></video>
+                </div>
+
+            </div>
+
+            <div class="sticky-menu">
+                <div class="wrapper-nav">
+                    <ul>
+                        <li>
+                            <a href="https://yoriiis.github.io/vlitejs/" title="Documentation">Documentation</a>
+                        </li>
+                        <li>
+                            <a href="https://yoriiis.github.io/vlitejs/download" title="Download">Download</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+
+        <script src="./dist/vlite/js/vlite.js"></script>
+        <script>
+            //Youtube example
+            var playerYT = new vlitejs({
+                selector: '#player-yt',
+                options: {
+                    "poster": "./assets/poster.jpg"
+                }
+            });
+
+            //HTML5 example
+            var playerHtml5 = new vlitejs({
+                selector: '#player-html5',
+                options: {
+                    "poster": "./assets/poster.jpg"
+                }
+            });
+        </script>
+    </body>
+</html>

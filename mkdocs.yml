@@ -1,0 +1,59 @@
+# Project information
+site_name: 'vLitejs'
+site_description: 'vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme'
+site_author: 'Joris DANIEL aka Yoriiis'
+site_url: 'https://yoriiis.github.io/vlitejs'
+repo_name: 'yoriiis/vlitejs'
+repo_url: 'https://github.com/yoriiis/vlitejs'
+
+# Pages
+nav:
+  - Overview: index.md
+  - Getting started: getting-started.md
+  - How it works: how-it-works.md
+  - Available methods: available-methods.md
+  - Demo: demo.md
+  - Download: download.md
+
+# Copyright
+copyright: 'Copyright &copy; 2019 - Joris DANIEL aka Yoriiis'
+
+# Documentation and theme
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'white'
+    accent: 'white'
+  font:
+    text: 'Roboto'
+    code: 'Ubuntu Mono'
+  logo: 'img/logo-vlite-small.svg'
+  feature:
+    tabs: false
+
+# Options
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/yoriiis'
+    - type: 'linkedin'
+      link: 'https://www.linkedin.com/in/jorisdaniel'
+
+extra_css:
+  - 'stylesheets/extra.css'
+
+# Google Analytics
+google_analytics:
+  - 'UA-108758282-2'
+  - 'auto'
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      linenums: true
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.details
+  - meta

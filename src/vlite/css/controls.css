@@ -1,0 +1,225 @@
+@import "./vars";
+
+.v-vlite {
+    .v-bigPlayButton {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 65px;
+        height: 65px;
+        transform: translateX(-50%) translateY(-50%);
+        cursor: pointer;
+        z-index: 2;
+        transition: opacity 200ms ease-in;
+        transition-delay: 100ms;
+
+        .v-iconBigPlay {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        svg {
+            fill: var(--colorControl);
+            transition: opacity var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    &:hover .v-bigPlayButton svg {
+        opacity: 1;
+    }
+
+    .v-progressBar {
+        position: absolute;
+        top: 0;
+        left: var(--offsetLeftRightControlBar);
+        right: var(--offsetLeftRightControlBar);
+        height: var(--heightProgressBar);
+        background-color: rgba(0, 0, 0, 0.2);
+        transition: height 100ms ease-out, top 100ms ease-out;
+        z-index: 1;
+
+        .v-progressInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .v-progressSeek {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--colorGradient);
+            border-radius: 0 4px 4px 0;
+            transition: all 100ms ease-out;
+        }
+
+        &:hover {
+            height: var(--heightProgressBarHover);
+            top: calc(((var(--heightProgressBarHover) - var(--heightProgressBar)) / 2) * -1);
+        }
+    }
+
+    .v-controlBar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: var(--heightControlBar);
+        padding-top: var(--heightProgressBar);
+        text-align: right;
+        padding-left: var(--offsetLeftRightControlBar);
+        padding-right: var(--offsetLeftRightControlBar);
+        background: var(--backgroundControlBar);
+        transition: 250ms ease-in;
+
+        &:hover {
+            opacity: 1 !important;
+        }
+
+        &.hidden {
+            opacity: 0;
+        }
+
+        .v-controlBarContent {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .v-playPauseButton {
+        position: relative;
+        float: left;
+        width: 40px;
+        height: 100%;
+        cursor: pointer;
+
+        .v-playerIcon {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        /* stylelint-disable no-descending-specificity */
+        svg {
+            fill: var(--colorControl);
+            transition: opacity var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
+            width: 18px;
+            height: 18px;
+        }
+        /* stylelint-enable */
+
+        &:hover svg {
+            opacity: 1;
+        }
+    }
+
+    .v-time {
+        color: var(--colorControl);
+        font-size: 12px;
+        float: left;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .v-volume {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 100%;
+        cursor: pointer;
+
+        .v-playerIcon {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        &:not(.v-muted) {
+            .v-iconVolumeHigh {
+                display: block;
+            }
+        }
+
+        &.v-muted {
+            .v-iconVolumeMute {
+                display: block;
+            }
+        }
+
+        /* stylelint-disable no-descending-specificity */
+        svg {
+            fill: var(--colorControl);
+            transition: opacity var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
+            width: 18px;
+            height: 18px;
+        }
+        /* stylelint-enable */
+
+        &:hover svg {
+            opacity: 1;
+        }
+    }
+
+    .v-fullscreen {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 100%;
+        cursor: pointer;
+
+        .v-playerIcon {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        &:not(.v-exit) {
+            .v-iconFullscreen {
+                display: block;
+            }
+        }
+
+        &.v-exit {
+            .v-iconShrink {
+                display: block;
+            }
+        }
+
+        /* stylelint-disable no-descending-specificity */
+        svg {
+            fill: var(--colorControl);
+            transition: opacity var(--delayTransitionControlsHover);
+            opacity: var(--defaultControlsOpacity);
+            width: 18px;
+            height: 18px;
+        }
+        /* stylelint-enable */
+
+        &:hover svg {
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.v-vlite {
+    &,
+    * {
+        box-sizing: border-box;
+    }
+
+    div,
+    span,
+    p,
+    a,
+    ul,
+    li,
+    form,
+    label {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        vertical-align: baseline;
+    }
+}
