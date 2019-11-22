@@ -65,6 +65,7 @@
 		"webpack-manifest-plugin": "2.0.3"
 	},
 	"engines": {
-		"node": ">=8.11.2"
+		"node": "8.11.2",
+		"npm": "5.6.0"
 	}
 }
