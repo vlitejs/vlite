@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>vLitejs</title>
+	<link rel="stylesheet" href="../../dist/vlite/css/vlite.css" />
+</head>
+<body>
+	<video id="player-html5" class="vlite-js" src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4" data-options='{"autoplay": false, "controls": true, "playPause": true, "progressBar": true, "time": true, "volume": true, "fullscreen": true, "poster": "../assets/poster.jpg", "bigPlay": true, "autoHide": true, "nativeControlsForTouch": false, "playsinline": true}'></video>
+	<script src="../../dist/vlite/js/vlite.js"></script>
+	<script>
+		new vlitejs({
+			selector: '#player-html5',
+			onReady: (player) => {
+				//Ready
+			}
+		});
+	</script>
+</body>
+</html>

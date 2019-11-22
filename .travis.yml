@@ -1,0 +1,38 @@
+os: linux
+
+language: node_js
+
+node_js: "8.11.2"
+
+# Safelist
+branches:
+  only:
+    - master
+
+cache:
+  npm: true
+  pip: true
+
+jobs:
+  include:
+    - language: python
+      python: 3.6
+      before_script:
+        - pip install mkdocs
+        - pip install mkdocs-material
+        - npm install
+      script:
+        - npm run build
+        - npm run test:eslint && npm run test:stylelint
+        - npm run build:mkdocs:only
+        - npm run create:demo
+        - cd site
+      deploy:
+        provider: pages
+        cleanup: false
+        token: $GITHUB_TOKEN
+        keep_history: false
+        edge: true
+        commit_message: Deploy Travis CI to %{target_branch} branch
+        on:
+          branch: master

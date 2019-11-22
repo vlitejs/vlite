@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "eg2.vscode-npm-script",
+        "esbenp.prettier-vscode",
+        "ricard.postcss",
+        "shd101wyy.markdown-preview-enhanced",
+        "Tobermory.es6-string-html"
+    ]
+}

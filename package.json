@@ -1,25 +1,70 @@
 {
-  "name": "vlitejs",
-  "version": "2.0.1",
-  "description": "vLite.js is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin",
-  "main": "js/vlite-html5+youtube.min.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yoriiis/vlitejs.git"
-  },
-  "keywords": [
-    "player",
-    "video",
-    "html5",
-    "youtube",
-    "youtube api",
-    "vanilla javascript",
-    "lightweight"
-  ],
-  "author": "Yoriiis aka Joris Daniel (joris.daniel@gmail.com)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yoriiis/vlitejs/issues"
-  },
-  "homepage": "https://vlite.bitbucket.io"
+	"name": "vlitejs",
+	"version": "3.0.0",
+	"description": "vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme",
+	"keywords": [
+		"html5",
+		"lightweight",
+		"player",
+		"vanilla javascript",
+		"video",
+		"videojs",
+		"youtube",
+		"youtube api"
+	],
+	"homepage": "https://yoriiis.github.io/vlitejs",
+	"bugs": "https://github.com/yoriiis/vlitejs/issues",
+	"repository": "https://github.com/yoriiis/vlitejs.git",
+	"license": "MIT",
+	"author": "Yoriiis aka Joris Daniel (joris.daniel@gmail.com)",
+	"main": "dist/vlite/js/vlite.js",
+	"scripts": {
+		"build": "rm -rf ./dist/ && webpack --mode=production",
+		"build:jsdoc": "jsdoc --configure ./jsdoc.json",
+		"build:mkdocs": "rm -rf ./site/ && npm run build && npm run build:mkdocs:only && npm run create:demo",
+		"build:mkdocs:only": "mkdocs build",
+		"create:demo": "cp -rv ./dist/. ./docs/demo/dist/ && cp -rv ./docs/demo/. ./site/demo/",
+		"start": "rm -rf ./dist/ && webpack --mode=development",
+		"test:eslint": "eslint -c ./.eslintrc.js ./src/",
+		"test:stylelint": "stylelint './src/**/*.css' --config ./stylelint.config.js"
+	},
+	"devDependencies": {
+		"@babel/core": "7.4.5",
+		"@babel/plugin-transform-modules-commonjs": "7.7.0",
+		"@babel/preset-env": "7.4.5",
+		"babel-eslint": "8.0.1",
+		"babel-loader": "8.0.6",
+		"css-loader": "1.0.0",
+		"eslint": "4.10.0",
+		"eslint-config-standard": "10.2.1",
+		"eslint-plugin-import": "2.8.0",
+		"eslint-plugin-node": "5.2.1",
+		"eslint-plugin-promise": "3.6.0",
+		"eslint-plugin-standard": "3.0.1",
+		"expose-loader": "0.7.5",
+		"file-loader": "1.1.11",
+		"jsdoc": "3.6.3",
+		"mini-css-extract-plugin": "0.4.1",
+		"optimize-css-assets-webpack-plugin": "5.0.1",
+		"postcss-import": "11.0.0",
+		"postcss-loader": "2.1.6",
+		"postcss-nested": "3.0.0",
+		"postcss-preset-env": "6.7.0",
+		"prettier-eslint": "9.0.1",
+		"prettier-stylelint": "0.4.2",
+		"progress-bar-webpack-plugin": "1.11.0",
+		"style-loader": "0.21.0",
+		"stylefmt": "6.0.3",
+		"stylelint": "10.1.0",
+		"stylelint-config-recommended": "3.0.0",
+		"stylelint-config-standard": "18.3.0",
+		"svg-inline-loader": "0.8.0",
+		"terser-webpack-plugin": "2.2.1",
+		"webpack": "4.41.2",
+		"webpack-cli": "3.2.3",
+		"webpack-manifest-plugin": "2.0.3"
+	},
+	"engines": {
+		"node": ">=8.11.2"
+	}
 }
