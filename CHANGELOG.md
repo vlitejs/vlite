@@ -1,3 +1,10 @@
+# 3.0.1
+
+#### Updates
+
+* Update `engines` in `package.json` (node and npm)
+
+
 # 3.0.0
 
 #### New features
