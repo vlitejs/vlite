@@ -4,14 +4,14 @@
     </a>
 </p><br /><br />
 <p align="center">
-    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.0-ffb300.svg?style=for-the-badge">
+    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.0-ff7f15.svg?style=for-the-badge">
     <a href="https://travis-ci.com/yoriiis/vlitejs">
         <img alt="TravisCI" src="https://img.shields.io/travis/yoriiis/vlitejs?style=for-the-badge">
     </a>
-    <img alt="Support" src="https://img.shields.io/npm/v/vlitejs?style=for-the-badge">
-    <img alt="Support" src="https://img.shields.io/node/v/vlitejs?style=for-the-badge">
+    <img alt="npm" src="https://img.shields.io/npm/v/vlitejs?style=for-the-badge">
+    <img alt="Node.js" src="https://img.shields.io/node/v/vlitejs?style=for-the-badge">
     <a href="https://gitter.im/vlitejs/vlitejs">
-        <img alt="Support" src="https://img.shields.io/gitter/room/vlitejs/vlitejs?style=for-the-badge">
+        <img alt="Support" src="https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge">
     </a>
     <a href="https://bundlephobia.com/result?p=fela@latest">
         <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/vlitejs?style=for-the-badge">

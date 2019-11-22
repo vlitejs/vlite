@@ -4,5 +4,4 @@ dist/**/*.map
 dist/demo/
 docs/demo/dist/
 jsdocs/*
-!jsdocs/.gitkeep
 site/

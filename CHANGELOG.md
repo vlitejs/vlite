@@ -6,7 +6,7 @@
     * CSS
     * JS
     * Documentation with MkDocs build
-    * Webpack configuration for the build
+    * Webpack configuration
     * Examples
 * New folder structure
 * Add `ESLint` with `Standard JS` on the project with associated npm scripts
@@ -17,10 +17,10 @@
 * Add Travis builds: `stylelint`, `eslint` and `mkdocs build`
 * Add `JSDoc` configuration file and all code comments
 * Add `Material for MkDocs` to build the documentation website
-* Add `Webpack` configuration for builds
-* Add `./examples` folder with `vlitejs` examples
+* Add `Webpack` configuration
+* Add `./examples` folder with vLitejs examples
 * Add `.github` folder with `ISSUE_TEMPLATE` and `PULL_REQUEST_TEMPLATE`
-* Add `./dist` folder with `vlitejs` assets
+* Add `./dist` folder with vLitejs assets
 * Add `CHANGELOG` file
 * Add `.editorconfig` file
 
@@ -38,7 +38,7 @@
 
 #### Fixes
 
-* Fixed autoplay option that does not work with browser policy without user gesture. Muted option is forced to solved the problem.
+* Fix autoplay option that does not work with browser policy without user gesture. Muted option is forced to solved the problem.
 
 
 # 2.0.1
@@ -90,5 +90,5 @@
 
 #### New features
 
-* First release of `vlitejs`
+* First release of vLitejs
 * Update README

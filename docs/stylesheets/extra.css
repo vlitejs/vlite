@@ -1,4 +1,4 @@
-/* Override theme color */
+/* Override default theme */
 
 /* Header */
 .md-header {
@@ -59,6 +59,7 @@
     margin: 0 auto;
 }
 
+/* Gitter button */
 .gitter-open-chat-button {
     width: 50px;
     height: 50px;
@@ -74,7 +75,6 @@
     opacity: 0.8;
 }
 
-/* Gitter button */
 .gitter-open-chat-button:hover {
     background-color: #36bc98;
     opacity: 1;
