@@ -197,11 +197,11 @@ export default class Player {
 
 		if (this.options.controls && this.options.volume) {
 			// Create volume button event listener
-			this.onCLickToggleVolume = e => {
+			this.onClickToggleVolume = e => {
 				e.preventDefault()
 				this.toggleVolume()
 			}
-			this.wrapperPlayer.querySelector('.v-volume').addEventListener('click', this.onCLickToggleVolume, false)
+			this.wrapperPlayer.querySelector('.v-volume').addEventListener('click', this.onClickToggleVolume, false)
 		}
 
 		if (this.options.controls && this.options.fullscreen) {
@@ -550,8 +550,8 @@ export default class Player {
 		}
 
 		if (this.options.controls && this.options.volume) {
-			this.wrapperPlayer.querySelector('.v-volume').removeEventListener('click', this.onCLickToggleVolume)
-			this.onCLickToggleVolume = null
+			this.wrapperPlayer.querySelector('.v-volume').removeEventListener('click', this.onClickToggleVolume)
+			this.onClickToggleVolume = null
 		}
 
 		if (this.options.controls) {
