@@ -1,6 +1,6 @@
 # Project information
 site_name: 'vLitejs'
-site_description: 'vLitejs is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native.'
+site_description: 'vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme'
 site_author: 'Joris DANIEL aka Yoriiis'
 site_url: 'https://yoriiis.github.io/vlitejs'
 repo_name: 'yoriiis/vlitejs'

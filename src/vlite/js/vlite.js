@@ -3,7 +3,7 @@
 * @name vlitejs
 * @version 3.0.0
 * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
-* @description: vLitejs is a fast and lightweight Javascript library to customize and skin native HTML5 video and Youtube video in Javascript native with a default skin
+* @description: vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme
 * {@link https://yoriiis.github.io/vlitejs}
 * @copyright 2019 Joris DANIEL <https://yoriiis.github.io/vlitejs>
 **/
