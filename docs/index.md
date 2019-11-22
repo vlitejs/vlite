@@ -10,7 +10,13 @@ vLitejs is a **fast** and **lightweight** Javascript library to customize and sk
     <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
         ![Screenshot](img/demo.jpg)
     </a>
-</p><br />
+</p>
+
+## Philosophy
+
+vLitejs was created with the minimum functionality required for a video player with a custom theme. The performance and weight of the library are therefore very important and this is the main vision of vLitejs.
+
+The library is composed of a Javascript `Player` class, extended by Youtube and HTML5 videos. It is therefore possible to add other popular video services in the future.
 
 ## Github & npm
 
@@ -30,7 +36,7 @@ Created with ♥ by [@yoriiis](http://github.com/yoriiis).
 ## Contributors
 
 !!! note "Contributors"
-    Thanks to Maxime LEROUGE for its contribution and  <a href="https://www.behance.net/victorshm" target="_blank" title="Victor Schirm">Victor Schirm</a> for the vLitejs logo.
+    Many thanks to Maxime LEROUGE for its contribution and <a href="https://www.behance.net/victorshm" target="_blank" title="Victor Schirm">Victor Schirm</a> for the vLitejs logo 👍
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 

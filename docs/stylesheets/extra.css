@@ -81,5 +81,5 @@
 }
 
 .gitter-open-chat-button.is-collapsed {
-    transform: translateY(150%);
+    transform: translateY(calc(150% + 20px));
 }

@@ -2,17 +2,17 @@
 
 #### New features
 
-* Add all sources of `vlitejs` project including:
+* Add all sources of the vLitejs project, including:
     * CSS
     * JS
     * Documentation with MkDocs build
     * Webpack configuration for the build
     * Examples
 * New folder structure
-* Add `ESLint` on the project and add npm scripts
-* Add `StyleLint` on the project and add npm scripts
-* Add `Babel` on the project
-* Add `postCSS` on the project
+* Add `ESLint` with `Standard JS` on the project with associated npm scripts
+* Add `StyleLint` configuration on the project with associated npm scripts
+* Add `Babel` configuration on the project
+* Add `postCSS` configuration on the project
 * Add `browserslistrc` files for browsers support
 * Add Travis builds: `stylelint`, `eslint` and `mkdocs build`
 * Add `JSDoc` configuration file and all code comments
@@ -20,7 +20,7 @@
 * Add `Webpack` configuration for builds
 * Add `./examples` folder with `vlitejs` examples
 * Add `.github` folder with `ISSUE_TEMPLATE` and `PULL_REQUEST_TEMPLATE`
-* Add `./build` folder with `vlitejs` assets build
+* Add `./dist` folder with `vlitejs` assets
 * Add `CHANGELOG` file
 * Add `.editorconfig` file
 
@@ -28,9 +28,11 @@
 
 * Remove specific build file for `html5` player only or `youtube` player only. We keep only one bundle compatible with `html5` and `youtube`
 
-##### Updates
+#### Updates
 
-* Rename vLitejs `callback` function into `onReady`
+* Rename the export of the `vLite` constructor to` vlitejs`
+* Rename `timeline` option to `progressBar`
+* Rename `callback` option to `onReady`
 * Rename CSS class prefixes from `.vl-` to `.v-`
 * Rename all CSS class with [FUN](https://benfrain.com/enduring-css-writing-style-sheets-rapidly-changing-long-lived-projects/#h-H2_5) methodology
 

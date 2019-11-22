@@ -1,3 +1,6 @@
+<br /><p align="center" style="max-width: 200px; margin: 0 auto;">
+    <img src="https://yoriiis.github.io/vlitejs/img/logo-vlite.svg" alt="vLitejs on desktop" />
+</p><br /><br />
 <p align="center">
     <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.0-ffb300.svg?style=for-the-badge">
     <a href="https://travis-ci.com/yoriiis/vlitejs">
@@ -22,11 +25,9 @@
 
 ---
 
-# vLitejs
-
 ## The new smallest Javascript video library
 
-vLitejs is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with Gzip, vLitejs has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
+vLitejs is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with gzip, vLitejs has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
 
 <p align="center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo" target="_blank">
@@ -36,7 +37,7 @@ vLitejs is a **fast** and **lightweight** Javascript library to customize and sk
 
 ## Installation
 
-The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs.com/package/vlitejs) and [Github](https://github.com/yoriiis/vlitejs).
+The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs.com/package/vlitejs).
 
 ```
 npm i --save-dev vlitejs
@@ -47,37 +48,46 @@ yarn add --dev vlitejs
 
 ## Demo
 
-Online demo is available on [vLitejs](https://yoriiis.github.io/vlitejs/demo).
+Online demo is available on [yoriiis.github.io/vlitejs/demo](https://yoriiis.github.io/vlitejs/demo).
+
+The project includes also several examples of vLitejs implementation.
 
 ## How it works
+HTML5 and Youtube video players use the same minimalist structure with native HTML5 `<video>` tag.
 
-#### HTML5 video
+### HTML5 video
+
+* `{{idSelector}}` - Unique HTML id
+* `{{videoSource}}` - Video path
 
 ```html
 <video id="{{idSelector}}"
-    class="vlite-js">
+    class="vlite-js"
+    src="{{videoSource}}">
 </video>
 ```
 
 ### Youtube video
 
+* `{{idSelector}}` - Unique HTML id
+* `{{videoId}}` - Youtube video id
+
 ```html
 <video id="{{idSelector}}"
     class="vlite-js"
-    data-youtube-id="{{videoId}">
+    data-youtube-id="{{videoId}}">
 </video>
 ```
 
 ### Options
 
-Each players has its own object of options. By default, vLitejs use default value of these options like the list below. For more flexibility, vLitejs accepts two possibilities for passed them.
+Each video players has its own options object. For more flexibility, vLitejs accepts two possibilities for passed them. Available options are available on the [vLitejs website](https://yoriiis.github.io/vlitejs).
 
-#### Options in the HTML
+#### Options in HTML
 
 ```html
-<video id="{{idSelector}}"
-    class="vlite-js"
-    data-options='{"poster": "poster.jpg", "controls": true}'>
+<video id="player"
+    data-options='{"autoplay": false, "controls": true}'>
 </video>
 ```
 
@@ -87,30 +97,28 @@ new vlitejs({
 });
 ```
 
-#### Option in the Javascript constructor
+#### Option in Javascript constructor
 
-```html
-<video id="{{idSelector}}"
-    class="vlite-js">
-</video>
-```
+Options object passed to the constructor.
 
 ```javascript
 new vlitejs({
-    selector: '#player',
     options: {
-        "controls": true,
-        "poster": "poster.jpg"
+        autoplay: false,
+        controls: true
     }
 });
 ```
 
 ## Browsers support
 
-The project is fully compatible with the most popular web browser. More information about the HTML5 video support <a href="https://caniuse.com/#feat=video" target="_blank" title="Browser support">here</a>.
+The project is fully compatible with the most popular web browsers. More information about the HTML5 video support on <a href="https://caniuse.com/#feat=video" target="_blank" title="Video element - Can I use">Can I Use</a>. HTML and CSS files are W3C valid.
 
-## Licences
+## Licence
 
-`vLitejs` is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
-Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
-Created with ♥ by [@yoriiis](http://github.com/yoriiis), If you like the project, like it on Github please :)
+vLitejs and his documentation are licensed under the [MIT License](http://opensource.org/licenses/MIT).<br />
+Created with ♥ by [@yoriiis](http://github.com/yoriiis).
+
+## Contributors
+
+Many thanks to Maxime LEROUGE for its contribution and <a href="https://www.behance.net/victorshm" target="_blank" title="Victor Schirm">Victor Schirm</a> for the vLitejs logo 👍
