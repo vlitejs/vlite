@@ -1,5 +1,5 @@
-<br /><p align="center" style="max-width: 200px; margin: 0 auto;">
-    <img src="https://yoriiis.github.io/vlitejs/img/logo-vlite.svg" alt="vLitejs on desktop" />
+<br /><p align="center">
+    <img src="https://yoriiis.github.io/vlitejs/img/logo-vlite.svg" alt="vLitejs on desktop" width="200px" />
 </p><br /><br />
 <p align="center">
     <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.0-ffb300.svg?style=for-the-badge">
@@ -31,7 +31,7 @@ vLitejs is a **fast** and **lightweight** Javascript library to customize and sk
 
 <p align="center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo" target="_blank">
-        <img src="https://yoriiis.github.io/vlitejs/img/demo.jpg" alt="vLitejs on desktop" />
+        <img src="https://yoriiis.github.io/vlitejs/img/demo.jpg" alt="vLitejs on desktop" width="500px" />
     </a>
 </p>
 
