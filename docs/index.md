@@ -4,7 +4,7 @@
 
 # The new smallest Javascript video library
 
-vLitejs is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with gzip, vLitejs has no dependency with any framework or library and is write in **Javascript native**.<br />
+vLitejs is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with gzip, vLitejs has no dependency with any framework or library and is written in **Javascript native**.<br />
 
 <br /><p align="center" class="video-center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
