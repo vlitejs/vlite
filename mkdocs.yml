@@ -21,6 +21,8 @@ copyright: 'Copyright &copy; 2019 - Joris DANIEL aka Yoriiis'
 # Documentation and theme
 theme:
   name: 'material'
+  custom_dir: 'docs/theme'
+  favicon: 'images/vlitejs-favicon.png'
   language: 'en'
   palette:
     primary: 'white'
@@ -28,7 +30,7 @@ theme:
   font:
     text: 'Roboto'
     code: 'Ubuntu Mono'
-  logo: 'img/logo-vlite-small.svg'
+  logo: 'images/logo-vlite-small.svg'
   feature:
     tabs: false
 
@@ -39,9 +41,6 @@ extra:
       link: 'https://github.com/yoriiis'
     - type: 'linkedin'
       link: 'https://www.linkedin.com/in/jorisdaniel'
-
-extra_css:
-  - 'stylesheets/extra.css'
 
 # Google Analytics
 google_analytics:
