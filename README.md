@@ -4,7 +4,7 @@
     </a>
 </p><br /><br />
 <p align="center">
-    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.1-ff7f15.svg?style=for-the-badge">
+    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.2-ff7f15.svg?style=for-the-badge">
     <a href="https://travis-ci.com/yoriiis/vlitejs">
         <img alt="TravisCI" src="https://img.shields.io/travis/yoriiis/vlitejs?style=for-the-badge">
     </a>

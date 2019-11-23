@@ -1,3 +1,10 @@
+# 3.0.2
+
+#### Updates
+
+* Update docs and add `.eslintignore`
+
+
 # 3.0.1
 
 #### Updates
