@@ -36,7 +36,7 @@ HTML5 and Youtube video players use the same minimalist structure with native HT
 
 <br /><p align="center" class="video-center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
-        ![Screenshot](img/demo2.jpg)
+        ![Screenshot](images/demo2.jpg)
     </a>
 </p>
 
