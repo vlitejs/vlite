@@ -26,7 +26,7 @@
 		"create:demo": "cp -rv ./dist/. ./docs/demo/dist/ && cp -rv ./docs/demo/. ./site/demo/",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
 		"test:eslint": "eslint -c ./.eslintrc.js ./src/",
-		"test:stylelint": "stylelint './src/**/*.css' --config ./stylelint.config.js"
+		"test:stylelint": "stylelint './src/**/*.css' './docs/theme/assets/stylesheets/**/*.css' --config ./stylelint.config.js"
 	},
 	"devDependencies": {
 		"@babel/core": "7.4.5",

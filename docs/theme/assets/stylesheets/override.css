@@ -25,7 +25,7 @@
     margin-top: -20px;
 }
 
-.logo-vlite img {
+.md-content .logo-vlite img {
     width: 180px;
 }
 
@@ -37,20 +37,20 @@
 .md-typeset a,
 .md-typeset a:active,
 .md-typeset a:hover,
-.md-typeset .footnote li:hover .footnote-backref:hover,
 .md-typeset .footnote li:target .footnote-backref,
-.md-typeset .md-clipboard:active:before,
-.md-typeset .md-clipboard:hover:before,
+.md-typeset .footnote li:hover .footnote-backref:hover,
+.md-typeset .md-clipboard:active::before,
+.md-typeset .md-clipboard:hover::before,
 .md-typeset [id] .headerlink:focus,
-.md-typeset [id]:hover .headerlink:hover,
-.md-typeset [id]:target .headerlink {
+.md-typeset [id]:target .headerlink,
+.md-typeset [id]:hover .headerlink:hover {
     color: #ff7f15;
 }
 
 /* Research */
 .md-search-result__link:hover,
 .md-search-result__link[data-md-state=active] {
-    background-color: rgba(255, 171, 0, .1);
+    background-color: rgba(255, 171, 0, 0.1);
 }
 
 /* Video screenshot */
@@ -68,7 +68,7 @@
     padding: 0;
     bottom: 20px;
     right: 20px;
-    background-image: url('../img/gitter.png');
+    background-image: url('../images/gitter.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 35%;

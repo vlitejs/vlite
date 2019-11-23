@@ -1,5 +1,5 @@
 <br /><p align="center" class="logo-vlite">
-  ![Screenshot](img/logo-vlite.svg)
+  ![Screenshot](images/logo-vlite.svg)
 </p><br />
 
 # The new smallest Javascript video library
@@ -8,7 +8,7 @@ vLitejs is a **fast** and **lightweight** Javascript library to customize and sk
 
 <br /><p align="center" class="video-center">
     <a href="https://yoriiis.github.io/vlitejs/demo" title="Demo" class="custom-button">
-        ![Screenshot](img/demo.jpg)
+        ![Screenshot](images/demo.jpg)
     </a>
 </p>
 
