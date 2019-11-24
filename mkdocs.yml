@@ -5,6 +5,7 @@ site_author: 'Joris DANIEL aka Yoriiis'
 site_url: 'https://yoriiis.github.io/vlitejs/'
 repo_name: 'yoriiis/vlitejs'
 repo_url: 'https://github.com/yoriiis/vlitejs'
+use_directory_urls: false
 
 # Pages
 nav:
