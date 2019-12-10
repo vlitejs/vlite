@@ -4,7 +4,7 @@
     </a>
 </p><br /><br />
 <p align="center">
-    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.2-ff7f15.svg?style=for-the-badge">
+    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.3-ff7f15.svg?style=for-the-badge">
     <a href="https://travis-ci.com/yoriiis/vlitejs">
         <img alt="TravisCI" src="https://img.shields.io/travis/yoriiis/vlitejs?style=for-the-badge">
     </a>
@@ -16,7 +16,7 @@
     <a href="https://bundlephobia.com/result?p=fela@latest">
         <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/vlitejs?style=for-the-badge">
     </a>
-    <a href="https://npmjs.com/package/chunks-webpack-plugin">
+    <a href="https://npmjs.com/package/vlitejs">
         <img alt="Npm downloads" src="https://img.shields.io/npm/dm/vlitejs?color=fb3e44&label=npm%20downloads&style=for-the-badge">
     </a>
 </p>
@@ -55,6 +55,7 @@ Online demo is available on [yoriiis.github.io/vlitejs/demo](https://yoriiis.git
 The project includes also several examples of vLitejs implementation.
 
 ## How it works
+
 HTML5 and Youtube video players use the same minimalist structure with native HTML5 `<video>` tag.
 
 ### HTML5 video
