@@ -26,14 +26,13 @@ Includes files manually in your project:
 
 ```html
 <link rel="stylesheet" href="vlite.css" />
-<script src="vlitejs"></script>
+<script src="vlite.js"></script>
 
 <script>
     new vlitejs({
         selector: '#player'
     });
 </script>
-
 ```
 
 <script>
