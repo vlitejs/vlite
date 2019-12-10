@@ -1,3 +1,10 @@
+# 3.0.3
+
+#### Fixes
+
+* Fixed strict node engine version break with different node version [#6](https://github.com/yoriiis/vlitejs/issues/6)
+
+
 # 3.0.2
 
 #### Updates

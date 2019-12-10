@@ -1,6 +1,6 @@
 {
 	"name": "vlitejs",
-	"version": "3.0.2",
+	"version": "3.0.3",
 	"description": "vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme",
 	"keywords": [
 		"html5",
@@ -65,7 +65,6 @@
 		"webpack-manifest-plugin": "2.0.3"
 	},
 	"engines": {
-		"node": "8.11.2",
-		"npm": "5.6.0"
+		"node": ">=8.11.2"
 	}
 }
