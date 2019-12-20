@@ -29,7 +29,7 @@
 		"test:stylelint": "stylelint './src/**/*.css' './docs/theme/assets/stylesheets/**/*.css' --config ./stylelint.config.js"
 	},
 	"devDependencies": {
-		"@babel/core": "7.4.5",
+		"@babel/core": "7.7.7",
 		"@babel/plugin-transform-modules-commonjs": "7.7.0",
 		"@babel/preset-env": "7.7.7",
 		"babel-eslint": "8.0.1",
