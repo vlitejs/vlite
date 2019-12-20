@@ -34,7 +34,7 @@
 		"@babel/preset-env": "7.7.7",
 		"babel-eslint": "8.0.1",
 		"babel-loader": "8.0.6",
-		"css-loader": "1.0.0",
+		"css-loader": "3.4.0",
 		"eslint": "4.19.1",
 		"eslint-config-standard": "11.0.0",
 		"eslint-plugin-import": "2.19.1",
