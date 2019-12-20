@@ -45,7 +45,7 @@
 		"file-loader": "5.0.2",
 		"jsdoc": "3.6.3",
 		"mini-css-extract-plugin": "0.4.1",
-		"optimize-css-assets-webpack-plugin": "5.0.1",
+		"optimize-css-assets-webpack-plugin": "5.0.3",
 		"postcss-import": "11.0.0",
 		"postcss-loader": "3.0.0",
 		"postcss-nested": "3.0.0",
