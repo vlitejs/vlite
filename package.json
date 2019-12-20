@@ -52,7 +52,7 @@
 		"postcss-preset-env": "6.7.0",
 		"prettier-eslint": "9.0.1",
 		"prettier-stylelint": "0.4.2",
-		"progress-bar-webpack-plugin": "1.11.0",
+		"progress-bar-webpack-plugin": "1.12.1",
 		"style-loader": "0.21.0",
 		"stylefmt": "6.0.3",
 		"stylelint": "10.1.0",
