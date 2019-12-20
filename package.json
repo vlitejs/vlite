@@ -57,7 +57,7 @@
 		"stylefmt": "6.0.3",
 		"stylelint": "10.1.0",
 		"stylelint-config-recommended": "3.0.0",
-		"stylelint-config-standard": "18.3.0",
+		"stylelint-config-standard": "19.0.0",
 		"svg-inline-loader": "0.8.0",
 		"terser-webpack-plugin": "2.3.1",
 		"webpack": "4.41.4",
