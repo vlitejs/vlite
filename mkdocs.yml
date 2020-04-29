@@ -35,14 +35,6 @@ theme:
   feature:
     tabs: false
 
-# Options
-extra:
-  social:
-    - type: 'github'
-      link: 'https://github.com/yoriiis'
-    - type: 'linkedin'
-      link: 'https://www.linkedin.com/in/jorisdaniel'
-
 # Google Analytics
 google_analytics:
   - 'UA-108758282-2'
