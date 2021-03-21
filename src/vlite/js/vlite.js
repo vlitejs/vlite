@@ -5,7 +5,7 @@
  * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
  * @description: vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme
  * {@link https://yoriiis.github.io/vlitejs}
- * @copyright 2019 Joris DANIEL <https://yoriiis.github.io/vlitejs>
+ * @copyright 2021 Joris DANIEL <https://yoriiis.github.io/vlitejs>
  **/
 
 'use strict'

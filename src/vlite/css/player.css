@@ -4,7 +4,8 @@
 }
 
 .v-vlite {
-	font-family: 'Roboto', arial, sans-serif;
+	font-family: -apple-system, blinkmacsystemfont, segoe UI, Helvetica, Arial, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji;
 	position: relative;
 	height: 0;
 	padding-top: 56.25%;
@@ -16,7 +17,6 @@
 		height: 100%;
 	}
 
-	/* Firefox fullscreen config */
 	::-moz-full-screen & {
 		width: 100%;
 		height: 100%;
@@ -55,7 +55,6 @@
 		object-fit: cover;
 	}
 
-	/* Skin */
 	&.v-paused {
 		.v-playPauseButton {
 			.v-iconPlay {
@@ -65,27 +64,6 @@
 
 		.v-controlBar.hidden {
 			opacity: 1;
-		}
-	}
-
-	.v-poster {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: #000;
-		background-repeat: no-repeat;
-		background-position: 50% 50%;
-		background-size: cover;
-		cursor: pointer;
-		visibility: hidden;
-		opacity: 0;
-		z-index: 2;
-
-		&.v-active {
-			opacity: 1;
-			visibility: visible;
 		}
 	}
 
@@ -107,30 +85,6 @@
 			.v-iconPause {
 				display: block;
 			}
-		}
-	}
-
-	.v-overlayVideo {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: calc(100% - var(--heightControlBar));
-
-		.v-overlayLeft,
-		.v-overlayRight {
-			position: absolute;
-			top: 0;
-			width: 30%;
-			height: 100%;
-		}
-
-		.v-overlayLeft {
-			left: 0;
-		}
-
-		.v-overlayRight {
-			right: 0;
 		}
 	}
 }

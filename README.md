@@ -1,7 +1,8 @@
 <br /><p align="center">
-    <a href="https://yoriiis.github.io/vlitejs" title="vLitejs">
-        <img src="https://yoriiis.github.io/vlitejs/images/logo-vlite.svg" alt="vLitejs" width="200px" />
-    </a>
+<a href="https://yoriiis.github.io/vlitejs" title="vLitejs">
+<img src="https://yoriiis.github.io/vlitejs/images/logo-vlite.svg" alt="vLitejs" width="200px" />
+</a>
+
 </p><br /><br />
 <p align="center">
     <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.4-ff7f15.svg?style=for-the-badge">
@@ -44,6 +45,7 @@ The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs
 ```
 npm i --save-dev vlitejs
 ```
+
 ```
 yarn add --dev vlitejs
 ```
@@ -60,26 +62,20 @@ HTML5 and Youtube video players use the same minimalist structure with native HT
 
 ### HTML5 video
 
-* `{{idSelector}}` - Unique HTML id
-* `{{videoSource}}` - Video path
+- `{{idSelector}}` - Unique HTML id
+- `{{videoSource}}` - Video path
 
 ```html
-<video id="{{idSelector}}"
-    class="vlite-js"
-    src="{{videoSource}}">
-</video>
+<video id="{{idSelector}}" class="vlite-js" src="{{videoSource}}"></video>
 ```
 
 ### Youtube video
 
-* `{{idSelector}}` - Unique HTML id
-* `{{videoId}}` - Youtube video id
+- `{{idSelector}}` - Unique HTML id
+- `{{videoId}}` - Youtube video id
 
 ```html
-<video id="{{idSelector}}"
-    class="vlite-js"
-    data-youtube-id="{{videoId}}">
-</video>
+<video id="{{idSelector}}" class="vlite-js" data-youtube-id="{{videoId}}"></video>
 ```
 
 ### Options
@@ -89,15 +85,13 @@ Each video players has its own options object. For more flexibility, vLitejs acc
 #### Options in HTML
 
 ```html
-<video id="player"
-    data-options='{"autoplay": false, "controls": true}'>
-</video>
+<video id="player" data-options='{"autoplay": false, "controls": true}'></video>
 ```
 
 ```javascript
 new vlitejs({
-    selector: '#player'
-});
+  selector: '#player'
+})
 ```
 
 #### Option in Javascript constructor
@@ -106,11 +100,11 @@ Options object passed to the constructor.
 
 ```javascript
 new vlitejs({
-    options: {
-        autoplay: false,
-        controls: true
-    }
-});
+  options: {
+    autoplay: false,
+    controls: true
+  }
+})
 ```
 
 ## Browsers support

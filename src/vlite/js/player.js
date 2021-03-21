@@ -1,11 +1,10 @@
 // Import SVG icons
-import svgBigPlay from '../svg/big-play.svg'
-import svgPlay from '../svg/play.svg'
-import svgPause from '../svg/pause.svg'
-import svgVolumeHigh from '../svg/volume-high.svg'
-import svgVolumeMute from '../svg/volume-mute.svg'
-import svgFullscreen from '../svg/fullscreen.svg'
-import svgFullscreenExit from '../svg/fullscreen-exit.svg'
+import { createElement, Fragment } from 'jsx-dom'
+import LoaderTemplate from 'shared/loader/assets/scripts/loader'
+import ControlBarTemplate from 'shared/control-bar/assets/scripts/control-bar'
+import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
+import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
+import PosterTemplate from 'shared/poster/assets/scripts/poster'
 
 /**
  * vlitejs Player
@@ -50,7 +49,7 @@ export default class Player {
 			// Check if there is a conflict with the constructor options
 			if (options !== undefined) {
 				console.warn(
-					`vLitejs :: Option passed in '${selector}' by data attribute is priority over object in constructor.`
+					`vLitejs :: Option passed in "${selector}" by data attribute is priority over object in constructor.`
 				)
 			}
 
@@ -99,85 +98,29 @@ export default class Player {
 			this.wrapperPlayer.classList.add('v-forceControls')
 		}
 
-		const cssstylePoster =
-			this.options.poster !== null ? `background-image: url(${this.options.poster});` : ''
+		const htmlControls = (
+			<>
+				{!this.options.nativeControlsForTouch && (
+					<>
+						<OverlayTemplate fastForward={!this.touchSupport} />
+						<LoaderTemplate />
+						<PosterTemplate posterUrl={this.options.poster} />
+						{this.options.bigPlay && <BigPlayTemplate />}
+						{this.options.controls && (
+							<ControlBarTemplate
+								progressBar={this.options.progressBar}
+								playPause={this.options.playPause}
+								time={this.options.time}
+								volume={this.options.volume}
+								fullscreen={this.options.fullscreen}
+							/>
+						)}
+					</>
+				)}
+			</>
+		)
 
-		const htmlControls = `${
-			!this.options.nativeControlsForTouch
-				? `<div class="v-overlayVideo" data-v-toggle-play-pause>
-									${
-										!this.touchSupport
-											? `<div class="v-overlayLeft" data-v-fast-forward data-direction="left"></div>
-										<div class="v-overlayRight" data-v-fast-forward data-direction="right"></div>`
-											: ''
-									}
-								</div>`
-				: ''
-		}
-							<div class="v-loader">
-								<div class="v-loaderContent">
-									<div class="v-loaderBounce1"></div>
-									<div class="v-loaderBounce2"></div>
-									<div class="v-loaderBounce3"></div>
-								</div>
-							</div>
-							<div class="v-poster v-active" data-v-toggle-play-pause style="${cssstylePoster}"></div>
-							${
-								this.options.bigPlay
-									? `<div class="v-bigPlayButton" data-v-toggle-play-pause>
-									 <span class="v-playerIcon v-iconBigPlay">${svgBigPlay}</span>
-								</div>`
-									: ''
-							}
-							${
-								this.options.controls
-									? `<div class="v-controlBar">
-									${
-										this.options.progressBar
-											? `<div class="v-progressBar">
-											<div class="v-progressSeek"></div>
-											<input type="range" class="v-progressInput" min="0" max="100" step="0.01" value="0" orient="horizontal" />
-										</div>`
-											: ''
-									}
-									<div class="v-controlBarContent">
-										${
-											this.options.playPause
-												? `<div class="v-playPauseButton" data-v-toggle-play-pause>
-												<span class="v-playerIcon v-iconPlay">${svgPlay}</span>
-												<span class="v-playerIcon v-iconPause">${svgPause}</span>
-											</div>`
-												: ''
-										}
-										${
-											this.options.time
-												? `<div class="v-time">
-												<span class="v-currentTime">00:00</span>&nbsp;/&nbsp;<span class="v-duration"></span>
-											</div>`
-												: ''
-										}
-										${
-											this.options.volume
-												? `<div class="v-volume">
-												<span class="v-playerIcon v-iconVolumeHigh">${svgVolumeHigh}</span>
-												<span class="v-playerIcon v-iconVolumeMute">${svgVolumeMute}</span>
-											</div>`
-												: ''
-										}
-										${
-											this.options.fullscreen
-												? `<div class="v-fullscreen">
-												<span class="v-playerIcon v-iconFullscreen">${svgFullscreen}</span>
-												<span class="v-playerIcon v-iconShrink">${svgFullscreenExit}</span>
-											</div>`
-												: ''
-										}
-									</div>
-								</div>`
-									: ''
-							}`
-
-		wrapper.insertAdjacentHTML('beforeend', htmlControls)
+		wrapper.appendChild(htmlControls)
 	}
 
 	/**
