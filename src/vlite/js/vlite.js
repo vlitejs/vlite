@@ -12,12 +12,20 @@
 
 import PlayerYoutube from './player-youtube'
 import PlayerHtml5 from './player-html5'
+import PlayerVimeo from './player-vimeo'
 
 // Set Youtube API configuration for the queue if the API is not ready
-const _VliteYoutube = {
-	apiLoading: false,
-	apiReady: false,
-	apiReadyQueue: []
+const VLITE_QUEUE = {
+	youtube: {
+		apiLoading: false,
+		apiReady: false,
+		apiReadyQueue: []
+	},
+	vimeo: {
+		apiLoading: false,
+		apiReady: false,
+		apiReadyQueue: []
+	}
 }
 
 /**
@@ -58,29 +66,9 @@ export default class vlitejs {
 	initPlayer() {
 		// Detect the player type (Youtube or HTML5)
 		if (this.player.hasAttribute('data-youtube-id')) {
-			// Detect if the Youtube API is ready
-			if (!_VliteYoutube.apiReady) {
-				// Load the Youtube API if necessary
-				if (!_VliteYoutube.apiLoading) {
-					_VliteYoutube.apiLoading = true
-					this.loadYoutubeAPI()
-				}
-
-				// Create a queue to load players when the API is ready
-				_VliteYoutube.apiReadyQueue.push({
-					player: this.player,
-					options: this.options,
-					onReady: this.onReady
-				})
-			} else {
-				// Youtube API is already available, initialize the Youtube player
-				this.instancePlayer = new PlayerYoutube({
-					selector: this.player,
-					options: this.options,
-					onReady: this.onReady
-				})
-				this.instancePlayer.init()
-			}
+			this.initializeApiQueue({ type: 'youtube' })
+		} else if (this.player.hasAttribute('data-vimeo-id')) {
+			this.initializeApiQueue({ type: 'vimeo' })
 		} else {
 			// Initialize the HTML5 Player
 			this.instancePlayer = new PlayerHtml5({
@@ -93,31 +81,88 @@ export default class vlitejs {
 	}
 
 	/**
+	 * Initialize the queue and the API
+	 * @param {Object} options
+	 * @param {String} options.type API type
+	 */
+	initializeApiQueue({ type }) {
+		// Detect if the API is ready
+		if (!VLITE_QUEUE[type].apiReady) {
+			// Load the API if necessary
+			if (!VLITE_QUEUE[type].apiLoading) {
+				VLITE_QUEUE[type].apiLoading = true
+				type === 'youtube' ? this.loadYoutubeAPI() : this.loadVimeoAPI()
+			}
+
+			// Create a queue to load players when the API is ready
+			VLITE_QUEUE[type].apiReadyQueue.push({
+				player: this.player,
+				options: this.options,
+				onReady: this.onReady
+			})
+		} else {
+			// Youtube API is already available, initialize the Youtube player
+			this.instancePlayer = new PlayerYoutube({
+				selector: this.player,
+				options: this.options,
+				onReady: this.onReady
+			})
+			this.instancePlayer.init()
+		}
+	}
+
+	/**
 	 * Load the Youtube API
 	 */
 	loadYoutubeAPI() {
+		const script = this.createScriptElement({ src: 'https://youtube.com/iframe_api' })
+		window.onYouTubeIframeAPIReady = () => this.onApiReady({ type: 'youtube' })
+		document.getElementsByTagName('body')[0].appendChild(script)
+	}
+
+	/**
+	 * Load the Vimeo API
+	 */
+	loadVimeoAPI() {
+		const script = this.createScriptElement({ src: 'https://player.vimeo.com/api/player.js' })
+		script.onload = (response) => this.onApiReady({ type: 'vimeo' })
+		document.getElementsByTagName('body')[0].appendChild(script)
+	}
+
+	/**
+	 * On API ready
+	 * @param {Object} options
+	 * @param {String} options.type API type
+	 */
+	onApiReady({ type }) {
+		const PlayerInstance = type === 'youtube' ? PlayerYoutube : PlayerVimeo
+
+		VLITE_QUEUE[type].apiReady = true
+
+		// Initialize the player queue
+		VLITE_QUEUE[type].apiReadyQueue.forEach((element) => {
+			this.instancePlayer = new PlayerInstance({
+				selector: element.player,
+				options: element.options,
+				onReady: element.onReady
+			})
+			this.instancePlayer.init()
+		})
+		VLITE_QUEUE[type].apiReadyQueue = []
+	}
+
+	/**
+	 * Create script element
+	 * @param {*} param0
+	 * @returns {HTMLElement} Script tag
+	 */
+	createScriptElement({ src }) {
 		const script = document.createElement('script')
 		script.async = true
 		script.type = 'text/javascript'
-		script.src = 'https://youtube.com/iframe_api'
+		script.src = src
 
-		// Function called when the API is ready
-		window.onYouTubeIframeAPIReady = () => {
-			_VliteYoutube.apiReady = true
-
-			// Initialize the player queue
-			_VliteYoutube.apiReadyQueue.forEach((element) => {
-				this.instancePlayer = new PlayerYoutube({
-					selector: element.player,
-					options: element.options,
-					onReady: element.onReady
-				})
-				this.instancePlayer.init()
-			})
-			_VliteYoutube.apiReadyQueue = []
-		}
-
-		document.getElementsByTagName('body')[0].appendChild(script)
+		return script
 	}
 
 	/**

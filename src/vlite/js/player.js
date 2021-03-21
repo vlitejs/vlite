@@ -86,7 +86,6 @@ export default class Player {
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
-
 		this.onProgressChanged = this.onProgressChanged.bind(this)
 	}
 
@@ -245,9 +244,11 @@ export default class Player {
 	 * Update player duration
 	 */
 	updateDuration() {
-		this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(
-			this.getDuration()
-		)
+		this.getDuration().then((duration) => {
+			this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(
+				duration
+			)
+		})
 	}
 
 	/**
@@ -285,11 +286,13 @@ export default class Player {
 	 * @param {Object} e Event listener datas
 	 */
 	fastForward({ direction }) {
-		if (direction === 'backward') {
-			this.seekTo(this.getCurrentTime() - 10)
-		} else if (direction === 'forward') {
-			this.seekTo(this.getCurrentTime() + 10)
-		}
+		this.getCurrentTime().then((seconds) => {
+			if (direction === 'backward') {
+				this.seekTo(seconds - 10)
+			} else if (direction === 'forward') {
+				this.seekTo(seconds + 10)
+			}
+		})
 	}
 
 	/**
@@ -493,16 +496,17 @@ export default class Player {
 	 * Update current time displaying in the control bar and the width of the progress bar
 	 */
 	updateCurrentTime() {
-		const currentTime = Math.round(this.getCurrentTime())
-		const duration = this.getDuration()
-		const width = (currentTime * 100) / duration
-		const timeElement = this.wrapperPlayer.querySelector('.v-currentTime')
+		Promise.all([this.getCurrentTime(), this.getDuration()]).then(([seconds, duration]) => {
+			const currentTime = Math.round(seconds)
+			const width = (currentTime * 100) / duration
+			const timeElement = this.wrapperPlayer.querySelector('.v-currentTime')
 
-		this.wrapperPlayer.querySelector('.v-progressSeek').style.width = `${width}%`
+			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = `${width}%`
 
-		if (timeElement !== null) {
-			timeElement.innerHTML = this.constructor.formatVideoTime(currentTime)
-		}
+			if (timeElement !== null) {
+				timeElement.innerHTML = this.constructor.formatVideoTime(currentTime)
+			}
+		})
 	}
 
 	/**

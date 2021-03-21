@@ -1,11 +1,11 @@
 import Player from './player'
 
 /**
- * vlitejs Player HTML5
- * @module vlitejs/Player/PlayerHtml5
+ * vlitejs Player Vimeo
+ * @module vlitejs/Player/PlayerVimeo
  */
-export default class PlayerHtml5 extends Player {
-	type = 'html5'
+export default class PlayerVimeo extends Player {
+	type = 'vimeo'
 
 	/**
 	 * Instanciate the constructor
@@ -35,48 +35,28 @@ export default class PlayerHtml5 extends Player {
 	init() {
 		super.init()
 
-		this.waitUntilVideoIsReady().then(this.onPlayerReady)
+		// Init Vimeo player with API
+		this.initVimeoPlayer()
+	}
 
-		!this.skinDisabled && this.addSpecificEvents()
+	/**
+	 * Initialize the Vimeo player
+	 */
+	initVimeoPlayer() {
+		this.instancePlayer = new window.Vimeo.Player(this.player.getAttribute('id'), {
+			id: this.player.getAttribute('data-vimeo-id'),
+			controls: true
+		})
+		this.instancePlayer.ready().then(this.onPlayerReady())
 	}
 
 	/**
 	 * Function executed when the player is ready
 	 */
 	onPlayerReady() {
+		this.player = this.instancePlayer.element
 		super.playerIsReady()
-		this.updateDuration()
-	}
-
-	/**
-	 * Wait until the video is ready
-	 * @returns {Promise} Loading of the video with a Promise
-	 */
-	waitUntilVideoIsReady() {
-		return new window.Promise((resolve, reject) => {
-			// Check if the video is ready
-			if (typeof this.player.duration === 'number' && isNaN(this.player.duration) === false) {
-				resolve()
-			} else {
-				this.onDurationChange = () => {
-					this.player.removeEventListener('durationchange', this.onDurationChange)
-					this.player.removeEventListener('error', this.onError)
-
-					resolve()
-				}
-
-				this.onError = (error) => {
-					this.player.removeEventListener('error', this.onError)
-					this.player.removeEventListener('durationchange', this.onDurationChange)
-
-					reject(error)
-				}
-
-				// Listen error or durationchange events to detect when the video is ready
-				this.player.addEventListener('durationchange', this.onDurationChange)
-				this.player.addEventListener('error', this.onError)
-			}
-		})
+		this.addSpecificEvents()
 	}
 
 	/**
@@ -87,27 +67,27 @@ export default class PlayerHtml5 extends Player {
 		if (this.options.controls) {
 			if (this.options.time) {
 				// On durationchange event, update duration if value is different
-				this.player.addEventListener('durationchange', this.updateDuration)
+				this.instancePlayer.on('durationchange', this.updateDuration)
 			}
 
 			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.player.addEventListener('timeupdate', this.updateCurrentTime)
+			this.instancePlayer.on('timeupdate', this.updateCurrentTime)
 		}
 
 		// On ended event, show poster and reset progressBar and time
-		this.player.addEventListener('ended', this.onVideoEnded)
-		this.player.addEventListener('playing', this.onPlaying)
-		this.player.addEventListener('waiting', this.onWaiting)
-		this.player.addEventListener('seeking', this.onSeeking)
-		this.player.addEventListener('seeked', this.onSeeked)
+		this.instancePlayer.on('ended', this.onVideoEnded)
+		this.instancePlayer.on('playing', this.onPlaying)
+		this.instancePlayer.on('waiting', this.onWaiting)
+		this.instancePlayer.on('seeking', this.onSeeking)
+		this.instancePlayer.on('seeked', this.onSeeked)
 	}
 
 	/**
 	 * Get the player instance
-	 * @returns {Object} Video element
+	 * @returns {Object} Vimeo API instance
 	 */
 	getInstance() {
-		return this.player
+		return this.instancePlayer
 	}
 
 	/**
@@ -115,7 +95,9 @@ export default class PlayerHtml5 extends Player {
 	 * @returns {Float|Integer} Current time of the video
 	 */
 	getCurrentTime() {
-		return new window.Promise((resolve) => resolve(this.player.currentTime))
+		return new window.Promise((resolve) => {
+			this.instancePlayer.getCurrentTime().then((seconds) => resolve(seconds))
+		})
 	}
 
 	/**
@@ -123,7 +105,7 @@ export default class PlayerHtml5 extends Player {
 	 * @param {Float|Integer} Current time video
 	 */
 	setCurrentTime(newTime) {
-		this.player.currentTime = newTime
+		this.instancePlayer.setCurrentTime(newTime)
 	}
 
 	/**
@@ -131,7 +113,9 @@ export default class PlayerHtml5 extends Player {
 	 * @returns {Float|Integer} Duration of the video
 	 */
 	getDuration() {
-		return new window.Promise((resolve) => resolve(this.player.duration))
+		return new window.Promise((resolve) => {
+			this.instancePlayer.getDuration().then((duration) => resolve(duration))
+		})
 	}
 
 	/**
@@ -148,30 +132,28 @@ export default class PlayerHtml5 extends Player {
 	 * Play method of the player
 	 */
 	methodPlay() {
-		this.player.play()
+		this.instancePlayer.play()
 	}
 
 	/**
 	 * Pause method of the player
 	 */
 	methodPause() {
-		this.player.pause()
+		this.instancePlayer.pause()
 	}
 
 	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
-		this.player.muted = true
-		this.player.setAttribute('muted', '')
+		this.instancePlayer.setVolume(0)
 	}
 
 	/**
 	 * Unmute method of the player
 	 */
 	methodUnMute() {
-		this.player.muted = false
-		this.player.removeAttribute('muted')
+		this.instancePlayer.setVolume(1)
 	}
 
 	/**
@@ -206,13 +188,20 @@ export default class PlayerHtml5 extends Player {
 	 * Unbind event listeners
 	 */
 	removeSpecificEvents() {
-		this.options.time && this.player.removeEventListener('durationchange', this.updateDuration)
+		this.options.time && this.instancePlayer.off('durationchange', this.updateDuration)
 
-		this.player.removeEventListener('timeupdate', this.updateCurrentTime)
-		this.player.removeEventListener('playing', this.onPlaying)
-		this.player.removeEventListener('waiting', this.onWaiting)
-		this.player.removeEventListener('seeking', this.onSeeking)
-		this.player.removeEventListener('seeked', this.onSeeked)
-		this.player.removeEventListener('ended', this.onVideoEnded)
+		this.instancePlayer.off('timeupdate', this.updateCurrentTime)
+		this.instancePlayer.off('playing', this.onPlaying)
+		this.instancePlayer.off('waiting', this.onWaiting)
+		this.instancePlayer.off('seeking', this.onSeeking)
+		this.instancePlayer.off('seeked', this.onSeeked)
+		this.instancePlayer.off('ended', this.onVideoEnded)
+	}
+
+	/**
+	 * Remove the Vimeo instance
+	 */
+	removeInstance() {
+		this.instancePlayer.destroy()
 	}
 }

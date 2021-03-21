@@ -5,10 +5,8 @@
 
 </p><br /><br />
 <p align="center">
-    <img alt="TravisCI" src="https://img.shields.io/badge/vLitejs-v3.0.4-ff7f15.svg?style=for-the-badge">
-    <a href="https://travis-ci.com/yoriiis/vlitejs">
-        <img alt="TravisCI" src="https://img.shields.io/travis/yoriiis/vlitejs?style=for-the-badge">
-    </a>
+    <img alt="vLitejs" src="https://img.shields.io/badge/vLitejs-v3.0.4-ff7f15.svg?style=for-the-badge">
+    <img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge" />
     <img alt="npm" src="https://img.shields.io/npm/v/vlitejs?style=for-the-badge">
     <img alt="Node.js" src="https://img.shields.io/node/v/vlitejs?style=for-the-badge">
     <a href="https://gitter.im/vlitejs/vlitejs">

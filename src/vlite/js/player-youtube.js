@@ -113,7 +113,7 @@ export default class PlayerYoutube extends Player {
 	 * @returns {Float|Integer} Current time of the video
 	 */
 	getCurrentTime() {
-		return this.instancePlayer.getCurrentTime()
+		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
 	}
 
 	/**
@@ -121,7 +121,7 @@ export default class PlayerYoutube extends Player {
 	 * @returns {Float|Integer} Duration of the video
 	 */
 	getDuration() {
-		return this.instancePlayer.getDuration()
+		return new window.Promise((resolve) => resolve(this.instancePlayer.getDuration()))
 	}
 
 	/**
@@ -129,7 +129,9 @@ export default class PlayerYoutube extends Player {
 	 * @param {Object} e Event listener datas
 	 */
 	onProgressChanged(e) {
-		this.setCurrentTime((e.target.value * this.getDuration()) / 100)
+		this.getDuration().then((duration) => {
+			this.setCurrentTime((e.target.value * duration) / 100)
+		})
 	}
 
 	/**
