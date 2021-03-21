@@ -5,12 +5,7 @@ import Player from './player'
  * @module vlitejs/Player/PlayerHtml5
  */
 export default class PlayerHtml5 extends Player {
-	/**
-	 * Get the type of the player
-	 */
-	get type() {
-		return 'html5'
-	}
+	type = 'html5'
 
 	/**
 	 * Instanciate the constructor
@@ -22,17 +17,20 @@ export default class PlayerHtml5 extends Player {
 	constructor({ selector, options, onReady }) {
 		// Init Player class
 		super({
-			selector: selector,
-			options: options,
-			onReady: onReady
+			selector,
+			options,
+			onReady
 		})
 
-		// Create Promise to check when the video is ready
-		this.waitUntilVideoIsReady().then(this.onPlayerReady.bind(this))
+		this.onPlayerReady = this.onPlayerReady.bind(this)
+	}
 
-		if (!this.skinDisabled) {
-			this.bindSpecificEvents()
-		}
+	init() {
+		super.init()
+
+		this.waitUntilVideoIsReady().then(this.onPlayerReady)
+
+		!this.skinDisabled && this.bindSpecificEvents()
 	}
 
 	/**
@@ -214,10 +212,8 @@ export default class PlayerHtml5 extends Player {
 	/**
 	 * Unbind event listeners
 	 */
-	unBindSpecificEvents() {
-		if (this.options.time) {
-			this.player.removeEventListener('durationchange', this.updateDuration)
-		}
+	removeSpecificEvents() {
+		this.options.time && this.player.removeEventListener('durationchange', this.updateDuration)
 
 		this.player.removeEventListener('timeupdate', this.updateCurrentTime)
 		this.player.removeEventListener('playing', this.onPlaying)

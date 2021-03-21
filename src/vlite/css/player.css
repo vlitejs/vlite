@@ -38,9 +38,9 @@
 		}
 	}
 
-	&.v-fullscreen-display {
+	&.v-fullscreenButton-display {
 		.v-controlBar,
-		.v-bigPlayButton {
+		.v-bigPlay {
 			position: fixed;
 			z-index: 2147483647;
 		}
@@ -76,7 +76,7 @@
 	}
 
 	&.v-playing {
-		.v-bigPlayButton {
+		.v-bigPlay {
 			visibility: hidden;
 			opacity: 0;
 		}

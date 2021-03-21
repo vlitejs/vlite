@@ -5,12 +5,7 @@ import Player from './player'
  * @module vlitejs/Player/PlayerYoutube
  */
 export default class PlayerYoutube extends Player {
-	/**
-	 * Get the type of the player
-	 */
-	get type() {
-		return 'youtube'
-	}
+	type = 'youtube'
 
 	/**
 	 * Instanciate the constructor
@@ -22,10 +17,14 @@ export default class PlayerYoutube extends Player {
 	constructor({ selector, options, onReady }) {
 		// Init Player class
 		super({
-			selector: selector,
-			options: options,
-			onReady: onReady
+			selector,
+			options,
+			onReady
 		})
+	}
+
+	init() {
+		super.init()
 
 		// Init Youtube player with API
 		this.initYoutubePlayer()

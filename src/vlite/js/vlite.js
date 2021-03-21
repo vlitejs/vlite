@@ -112,6 +112,7 @@ export default class vlitejs {
 					options: element.options,
 					onReady: element.onReady
 				})
+				this.instancePlayer.init()
 			})
 			_VliteYoutube.apiReadyQueue = []
 		}

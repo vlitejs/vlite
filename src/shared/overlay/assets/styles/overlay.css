@@ -1,25 +1,7 @@
-.v-overlayVideo {
+.v-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: calc(100% - var(--heightControlBar));
-
-	.v-overlayLeft,
-	.v-overlayRight {
-		position: absolute;
-		top: 0;
-		width: 30%;
-		height: 100%;
-	}
-
-	.v-overlayLeft {
-		left: 0;
-		background: rgba(255, 255, 0, 0.5);
-	}
-
-	.v-overlayRight {
-		right: 0;
-		background: rgba(255, 0, 255, 0.5);
-	}
 }

@@ -25,10 +25,10 @@ export default function ({ progressBar, playPause, time, volume, fullscreen }) {
 			)}
 			<div className="v-controlBarContent">
 				{playPause && (
-					<div className="v-playPauseButton" data-v-toggle-play-pause>
+					<button className="v-playPauseButton">
 						<span className="v-playerIcon v-iconPlay" innerHTML={svgPlay}></span>
 						<span className="v-playerIcon v-iconPause" innerHTML={svgPause}></span>
-					</div>
+					</button>
 				)}
 				{time && (
 					<div className="v-time">
@@ -37,16 +37,16 @@ export default function ({ progressBar, playPause, time, volume, fullscreen }) {
 					</div>
 				)}
 				{volume && (
-					<div className="v-volume">
+					<button className="v-volumeButton">
 						<span className="v-playerIcon v-iconVolumeHigh" innerHTML={svgVolumeHigh}></span>
 						<span className="v-playerIcon v-iconVolumeMute" innerHTML={svgVolumeMute}></span>
-					</div>
+					</button>
 				)}
 				{fullscreen && (
-					<div className="v-fullscreen">
+					<button className="v-fullscreenButton">
 						<span className="v-playerIcon v-iconFullscreen" innerHTML={svgFullscreen}></span>
 						<span className="v-playerIcon v-iconShrink" innerHTML={svgFullscreenExit}></span>
-					</div>
+					</button>
 				)}
 			</div>
 		</div>

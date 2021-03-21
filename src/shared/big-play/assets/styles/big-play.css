@@ -1,4 +1,4 @@
-.v-bigPlayButton {
+.v-bigPlay {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -33,7 +33,7 @@
 }
 
 .v-loading {
-	.v-bigPlayButton {
+	.v-bigPlay {
 		opacity: 0;
 	}
 }

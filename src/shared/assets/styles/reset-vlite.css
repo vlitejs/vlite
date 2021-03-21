@@ -18,4 +18,13 @@
 		font: inherit;
 		vertical-align: baseline;
 	}
+
+	button {
+		background-color: transparent;
+		border: none;
+
+		&:focus {
+			outline: none;
+		}
+	}
 }

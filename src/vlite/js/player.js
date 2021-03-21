@@ -80,7 +80,6 @@ export default class Player {
 
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.togglePlayPause = this.togglePlayPause.bind(this)
-		this.fastForward = this.fastForward.bind(this)
 		this.toggleVolume = this.toggleVolume.bind(this)
 		this.toggleFullscreen = this.toggleFullscreen.bind(this)
 		this.onKeyup = this.onKeyup.bind(this)
@@ -107,13 +106,12 @@ export default class Player {
 		this.player.parentNode.insertBefore(wrapper, this.player)
 		wrapper.appendChild(this.player)
 		this.wrapperPlayer = this.player.parentNode
-		this.player.setAttribute('data-v-toggle-play-pause', '')
 
 		if (this.skinDisabled) {
 			this.wrapperPlayer.classList.add('v-forceControls')
 		}
 
-		const htmlControls = (
+		wrapper.appendChild(
 			<>
 				{!this.options.nativeControlsForTouch && (
 					<>
@@ -134,8 +132,6 @@ export default class Player {
 				)}
 			</>
 		)
-
-		wrapper.appendChild(htmlControls)
 	}
 
 	/**
@@ -168,23 +164,28 @@ export default class Player {
 
 	onClickOnPlayer(e) {
 		const target = e.target
-		const validateTargetPlayPauseToggle = validateTarget({
+		const validateTargetPlayPauseButton = validateTarget({
 			target: target,
-			selectorString: '[data-v-toggle-play-pause]',
+			selectorString: '.v-playPauseButton',
+			nodeName: ['button']
+		})
+		const validateTargetPoster = validateTarget({
+			target: target,
+			selectorString: '.v-poster, .v-overlay',
 			nodeName: ['div']
 		})
 		const validateTargetVolume = validateTarget({
 			target: target,
-			selectorString: '.v-volume',
-			nodeName: ['div']
+			selectorString: '.v-volumeButton',
+			nodeName: ['button']
 		})
 		const validateTargetFullscreen = validateTarget({
 			target: target,
-			selectorString: '.v-fullscreen',
-			nodeName: ['div']
+			selectorString: '.v-fullscreenButton',
+			nodeName: ['button']
 		})
 
-		if (validateTargetPlayPauseToggle) {
+		if (validateTargetPlayPauseButton || validateTargetPoster) {
 			this.togglePlayPause(e)
 		} else if (validateTargetVolume) {
 			this.toggleVolume(e)
@@ -197,20 +198,11 @@ export default class Player {
 		const target = e.target
 		const validateTargetOverlay = validateTarget({
 			target: target,
-			selectorString: '.v-overlayVideo',
+			selectorString: '.v-overlay',
 			nodeName: ['div']
 		})
-		const validateTargetFastForward = validateTarget({
-			target: target,
-			selectorString: '[data-v-fast-forward]',
-			nodeName: ['div']
-		})
-
 		if (validateTargetOverlay) {
 			this.toggleFullscreen(e)
-		} else if (validateTargetFastForward) {
-			const direction = e.target.getAttribute('data-direction')
-			this.fastForward({ direction })
 		}
 	}
 
@@ -349,7 +341,7 @@ export default class Player {
 	 */
 	toggleVolume(e) {
 		e.preventDefault()
-		const volumeButton = this.wrapperPlayer.querySelector('.v-volume')
+		const volumeButton = this.wrapperPlayer.querySelector('.v-volumeButton')
 
 		if (volumeButton.classList.contains('v-muted')) {
 			this.unMute()
@@ -363,7 +355,7 @@ export default class Player {
 	 */
 	mute() {
 		this.methodMute()
-		this.wrapperPlayer.querySelector('.v-volume').classList.add('v-muted')
+		this.wrapperPlayer.querySelector('.v-volumeButton').classList.add('v-muted')
 	}
 
 	/**
@@ -371,7 +363,7 @@ export default class Player {
 	 */
 	unMute() {
 		this.methodUnMute()
-		this.wrapperPlayer.querySelector('.v-volume').classList.remove('v-muted')
+		this.wrapperPlayer.querySelector('.v-volumeButton').classList.remove('v-muted')
 	}
 
 	/**
@@ -446,8 +438,8 @@ export default class Player {
 			// Request fullscreen on parentNode player, to display custom controls
 			this.player.parentNode[requestFn]()
 			this.isFullScreen = true
-			this.wrapperPlayer.classList.add('v-fullscreen-display')
-			this.wrapperPlayer.querySelector('.v-fullscreen').classList.add('v-exit')
+			this.wrapperPlayer.classList.add('v-fullscreenButton-display')
+			this.wrapperPlayer.querySelector('.v-fullscreenButton').classList.add('v-exit')
 		}
 	}
 
@@ -460,8 +452,8 @@ export default class Player {
 		if (document[cancelFn]) {
 			document[cancelFn]()
 
-			this.wrapperPlayer.classList.remove('v-fullscreen-display')
-			this.wrapperPlayer.querySelector('.v-fullscreen').classList.remove('v-exit')
+			this.wrapperPlayer.classList.remove('v-fullscreenButton-display')
+			this.wrapperPlayer.querySelector('.v-fullscreenButton').classList.remove('v-exit')
 
 			this.isFullScreen = false
 		}
@@ -539,13 +531,8 @@ export default class Player {
 		this.pause()
 		this.removeEvents()
 
-		if (typeof this.unBindSpecificEvents === 'function') {
-			this.unBindSpecificEvents()
-		}
-
-		if (typeof this.removeInstance === 'function') {
-			this.removeInstance()
-		}
+		typeof this.removeSpecificEvents === 'function' && this.removeSpecificEvents()
+		typeof this.removeInstance === 'function' && this.removeInstance()
 
 		this.wrapperPlayer.remove()
 	}

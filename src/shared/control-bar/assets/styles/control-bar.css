@@ -25,7 +25,7 @@
 		height: 100%;
 	}
 
-	/* &:hover .v-bigPlayButton svg {
+	/* &:hover .v-bigPlay svg {
 		opacity: 1;
 	} */
 
@@ -110,7 +110,7 @@
 		align-items: center;
 	}
 
-	.v-volume {
+	.v-volumeButton {
 		position: relative;
 		display: inline-block;
 		width: 40px;
@@ -156,7 +156,7 @@
 		}
 	}
 
-	.v-fullscreen {
+	.v-fullscreenButton {
 		position: relative;
 		display: inline-block;
 		width: 40px;
