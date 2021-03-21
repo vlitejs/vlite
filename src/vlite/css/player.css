@@ -1,138 +1,136 @@
-@import "./vars";
-
 .vlite-js {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .v-vlite {
-    font-family: 'Roboto', arial, sans-serif;
-    position: relative;
-    height: 0;
-    padding-top: 56.25%;
-    background-color: #000;
-    overflow: hidden;
+	font-family: 'Roboto', arial, sans-serif;
+	position: relative;
+	height: 0;
+	padding-top: 56.25%;
+	background-color: #000;
+	overflow: hidden;
 
-    &::-webkit-full-screen {
-        width: 100%;
-        height: 100%;
-    }
+	&::-webkit-full-screen {
+		width: 100%;
+		height: 100%;
+	}
 
-    /* Firefox fullscreen config */
-    ::-moz-full-screen & {
-        width: 100%;
-        height: 100%;
-    }
+	/* Firefox fullscreen config */
+	::-moz-full-screen & {
+		width: 100%;
+		height: 100%;
+	}
 
-    &::-moz-full-screen {
-        width: 100%;
-        height: 100%;
-    }
+	&::-moz-full-screen {
+		width: 100%;
+		height: 100%;
+	}
 
-    &:not(.v-forceControls) {
-        /* Chrome fullscreen config */
-        video::-webkit-media-controls-enclosure {
-            display: none !important;
-        }
+	&:not(.v-forceControls) {
+		/* Chrome fullscreen config */
+		video::-webkit-media-controls-enclosure {
+			display: none !important;
+		}
 
-        iframe.vlite-js {
-            pointer-events: none;
-        }
-    }
+		iframe.vlite-js {
+			pointer-events: none;
+		}
+	}
 
-    &.v-fullscreen-display {
-        .v-controlBar,
-        .v-bigPlayButton {
-            position: fixed;
-            z-index: 2147483647;
-        }
-    }
+	&.v-fullscreen-display {
+		.v-controlBar,
+		.v-bigPlayButton {
+			position: fixed;
+			z-index: 2147483647;
+		}
+	}
 
-    .vlite-js {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+	.vlite-js {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 
-    /* Skin */
-    &.v-paused {
-        .v-playPauseButton {
-            .v-iconPlay {
-                display: block;
-            }
-        }
+	/* Skin */
+	&.v-paused {
+		.v-playPauseButton {
+			.v-iconPlay {
+				display: block;
+			}
+		}
 
-        .v-controlBar.hidden {
-            opacity: 1;
-        }
-    }
+		.v-controlBar.hidden {
+			opacity: 1;
+		}
+	}
 
-    .v-poster {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-        background-size: cover;
-        cursor: pointer;
-        visibility: hidden;
-        opacity: 0;
-        z-index: 2;
+	.v-poster {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #000;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: cover;
+		cursor: pointer;
+		visibility: hidden;
+		opacity: 0;
+		z-index: 2;
 
-        &.v-active {
-            opacity: 1;
-            visibility: visible;
-        }
-    }
+		&.v-active {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
 
-    &.v-playing,
-    &.v-paused:not(.v-firstStart) {
-        .v-poster {
-            visibility: hidden;
-            opacity: 0;
-        }
-    }
+	&.v-playing,
+	&.v-paused:not(.v-firstStart) {
+		.v-poster {
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
 
-    &.v-playing {
-        .v-bigPlayButton {
-            visibility: hidden;
-            opacity: 0;
-        }
+	&.v-playing {
+		.v-bigPlayButton {
+			visibility: hidden;
+			opacity: 0;
+		}
 
-        .v-playPauseButton {
-            .v-iconPause {
-                display: block;
-            }
-        }
-    }
+		.v-playPauseButton {
+			.v-iconPause {
+				display: block;
+			}
+		}
+	}
 
-    .v-overlayVideo {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: calc(100% - var(--heightControlBar));
+	.v-overlayVideo {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: calc(100% - var(--heightControlBar));
 
-        .v-overlayLeft,
-        .v-overlayRight {
-            position: absolute;
-            top: 0;
-            width: 30%;
-            height: 100%;
-        }
+		.v-overlayLeft,
+		.v-overlayRight {
+			position: absolute;
+			top: 0;
+			width: 30%;
+			height: 100%;
+		}
 
-        .v-overlayLeft {
-            left: 0;
-        }
+		.v-overlayLeft {
+			left: 0;
+		}
 
-        .v-overlayRight {
-            right: 0;
-        }
-    }
+		.v-overlayRight {
+			right: 0;
+		}
+	}
 }

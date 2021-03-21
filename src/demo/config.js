@@ -1,3 +1,3 @@
 // Import CSS
-import './css/reset.css'
+import 'shared/assets/styles/reset.css'
 import './css/demo.css'

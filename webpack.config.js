@@ -1,12 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
+	const suffixHash = isProduction ? '.[contenthash]' : ''
 
 	return {
 		watch: !isProduction,
@@ -17,47 +17,61 @@ module.exports = (env, argv) => {
 		watchOptions: {
 			ignored: /node_modules/
 		},
-		devtool: !isProduction ? 'source-map' : 'none',
+		devtool: isProduction ? false : 'source-map',
 		output: {
 			path: path.resolve(__dirname, './dist'),
 			publicPath: '/dist/',
-			filename: '[name]/js/[name].js',
+			filename: `[name]/js/[name]${suffixHash}.js`,
 			library: 'vlitejs',
 			libraryTarget: 'umd',
-			sourceMapFilename: '[file].map',
 			libraryExport: 'default'
 		},
 		module: {
-			rules: [{
-				test: /\.js$/,
-				include: path.resolve(__dirname, './src'),
-				use: [
-					{
-						loader: 'babel-loader'
-					}
-				]
-			}, {
-				test: /\.css$/,
-				include: path.resolve(__dirname, './src'),
-				use: [
-					MiniCssExtractPlugin.loader, {
-						loader: 'css-loader'
-					}, {
-						loader: 'postcss-loader',
-						options: {
-							config: {
-								path: path.resolve(__dirname, './')
+			rules: [
+				{
+					test: /\.js$/,
+					include: path.resolve(__dirname, './src'),
+					use: [
+						{
+							loader: 'babel-loader'
+						}
+					]
+				},
+				{
+					test: /\.css$/,
+					include: path.resolve(__dirname, './src'),
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: 'css-loader'
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									config: path.resolve(__dirname, 'postcss.config.js')
+								}
 							}
 						}
+					]
+				},
+				{
+					test: /\.(svg)$/i,
+					include: path.resolve(__dirname, './src/'),
+					type: 'asset/source',
+					generator: {
+						filename: '[name][ext]'
 					}
-				]
-			}, {
-				test: /\.svg$/,
-				loader: 'svg-inline-loader'
-			}]
+				}
+			]
+		},
+		resolve: {
+			extensions: ['.js', '.ts', '.tsx', '.css'],
+			alias: {
+				shared: path.resolve(__dirname, './src/shared')
+			}
 		},
 		plugins: [
-			new ProgressBarPlugin(),
 			new MiniCssExtractPlugin({
 				filename: `[name]/css/[name].css`,
 				chunkFilename: `[name]/css/[name].css`
@@ -81,24 +95,22 @@ module.exports = (env, argv) => {
 			minimizer: [
 				new TerserPlugin({
 					extractComments: false,
-					cache: true,
 					parallel: true,
-					sourceMap: false,
 					terserOptions: {
-						extractComments: 'all',
 						compress: {
-							drop_console: true
+							// Drop console.log|console.info|console.debug
+							// Keep console.warn|console.error
+							pure_funcs: ['console.log', 'console.info', 'console.debug']
 						},
 						mangle: true
 					}
 				}),
-				new OptimizeCSSAssetsPlugin({})
+				new CssMinimizerPlugin()
 			],
-			namedModules: true,
+			chunkIds: 'deterministic', // or 'named'
 			removeAvailableModules: true,
 			removeEmptyChunks: true,
 			mergeDuplicateChunks: true,
-			occurrenceOrder: true,
 			providedExports: false,
 			splitChunks: false
 		}

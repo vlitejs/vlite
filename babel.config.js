@@ -1,20 +1,9 @@
-module.exports = function (api) {
-	const presets = [
-		[
-			'@babel/preset-env',
-			{
-				targets: {
-					node: '8.11.2'
-				}
-			}
-		]
-	]
+module.exports = function(api) {
+	const presets = [['@babel/preset-env']]
 
 	api.cache(true)
 
-	const plugins = [
-		'@babel/plugin-transform-modules-commonjs'
-	]
+	const plugins = ['@babel/plugin-transform-modules-commonjs', '@babel/proposal-class-properties']
 
 	return {
 		presets,
