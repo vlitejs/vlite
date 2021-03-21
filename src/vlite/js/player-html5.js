@@ -8,7 +8,7 @@ export default class PlayerHtml5 extends Player {
 	/**
 	 * Get the type of the player
 	 */
-	get type () {
+	get type() {
 		return 'html5'
 	}
 
@@ -19,7 +19,7 @@ export default class PlayerHtml5 extends Player {
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor ({selector, options, onReady}) {
+	constructor({ selector, options, onReady }) {
 		// Init Player class
 		super({
 			selector: selector,
@@ -38,7 +38,7 @@ export default class PlayerHtml5 extends Player {
 	/**
 	 * Function executed when the player is ready
 	 */
-	onPlayerReady () {
+	onPlayerReady() {
 		super.playerIsReady()
 		this.updateDuration()
 	}
@@ -47,7 +47,7 @@ export default class PlayerHtml5 extends Player {
 	 * Wait until the video is ready
 	 * @returns {Promise} Loading of the video with a Promise
 	 */
-	waitUntilVideoIsReady () {
+	waitUntilVideoIsReady() {
 		return new window.Promise((resolve, reject) => {
 			// Check if the video is ready
 			if (typeof this.player.duration === 'number' && isNaN(this.player.duration) === false) {
@@ -78,7 +78,7 @@ export default class PlayerHtml5 extends Player {
 	 * Create event listeners
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
-	bindSpecificEvents () {
+	bindSpecificEvents() {
 		if (this.options.controls) {
 			if (this.options.time) {
 				// On durationchange event, update duration if value is different
@@ -117,7 +117,7 @@ export default class PlayerHtml5 extends Player {
 	 * Get the player instance
 	 * @returns {Object} Video element
 	 */
-	getInstance () {
+	getInstance() {
 		return this.player
 	}
 
@@ -125,7 +125,7 @@ export default class PlayerHtml5 extends Player {
 	 * Get the player current time
 	 * @returns {Float|Integer} Current time of the video
 	 */
-	getCurrentTime () {
+	getCurrentTime() {
 		return this.player.currentTime
 	}
 
@@ -133,7 +133,7 @@ export default class PlayerHtml5 extends Player {
 	 * Set the new current time for the player
 	 * @param {Float|Integer} Current time video
 	 */
-	setCurrentTime (newTime) {
+	setCurrentTime(newTime) {
 		this.player.currentTime = newTime
 	}
 
@@ -141,7 +141,7 @@ export default class PlayerHtml5 extends Player {
 	 * Get the player duration
 	 * @returns {Float|Integer} Duration of the video
 	 */
-	getDuration () {
+	getDuration() {
 		return this.player.duration
 	}
 
@@ -149,28 +149,28 @@ export default class PlayerHtml5 extends Player {
 	 * Function executed on the video progress changed
 	 * @param {Object} e Event listener datas
 	 */
-	onProgressChanged (e) {
+	onProgressChanged(e) {
 		this.setCurrentTime((e.target.value * this.getDuration()) / 100)
 	}
 
 	/**
 	 * Play method of the player
 	 */
-	methodPlay () {
+	methodPlay() {
 		this.player.play()
 	}
 
 	/**
 	 * Pause method of the player
 	 */
-	methodPause () {
+	methodPause() {
 		this.player.pause()
 	}
 
 	/**
 	 * Mute method of the player
 	 */
-	methodMute () {
+	methodMute() {
 		this.player.muted = true
 		this.player.setAttribute('muted', '')
 	}
@@ -178,7 +178,7 @@ export default class PlayerHtml5 extends Player {
 	/**
 	 * Unmute method of the player
 	 */
-	methodUnMute () {
+	methodUnMute() {
 		this.player.muted = false
 		this.player.removeAttribute('muted')
 	}
@@ -186,35 +186,35 @@ export default class PlayerHtml5 extends Player {
 	/**
 	 * Function executed when the video is waiting
 	 */
-	onWaiting () {
+	onWaiting() {
 		this.loading(true)
 	}
 
 	/**
 	 * Function executed when the video is playing
 	 */
-	onPlaying () {
+	onPlaying() {
 		this.loading(false)
 	}
 
 	/**
 	 * Function executed when the video is seeking
 	 */
-	onSeeking () {
+	onSeeking() {
 		this.loading(true)
 	}
 
 	/**
 	 * Function executed when the video seek is done
 	 */
-	onSeeked () {
+	onSeeked() {
 		this.loading(false)
 	}
 
 	/**
 	 * Unbind event listeners
 	 */
-	unBindSpecificEvents () {
+	unBindSpecificEvents() {
 		if (this.options.time) {
 			this.player.removeEventListener('durationchange', this.updateDuration)
 		}

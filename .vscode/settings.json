@@ -1,21 +1,40 @@
 {
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[postcss]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "editor.autoIndent": false,
-    "editor.formatOnSave": false,
-    "editor.tabSize": 4,
-    "eslint.autoFixOnSave": false,
-    "files.associations": {
-        "*.css": "postcss"
-    },
-    "files.trimTrailingWhitespace": true,
-    "javascript.format.enable": false,
-    "javascript.validate.enable": false,
-    "search.exclude": {
-        "**/node_modules": true
-    }
+	"[javascript]": {
+		"editor.formatOnSave": true
+	},
+	"[typescript]": {
+		"editor.formatOnSave": true
+	},
+	"[postcss]": {
+		"editor.formatOnSave": true
+	},
+	"[html]": {
+		"editor.formatOnSave": true
+	},
+	"[markdown]": {
+		"editor.formatOnSave": true
+	},
+	"[json]": {
+		"editor.formatOnSave": true
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true,
+		"source.fixAll.stylelint": true
+	},
+	"editor.formatOnSave": false,
+	"editor.tabSize": 4,
+	"files.associations": {
+		"*.css": "postcss",
+		"*.html": "html",
+		"*.ts": "typescript",
+		"*.json": "json"
+	},
+	"files.trimTrailingWhitespace": true,
+	"javascript.format.enable": false,
+	"javascript.validate.enable": false,
+	"typescript.validate.enable": false,
+	"search.exclude": {
+		"**/node_modules": true
+	},
+	"editor.rulers": [100]
 }

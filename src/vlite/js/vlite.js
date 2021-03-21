@@ -1,12 +1,12 @@
 /**
-* @license MIT
-* @name vlitejs
-* @version 3.0.4
-* @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
-* @description: vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme
-* {@link https://yoriiis.github.io/vlitejs}
-* @copyright 2019 Joris DANIEL <https://yoriiis.github.io/vlitejs>
-**/
+ * @license MIT
+ * @name vlitejs
+ * @version 3.0.4
+ * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
+ * @description: vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme
+ * {@link https://yoriiis.github.io/vlitejs}
+ * @copyright 2019 Joris DANIEL <https://yoriiis.github.io/vlitejs>
+ **/
 
 'use strict'
 
@@ -32,11 +32,7 @@ export default class vlitejs {
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor ({
-		selector,
-		options = undefined,
-		onReady
-	}) {
+	constructor({ selector, options = undefined, onReady }) {
 		this.player = null
 
 		// Detect the type of the selector (string or object)
@@ -59,7 +55,7 @@ export default class vlitejs {
 	/**
 	 * Initialize the player (Youtube or HTML5)
 	 */
-	initPlayer () {
+	initPlayer() {
 		// Detect the player type (Youtube or HTML5)
 		if (this.player.hasAttribute('data-youtube-id')) {
 			// Detect if the Youtube API is ready
@@ -97,9 +93,8 @@ export default class vlitejs {
 	/**
 	 * Load the Youtube API
 	 */
-	loadYoutubeAPI () {
-		let script = document.createElement('script')
-
+	loadYoutubeAPI() {
+		const script = document.createElement('script')
 		script.async = true
 		script.type = 'text/javascript'
 		script.src = 'https://youtube.com/iframe_api'
@@ -109,7 +104,7 @@ export default class vlitejs {
 			_VliteYoutube.apiReady = true
 
 			// Initialize the player queue
-			_VliteYoutube.apiReadyQueue.forEach(element => {
+			_VliteYoutube.apiReadyQueue.forEach((element) => {
 				this.instancePlayer = new PlayerYoutube({
 					selector: element.player,
 					options: element.options,
@@ -125,7 +120,7 @@ export default class vlitejs {
 	/**
 	 * Destroy the player instance
 	 */
-	destroy () {
+	destroy() {
 		this.instancePlayer.destroy()
 	}
 }
