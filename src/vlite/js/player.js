@@ -1,5 +1,6 @@
 // Import SVG icons
 import { createElement, Fragment } from 'jsx-dom'
+import validateTarget from 'validate-target'
 import LoaderTemplate from 'shared/loader/assets/scripts/loader'
 import ControlBarTemplate from 'shared/control-bar/assets/scripts/control-bar'
 import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
@@ -77,14 +78,28 @@ export default class Player {
 		// Check fullscreen support API on different browsers and cached prefixs
 		this.supportFullScreen = this.constructor.checkSupportFullScreen()
 
-		this.buildPlayer()
-		this.bindEvents()
+		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
+		this.togglePlayPause = this.togglePlayPause.bind(this)
+		this.fastForward = this.fastForward.bind(this)
+		this.toggleVolume = this.toggleVolume.bind(this)
+		this.toggleFullscreen = this.toggleFullscreen.bind(this)
+		this.onKeyup = this.onKeyup.bind(this)
+		this.onMousemove = this.onMousemove.bind(this)
+		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
+		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
+
+		this.onProgressChanged = this.onProgressChanged.bind(this)
+	}
+
+	init() {
+		this.render()
+		this.addEvents()
 	}
 
 	/**
 	 * Build the DOM of the player
 	 */
-	buildPlayer() {
+	render() {
 		// Create a wrapper for each player
 		const wrapper = document.createElement('div')
 		wrapper.setAttribute('class', 'v-vlite v-firstStart v-paused v-loading')
@@ -127,95 +142,76 @@ export default class Player {
 	 * Create event listeners
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
-	bindEvents() {
+	addEvents() {
 		if (this.options.controls && this.options.progressBar) {
-			// Create progress bar event listener
-			this.onChangeProgressBar = (e) => {
-				this.onProgressChanged(e)
-			}
 			this.wrapperPlayer
-				.querySelector('.v-progressInput')
-				.addEventListener('change', this.onChangeProgressBar, false)
+				.querySelector('.v-progressBar')
+				.addEventListener('change', this.onProgressChanged)
 		}
 
-		// Create play/pause button event listener
-		this.onClickTogglePlayPause = (e) => {
-			e.preventDefault()
-			this.togglePlayPause()
+		this.wrapperPlayer.addEventListener('click', this.onClickOnPlayer)
+		this.wrapperPlayer.addEventListener('dblclick', this.onDoubleClickOnPlayer)
+		this.wrapperPlayer.addEventListener('keyup', this.onKeyup)
+		this.wrapperPlayer.addEventListener('mousemove', this.onMousemove)
+
+		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
+	}
+
+	// Create fullscreen button event listener
+	// Detect fullscreen change, particulary util for esc key because state is not updated
+	// More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+	onChangeFullScreen(e) {
+		if (!document[this.supportFullScreen.isFullScreen] && this.isFullScreen) {
+			this.exitFullscreen(e.target)
 		}
-		const playPauseButtons = this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]')
-		playPauseButtons.forEach((button) => {
-			button.addEventListener('click', this.onClickTogglePlayPause, false)
+	}
+
+	onClickOnPlayer(e) {
+		const target = e.target
+		const validateTargetPlayPauseToggle = validateTarget({
+			target: target,
+			selectorString: '[data-v-toggle-play-pause]',
+			nodeName: ['div']
+		})
+		const validateTargetVolume = validateTarget({
+			target: target,
+			selectorString: '.v-volume',
+			nodeName: ['div']
+		})
+		const validateTargetFullscreen = validateTarget({
+			target: target,
+			selectorString: '.v-fullscreen',
+			nodeName: ['div']
 		})
 
-		// Create double click to fast-forward video current time (only on desktop, mobile doesn't support event)
-		if (!this.touchSupport) {
-			this.onDblclickFastForward = (e) => {
-				e.preventDefault()
-				this.fastForward(e)
-			}
-			const fastForwardButtons = [
-				...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')
-			]
-			fastForwardButtons.forEach((button) => {
-				button.addEventListener('dblclick', this.onDblclickFastForward, false)
-			})
+		if (validateTargetPlayPauseToggle) {
+			this.togglePlayPause(e)
+		} else if (validateTargetVolume) {
+			this.toggleVolume(e)
+		} else if (validateTargetFullscreen) {
+			this.toggleFullscreen(e)
 		}
+	}
 
-		if (this.options.controls && this.options.volume) {
-			// Create volume button event listener
-			this.onClickToggleVolume = (e) => {
-				e.preventDefault()
-				this.toggleVolume()
-			}
-			this.wrapperPlayer
-				.querySelector('.v-volume')
-				.addEventListener('click', this.onClickToggleVolume, false)
+	onDoubleClickOnPlayer(e) {
+		const target = e.target
+		const validateTargetOverlay = validateTarget({
+			target: target,
+			selectorString: '.v-overlayVideo',
+			nodeName: ['div']
+		})
+		const validateTargetFastForward = validateTarget({
+			target: target,
+			selectorString: '[data-v-fast-forward]',
+			nodeName: ['div']
+		})
+
+		if (validateTargetOverlay) {
+			this.toggleFullscreen(e)
+		} else if (validateTargetFastForward) {
+			const direction = e.target.getAttribute('data-direction')
+			this.fastForward({ direction })
 		}
-
-		if (this.options.controls && this.options.fullscreen) {
-			// Create fullscreen button event listener
-			this.onClickToggleFullscreen = (e) => {
-				e.preventDefault()
-				this.toggleFullscreen()
-			}
-			this.wrapperPlayer
-				.querySelector('.v-fullscreen')
-				.addEventListener('click', this.onClickToggleFullscreen, false)
-
-			// Create double click event to trigger fullscreen change
-			this.onDblclickVideo = (e) => {
-				e.preventDefault()
-				// Prevent double click to fast-forward video current time
-				if (e.target.hasAttribute('data-v-fast-forward')) return
-				this.toggleFullscreen()
-			}
-			this.wrapperPlayer
-				.querySelector('.v-overlayVideo')
-				.addEventListener('dblclick', this.onDblclickVideo, false)
-		}
-
-		if (this.options.controls) {
-			this.onKeyupEvent = (e) => {
-				this.onKeyup(e)
-			}
-			this.wrapperPlayer.addEventListener('keyup', this.onKeyupEvent, false)
-
-			this.onMousemoveEvent = (e) => {
-				this.onMousemove(e)
-			}
-			this.wrapperPlayer.addEventListener('mousemove', this.onMousemoveEvent, false)
-		}
-
-		// Create fullscreen button event listener
-		// Detect fullscreen change, particulary util for esc key because state is not updated
-		// More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-		this.onChangeFullScreen = (e) => {
-			if (!document[this.supportFullScreen.isFullScreen] && this.isFullScreen) {
-				this.exitFullscreen(e.target)
-			}
-		}
-		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen, false)
 	}
 
 	/**
@@ -257,9 +253,9 @@ export default class Player {
 	 * Update player duration
 	 */
 	updateDuration() {
-		this.wrapperPlayer.querySelector(
-			'.v-duration'
-		).innerHTML = this.constructor.formatVideoTime(this.getDuration())
+		this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(
+			this.getDuration()
+		)
 	}
 
 	/**
@@ -280,7 +276,11 @@ export default class Player {
 	/**
 	 * Function executed to toggle the video status (play, pause)
 	 */
-	togglePlayPause() {
+	togglePlayPause(e) {
+		if (e) {
+			e.preventDefault()
+		}
+
 		if (this.wrapperPlayer.classList.contains('v-paused')) {
 			this.play()
 		} else {
@@ -292,10 +292,10 @@ export default class Player {
 	 * Trigger the video fast forward (front and rear)
 	 * @param {Object} e Event listener datas
 	 */
-	fastForward(e) {
-		if (e.target.getAttribute('data-direction') === 'left') {
+	fastForward({ direction }) {
+		if (direction === 'backward') {
 			this.seekTo(this.getCurrentTime() - 10)
-		} else {
+		} else if (direction === 'forward') {
 			this.seekTo(this.getCurrentTime() + 10)
 		}
 	}
@@ -347,7 +347,8 @@ export default class Player {
 	/**
 	 * Toggle the volume on the video
 	 */
-	toggleVolume() {
+	toggleVolume(e) {
+		e.preventDefault()
 		const volumeButton = this.wrapperPlayer.querySelector('.v-volume')
 
 		if (volumeButton.classList.contains('v-muted')) {
@@ -384,7 +385,8 @@ export default class Player {
 	/**
 	 * Toggle the fullscreen of the video
 	 */
-	toggleFullscreen() {
+	toggleFullscreen(e) {
+		e.preventDefault()
 		if (this.isFullScreen) {
 			this.exitFullscreen()
 		} else {
@@ -473,6 +475,10 @@ export default class Player {
 	onKeyup(e) {
 		if (e.keyCode === 32) {
 			this.togglePlayPause()
+		} else if (e.keyCode === 37) {
+			this.fastForward({ direction: 'backward' })
+		} else if (e.keyCode === 39) {
+			this.fastForward({ direction: 'forward' })
 		}
 	}
 
@@ -510,56 +516,17 @@ export default class Player {
 	/**
 	 * Unbind event listeners
 	 */
-	unBindEvents() {
-		const playPauseButtons = [
-			...this.wrapperPlayer.querySelectorAll('[data-v-toggle-play-pause]')
-		]
-		playPauseButtons.forEach((button) => {
-			button.removeEventListener('click', this.onClickTogglePlayPause)
-		})
-		this.onClickTogglePlayPause = null
-
-		if (!this.touchSupport) {
-			const fastForwardButtons = [
-				...this.wrapperPlayer.querySelectorAll('[data-v-fast-forward]')
-			]
-			fastForwardButtons.forEach((button) => {
-				button.removeEventListener('dblclick', this.onDblclickFastForward)
-			})
-			this.onDblclickFastForward = null
-		}
-
+	removeEvents() {
 		if (this.options.controls && this.options.progressBar) {
 			this.wrapperPlayer
-				.querySelector('.v-progressInput')
-				.removeEventListener('change', this.onChangeProgressBar, false)
-			this.onChangeProgressBar = null
+				.querySelector('.v-progressBar')
+				.removeEventListener('change', this.onProgressChanged)
 		}
 
-		if (this.options.controls && this.options.volume) {
-			this.wrapperPlayer
-				.querySelector('.v-volume')
-				.removeEventListener('click', this.onClickToggleVolume)
-			this.onClickToggleVolume = null
-		}
-
-		if (this.options.controls) {
-			this.wrapperPlayer.removeEventListener('keyup', this.onKeyupEvent)
-			this.wrapperPlayer.removeEventListener('mousemove', this.onMousemoveEvent)
-			this.onKeyupEvent = null
-			this.onMousemoveEvent = null
-		}
-
-		if (this.options.controls && this.options.fullscreen) {
-			this.wrapperPlayer
-				.querySelector('.v-fullscreen')
-				.removeEventListener('click', this.onClickToggleFullscreen)
-			this.wrapperPlayer
-				.querySelector('.v-overlayVideo')
-				.removeEventListener('dblclick', this.onDblclickVideo)
-			this.onClickToggleFullscreen = null
-			this.onDblclickVideo = null
-		}
+		this.wrapperPlayer.removeEventListener('click', this.onClickOnPlayer)
+		this.wrapperPlayer.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
+		this.wrapperPlayer.removeEventListener('keyup', this.onKeyup)
+		this.wrapperPlayer.removeEventListener('mousemove', this.onMousemove)
 
 		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
@@ -570,7 +537,7 @@ export default class Player {
 	 */
 	destroy() {
 		this.pause()
-		this.unBindEvents()
+		this.removeEvents()
 
 		if (typeof this.unBindSpecificEvents === 'function') {
 			this.unBindSpecificEvents()
@@ -589,8 +556,7 @@ export default class Player {
 	 */
 	isTouch() {
 		return (
-			'ontouchstart' in window ||
-			(window.DocumentTouch && document instanceof window.DocumentTouch)
+			'ontouchstart' in window || (window.DocumentTouch && document instanceof window.DocumentTouch)
 		)
 	}
 

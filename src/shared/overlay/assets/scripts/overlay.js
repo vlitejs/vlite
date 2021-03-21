@@ -5,8 +5,8 @@ export default function ({ fastForward }) {
 		<div className="v-overlayVideo" data-v-toggle-play-pause>
 			{fastForward && (
 				<>
-					<div className="v-overlayLeft" data-v-fast-forward data-direction="left"></div>
-					<div className="v-overlayRight" data-v-fast-forward data-direction="right"></div>
+					<div className="v-overlayLeft" data-v-fast-forward data-direction="backward"></div>
+					<div className="v-overlayRight" data-v-fast-forward data-direction="forward"></div>
 				</>
 			)}
 		</div>

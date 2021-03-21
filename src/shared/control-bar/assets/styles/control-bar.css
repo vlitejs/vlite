@@ -24,6 +24,7 @@
 		width: 100%;
 		height: 100%;
 	}
+
 	/* &:hover .v-bigPlayButton svg {
 		opacity: 1;
 	} */
@@ -73,6 +74,10 @@
 		height: 100%;
 		cursor: pointer;
 
+		* {
+			pointer-events: none;
+		}
+
 		.v-playerIcon {
 			display: none;
 			position: absolute;
@@ -111,6 +116,10 @@
 		width: 40px;
 		height: 100%;
 		cursor: pointer;
+
+		* {
+			pointer-events: none;
+		}
 
 		.v-playerIcon {
 			display: none;
@@ -153,6 +162,10 @@
 		width: 40px;
 		height: 100%;
 		cursor: pointer;
+
+		* {
+			pointer-events: none;
+		}
 
 		.v-playerIcon {
 			display: none;

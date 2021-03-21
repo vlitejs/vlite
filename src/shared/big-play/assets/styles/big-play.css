@@ -10,6 +10,11 @@
 	transition: opacity 200ms ease-in;
 	transition-delay: 100ms;
 
+	&,
+	* {
+		pointer-events: none;
+	}
+
 	.v-iconBigPlay {
 		display: block;
 		position: absolute;

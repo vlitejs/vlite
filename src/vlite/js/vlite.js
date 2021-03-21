@@ -79,6 +79,7 @@ export default class vlitejs {
 					options: this.options,
 					onReady: this.onReady
 				})
+				this.instancePlayer.init()
 			}
 		} else {
 			// Initialize the HTML5 Player
@@ -87,6 +88,7 @@ export default class vlitejs {
 				options: this.options,
 				onReady: this.onReady
 			})
+			this.instancePlayer.init()
 		}
 	}
 

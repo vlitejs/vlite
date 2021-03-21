@@ -70,5 +70,8 @@
 	},
 	"engines": {
 		"node": ">=8.11.2"
+	},
+	"dependencies": {
+		"validate-target": "^2.0.0"
 	}
 }
