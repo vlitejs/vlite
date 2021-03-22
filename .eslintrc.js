@@ -36,9 +36,7 @@ module.exports = {
 		document: false,
 		navigator: false,
 		window: false,
-		$: true,
-		jQuery: true,
-		__webpack_public_path__: true
+		vlitejs: false
 	},
 
 	settings: {

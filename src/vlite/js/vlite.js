@@ -10,29 +10,18 @@
 
 'use strict'
 
-import PlayerYoutube from './player-youtube'
-import PlayerHtml5 from './player-html5'
-import PlayerVimeo from './player-vimeo'
+import PlayerHtml5 from '../../providers/html5'
+import Player from './player'
 
-// Set Youtube API configuration for the queue if the API is not ready
-const VLITE_QUEUE = {
-	youtube: {
-		apiLoading: false,
-		apiReady: false,
-		apiReadyQueue: []
-	},
-	vimeo: {
-		apiLoading: false,
-		apiReady: false,
-		apiReadyQueue: []
-	}
+const Providers = {
+	html5: PlayerHtml5
 }
 
 /**
  * vlitejs entrypoint
  * @module vLite/entrypoint
  */
-export default class vlitejs {
+class vlitejs {
 	/**
 	 * Instanciate the constructor
 	 * @constructor
@@ -40,129 +29,29 @@ export default class vlitejs {
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ selector, options = undefined, onReady }) {
-		this.player = null
+	constructor({ selector, options = {}, provider = 'html5', onReady }) {
+		let element = null
 
-		// Detect the type of the selector (string or object)
+		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
-			this.player = document.querySelector(selector)
-		} else if (typeof selector === 'object') {
-			this.player = selector
-		}
-		if (this.player === null) {
-			console.warn('[vLite] - Selector not found')
-			return
-		}
-
-		this.options = options
-		this.onReady = onReady
-
-		this.initPlayer()
-	}
-
-	/**
-	 * Initialize the player (Youtube or HTML5)
-	 */
-	initPlayer() {
-		// Detect the player type (Youtube or HTML5)
-		if (this.player.hasAttribute('data-youtube-id')) {
-			this.initializeApiQueue({ type: 'youtube' })
-		} else if (this.player.hasAttribute('data-vimeo-id')) {
-			this.initializeApiQueue({ type: 'vimeo' })
+			element = document.querySelector(selector)
+		} else if (selector instanceof HTMLElement) {
+			element = selector
 		} else {
-			// Initialize the HTML5 Player
-			this.instancePlayer = new PlayerHtml5({
-				selector: this.player,
-				options: this.options,
-				onReady: this.onReady
-			})
-			this.instancePlayer.init()
+			throw new TypeError('vlitejs :: The element or selector supplied is not valid.')
 		}
-	}
 
-	/**
-	 * Initialize the queue and the API
-	 * @param {Object} options
-	 * @param {String} options.type API type
-	 */
-	initializeApiQueue({ type }) {
-		// Detect if the API is ready
-		if (!VLITE_QUEUE[type].apiReady) {
-			// Load the API if necessary
-			if (!VLITE_QUEUE[type].apiLoading) {
-				VLITE_QUEUE[type].apiLoading = true
-				type === 'youtube' ? this.loadYoutubeAPI() : this.loadVimeoAPI()
-			}
-
-			// Create a queue to load players when the API is ready
-			VLITE_QUEUE[type].apiReadyQueue.push({
-				player: this.player,
-				options: this.options,
-				onReady: this.onReady
+		const ProviderInstance = Providers[provider]
+		if (ProviderInstance) {
+			const instancePlayer = new ProviderInstance({
+				element,
+				options,
+				onReady
 			})
+			instancePlayer.init()
 		} else {
-			// Youtube API is already available, initialize the Youtube player
-			this.instancePlayer = new PlayerYoutube({
-				selector: this.player,
-				options: this.options,
-				onReady: this.onReady
-			})
-			this.instancePlayer.init()
+			throw new TypeError(`vlitejs :: Unknown provider "${provider}"`)
 		}
-	}
-
-	/**
-	 * Load the Youtube API
-	 */
-	loadYoutubeAPI() {
-		const script = this.createScriptElement({ src: 'https://youtube.com/iframe_api' })
-		window.onYouTubeIframeAPIReady = () => this.onApiReady({ type: 'youtube' })
-		document.getElementsByTagName('body')[0].appendChild(script)
-	}
-
-	/**
-	 * Load the Vimeo API
-	 */
-	loadVimeoAPI() {
-		const script = this.createScriptElement({ src: 'https://player.vimeo.com/api/player.js' })
-		script.onload = (response) => this.onApiReady({ type: 'vimeo' })
-		document.getElementsByTagName('body')[0].appendChild(script)
-	}
-
-	/**
-	 * On API ready
-	 * @param {Object} options
-	 * @param {String} options.type API type
-	 */
-	onApiReady({ type }) {
-		const PlayerInstance = type === 'youtube' ? PlayerYoutube : PlayerVimeo
-
-		VLITE_QUEUE[type].apiReady = true
-
-		// Initialize the player queue
-		VLITE_QUEUE[type].apiReadyQueue.forEach((element) => {
-			this.instancePlayer = new PlayerInstance({
-				selector: element.player,
-				options: element.options,
-				onReady: element.onReady
-			})
-			this.instancePlayer.init()
-		})
-		VLITE_QUEUE[type].apiReadyQueue = []
-	}
-
-	/**
-	 * Create script element
-	 * @param {*} param0
-	 * @returns {HTMLElement} Script tag
-	 */
-	createScriptElement({ src }) {
-		const script = document.createElement('script')
-		script.async = true
-		script.type = 'text/javascript'
-		script.src = src
-
-		return script
 	}
 
 	/**
@@ -172,3 +61,15 @@ export default class vlitejs {
 		this.instancePlayer.destroy()
 	}
 }
+
+vlitejs.Player = Player
+
+vlitejs.registerProvider = (id, instance) => {
+	if (!Object.keys(Providers).includes(id)) {
+		Providers[id] = instance
+	} else {
+		throw new TypeError(`vlitejs::registerProvider, the provider id "${id}" is already registered.`)
+	}
+}
+
+export default vlitejs

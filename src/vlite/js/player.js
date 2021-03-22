@@ -15,20 +15,18 @@ export default class Player {
 	/**
 	 * Instanciate the constructor
 	 * @constructor
-	 * @param {String|Object} selector CSS selector or query selector
+	 * @param {HTMLElement} element Player HTML element
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ selector, options, onReady }) {
+	constructor({ element, options, onReady }) {
 		this.onReady = onReady
 		this.isFullScreen = false
 		this.isPaused = null
-		this.player = selector
+		this.element = element
 		this.touchSupport = this.isTouch()
 		this.skinDisabled = false
 		this.delayAutoHide = 3000
-
-		let customOptions = {}
 
 		const DEFAULT_OPTIONS = {
 			autoplay: false,
@@ -45,39 +43,25 @@ export default class Player {
 			playsinline: true
 		}
 
-		// Check if options have gone through DOM with data attribute
-		if (this.player.hasAttribute('data-options')) {
-			// Check if there is a conflict with the constructor options
-			if (options !== undefined) {
-				console.warn(
-					`vLitejs :: Option passed in "${selector}" by data attribute is priority over object in constructor.`
-				)
-			}
-
-			customOptions = JSON.parse(this.player.getAttribute('data-options'))
-		} else {
-			// No conflict, we can use options in the constructor
-			customOptions = options
-		}
-
-		this.options = Object.assign({}, DEFAULT_OPTIONS, customOptions)
+		this.options = Object.assign({}, DEFAULT_OPTIONS, options)
 
 		// Keep player native control and disable custom skin
 		if (this.options.nativeControlsForTouch) {
 			this.skinDisabled = true
-			this.player.setAttribute('controls', 'controls')
+			this.element.setAttribute('controls', 'controls')
 			this.options.controls = false
 		}
 
 		// Add play inline attribute
 		if (this.options.playsinline) {
-			this.player.setAttribute('playsinline', true)
-			this.player.setAttribute('webkit-playsinline', true)
+			this.element.setAttribute('playsinline', true)
+			this.element.setAttribute('webkit-playsinline', true)
 		}
 
 		// Check fullscreen support API on different browsers and cached prefixs
 		this.supportFullScreen = this.constructor.checkSupportFullScreen()
 
+		this.initReady = this.initReady.bind(this)
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.togglePlayPause = this.togglePlayPause.bind(this)
 		this.toggleVolume = this.toggleVolume.bind(this)
@@ -90,6 +74,14 @@ export default class Player {
 	}
 
 	init() {
+		this.isApiReady().then(this.initReady)
+	}
+
+	isApiReady() {
+		return Promise.resolve()
+	}
+
+	initReady() {
 		this.render()
 		this.addEvents()
 	}
@@ -102,9 +94,9 @@ export default class Player {
 		const wrapper = document.createElement('div')
 		wrapper.setAttribute('class', 'v-vlite v-firstStart v-paused v-loading')
 		wrapper.setAttribute('tabindex', 0)
-		this.player.parentNode.insertBefore(wrapper, this.player)
-		wrapper.appendChild(this.player)
-		this.wrapperPlayer = this.player.parentNode
+		this.element.parentNode.insertBefore(wrapper, this.element)
+		wrapper.appendChild(this.element)
+		this.wrapperPlayer = this.element.parentNode
 
 		if (this.skinDisabled) {
 			this.wrapperPlayer.classList.add('v-forceControls')
@@ -219,7 +211,7 @@ export default class Player {
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the video is muted
-			if (!this.player.muted) {
+			if (!this.element.muted) {
 				this.mute()
 				console.warn('vLitejs :: Video muted to authorize autoplay option')
 			}
@@ -437,9 +429,9 @@ export default class Player {
 	requestFullscreen() {
 		const { requestFn } = this.supportFullScreen
 
-		if (this.player[requestFn]) {
+		if (this.element[requestFn]) {
 			// Request fullscreen on parentNode player, to display custom controls
-			this.player.parentNode[requestFn]()
+			this.element.parentNode[requestFn]()
 			this.isFullScreen = true
 			this.wrapperPlayer.classList.add('v-fullscreenButton-display')
 			this.wrapperPlayer.querySelector('.v-fullscreenButton').classList.add('v-exit')

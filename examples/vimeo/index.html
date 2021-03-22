@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>vLitejs</title>
+	<link rel="stylesheet" href="../../dist/vlite.css" />
+</head>
+<body>
+	<div id="player-vimeo1" class="vlite-js" data-vimeo-id="1084537"></div>
+	<div id="player-vimeo2" class="vlite-js" data-vimeo-id="366234063"></div>
+	<script src="../../dist/vlite.js"></script>
+	<script src="../../dist/providers/vimeo.js"></script>
+	<script>
+        vlitejs.registerProvider('vimeo', vlitejsVimeo)
+		new vlitejs({
+			selector: '#player-vimeo1',
+			options: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				fullscreen: true,
+				poster: '../assets/poster.jpg',
+				bigPlay: true,
+				autoHide: true,
+				nativeControlsForTouch: false,
+				playsinline: true
+			},
+            provider: 'vimeo',
+			onReady: (player) => {
+				//Ready
+			}
+		});
+        new vlitejs({
+			selector: '#player-vimeo2',
+			options: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				fullscreen: true,
+				poster: '../assets/poster.jpg',
+				bigPlay: true,
+				autoHide: true,
+				nativeControlsForTouch: false,
+				playsinline: true
+			},
+            provider: 'vimeo',
+			onReady: (player) => {
+				//Ready
+			}
+		});
+	</script>
+</body>
+</html>

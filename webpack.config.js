@@ -4,28 +4,25 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
-module.exports = (env, argv) => {
-	const isProduction = argv.mode === 'production'
-	const suffixHash = isProduction ? '.[contenthash]' : ''
-
+const generator = ({ entry, library = false, isProduction }) => {
+	const output = {
+		path: path.resolve(__dirname, './dist'),
+		publicPath: '/dist/',
+		filename: '[name].js'
+	}
+	if (library) {
+		output.library = library
+		output.libraryTarget = 'umd'
+		output.libraryExport = 'default'
+	}
 	return {
 		watch: !isProduction,
-		entry: {
-			vlite: './src/vlite/config.js',
-			demo: './src/demo/config.js'
-		},
+		entry,
 		watchOptions: {
 			ignored: /node_modules/
 		},
 		devtool: isProduction ? false : 'source-map',
-		output: {
-			path: path.resolve(__dirname, './dist'),
-			publicPath: '/dist/',
-			filename: `[name]/js/[name]${suffixHash}.js`,
-			library: 'vlitejs',
-			libraryTarget: 'umd',
-			libraryExport: 'default'
-		},
+		output,
 		module: {
 			rules: [
 				{
@@ -73,8 +70,8 @@ module.exports = (env, argv) => {
 		},
 		plugins: [
 			new MiniCssExtractPlugin({
-				filename: `[name]/css/[name].css`,
-				chunkFilename: `[name]/css/[name].css`
+				filename: '[name].css',
+				chunkFilename: '[name].css'
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin()
 		],
@@ -115,4 +112,37 @@ module.exports = (env, argv) => {
 			splitChunks: false
 		}
 	}
+}
+
+module.exports = (env, argv) => {
+	const isProduction = argv.mode === 'production'
+
+	const configVlitejs = generator({
+		entry: {
+			vlite: './src/vlite/config.js'
+		},
+		library: 'vlitejs',
+		isProduction
+	})
+	const configProviderYoutube = generator({
+		entry: {
+			'providers/youtube': './src/providers/youtube'
+		},
+		library: 'vlitejsYoutube',
+		isProduction
+	})
+	const configProviderVimeo = generator({
+		entry: {
+			'providers/vimeo': './src/providers/vimeo'
+		},
+		library: 'vlitejsVimeo',
+		isProduction
+	})
+	const configDemo = generator({
+		entry: {
+			demo: './src/demo/config.js'
+		},
+		isProduction
+	})
+	return [configVlitejs, configProviderYoutube, configProviderVimeo, configDemo]
 }

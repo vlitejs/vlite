@@ -3,6 +3,13 @@
 <img src="https://yoriiis.github.io/vlitejs/images/logo-vlite.svg" alt="vLitejs" width="200px" />
 </a>
 
+import vlitejs from 'vlitejs'
+import vlitejs from 'vlitejs/dist/vlite.css'
+import vlitejs from 'vlitejs/dist/vlite.js'
+import youtube from 'vlitejs/providers/youtube'
+import vimeo from 'vlitejs/providers/vimeo'
+import pictureInPicture from 'vlitejs/plugins/picture-in-picture'
+
 </p><br /><br />
 <p align="center">
     <img alt="vLitejs" src="https://img.shields.io/badge/vLitejs-v3.0.4-ff7f15.svg?style=for-the-badge">

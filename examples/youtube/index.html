@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>vLitejs</title>
+	<link rel="stylesheet" href="../../dist/vlite.css" />
+</head>
+<body>
+	<div id="player-yt1" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></div>
+	<div id="player-yt2" class="vlite-js" data-youtube-id="v34w65U98gI"></div>
+	<div id="player-yt3" class="vlite-js" data-youtube-id="E-p6l9nioNI"></div>
+	<script src="../../dist/vlite.js"></script>
+	<script src="../../dist/providers/youtube.js"></script>
+	<script>
+        vlitejs.registerProvider('youtube', vlitejsYoutube)
+		new vlitejs({
+			selector: '#player-yt1',
+			options: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				fullscreen: true,
+				poster: '../assets/poster.jpg',
+				bigPlay: true,
+				autoHide: true,
+				nativeControlsForTouch: false,
+				playsinline: true
+			},
+            provider: 'youtube',
+			onReady: (player) => {
+				//Ready
+			}
+		});
+        new vlitejs({
+			selector: '#player-yt2',
+			options: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				fullscreen: true,
+				poster: '../assets/poster.jpg',
+				bigPlay: true,
+				autoHide: true,
+				nativeControlsForTouch: false,
+				playsinline: true
+			},
+            provider: 'youtube',
+			onReady: (player) => {
+				//Ready
+			}
+		});
+        new vlitejs({
+			selector: '#player-yt3',
+			options: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				fullscreen: true,
+				poster: '../assets/poster.jpg',
+				bigPlay: true,
+				autoHide: true,
+				nativeControlsForTouch: false,
+				playsinline: true
+			},
+            provider: 'youtube',
+			onReady: (player) => {
+				//Ready
+			}
+		});
+	</script>
+</body>
+</html>

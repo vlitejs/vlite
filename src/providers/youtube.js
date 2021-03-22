@@ -1,30 +1,26 @@
-import Player from './player'
+if (typeof vlitejs === 'undefined') {
+	throw new TypeError('vlitejs :: The library is not available.')
+}
+
+let youtubeQueue = []
 
 /**
  * vlitejs Player Youtube
  * @module vlitejs/Player/PlayerYoutube
  */
-export default class PlayerYoutube extends Player {
-	type = 'youtube'
-
-	/**
-	 * Instanciate the constructor
-	 * @constructor
-	 * @param {String|Object} selector CSS selector or query selector
-	 * @param {Object} options Player options
-	 * @param {Function} onReady Callback function executed when the player is ready
-	 */
-	constructor({ selector, options, onReady }) {
-		// Init Player class
-		super({
-			selector,
-			options,
-			onReady
+class PlayerYoutube extends vlitejs.Player {
+	isApiReady() {
+		return new window.Promise((resolve) => {
+			if (typeof window.YT !== 'undefined') {
+				resolve()
+			} else {
+				youtubeQueue.push(this)
+			}
 		})
 	}
 
-	init() {
-		super.init()
+	initReady() {
+		super.initReady()
 
 		// Init Youtube player with API
 		this.initYoutubePlayer()
@@ -34,8 +30,8 @@ export default class PlayerYoutube extends Player {
 	 * Initialize the Youtube player
 	 */
 	initYoutubePlayer() {
-		this.instancePlayer = new window.YT.Player(this.player.getAttribute('id'), {
-			videoId: this.player.getAttribute('data-youtube-id'),
+		this.instancePlayer = new window.YT.Player(this.element.getAttribute('id'), {
+			videoId: this.element.getAttribute('data-youtube-id'),
 			height: '100%',
 			width: '100%',
 			playerVars: {
@@ -60,7 +56,7 @@ export default class PlayerYoutube extends Player {
 	 * @param {Object} data Youtube datas from the player API
 	 */
 	onPlayerReady(data) {
-		this.player = data.target.getIframe()
+		this.element = data.target.getIframe()
 		super.playerIsReady()
 	}
 
@@ -169,3 +165,20 @@ export default class PlayerYoutube extends Player {
 		this.instancePlayer.destroy()
 	}
 }
+
+function onYoutubeApiReady() {
+	youtubeQueue.forEach((item) => item.initReady())
+	youtubeQueue = []
+}
+
+if (typeof window.YT === 'undefined') {
+	const script = document.createElement('script')
+	script.async = true
+	script.type = 'text/javascript'
+	script.src = 'https://youtube.com/iframe_api'
+
+	window.onYouTubeIframeAPIReady = () => onYoutubeApiReady()
+	document.getElementsByTagName('body')[0].appendChild(script)
+}
+
+export default PlayerYoutube

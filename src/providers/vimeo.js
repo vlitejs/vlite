@@ -1,23 +1,25 @@
-import Player from './player'
+if (typeof vlitejs === 'undefined') {
+	throw new TypeError('vlitejs :: The library is not available.')
+}
+
+let vimeoQueue = []
 
 /**
  * vlitejs Player Vimeo
  * @module vlitejs/Player/PlayerVimeo
  */
-export default class PlayerVimeo extends Player {
-	type = 'vimeo'
-
+class PlayerVimeo extends vlitejs.Player {
 	/**
 	 * Instanciate the constructor
 	 * @constructor
-	 * @param {String|Object} selector CSS selector or query selector
+	 * @param {HTMLElement} element Player HTML element
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ selector, options, onReady }) {
+	constructor({ element, options, onReady }) {
 		// Init Player class
 		super({
-			selector,
+			element,
 			options,
 			onReady
 		})
@@ -32,8 +34,18 @@ export default class PlayerVimeo extends Player {
 		this.onSeeked = this.onSeeked.bind(this)
 	}
 
-	init() {
-		super.init()
+	isApiReady() {
+		return new window.Promise((resolve) => {
+			if (typeof window.Vimeo !== 'undefined') {
+				resolve()
+			} else {
+				vimeoQueue.push(this)
+			}
+		})
+	}
+
+	initReady() {
+		super.initReady()
 
 		// Init Vimeo player with API
 		this.initVimeoPlayer()
@@ -43,8 +55,8 @@ export default class PlayerVimeo extends Player {
 	 * Initialize the Vimeo player
 	 */
 	initVimeoPlayer() {
-		this.instancePlayer = new window.Vimeo.Player(this.player.getAttribute('id'), {
-			id: this.player.getAttribute('data-vimeo-id'),
+		this.instancePlayer = new window.Vimeo.Player(this.element.getAttribute('id'), {
+			id: this.element.getAttribute('data-vimeo-id'),
 			controls: true
 		})
 		this.instancePlayer.ready().then(this.onPlayerReady())
@@ -54,7 +66,7 @@ export default class PlayerVimeo extends Player {
 	 * Function executed when the player is ready
 	 */
 	onPlayerReady() {
-		this.player = this.instancePlayer.element
+		this.element = this.instancePlayer.element
 		super.playerIsReady()
 		this.addSpecificEvents()
 	}
@@ -205,3 +217,20 @@ export default class PlayerVimeo extends Player {
 		this.instancePlayer.destroy()
 	}
 }
+
+function onVimeoApiReady() {
+	vimeoQueue.forEach((item) => item.initReady())
+	vimeoQueue = []
+}
+
+if (typeof window.YT === 'undefined') {
+	const script = document.createElement('script')
+	script.async = true
+	script.type = 'text/javascript'
+	script.src = 'https://player.vimeo.com/api/player.js'
+	script.onload = () => onVimeoApiReady()
+
+	document.getElementsByTagName('body')[0].appendChild(script)
+}
+
+export default PlayerVimeo
