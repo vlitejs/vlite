@@ -15,9 +15,26 @@
 		}
 	}
 
-	&-controlBarContent {
-		width: 100%;
+	&-playPauseButton {
+		position: relative;
+		float: left;
+		width: 40px;
 		height: 100%;
+		flex-shrink: 0;
+
+		&:hover svg {
+			opacity: 1;
+		}
+	}
+
+	&-time {
+		color: var(--colorControl);
+		font-size: 12px;
+		float: left;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		margin-right: auto;
 	}
 
 	&-progressBar {
@@ -62,27 +79,6 @@
 			border-color: transparent;
 			color: transparent;
 		}
-	}
-
-	&-playPauseButton {
-		position: relative;
-		float: left;
-		width: 40px;
-		height: 100%;
-
-		&:hover svg {
-			opacity: 1;
-		}
-	}
-
-	&-time {
-		color: var(--colorControl);
-		font-size: 12px;
-		float: left;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		margin-right: auto;
 	}
 
 	&-volumeButton {

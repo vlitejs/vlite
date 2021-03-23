@@ -2,6 +2,9 @@
 	.v-vlite * {
 		box-sizing: border-box;
 	}
+	.v-vlite button * {
+			pointer-events: none;
+		}
 	.v-vlite button,
 	.v-vlite input[type='range'] {
 		-webkit-appearance: none;
@@ -14,16 +17,19 @@
 	.v-vlite button:focus-visible, .v-vlite input[type='range']:focus-visible {
 			outline: 4px dashed var(--outlineColor);
 		}
-	.v-vlite button * {
-			pointer-events: none;
-		}
+	.v-vlite button:focus-visible {
+		outline-offset: -4px;
+	}
+	.v-vlite input[type='range']:focus-visible {
+		outline-offset: 2px;
+	}
 
 :root {
 	--heightControlBar: 50px;
 	--heightProgressBar: 5px;
 	--heightProgressBarHover: 5px;
 	--offsetLeftRightControlBar: 10px;
-	--backgroundControlBar: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%);
+	--backgroundControlBar: linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%);
 	--colorControl: #fff;
 	--colorGradient: linear-gradient(135deg, #ff0053, #ee5b35);
 	--defaultControlsOpacity: 0.85;
@@ -31,7 +37,7 @@
 	--controlIconHeight: 26px;
 	--transition300msEase: 0.3s ease;
 	--orange: #ff7f15;
-	--backgroundProgressBar: transparent;
+	--backgroundProgressBar: rgba(0 0 0 / 25%);
 	--outlineColor: #51a7e8;
 }
 
@@ -57,7 +63,6 @@
 
 .v-vlite.v-styleAudio {
 		--colorControl: black;
-		--backgroundProgressBar: black;
 
 		box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
 		border-radius: 8px;
@@ -200,9 +205,24 @@
 			width: var(--controlIconWidth);
 			height: var(--controlIconHeight);
 		}
-	.v-controlBarContent {
-		width: 100%;
+	.v-playPauseButton {
+		position: relative;
+		float: left;
+		width: 40px;
 		height: 100%;
+		flex-shrink: 0;
+	}
+	.v-playPauseButton:hover svg {
+			opacity: 1;
+		}
+	.v-time {
+		color: var(--colorControl);
+		font-size: 12px;
+		float: left;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		margin-right: auto;
 	}
 	.v-progressBar {
 		-webkit-appearance: none;
@@ -243,24 +263,6 @@
 			border-color: transparent;
 			color: transparent;
 		}
-	.v-playPauseButton {
-		position: relative;
-		float: left;
-		width: 40px;
-		height: 100%;
-	}
-	.v-playPauseButton:hover svg {
-			opacity: 1;
-		}
-	.v-time {
-		color: var(--colorControl);
-		font-size: 12px;
-		float: left;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		margin-right: auto;
-	}
 	.v-volumeButton {
 		position: relative;
 		display: inline-block;

@@ -4,6 +4,12 @@
 		box-sizing: border-box;
 	}
 
+	button {
+		* {
+			pointer-events: none;
+		}
+	}
+
 	button,
 	input[type='range'] {
 		-webkit-appearance: none;
@@ -18,9 +24,11 @@
 		}
 	}
 
-	button {
-		* {
-			pointer-events: none;
-		}
+	button:focus-visible {
+		outline-offset: -4px;
+	}
+
+	input[type='range']:focus-visible {
+		outline-offset: 2px;
 	}
 }

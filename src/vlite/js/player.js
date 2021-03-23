@@ -30,7 +30,7 @@ export default class Player {
 		this.delayAutoHide = 3000
 		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
 
-		const DEFAULT_OPTIONS = {
+		const DEFAULT_OPTIONS_VIDEO = {
 			autoplay: false,
 			controls: true,
 			playPause: true,
@@ -45,7 +45,21 @@ export default class Player {
 			playsinline: true
 		}
 
-		this.options = Object.assign({}, DEFAULT_OPTIONS, options)
+		const DEFAULT_OPTIONS_AUDIO = {
+			autoplay: false,
+			controls: true,
+			playPause: true,
+			progressBar: true,
+			time: true,
+			volume: true,
+			nativeControlsForTouch: false
+		}
+
+		this.options = Object.assign(
+			{},
+			this.mode === 'video' ? DEFAULT_OPTIONS_VIDEO : DEFAULT_OPTIONS_AUDIO,
+			options
+		)
 
 		// Keep player native control and disable custom skin
 		if (this.options.nativeControlsForTouch) {
@@ -296,7 +310,7 @@ export default class Player {
 	togglePlayPause(e) {
 		e && e.preventDefault()
 
-		if (this.wrapperPlayer.classList.contains('v-firstStart')) {
+		if (this.mode === 'video' && this.wrapperPlayer.classList.contains('v-firstStart')) {
 			this.wrapperPlayer.focus()
 		}
 
@@ -343,12 +357,18 @@ export default class Player {
 	afterPlayPause() {
 		if (this.isPaused) {
 			this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
-			this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play')
 			this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Play')
+
+			if (this.mode === 'video' && this.options.bigPlay) {
+				this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play')
+			}
 		} else {
 			this.wrapperPlayer.classList.replace('v-paused', 'v-playing')
-			this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause')
 			this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Pause')
+
+			if (this.mode === 'video' && this.options.bigPlay) {
+				this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause')
+			}
 		}
 
 		if (this.options.autoHide && this.options.controls) {
@@ -524,12 +544,14 @@ export default class Player {
 	}
 
 	stopAutoHideTimer() {
-		this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
-		clearTimeout(this.timerAutoHide)
+		if (this.mode === 'video') {
+			this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
+			clearTimeout(this.timerAutoHide)
+		}
 	}
 
 	startAutoHideTimer() {
-		if (!this.isPaused) {
+		if (this.mode === 'video' && !this.isPaused) {
 			this.timerAutoHide = setTimeout(() => {
 				this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden')
 			}, this.delayAutoHide)

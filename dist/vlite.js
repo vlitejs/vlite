@@ -350,18 +350,9 @@ function _default({
 }) {
   return (0, _jsxDom.createElement)("div", {
     className: `v-controlBar v-style${(0, _utils.capitalized)(mode)}`
-  }, progressBar && (0, _jsxDom.createElement)("input", {
-    type: "range",
-    className: "v-progressBar",
-    min: "0",
-    max: "100",
-    step: "0.01",
-    value: "0",
-    orient: "horizontal",
-    "aria-label": "Seek",
-    "aria-valuemin": "0"
-  }), playPause && (0, _jsxDom.createElement)("button", {
-    className: "v-playPauseButton"
+  }, playPause && (0, _jsxDom.createElement)("button", {
+    className: "v-playPauseButton",
+    "aria-label": "Play"
   }, (0, _jsxDom.createElement)("span", {
     className: "v-playerIcon v-iconPlay",
     innerHTML: _play.default
@@ -374,7 +365,17 @@ function _default({
     className: "v-currentTime"
   }, "00:00"), "\xA0/\xA0", (0, _jsxDom.createElement)("span", {
     className: "v-duration"
-  })), volume && (0, _jsxDom.createElement)("button", {
+  })), progressBar && (0, _jsxDom.createElement)("input", {
+    type: "range",
+    className: "v-progressBar",
+    min: "0",
+    max: "100",
+    step: "0.01",
+    value: "0",
+    orient: "horizontal",
+    "aria-label": "Seek",
+    "aria-valuemin": "0"
+  }), volume && (0, _jsxDom.createElement)("button", {
     className: "v-volumeButton"
   }, (0, _jsxDom.createElement)("span", {
     className: "v-playerIcon v-iconVolumeHigh",
@@ -621,7 +622,7 @@ class Player {
     this.skinDisabled = false;
     this.delayAutoHide = 3000;
     this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video';
-    const DEFAULT_OPTIONS = {
+    const DEFAULT_OPTIONS_VIDEO = {
       autoplay: false,
       controls: true,
       playPause: true,
@@ -635,7 +636,16 @@ class Player {
       nativeControlsForTouch: false,
       playsinline: true
     };
-    this.options = Object.assign({}, DEFAULT_OPTIONS, options); // Keep player native control and disable custom skin
+    const DEFAULT_OPTIONS_AUDIO = {
+      autoplay: false,
+      controls: true,
+      playPause: true,
+      progressBar: true,
+      time: true,
+      volume: true,
+      nativeControlsForTouch: false
+    };
+    this.options = Object.assign({}, this.mode === 'video' ? DEFAULT_OPTIONS_VIDEO : DEFAULT_OPTIONS_AUDIO, options); // Keep player native control and disable custom skin
 
     if (this.options.nativeControlsForTouch) {
       this.skinDisabled = true;
@@ -857,7 +867,7 @@ class Player {
   togglePlayPause(e) {
     e && e.preventDefault();
 
-    if (this.wrapperPlayer.classList.contains('v-firstStart')) {
+    if (this.mode === 'video' && this.wrapperPlayer.classList.contains('v-firstStart')) {
       this.wrapperPlayer.focus();
     }
 
@@ -909,12 +919,18 @@ class Player {
   afterPlayPause() {
     if (this.isPaused) {
       this.wrapperPlayer.classList.replace('v-playing', 'v-paused');
-      this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play');
       this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Play');
+
+      if (this.mode === 'video' && this.options.bigPlay) {
+        this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play');
+      }
     } else {
       this.wrapperPlayer.classList.replace('v-paused', 'v-playing');
-      this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause');
       this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Pause');
+
+      if (this.mode === 'video' && this.options.bigPlay) {
+        this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause');
+      }
     }
 
     if (this.options.autoHide && this.options.controls) {
@@ -1098,12 +1114,14 @@ class Player {
   }
 
   stopAutoHideTimer() {
-    this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden');
-    clearTimeout(this.timerAutoHide);
+    if (this.mode === 'video') {
+      this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden');
+      clearTimeout(this.timerAutoHide);
+    }
   }
 
   startAutoHideTimer() {
-    if (!this.isPaused) {
+    if (this.mode === 'video' && !this.isPaused) {
       this.timerAutoHide = setTimeout(() => {
         this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden');
       }, this.delayAutoHide);

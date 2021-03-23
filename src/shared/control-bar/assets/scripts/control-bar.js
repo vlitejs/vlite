@@ -17,6 +17,18 @@ export default function ({
 }) {
 	return (
 		<div className={`v-controlBar v-style${capitalized(mode)}`}>
+			{playPause && (
+				<button className="v-playPauseButton" aria-label="Play">
+					<span className="v-playerIcon v-iconPlay" innerHTML={svgPlay}></span>
+					<span className="v-playerIcon v-iconPause" innerHTML={svgPause}></span>
+				</button>
+			)}
+			{time && (
+				<div className="v-time">
+					<span className="v-currentTime">00:00</span>&nbsp;/&nbsp;
+					<span className="v-duration"></span>
+				</div>
+			)}
 			{progressBar && (
 				<input
 					type="range"
@@ -29,18 +41,6 @@ export default function ({
 					aria-label="Seek"
 					aria-valuemin="0"
 				/>
-			)}
-			{playPause && (
-				<button className="v-playPauseButton">
-					<span className="v-playerIcon v-iconPlay" innerHTML={svgPlay}></span>
-					<span className="v-playerIcon v-iconPause" innerHTML={svgPause}></span>
-				</button>
-			)}
-			{time && (
-				<div className="v-time">
-					<span className="v-currentTime">00:00</span>&nbsp;/&nbsp;
-					<span className="v-duration"></span>
-				</div>
 			)}
 			{volume && (
 				<button className="v-volumeButton">

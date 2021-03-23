@@ -3,7 +3,7 @@
 	--heightProgressBar: 5px;
 	--heightProgressBarHover: 5px;
 	--offsetLeftRightControlBar: 10px;
-	--backgroundControlBar: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%);
+	--backgroundControlBar: linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%);
 	--colorControl: #fff;
 	--colorGradient: linear-gradient(135deg, #ff0053, #ee5b35);
 	--defaultControlsOpacity: 0.85;
@@ -11,6 +11,6 @@
 	--controlIconHeight: 26px;
 	--transition300msEase: 0.3s ease;
 	--orange: #ff7f15;
-	--backgroundProgressBar: transparent;
+	--backgroundProgressBar: rgba(0 0 0 / 25%);
 	--outlineColor: #51a7e8;
 }
