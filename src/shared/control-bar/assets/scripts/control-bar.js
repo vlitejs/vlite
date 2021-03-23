@@ -26,6 +26,8 @@ export default function ({
 					step="0.01"
 					value="0"
 					orient="horizontal"
+					aria-label="Seek"
+					aria-valuemin="0"
 				/>
 			)}
 			{playPause && (
@@ -47,7 +49,7 @@ export default function ({
 				</button>
 			)}
 			{fullscreen && (
-				<button className="v-fullscreenButton">
+				<button className="v-fullscreenButton" aria-label="Enter fullscreen">
 					<span className="v-playerIcon v-iconFullscreen" innerHTML={svgFullscreen}></span>
 					<span className="v-playerIcon v-iconShrink" innerHTML={svgFullscreenExit}></span>
 				</button>

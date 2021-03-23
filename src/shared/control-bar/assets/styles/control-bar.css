@@ -43,9 +43,6 @@
 				var(--orange) var(--value, 0),
 				var(--backgroundProgressBar) var(--value, 0)
 			);
-
-			/* --fillProgress: calc((var(--value) / 100) * 100%);
-			background: linear-gradient(red, red) 0 / var(--fillProgress) 100% no-repeat rgba(0, 0, 0, 0.2); */
 		}
 
 		&::-webkit-slider-thumb {
@@ -72,11 +69,6 @@
 		float: left;
 		width: 40px;
 		height: 100%;
-		cursor: pointer;
-
-		* {
-			pointer-events: none;
-		}
 
 		&:hover svg {
 			opacity: 1;
@@ -98,11 +90,6 @@
 		display: inline-block;
 		width: 40px;
 		height: 100%;
-		cursor: pointer;
-
-		* {
-			pointer-events: none;
-		}
 
 		&:not(.v-muted) {
 			.v-iconVolumeHigh {
@@ -126,11 +113,6 @@
 		display: inline-block;
 		width: 40px;
 		height: 100%;
-		cursor: pointer;
-
-		* {
-			pointer-events: none;
-		}
 
 		&:not(.v-exit) {
 			.v-iconFullscreen {

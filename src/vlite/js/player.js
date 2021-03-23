@@ -184,7 +184,10 @@ export default class Player {
 
 	onProgressInput(e) {
 		const target = e.target
+
 		target.style.setProperty('--value', `${target.value}%`)
+		this.getCurrentTime().then((seconds) => target.setAttribute('aria-valuenow', seconds))
+
 		this.onProgressChanged(e)
 	}
 
@@ -231,6 +234,10 @@ export default class Player {
 	 * Function executed when the player is ready
 	 */
 	playerIsReady() {
+		this.getDuration().then((duration) => {
+			this.wrapperPlayer.querySelector('.v-progressBar').setAttribute('aria-valuemax', duration)
+		})
+
 		this.loading(false)
 
 		// Execute the onReady function
@@ -243,6 +250,10 @@ export default class Player {
 
 			this.togglePlayPause()
 		}
+
+		this.wrapperPlayer
+			.querySelector('.v-volumeButton')
+			.setAttribute('aria-label', this.element.muted ? 'Unmute' : 'Mute')
 	}
 
 	/**
@@ -285,8 +296,11 @@ export default class Player {
 	togglePlayPause(e) {
 		e && e.preventDefault()
 
+		if (this.wrapperPlayer.classList.contains('v-firstStart')) {
+			this.wrapperPlayer.focus()
+		}
+
 		this.wrapperPlayer.classList.contains('v-paused') ? this.play() : this.pause()
-		this.wrapperPlayer.focus()
 	}
 
 	/**
@@ -329,17 +343,20 @@ export default class Player {
 	afterPlayPause() {
 		if (this.isPaused) {
 			this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
+			this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play')
+			this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Play')
 		} else {
 			this.wrapperPlayer.classList.replace('v-paused', 'v-playing')
+			this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause')
+			this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Pause')
 		}
 
 		if (this.options.autoHide && this.options.controls) {
+			this.stopAutoHideTimer()
 			if (this.isPaused) {
 				this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
 			} else {
-				this.timerAutoHide = setTimeout(() => {
-					this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden')
-				}, this.delayAutoHide)
+				this.startAutoHideTimer()
 			}
 		}
 	}
@@ -350,9 +367,13 @@ export default class Player {
 	toggleVolume(e) {
 		e.preventDefault()
 
-		this.wrapperPlayer.querySelector('.v-volumeButton').classList.contains('v-muted')
-			? this.unMute()
-			: this.mute()
+		if (this.wrapperPlayer.querySelector('.v-volumeButton').classList.contains('v-muted')) {
+			this.unMute()
+			this.wrapperPlayer.querySelector('.v-volumeButton').setAttribute('aria-label', 'Mute')
+		} else {
+			this.mute()
+			this.wrapperPlayer.querySelector('.v-volumeButton').setAttribute('aria-label', 'Unmute')
+		}
 	}
 
 	/**
@@ -384,7 +405,17 @@ export default class Player {
 	 */
 	toggleFullscreen(e) {
 		e.preventDefault()
-		this.isFullScreen ? this.exitFullscreen() : this.requestFullscreen()
+		if (this.isFullScreen) {
+			this.exitFullscreen()
+			this.wrapperPlayer
+				.querySelector('.v-fullscreenButton')
+				.setAttribute('aria-label', 'Enter fullscreen')
+		} else {
+			this.requestFullscreen()
+			this.wrapperPlayer
+				.querySelector('.v-fullscreenButton')
+				.setAttribute('aria-label', 'Exit fullscreen')
+		}
 	}
 
 	/**
@@ -466,6 +497,12 @@ export default class Player {
 	 * @param {Object} e Event listener datas
 	 */
 	onKeyup(e) {
+		const validKeyCode = [9, 32, 37, 39]
+		if (validKeyCode.includes(e.keyCode)) {
+			this.stopAutoHideTimer()
+			this.startAutoHideTimer()
+		}
+
 		if (e.keyCode === 32) {
 			this.togglePlayPause(e)
 		} else if (e.keyCode === 37) {
@@ -481,9 +518,18 @@ export default class Player {
 	 */
 	onMousemove() {
 		if (this.isPaused === false && this.options.autoHide && this.options.controls) {
-			this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
-			clearTimeout(this.timerAutoHide)
+			this.stopAutoHideTimer()
+			this.startAutoHideTimer()
+		}
+	}
 
+	stopAutoHideTimer() {
+		this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
+		clearTimeout(this.timerAutoHide)
+	}
+
+	startAutoHideTimer() {
+		if (!this.isPaused) {
 			this.timerAutoHide = setTimeout(() => {
 				this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden')
 			}, this.delayAutoHide)

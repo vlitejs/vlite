@@ -9,11 +9,6 @@
 		z-index: 2;
 		transition: opacity var(--transition300msEase);
 		transition-delay: 100ms;
-		cursor: pointer;
-
-		* {
-			pointer-events: none;
-		}
 
 		svg {
 			fill: var(--colorControl);
