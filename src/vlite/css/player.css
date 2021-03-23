@@ -14,11 +14,22 @@
 .v-vlite {
 	font-family: -apple-system, blinkmacsystemfont, segoe UI, Helvetica, Arial, sans-serif,
 		Apple Color Emoji, Segoe UI Emoji;
-	position: relative;
-	height: 0;
-	padding-top: 56.25%;
-	background-color: #000;
 	overflow: hidden;
+	position: relative;
+
+	&.v-styleAudio {
+		--colorControl: black;
+		--backgroundProgressBar: black;
+
+		box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+		border-radius: 8px;
+	}
+
+	&.v-styleVideo {
+		background-color: #000;
+		height: 0;
+		padding-top: 56.25%;
+	}
 
 	&::-webkit-full-screen {
 		width: 100%;

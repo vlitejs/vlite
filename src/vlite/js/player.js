@@ -6,6 +6,7 @@ import ControlBarTemplate from 'shared/control-bar/assets/scripts/control-bar'
 import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
 import PosterTemplate from 'shared/poster/assets/scripts/poster'
+import { capitalized } from 'shared/utils/utils'
 
 /**
  * vlitejs Player
@@ -27,6 +28,7 @@ export default class Player {
 		this.touchSupport = this.isTouch()
 		this.skinDisabled = false
 		this.delayAutoHide = 3000
+		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
 
 		const DEFAULT_OPTIONS = {
 			autoplay: false,
@@ -70,7 +72,7 @@ export default class Player {
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
-		this.onProgressChanged = this.onProgressChanged.bind(this)
+		this.onProgressInput = this.onProgressInput.bind(this)
 	}
 
 	init() {
@@ -92,7 +94,13 @@ export default class Player {
 	render() {
 		// Create a wrapper for each player
 		const wrapper = document.createElement('div')
-		wrapper.setAttribute('class', 'v-vlite v-firstStart v-paused v-loading')
+		wrapper.classList.add(
+			'v-vlite',
+			'v-firstStart',
+			'v-paused',
+			'v-loading',
+			`v-style${capitalized(this.mode)}`
+		)
 		wrapper.setAttribute('tabindex', 0)
 		this.element.parentNode.insertBefore(wrapper, this.element)
 		wrapper.appendChild(this.element)
@@ -105,22 +113,43 @@ export default class Player {
 		wrapper.appendChild(
 			<>
 				{!this.options.nativeControlsForTouch && (
-					<>
-						<OverlayTemplate fastForward={!this.touchSupport} />
-						<LoaderTemplate />
-						<PosterTemplate posterUrl={this.options.poster} />
-						{this.options.bigPlay && <BigPlayTemplate />}
-						{this.options.controls && (
-							<ControlBarTemplate
-								progressBar={this.options.progressBar}
-								playPause={this.options.playPause}
-								time={this.options.time}
-								volume={this.options.volume}
-								fullscreen={this.options.fullscreen}
-							/>
-						)}
-					</>
+					<>{this.mode === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
 				)}
+			</>
+		)
+	}
+
+	renderVideoElement() {
+		return (
+			<>
+				<OverlayTemplate fastForward={!this.touchSupport} />
+				<LoaderTemplate />
+				{this.options.poster && <PosterTemplate posterUrl={this.options.poster} />}
+				{this.options.bigPlay && <BigPlayTemplate />}
+				{this.options.controls && (
+					<ControlBarTemplate
+						progressBar={this.options.progressBar}
+						playPause={this.options.playPause}
+						time={this.options.time}
+						volume={this.options.volume}
+						fullscreen={this.options.fullscreen}
+						mode={this.mode}
+					/>
+				)}
+			</>
+		)
+	}
+
+	renderAudioElement() {
+		return (
+			<>
+				<ControlBarTemplate
+					progressBar={this.options.progressBar}
+					playPause={this.options.playPause}
+					time={this.options.time}
+					volume={this.options.volume}
+					mode={this.mode}
+				/>
 			</>
 		)
 	}
@@ -133,13 +162,13 @@ export default class Player {
 		if (this.options.controls && this.options.progressBar) {
 			this.wrapperPlayer
 				.querySelector('.v-progressBar')
-				.addEventListener('change', this.onProgressChanged)
+				.addEventListener('input', this.onProgressInput)
 		}
 
 		this.wrapperPlayer.addEventListener('click', this.onClickOnPlayer)
 		this.wrapperPlayer.addEventListener('dblclick', this.onDoubleClickOnPlayer)
 		this.wrapperPlayer.addEventListener('keyup', this.onKeyup)
-		this.wrapperPlayer.addEventListener('mousemove', this.onMousemove)
+		this.mode === 'video' && this.wrapperPlayer.addEventListener('mousemove', this.onMousemove)
 
 		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
@@ -153,17 +182,18 @@ export default class Player {
 		}
 	}
 
+	onProgressInput(e) {
+		const target = e.target
+		target.style.setProperty('--value', `${target.value}%`)
+		this.onProgressChanged(e)
+	}
+
 	onClickOnPlayer(e) {
 		const target = e.target
 		const validateTargetPlayPauseButton = validateTarget({
 			target: target,
-			selectorString: '.v-playPauseButton',
-			nodeName: ['button']
-		})
-		const validateTargetPoster = validateTarget({
-			target: target,
-			selectorString: '.v-poster, .v-overlay',
-			nodeName: ['div']
+			selectorString: '.v-poster, .v-overlay, .v-bigPlay, .v-playPauseButton',
+			nodeName: ['div', 'button']
 		})
 		const validateTargetVolume = validateTarget({
 			target: target,
@@ -176,7 +206,7 @@ export default class Player {
 			nodeName: ['button']
 		})
 
-		if (validateTargetPlayPauseButton || validateTargetPoster) {
+		if (validateTargetPlayPauseButton) {
 			this.togglePlayPause(e)
 		} else if (validateTargetVolume) {
 			this.toggleVolume(e)
@@ -204,17 +234,12 @@ export default class Player {
 		this.loading(false)
 
 		// Execute the onReady function
-		if (typeof this.onReady === 'function') {
-			this.onReady(this)
-		}
+		typeof this.onReady === 'function' && this.onReady(this)
 
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the video is muted
-			if (!this.element.muted) {
-				this.mute()
-				console.warn('vLitejs :: Video muted to authorize autoplay option')
-			}
+			!this.element.muted && this.mute()
 
 			this.togglePlayPause()
 		}
@@ -225,11 +250,7 @@ export default class Player {
 	 * @param {Boolean} state Status of the loader
 	 */
 	loading(state) {
-		if (state) {
-			this.wrapperPlayer.classList.add('v-loading')
-		} else {
-			this.wrapperPlayer.classList.remove('v-loading')
-		}
+		this.wrapperPlayer.classList[state ? 'add' : 'remove']('v-loading')
 	}
 
 	/**
@@ -262,15 +283,10 @@ export default class Player {
 	 * Function executed to toggle the video status (play, pause)
 	 */
 	togglePlayPause(e) {
-		if (e) {
-			e.preventDefault()
-		}
+		e && e.preventDefault()
 
-		if (this.wrapperPlayer.classList.contains('v-paused')) {
-			this.play()
-		} else {
-			this.pause()
-		}
+		this.wrapperPlayer.classList.contains('v-paused') ? this.play() : this.pause()
+		this.wrapperPlayer.focus()
 	}
 
 	/**
@@ -279,11 +295,7 @@ export default class Player {
 	 */
 	fastForward({ direction }) {
 		this.getCurrentTime().then((seconds) => {
-			if (direction === 'backward') {
-				this.seekTo(seconds - 10)
-			} else if (direction === 'forward') {
-				this.seekTo(seconds + 10)
-			}
+			this.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
 		})
 	}
 
@@ -293,7 +305,8 @@ export default class Player {
 	play() {
 		if (this.wrapperPlayer.classList.contains('v-firstStart')) {
 			this.wrapperPlayer.classList.remove('v-firstStart')
-			this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active')
+			this.mode === 'video' &&
+				this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active')
 		}
 
 		this.methodPlay()
@@ -336,13 +349,10 @@ export default class Player {
 	 */
 	toggleVolume(e) {
 		e.preventDefault()
-		const volumeButton = this.wrapperPlayer.querySelector('.v-volumeButton')
 
-		if (volumeButton.classList.contains('v-muted')) {
-			this.unMute()
-		} else {
-			this.mute()
-		}
+		this.wrapperPlayer.querySelector('.v-volumeButton').classList.contains('v-muted')
+			? this.unMute()
+			: this.mute()
 	}
 
 	/**
@@ -374,11 +384,7 @@ export default class Player {
 	 */
 	toggleFullscreen(e) {
 		e.preventDefault()
-		if (this.isFullScreen) {
-			this.exitFullscreen()
-		} else {
-			this.requestFullscreen()
-		}
+		this.isFullScreen ? this.exitFullscreen() : this.requestFullscreen()
 	}
 
 	/**
@@ -461,7 +467,7 @@ export default class Player {
 	 */
 	onKeyup(e) {
 		if (e.keyCode === 32) {
-			this.togglePlayPause()
+			this.togglePlayPause(e)
 		} else if (e.keyCode === 37) {
 			this.fastForward({ direction: 'backward' })
 		} else if (e.keyCode === 39) {
@@ -487,18 +493,21 @@ export default class Player {
 	/**
 	 * Update current time displaying in the control bar and the width of the progress bar
 	 */
-	updateCurrentTime() {
-		Promise.all([this.getCurrentTime(), this.getDuration()]).then(([seconds, duration]) => {
-			const currentTime = Math.round(seconds)
-			const width = (currentTime * 100) / duration
-			const timeElement = this.wrapperPlayer.querySelector('.v-currentTime')
+	onTimeUpdate() {
+		if (this.options.time) {
+			Promise.all([this.getCurrentTime(), this.getDuration()]).then(([seconds, duration]) => {
+				const currentTime = Math.round(seconds)
+				const width = (currentTime * 100) / duration
+				const progressBar = this.wrapperPlayer.querySelector('.v-progressBar')
 
-			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = `${width}%`
+				progressBar.value = width
+				progressBar.style.setProperty('--value', `${width}%`)
 
-			if (timeElement !== null) {
-				timeElement.innerHTML = this.constructor.formatVideoTime(currentTime)
-			}
-		})
+				this.wrapperPlayer.querySelector(
+					'.v-currentTime'
+				).innerHTML = this.constructor.formatVideoTime(currentTime)
+			})
+		}
 	}
 
 	/**
@@ -508,13 +517,13 @@ export default class Player {
 		if (this.options.controls && this.options.progressBar) {
 			this.wrapperPlayer
 				.querySelector('.v-progressBar')
-				.removeEventListener('change', this.onProgressChanged)
+				.removeEventListener('change', this.onProgressInput)
 		}
 
 		this.wrapperPlayer.removeEventListener('click', this.onClickOnPlayer)
 		this.wrapperPlayer.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
 		this.wrapperPlayer.removeEventListener('keyup', this.onKeyup)
-		this.wrapperPlayer.removeEventListener('mousemove', this.onMousemove)
+		this.mode === 'video' && this.wrapperPlayer.removeEventListener('mousemove', this.onMousemove)
 
 		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}

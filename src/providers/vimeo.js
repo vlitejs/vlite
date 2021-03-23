@@ -26,7 +26,7 @@ class PlayerVimeo extends vlitejs.Player {
 
 		this.onPlayerReady = this.onPlayerReady.bind(this)
 		this.updateDuration = this.updateDuration.bind(this)
-		this.updateCurrentTime = this.updateCurrentTime.bind(this)
+		this.onTimeUpdate = this.onTimeUpdate.bind(this)
 		this.onVideoEnded = this.onVideoEnded.bind(this)
 		this.onPlaying = this.onPlaying.bind(this)
 		this.onWaiting = this.onWaiting.bind(this)
@@ -83,7 +83,7 @@ class PlayerVimeo extends vlitejs.Player {
 			}
 
 			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.instancePlayer.on('timeupdate', this.updateCurrentTime)
+			this.instancePlayer.on('timeupdate', this.onTimeUpdate)
 		}
 
 		// On ended event, show poster and reset progressBar and time
@@ -202,7 +202,7 @@ class PlayerVimeo extends vlitejs.Player {
 	removeSpecificEvents() {
 		this.options.time && this.instancePlayer.off('durationchange', this.updateDuration)
 
-		this.instancePlayer.off('timeupdate', this.updateCurrentTime)
+		this.instancePlayer.off('timeupdate', this.onTimeUpdate)
 		this.instancePlayer.off('playing', this.onPlaying)
 		this.instancePlayer.off('waiting', this.onWaiting)
 		this.instancePlayer.off('seeking', this.onSeeking)

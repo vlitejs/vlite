@@ -84,7 +84,7 @@ class PlayerYoutube extends vlitejs.Player {
 
 			if (this.options.controls) {
 				setInterval(() => {
-					super.updateCurrentTime()
+					super.onTimeUpdate()
 				}, 100)
 			}
 

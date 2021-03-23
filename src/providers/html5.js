@@ -22,7 +22,7 @@ export default class PlayerHtml5 extends Player {
 
 		this.onPlayerReady = this.onPlayerReady.bind(this)
 		this.updateDuration = this.updateDuration.bind(this)
-		this.updateCurrentTime = this.updateCurrentTime.bind(this)
+		this.onTimeUpdate = this.onTimeUpdate.bind(this)
 		this.onVideoEnded = this.onVideoEnded.bind(this)
 		this.onPlaying = this.onPlaying.bind(this)
 		this.onWaiting = this.onWaiting.bind(this)
@@ -89,7 +89,7 @@ export default class PlayerHtml5 extends Player {
 			}
 
 			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.element.addEventListener('timeupdate', this.updateCurrentTime)
+			this.element.addEventListener('timeupdate', this.onTimeUpdate)
 		}
 
 		// On ended event, show poster and reset progressBar and time
@@ -206,7 +206,7 @@ export default class PlayerHtml5 extends Player {
 	removeSpecificEvents() {
 		this.options.time && this.element.removeEventListener('durationchange', this.updateDuration)
 
-		this.element.removeEventListener('timeupdate', this.updateCurrentTime)
+		this.element.removeEventListener('timeupdate', this.onTimeUpdate)
 		this.element.removeEventListener('playing', this.onPlaying)
 		this.element.removeEventListener('waiting', this.onWaiting)
 		this.element.removeEventListener('seeking', this.onSeeking)
