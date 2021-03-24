@@ -1,0 +1,1 @@
+.v-captions{position:absolute;left:50%;width:auto;bottom:70px;z-index:2;color:#fff;text-align:center;background-color:#212121;padding:5px 10px;transform:translateX(-50%);display:none}.v-captions.active{display:block}

@@ -12,11 +12,12 @@ export default class PlayerHtml5 extends Player {
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ element, options, onReady }) {
+	constructor({ element, options, plugins, onReady }) {
 		// Init Player class
 		super({
 			element,
 			options,
+			plugins,
 			onReady
 		})
 

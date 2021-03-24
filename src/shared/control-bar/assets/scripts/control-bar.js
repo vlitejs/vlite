@@ -13,6 +13,7 @@ export default function ({
 	time = false,
 	volume = false,
 	fullscreen = false,
+	isMuted = false,
 	mode
 }) {
 	return (
@@ -43,7 +44,7 @@ export default function ({
 				/>
 			)}
 			{volume && (
-				<button className="v-volumeButton">
+				<button className={`v-volumeButton${isMuted ? ' v-muted' : ''}`}>
 					<span className="v-playerIcon v-iconVolumeHigh" innerHTML={svgVolumeHigh}></span>
 					<span className="v-playerIcon v-iconVolumeMute" innerHTML={svgVolumeMute}></span>
 				</button>

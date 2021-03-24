@@ -6,7 +6,7 @@ import ControlBarTemplate from 'shared/control-bar/assets/scripts/control-bar'
 import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
 import PosterTemplate from 'shared/poster/assets/scripts/poster'
-import { capitalized } from 'shared/utils/utils'
+import { capitalized, formatVideoTime, isTouch, checkSupportFullScreen } from 'shared/utils/utils'
 
 /**
  * vlitejs Player
@@ -20,62 +20,68 @@ export default class Player {
 	 * @param {Object} options Player options
 	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ element, options, onReady }) {
+	constructor({ element, options, plugins = [], onReady }) {
 		this.onReady = onReady
+		this.element = element
+		this.plugins = plugins
+
+		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
 		this.isFullScreen = false
 		this.isPaused = null
-		this.element = element
-		this.touchSupport = this.isTouch()
-		this.skinDisabled = false
 		this.delayAutoHide = 3000
-		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
 
-		const DEFAULT_OPTIONS_VIDEO = {
-			autoplay: false,
-			controls: true,
-			playPause: true,
-			progressBar: true,
-			time: true,
-			volume: true,
-			fullscreen: true,
-			poster: null,
-			bigPlay: true,
-			autoHide: false,
-			nativeControlsForTouch: false,
-			playsinline: true
+		// Check fullscreen support API on different browsers and cached prefixs
+		this.supportFullScreen = checkSupportFullScreen()
+		this.touchSupport = isTouch()
+
+		const DEFAULT_OPTIONS = {
+			audio: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				loop: false
+			},
+			video: {
+				autoplay: false,
+				controls: true,
+				playPause: true,
+				progressBar: true,
+				time: true,
+				volume: true,
+				fullscreen: true,
+				poster: null,
+				bigPlay: true,
+				autoHide: false,
+				playsinline: true,
+				loop: false,
+				muted: false
+			}
 		}
 
-		const DEFAULT_OPTIONS_AUDIO = {
-			autoplay: false,
-			controls: true,
-			playPause: true,
-			progressBar: true,
-			time: true,
-			volume: true,
-			nativeControlsForTouch: false
+		// Update config from element attributes
+		if (this.element.hasAttribute('autoplay')) {
+			options.autoplay = true
+		}
+		if (this.element.hasAttribute('playsinline')) {
+			options.playsinline = true
+		}
+		if (this.element.hasAttribute('muted')) {
+			options.muted = true
+		}
+		if (this.element.hasAttribute('loop')) {
+			options.loop = true
 		}
 
-		this.options = Object.assign(
-			{},
-			this.mode === 'video' ? DEFAULT_OPTIONS_VIDEO : DEFAULT_OPTIONS_AUDIO,
-			options
-		)
-
-		// Keep player native control and disable custom skin
-		if (this.options.nativeControlsForTouch) {
-			this.skinDisabled = true
-			this.element.setAttribute('controls', 'controls')
-			this.options.controls = false
-		}
+		this.options = Object.assign({}, DEFAULT_OPTIONS[this.mode], options)
 
 		// Add play inline attribute
 		if (this.options.playsinline) {
 			this.element.setAttribute('playsinline', true)
 			this.element.setAttribute('webkit-playsinline', true)
 		}
-
-		// Check fullscreen support API on different browsers and cached prefixs
-		this.supportFullScreen = this.constructor.checkSupportFullScreen()
 
 		this.initReady = this.initReady.bind(this)
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
@@ -120,16 +126,8 @@ export default class Player {
 		wrapper.appendChild(this.element)
 		this.wrapperPlayer = this.element.parentNode
 
-		if (this.skinDisabled) {
-			this.wrapperPlayer.classList.add('v-forceControls')
-		}
-
 		wrapper.appendChild(
-			<>
-				{!this.options.nativeControlsForTouch && (
-					<>{this.mode === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
-				)}
-			</>
+			<>{this.mode === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
 		)
 	}
 
@@ -147,6 +145,7 @@ export default class Player {
 						time={this.options.time}
 						volume={this.options.volume}
 						fullscreen={this.options.fullscreen}
+						isMuted={this.options.muted}
 						mode={this.mode}
 					/>
 				)}
@@ -191,9 +190,9 @@ export default class Player {
 	// Detect fullscreen change, particulary util for esc key because state is not updated
 	// More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 	onChangeFullScreen(e) {
-		if (!document[this.supportFullScreen.isFullScreen] && this.isFullScreen) {
+		!document[this.supportFullScreen.isFullScreen] &&
+			this.isFullScreen &&
 			this.exitFullscreen(e.target)
-		}
 	}
 
 	onProgressInput(e) {
@@ -265,9 +264,13 @@ export default class Player {
 			this.togglePlayPause()
 		}
 
-		this.wrapperPlayer
-			.querySelector('.v-volumeButton')
-			.setAttribute('aria-label', this.element.muted ? 'Unmute' : 'Mute')
+		if (this.options.volume) {
+			this.wrapperPlayer
+				.querySelector('.v-volumeButton')
+				.setAttribute('aria-label', this.element.muted ? 'Unmute' : 'Mute')
+		}
+
+		this.plugins.forEach((Plugin) => new Plugin({ player: this }))
 	}
 
 	/**
@@ -282,11 +285,11 @@ export default class Player {
 	 * Update player duration
 	 */
 	updateDuration() {
-		this.getDuration().then((duration) => {
-			this.wrapperPlayer.querySelector('.v-duration').innerHTML = this.constructor.formatVideoTime(
-				duration
-			)
-		})
+		if (this.options.time) {
+			this.getDuration().then((duration) => {
+				this.wrapperPlayer.querySelector('.v-duration').innerHTML = formatVideoTime(duration)
+			})
+		}
 	}
 
 	/**
@@ -295,7 +298,10 @@ export default class Player {
 	onVideoEnded() {
 		this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
 		this.wrapperPlayer.classList.add('v-firstStart')
-		this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active')
+
+		if (this.options.poster) {
+			this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active')
+		}
 
 		if (this.options.controls) {
 			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%'
@@ -333,8 +339,10 @@ export default class Player {
 	play() {
 		if (this.wrapperPlayer.classList.contains('v-firstStart')) {
 			this.wrapperPlayer.classList.remove('v-firstStart')
-			this.mode === 'video' &&
+
+			if (this.mode === 'video' && this.options.poster) {
 				this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active')
+			}
 		}
 
 		this.methodPlay()
@@ -439,48 +447,6 @@ export default class Player {
 	}
 
 	/**
-	 * Check fullscreen support API on different browsers and cached prefixs
-	 */
-	static checkSupportFullScreen() {
-		const prefixs = ['', 'moz', 'webkit', 'ms', 'o']
-		let lengthPrefixs = prefixs.length
-		let requestFn
-		let cancelFn
-		let changeEvent
-		let isFullScreen
-
-		if (document.cancelFullscreen !== undefined) {
-			requestFn = 'requestFullscreen'
-			cancelFn = 'exitFullscreen'
-			changeEvent = 'fullscreenchange'
-		} else {
-			while (lengthPrefixs--) {
-				if (
-					(prefixs[lengthPrefixs] !== 'moz' || document.mozFullScreenEnabled) &&
-					document[prefixs[lengthPrefixs] + 'CancelFullScreen'] !== undefined
-				) {
-					requestFn = prefixs[lengthPrefixs] + 'RequestFullScreen'
-					cancelFn = prefixs[lengthPrefixs] + 'CancelFullScreen'
-					changeEvent = prefixs[lengthPrefixs] + 'fullscreenchange'
-					isFullScreen =
-						prefixs[lengthPrefixs] === 'webkit'
-							? prefixs[lengthPrefixs] + 'IsFullScreen'
-							: prefixs[lengthPrefixs] + 'FullScreen'
-				}
-			}
-		}
-
-		const fullscreen = {
-			requestFn: requestFn,
-			cancelFn: cancelFn,
-			changeEvent: changeEvent,
-			isFullScreen: isFullScreen
-		}
-
-		return requestFn ? fullscreen : false
-	}
-
-	/**
 	 * Request fullscreen after user action
 	 */
 	requestFullscreen() {
@@ -571,9 +537,7 @@ export default class Player {
 				progressBar.value = width
 				progressBar.style.setProperty('--value', `${width}%`)
 
-				this.wrapperPlayer.querySelector(
-					'.v-currentTime'
-				).innerHTML = this.constructor.formatVideoTime(currentTime)
+				this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
 			})
 		}
 	}
@@ -608,33 +572,5 @@ export default class Player {
 		typeof this.removeInstance === 'function' && this.removeInstance()
 
 		this.wrapperPlayer.remove()
-	}
-
-	/**
-	 * Check if browser support touch event
-	 * @returns {Boolean} Touch event support
-	 */
-	isTouch() {
-		return (
-			'ontouchstart' in window || (window.DocumentTouch && document instanceof window.DocumentTouch)
-		)
-	}
-
-	/**
-	 * Convert video time second to 00:00 display
-	 * @param {Float|Integer} time Current time
-	 */
-	static formatVideoTime(time) {
-		const ms = time * 1000
-		const min = (ms / 1000 / 60) << 0
-		const sec = (ms / 1000) % 60 << 0
-		let timeInString = ''
-
-		timeInString += min < 10 ? '0' : ''
-		timeInString += min + ':'
-		timeInString += sec < 10 ? '0' : ''
-		timeInString += sec
-
-		return timeInString
 	}
 }

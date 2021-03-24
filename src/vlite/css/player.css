@@ -45,15 +45,12 @@
 		height: 100%;
 	}
 
-	&:not(.v-forceControls) {
-		/* Chrome fullscreen config */
-		video::-webkit-media-controls-enclosure {
-			display: none !important;
-		}
+	video::-webkit-media-controls-enclosure {
+		display: none !important;
+	}
 
-		iframe.vlite-js {
-			pointer-events: none;
-		}
+	iframe.vlite-js {
+		pointer-events: none;
 	}
 
 	&.v-fullscreenButton-display {

@@ -138,11 +138,24 @@ module.exports = (env, argv) => {
 		library: 'vlitejsVimeo',
 		isProduction
 	})
+	const configPluginSubtitle = generator({
+		entry: {
+			'plugins/subtitle': './src/plugins/subtitle'
+		},
+		library: 'vlitejsSubtitle',
+		isProduction
+	})
 	const configDemo = generator({
 		entry: {
 			demo: './src/demo/config.js'
 		},
 		isProduction
 	})
-	return [configVlitejs, configProviderYoutube, configProviderVimeo, configDemo]
+	return [
+		configVlitejs,
+		configProviderYoutube,
+		configProviderVimeo,
+		configPluginSubtitle,
+		configDemo
+	]
 }
