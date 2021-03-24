@@ -5,46 +5,12 @@ import Player from '../vlite/js/player'
  * @module vlitejs/Player/PlayerHtml5
  */
 export default class PlayerHtml5 extends Player {
-	/**
-	 * Instanciate the constructor
-	 * @constructor
-	 * @param {HTMLElement} element Player HTML element
-	 * @param {Object} options Player options
-	 * @param {Function} onReady Callback function executed when the player is ready
-	 */
-	constructor({ element, options, plugins, onReady }) {
-		// Init Player class
-		super({
-			element,
-			options,
-			plugins,
-			onReady
-		})
-
-		this.onPlayerReady = this.onPlayerReady.bind(this)
-		this.updateDuration = this.updateDuration.bind(this)
-		this.onTimeUpdate = this.onTimeUpdate.bind(this)
-		this.onVideoEnded = this.onVideoEnded.bind(this)
-		this.onPlaying = this.onPlaying.bind(this)
-		this.onWaiting = this.onWaiting.bind(this)
-		this.onSeeking = this.onSeeking.bind(this)
-		this.onSeeked = this.onSeeked.bind(this)
-	}
-
 	init() {
-		super.init()
-
-		this.waitUntilVideoIsReady().then(this.onPlayerReady)
-
-		!this.skinDisabled && this.addSpecificEvents()
-	}
-
-	/**
-	 * Function executed when the player is ready
-	 */
-	onPlayerReady() {
-		super.playerIsReady()
-		this.updateDuration()
+		this.waitUntilVideoIsReady().then(() => {
+			this.onDurationChange()
+			this.onPlayerReady()
+		})
+		this.addSpecificEvents()
 	}
 
 	/**
@@ -53,28 +19,7 @@ export default class PlayerHtml5 extends Player {
 	 */
 	waitUntilVideoIsReady() {
 		return new window.Promise((resolve, reject) => {
-			// Check if the video is ready
-			if (typeof this.element.duration === 'number' && isNaN(this.element.duration) === false) {
-				resolve()
-			} else {
-				this.onDurationChange = () => {
-					this.element.removeEventListener('durationchange', this.onDurationChange)
-					this.element.removeEventListener('error', this.onError)
-
-					resolve()
-				}
-
-				this.onError = (error) => {
-					this.element.removeEventListener('error', this.onError)
-					this.element.removeEventListener('durationchange', this.onDurationChange)
-
-					reject(error)
-				}
-
-				// Listen error or durationchange events to detect when the video is ready
-				this.element.addEventListener('durationchange', this.onDurationChange)
-				this.element.addEventListener('error', this.onError)
-			}
+			this.element.addEventListener('loadedmetadata', resolve, { once: true })
 		})
 	}
 
@@ -86,19 +31,19 @@ export default class PlayerHtml5 extends Player {
 		if (this.options.controls) {
 			if (this.options.time) {
 				// On durationchange event, update duration if value is different
-				this.element.addEventListener('durationchange', this.updateDuration)
+				this.element.addEventListener('durationchange', this.onDurationChange.bind(this))
 			}
 
 			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.element.addEventListener('timeupdate', this.onTimeUpdate)
+			this.element.addEventListener('timeupdate', this.onTimeUpdate.bind(this))
 		}
 
 		// On ended event, show poster and reset progressBar and time
-		this.element.addEventListener('ended', this.onVideoEnded)
-		this.element.addEventListener('playing', this.onPlaying)
-		this.element.addEventListener('waiting', this.onWaiting)
-		this.element.addEventListener('seeking', this.onSeeking)
-		this.element.addEventListener('seeked', this.onSeeked)
+		this.element.addEventListener('ended', this.onVideoEnded.bind(this))
+		this.element.addEventListener('playing', this.onPlaying.bind(this))
+		this.element.addEventListener('waiting', this.onWaiting.bind(this))
+		this.element.addEventListener('seeking', this.onSeeking.bind(this))
+		this.element.addEventListener('seeked', this.onSeeked.bind(this))
 	}
 
 	/**
@@ -177,35 +122,35 @@ export default class PlayerHtml5 extends Player {
 	 * Function executed when the video is waiting
 	 */
 	onWaiting() {
-		this.loading(true)
+		this.instanceParent.loading(true)
 	}
 
 	/**
 	 * Function executed when the video is playing
 	 */
 	onPlaying() {
-		this.loading(false)
+		this.instanceParent.loading(false)
 	}
 
 	/**
 	 * Function executed when the video is seeking
 	 */
 	onSeeking() {
-		this.loading(true)
+		this.instanceParent.loading(true)
 	}
 
 	/**
 	 * Function executed when the video seek is done
 	 */
 	onSeeked() {
-		this.loading(false)
+		this.instanceParent.loading(false)
 	}
 
 	/**
 	 * Unbind event listeners
 	 */
 	removeSpecificEvents() {
-		this.options.time && this.element.removeEventListener('durationchange', this.updateDuration)
+		this.options.time && this.element.removeEventListener('durationchange', this.onDurationChange)
 
 		this.element.removeEventListener('timeupdate', this.onTimeUpdate)
 		this.element.removeEventListener('playing', this.onPlaying)

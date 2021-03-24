@@ -9,66 +9,37 @@ let vimeoQueue = []
  * @module vlitejs/Player/PlayerVimeo
  */
 class PlayerVimeo extends vlitejs.Player {
-	/**
-	 * Instanciate the constructor
-	 * @constructor
-	 * @param {HTMLElement} element Player HTML element
-	 * @param {Object} options Player options
-	 * @param {Function} onReady Callback function executed when the player is ready
-	 */
-	constructor({ element, options, onReady }) {
-		// Init Player class
-		super({
-			element,
-			options,
-			onReady
-		})
-
-		this.onPlayerReady = this.onPlayerReady.bind(this)
-		this.updateDuration = this.updateDuration.bind(this)
-		this.onTimeUpdate = this.onTimeUpdate.bind(this)
-		this.onVideoEnded = this.onVideoEnded.bind(this)
-		this.onPlaying = this.onPlaying.bind(this)
-		this.onWaiting = this.onWaiting.bind(this)
-		this.onSeeking = this.onSeeking.bind(this)
-		this.onSeeked = this.onSeeked.bind(this)
+	init() {
+		this.waitUntilVideoIsReady()
+			.then(() => {
+				this.addSpecificEvents()
+				this.onPlayerReady()
+			})
+			.catch(() => vimeoQueue.push(this))
 	}
 
-	isApiReady() {
-		return new window.Promise((resolve) => {
+	waitUntilVideoIsReady() {
+		return new window.Promise((resolve, reject) => {
 			if (typeof window.Vimeo !== 'undefined') {
-				resolve()
+				this.initVimeoPlayer().then(resolve)
 			} else {
-				vimeoQueue.push(this)
+				reject()
 			}
 		})
-	}
-
-	initReady() {
-		super.initReady()
-
-		// Init Vimeo player with API
-		this.initVimeoPlayer()
 	}
 
 	/**
 	 * Initialize the Vimeo player
 	 */
 	initVimeoPlayer() {
-		this.instancePlayer = new window.Vimeo.Player(this.element.getAttribute('id'), {
-			id: this.element.getAttribute('data-vimeo-id'),
-			controls: true
+		return new window.Promise((resolve, reject) => {
+			this.instancePlayer = new window.Vimeo.Player(this.element.getAttribute('id'), {
+				id: this.element.getAttribute('data-vimeo-id'),
+				controls: true
+			})
+			this.element = this.instancePlayer.element
+			this.instancePlayer.ready().then(resolve)
 		})
-		this.instancePlayer.ready().then(this.onPlayerReady())
-	}
-
-	/**
-	 * Function executed when the player is ready
-	 */
-	onPlayerReady() {
-		this.element = this.instancePlayer.element
-		super.playerIsReady()
-		this.addSpecificEvents()
 	}
 
 	/**
@@ -79,19 +50,19 @@ class PlayerVimeo extends vlitejs.Player {
 		if (this.options.controls) {
 			if (this.options.time) {
 				// On durationchange event, update duration if value is different
-				this.instancePlayer.on('durationchange', this.updateDuration)
+				this.instancePlayer.on('durationchange', this.onDurationChange.bind(this))
 			}
 
 			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.instancePlayer.on('timeupdate', this.onTimeUpdate)
+			this.instancePlayer.on('timeupdate', this.onTimeUpdate.bind(this))
 		}
 
 		// On ended event, show poster and reset progressBar and time
-		this.instancePlayer.on('ended', this.onVideoEnded)
-		this.instancePlayer.on('playing', this.onPlaying)
-		this.instancePlayer.on('waiting', this.onWaiting)
-		this.instancePlayer.on('seeking', this.onSeeking)
-		this.instancePlayer.on('seeked', this.onSeeked)
+		this.instancePlayer.on('ended', this.onVideoEnded.bind(this))
+		this.instancePlayer.on('playing', this.onPlaying.bind(this))
+		this.instancePlayer.on('waiting', this.onWaiting.bind(this))
+		this.instancePlayer.on('seeking', this.onSeeking.bind(this))
+		this.instancePlayer.on('seeked', this.onSeeked.bind(this))
 	}
 
 	/**
@@ -172,35 +143,35 @@ class PlayerVimeo extends vlitejs.Player {
 	 * Function executed when the video is waiting
 	 */
 	onWaiting() {
-		this.loading(true)
+		this.instanceParent.loading(true)
 	}
 
 	/**
 	 * Function executed when the video is playing
 	 */
 	onPlaying() {
-		this.loading(false)
+		this.instanceParent.loading(false)
 	}
 
 	/**
 	 * Function executed when the video is seeking
 	 */
 	onSeeking() {
-		this.loading(true)
+		this.instanceParent.loading(true)
 	}
 
 	/**
 	 * Function executed when the video seek is done
 	 */
 	onSeeked() {
-		this.loading(false)
+		this.instanceParent.loading(false)
 	}
 
 	/**
 	 * Unbind event listeners
 	 */
 	removeSpecificEvents() {
-		this.options.time && this.instancePlayer.off('durationchange', this.updateDuration)
+		this.options.time && this.instancePlayer.off('durationchange', this.onDurationChange)
 
 		this.instancePlayer.off('timeupdate', this.onTimeUpdate)
 		this.instancePlayer.off('playing', this.onPlaying)
@@ -218,17 +189,20 @@ class PlayerVimeo extends vlitejs.Player {
 	}
 }
 
-function onVimeoApiReady() {
-	vimeoQueue.forEach((item) => item.initReady())
-	vimeoQueue = []
-}
-
 if (typeof window.YT === 'undefined') {
 	const script = document.createElement('script')
 	script.async = true
 	script.type = 'text/javascript'
 	script.src = 'https://player.vimeo.com/api/player.js'
-	script.onload = () => onVimeoApiReady()
+	script.onload = () => {
+		vimeoQueue.forEach((itemClass) => {
+			itemClass.initVimeoPlayer().then(() => {
+				itemClass.addSpecificEvents()
+				itemClass.onPlayerReady()
+			})
+		})
+		vimeoQueue = []
+	}
 
 	document.getElementsByTagName('body')[0].appendChild(script)
 }

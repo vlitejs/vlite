@@ -1,12 +1,5 @@
 // Import SVG icons
-import { createElement, Fragment } from 'jsx-dom'
-import validateTarget from 'validate-target'
-import LoaderTemplate from 'shared/loader/assets/scripts/loader'
-import ControlBarTemplate from 'shared/control-bar/assets/scripts/control-bar'
-import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
-import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
-import PosterTemplate from 'shared/poster/assets/scripts/poster'
-import { capitalized, formatVideoTime, isTouch, checkSupportFullScreen } from 'shared/utils/utils'
+import { formatVideoTime } from 'shared/utils/utils'
 
 /**
  * vlitejs Player
@@ -18,243 +11,26 @@ export default class Player {
 	 * @constructor
 	 * @param {HTMLElement} element Player HTML element
 	 * @param {Object} options Player options
-	 * @param {Function} onReady Callback function executed when the player is ready
 	 */
-	constructor({ element, options, plugins = [], onReady }) {
-		this.onReady = onReady
+	constructor({ element, container, options, plugins = [], onReady, instanceParent }) {
 		this.element = element
+		this.container = container
+		this.options = options
 		this.plugins = plugins
+		this.onReady = onReady
+		this.instanceParent = instanceParent
 
-		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
+		this.progressBarIsMoving = false
 		this.isFullScreen = false
 		this.isPaused = null
 		this.delayAutoHide = 3000
-
-		// Check fullscreen support API on different browsers and cached prefixs
-		this.supportFullScreen = checkSupportFullScreen()
-		this.touchSupport = isTouch()
-
-		const DEFAULT_OPTIONS = {
-			audio: {
-				autoplay: false,
-				controls: true,
-				playPause: true,
-				progressBar: true,
-				time: true,
-				volume: true,
-				loop: false
-			},
-			video: {
-				autoplay: false,
-				controls: true,
-				playPause: true,
-				progressBar: true,
-				time: true,
-				volume: true,
-				fullscreen: true,
-				poster: null,
-				bigPlay: true,
-				autoHide: false,
-				playsinline: true,
-				loop: false,
-				muted: false
-			}
-		}
-
-		// Update config from element attributes
-		if (this.element.hasAttribute('autoplay')) {
-			options.autoplay = true
-		}
-		if (this.element.hasAttribute('playsinline')) {
-			options.playsinline = true
-		}
-		if (this.element.hasAttribute('muted')) {
-			options.muted = true
-		}
-		if (this.element.hasAttribute('loop')) {
-			options.loop = true
-		}
-
-		this.options = Object.assign({}, DEFAULT_OPTIONS[this.mode], options)
-
-		// Add play inline attribute
-		if (this.options.playsinline) {
-			this.element.setAttribute('playsinline', true)
-			this.element.setAttribute('webkit-playsinline', true)
-		}
-
-		this.initReady = this.initReady.bind(this)
-		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
-		this.togglePlayPause = this.togglePlayPause.bind(this)
-		this.toggleVolume = this.toggleVolume.bind(this)
-		this.toggleFullscreen = this.toggleFullscreen.bind(this)
-		this.onKeyup = this.onKeyup.bind(this)
-		this.onMousemove = this.onMousemove.bind(this)
-		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
-		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
-		this.onProgressInput = this.onProgressInput.bind(this)
-	}
-
-	init() {
-		this.isApiReady().then(this.initReady)
-	}
-
-	isApiReady() {
-		return Promise.resolve()
-	}
-
-	initReady() {
-		this.render()
-		this.addEvents()
-	}
-
-	/**
-	 * Build the DOM of the player
-	 */
-	render() {
-		// Create a wrapper for each player
-		const wrapper = document.createElement('div')
-		wrapper.classList.add(
-			'v-vlite',
-			'v-firstStart',
-			'v-paused',
-			'v-loading',
-			`v-style${capitalized(this.mode)}`
-		)
-		wrapper.setAttribute('tabindex', 0)
-		this.element.parentNode.insertBefore(wrapper, this.element)
-		wrapper.appendChild(this.element)
-		this.wrapperPlayer = this.element.parentNode
-
-		wrapper.appendChild(
-			<>{this.mode === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
-		)
-	}
-
-	renderVideoElement() {
-		return (
-			<>
-				<OverlayTemplate fastForward={!this.touchSupport} />
-				<LoaderTemplate />
-				{this.options.poster && <PosterTemplate posterUrl={this.options.poster} />}
-				{this.options.bigPlay && <BigPlayTemplate />}
-				{this.options.controls && (
-					<ControlBarTemplate
-						progressBar={this.options.progressBar}
-						playPause={this.options.playPause}
-						time={this.options.time}
-						volume={this.options.volume}
-						fullscreen={this.options.fullscreen}
-						isMuted={this.options.muted}
-						mode={this.mode}
-					/>
-				)}
-			</>
-		)
-	}
-
-	renderAudioElement() {
-		return (
-			<>
-				<ControlBarTemplate
-					progressBar={this.options.progressBar}
-					playPause={this.options.playPause}
-					time={this.options.time}
-					volume={this.options.volume}
-					mode={this.mode}
-				/>
-			</>
-		)
-	}
-
-	/**
-	 * Create event listeners
-	 * All listeners are created on class properties to facilitate the deletion of events
-	 */
-	addEvents() {
-		if (this.options.controls && this.options.progressBar) {
-			this.wrapperPlayer
-				.querySelector('.v-progressBar')
-				.addEventListener('input', this.onProgressInput)
-		}
-
-		this.wrapperPlayer.addEventListener('click', this.onClickOnPlayer)
-		this.wrapperPlayer.addEventListener('dblclick', this.onDoubleClickOnPlayer)
-		this.wrapperPlayer.addEventListener('keyup', this.onKeyup)
-		this.mode === 'video' && this.wrapperPlayer.addEventListener('mousemove', this.onMousemove)
-
-		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
-	}
-
-	// Create fullscreen button event listener
-	// Detect fullscreen change, particulary util for esc key because state is not updated
-	// More information on MDN : https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-	onChangeFullScreen(e) {
-		!document[this.supportFullScreen.isFullScreen] &&
-			this.isFullScreen &&
-			this.exitFullscreen(e.target)
-	}
-
-	onProgressInput(e) {
-		const target = e.target
-
-		target.style.setProperty('--value', `${target.value}%`)
-		this.getCurrentTime().then((seconds) => target.setAttribute('aria-valuenow', seconds))
-
-		this.onProgressChanged(e)
-	}
-
-	onClickOnPlayer(e) {
-		const target = e.target
-		const validateTargetPlayPauseButton = validateTarget({
-			target: target,
-			selectorString: '.v-poster, .v-overlay, .v-bigPlay, .v-playPauseButton',
-			nodeName: ['div', 'button']
-		})
-		const validateTargetVolume = validateTarget({
-			target: target,
-			selectorString: '.v-volumeButton',
-			nodeName: ['button']
-		})
-		const validateTargetFullscreen = validateTarget({
-			target: target,
-			selectorString: '.v-fullscreenButton',
-			nodeName: ['button']
-		})
-
-		if (validateTargetPlayPauseButton) {
-			this.togglePlayPause(e)
-		} else if (validateTargetVolume) {
-			this.toggleVolume(e)
-		} else if (validateTargetFullscreen) {
-			this.toggleFullscreen(e)
-		}
-	}
-
-	onDoubleClickOnPlayer(e) {
-		const target = e.target
-		const validateTargetOverlay = validateTarget({
-			target: target,
-			selectorString: '.v-overlay',
-			nodeName: ['div']
-		})
-		if (validateTargetOverlay) {
-			this.toggleFullscreen(e)
-		}
 	}
 
 	/**
 	 * Function executed when the player is ready
 	 */
-	playerIsReady() {
-		this.getDuration().then((duration) => {
-			this.wrapperPlayer.querySelector('.v-progressBar').setAttribute('aria-valuemax', duration)
-		})
-
-		this.loading(false)
-
-		// Execute the onReady function
-		typeof this.onReady === 'function' && this.onReady(this)
+	onPlayerReady() {
+		this.onReady(this)
 
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
@@ -263,31 +39,15 @@ export default class Player {
 
 			this.togglePlayPause()
 		}
-
-		if (this.options.volume) {
-			this.wrapperPlayer
-				.querySelector('.v-volumeButton')
-				.setAttribute('aria-label', this.element.muted ? 'Unmute' : 'Mute')
-		}
-
-		this.plugins.forEach((Plugin) => new Plugin({ player: this }))
-	}
-
-	/**
-	 * Update the loader status
-	 * @param {Boolean} state Status of the loader
-	 */
-	loading(state) {
-		this.wrapperPlayer.classList[state ? 'add' : 'remove']('v-loading')
 	}
 
 	/**
 	 * Update player duration
 	 */
-	updateDuration() {
+	onDurationChange() {
 		if (this.options.time) {
 			this.getDuration().then((duration) => {
-				this.wrapperPlayer.querySelector('.v-duration').innerHTML = formatVideoTime(duration)
+				this.container.querySelector('.v-duration').innerHTML = formatVideoTime(duration)
 			})
 		}
 	}
@@ -296,58 +56,42 @@ export default class Player {
 	 * Function executed when is video is ended
 	 */
 	onVideoEnded() {
-		this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
-		this.wrapperPlayer.classList.add('v-firstStart')
+		this.container.classList.replace('v-playing', 'v-paused')
+		this.container.classList.add('v-firstStart')
 
 		if (this.options.poster) {
-			this.wrapperPlayer.querySelector('.v-poster').classList.add('v-active')
+			this.container.querySelector('.v-poster').classList.add('v-active')
 		}
 
 		if (this.options.controls) {
-			this.wrapperPlayer.querySelector('.v-progressSeek').style.width = '0%'
-			this.wrapperPlayer.querySelector('.v-progressInput').setAttribute('value', 0)
-			this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = '00:00'
+			this.container.querySelector('.v-progressSeek').style.width = '0%'
+			this.container.querySelector('.v-progressInput').setAttribute('value', 0)
+			this.container.querySelector('.v-currentTime').innerHTML = '00:00'
 		}
-	}
-
-	/**
-	 * Function executed to toggle the video status (play, pause)
-	 */
-	togglePlayPause(e) {
-		e && e.preventDefault()
-
-		if (this.mode === 'video' && this.wrapperPlayer.classList.contains('v-firstStart')) {
-			this.wrapperPlayer.focus()
-		}
-
-		this.wrapperPlayer.classList.contains('v-paused') ? this.play() : this.pause()
-	}
-
-	/**
-	 * Trigger the video fast forward (front and rear)
-	 * @param {Object} e Event listener datas
-	 */
-	fastForward({ direction }) {
-		this.getCurrentTime().then((seconds) => {
-			this.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
-		})
 	}
 
 	/**
 	 * Play the video
 	 */
 	play() {
-		if (this.wrapperPlayer.classList.contains('v-firstStart')) {
-			this.wrapperPlayer.classList.remove('v-firstStart')
+		if (this.container.classList.contains('v-firstStart')) {
+			this.container.classList.remove('v-firstStart')
 
 			if (this.mode === 'video' && this.options.poster) {
-				this.wrapperPlayer.querySelector('.v-poster').classList.remove('v-active')
+				this.container.querySelector('.v-poster').classList.remove('v-active')
 			}
 		}
 
 		this.methodPlay()
 		this.isPaused = false
+		this.container.classList.replace('v-paused', 'v-playing')
+		this.container.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Pause')
+
+		if (this.mode === 'video' && this.options.bigPlay) {
+			this.container.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause')
+		}
 		this.afterPlayPause()
+		this.container.focus()
 	}
 
 	/**
@@ -356,6 +100,12 @@ export default class Player {
 	pause() {
 		this.methodPause()
 		this.isPaused = true
+		this.container.classList.replace('v-playing', 'v-paused')
+		this.container.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Play')
+
+		if (this.mode === 'video' && this.options.bigPlay) {
+			this.container.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play')
+		}
 		this.afterPlayPause()
 	}
 
@@ -363,44 +113,11 @@ export default class Player {
 	 * Function executed after the play or pause method
 	 */
 	afterPlayPause() {
-		if (this.isPaused) {
-			this.wrapperPlayer.classList.replace('v-playing', 'v-paused')
-			this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Play')
-
-			if (this.mode === 'video' && this.options.bigPlay) {
-				this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play')
+		if (this.instanceParent.autoHideGranted) {
+			this.instanceParent.stopAutoHideTimer()
+			if (!this.isPaused) {
+				this.instanceParent.startAutoHideTimer()
 			}
-		} else {
-			this.wrapperPlayer.classList.replace('v-paused', 'v-playing')
-			this.wrapperPlayer.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Pause')
-
-			if (this.mode === 'video' && this.options.bigPlay) {
-				this.wrapperPlayer.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause')
-			}
-		}
-
-		if (this.options.autoHide && this.options.controls) {
-			this.stopAutoHideTimer()
-			if (this.isPaused) {
-				this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
-			} else {
-				this.startAutoHideTimer()
-			}
-		}
-	}
-
-	/**
-	 * Toggle the volume on the video
-	 */
-	toggleVolume(e) {
-		e.preventDefault()
-
-		if (this.wrapperPlayer.querySelector('.v-volumeButton').classList.contains('v-muted')) {
-			this.unMute()
-			this.wrapperPlayer.querySelector('.v-volumeButton').setAttribute('aria-label', 'Mute')
-		} else {
-			this.mute()
-			this.wrapperPlayer.querySelector('.v-volumeButton').setAttribute('aria-label', 'Unmute')
 		}
 	}
 
@@ -409,7 +126,7 @@ export default class Player {
 	 */
 	mute() {
 		this.methodMute()
-		this.wrapperPlayer.querySelector('.v-volumeButton').classList.add('v-muted')
+		this.container.querySelector('.v-volumeButton').classList.add('v-muted')
 	}
 
 	/**
@@ -417,7 +134,7 @@ export default class Player {
 	 */
 	unMute() {
 		this.methodUnMute()
-		this.wrapperPlayer.querySelector('.v-volumeButton').classList.remove('v-muted')
+		this.container.querySelector('.v-volumeButton').classList.remove('v-muted')
 	}
 
 	/**
@@ -429,35 +146,17 @@ export default class Player {
 	}
 
 	/**
-	 * Toggle the fullscreen of the video
-	 */
-	toggleFullscreen(e) {
-		e.preventDefault()
-		if (this.isFullScreen) {
-			this.exitFullscreen()
-			this.wrapperPlayer
-				.querySelector('.v-fullscreenButton')
-				.setAttribute('aria-label', 'Enter fullscreen')
-		} else {
-			this.requestFullscreen()
-			this.wrapperPlayer
-				.querySelector('.v-fullscreenButton')
-				.setAttribute('aria-label', 'Exit fullscreen')
-		}
-	}
-
-	/**
 	 * Request fullscreen after user action
 	 */
 	requestFullscreen() {
-		const { requestFn } = this.supportFullScreen
+		const { requestFn } = this.instanceParent.supportFullScreen
 
 		if (this.element[requestFn]) {
 			// Request fullscreen on parentNode player, to display custom controls
 			this.element.parentNode[requestFn]()
 			this.isFullScreen = true
-			this.wrapperPlayer.classList.add('v-fullscreenButton-display')
-			this.wrapperPlayer.querySelector('.v-fullscreenButton').classList.add('v-exit')
+			this.container.classList.add('v-fullscreenButton-display')
+			this.container.querySelector('.v-fullscreenButton').classList.add('v-exit')
 		}
 	}
 
@@ -465,62 +164,15 @@ export default class Player {
 	 * Exit fullscreen after user action
 	 */
 	exitFullscreen() {
-		const { cancelFn } = this.supportFullScreen
+		const { cancelFn } = this.instanceParent.supportFullScreen
 
 		if (document[cancelFn]) {
 			document[cancelFn]()
 
-			this.wrapperPlayer.classList.remove('v-fullscreenButton-display')
-			this.wrapperPlayer.querySelector('.v-fullscreenButton').classList.remove('v-exit')
+			this.container.classList.remove('v-fullscreenButton-display')
+			this.container.querySelector('.v-fullscreenButton').classList.remove('v-exit')
 
 			this.isFullScreen = false
-		}
-	}
-
-	/**
-	 * Function executed on keyup event listener
-	 * Toggle the video on spacebar press
-	 * @param {Object} e Event listener datas
-	 */
-	onKeyup(e) {
-		const validKeyCode = [9, 32, 37, 39]
-		if (validKeyCode.includes(e.keyCode)) {
-			this.stopAutoHideTimer()
-			this.startAutoHideTimer()
-		}
-
-		if (e.keyCode === 32) {
-			this.togglePlayPause(e)
-		} else if (e.keyCode === 37) {
-			this.fastForward({ direction: 'backward' })
-		} else if (e.keyCode === 39) {
-			this.fastForward({ direction: 'forward' })
-		}
-	}
-
-	/**
-	 * Function executed on mousemove event listener
-	 * Toggle controls display on mousemove event
-	 */
-	onMousemove() {
-		if (this.isPaused === false && this.options.autoHide && this.options.controls) {
-			this.stopAutoHideTimer()
-			this.startAutoHideTimer()
-		}
-	}
-
-	stopAutoHideTimer() {
-		if (this.mode === 'video') {
-			this.wrapperPlayer.querySelector('.v-controlBar').classList.remove('hidden')
-			clearTimeout(this.timerAutoHide)
-		}
-	}
-
-	startAutoHideTimer() {
-		if (this.mode === 'video' && !this.isPaused) {
-			this.timerAutoHide = setTimeout(() => {
-				this.wrapperPlayer.querySelector('.v-controlBar').classList.add('hidden')
-			}, this.delayAutoHide)
 		}
 	}
 
@@ -532,12 +184,14 @@ export default class Player {
 			Promise.all([this.getCurrentTime(), this.getDuration()]).then(([seconds, duration]) => {
 				const currentTime = Math.round(seconds)
 				const width = (currentTime * 100) / duration
-				const progressBar = this.wrapperPlayer.querySelector('.v-progressBar')
+				const progressBar = this.container.querySelector('.v-progressBar')
 
-				progressBar.value = width
+				if (!this.progressBarIsMoving) {
+					progressBar.value = width
+				}
 				progressBar.style.setProperty('--value', `${width}%`)
 
-				this.wrapperPlayer.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
+				this.container.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
 			})
 		}
 	}
@@ -546,16 +200,9 @@ export default class Player {
 	 * Unbind event listeners
 	 */
 	removeEvents() {
-		if (this.options.controls && this.options.progressBar) {
-			this.wrapperPlayer
-				.querySelector('.v-progressBar')
-				.removeEventListener('change', this.onProgressInput)
-		}
-
-		this.wrapperPlayer.removeEventListener('click', this.onClickOnPlayer)
-		this.wrapperPlayer.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
-		this.wrapperPlayer.removeEventListener('keyup', this.onKeyup)
-		this.mode === 'video' && this.wrapperPlayer.removeEventListener('mousemove', this.onMousemove)
+		this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
+		this.container.removeEventListener('keyup', this.onKeyup)
+		this.mode === 'video' && this.container.removeEventListener('mousemove', this.onMousemove)
 
 		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
@@ -567,10 +214,11 @@ export default class Player {
 	destroy() {
 		this.pause()
 		this.removeEvents()
+		this.options.controls && this.controlBar.removeEvents()
 
 		typeof this.removeSpecificEvents === 'function' && this.removeSpecificEvents()
 		typeof this.removeInstance === 'function' && this.removeInstance()
 
-		this.wrapperPlayer.remove()
+		this.container.remove()
 	}
 }

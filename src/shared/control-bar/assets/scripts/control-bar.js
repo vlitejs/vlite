@@ -1,60 +1,145 @@
 import { createElement } from 'jsx-dom'
-import svgPlay from 'shared/assets/svgs/play.svg'
-import svgPause from 'shared/assets/svgs/pause.svg'
-import svgVolumeHigh from 'shared/assets/svgs/volume-high.svg'
-import svgVolumeMute from 'shared/assets/svgs/volume-mute.svg'
-import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
-import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
-import { capitalized } from 'shared/utils/utils'
+import validateTarget from 'validate-target'
+import Template from './templates/control-bar'
 
-export default function ({
-	progressBar = false,
-	playPause = false,
-	time = false,
-	volume = false,
-	fullscreen = false,
-	isMuted = false,
-	mode
-}) {
-	return (
-		<div className={`v-controlBar v-style${capitalized(mode)}`}>
-			{playPause && (
-				<button className="v-playPauseButton" aria-label="Play">
-					<span className="v-playerIcon v-iconPlay" innerHTML={svgPlay}></span>
-					<span className="v-playerIcon v-iconPause" innerHTML={svgPause}></span>
-				</button>
-			)}
-			{time && (
-				<div className="v-time">
-					<span className="v-currentTime">00:00</span>&nbsp;/&nbsp;
-					<span className="v-duration"></span>
-				</div>
-			)}
-			{progressBar && (
-				<input
-					type="range"
-					className="v-progressBar"
-					min="0"
-					max="100"
-					step="0.01"
-					value="0"
-					orient="horizontal"
-					aria-label="Seek"
-					aria-valuemin="0"
-				/>
-			)}
-			{volume && (
-				<button className={`v-volumeButton${isMuted ? ' v-muted' : ''}`}>
-					<span className="v-playerIcon v-iconVolumeHigh" innerHTML={svgVolumeHigh}></span>
-					<span className="v-playerIcon v-iconVolumeMute" innerHTML={svgVolumeMute}></span>
-				</button>
-			)}
-			{fullscreen && (
-				<button className="v-fullscreenButton" aria-label="Enter fullscreen">
-					<span className="v-playerIcon v-iconFullscreen" innerHTML={svgFullscreen}></span>
-					<span className="v-playerIcon v-iconShrink" innerHTML={svgFullscreenExit}></span>
-				</button>
-			)}
-		</div>
-	)
+export default class ControlBar {
+	constructor({ container, options, mode, playerInstance }) {
+		this.container = container
+		this.player = this.container.querySelector('.vlite-js')
+		this.options = options
+		this.mode = mode
+		this.playerInstance = playerInstance
+
+		this.onInputProgressBar = this.onInputProgressBar.bind(this)
+		this.onChangeProgressBar = this.onChangeProgressBar.bind(this)
+		this.onClickOnControlBar = this.onClickOnControlBar.bind(this)
+		this.toggleVolume = this.toggleVolume.bind(this)
+		this.toggleFullscreen = this.toggleFullscreen.bind(this)
+	}
+
+	init() {
+		this.controlBar = this.container.querySelector('.v-controlBar')
+		this.progressBar = this.controlBar.querySelector('.v-progressBar')
+		this.volumeButton = this.controlBar.querySelector('.v-volumeButton')
+		this.fullscreenButton = this.controlBar.querySelector('.v-fullscreenButton')
+
+		if (this.options.volume) {
+			this.volumeButton.setAttribute('aria-label', this.player.muted ? 'Unmute' : 'Mute')
+		}
+
+		this.addEvents()
+	}
+
+	onPlayerReady() {
+		this.playerInstance.getDuration().then((duration) => {
+			this.container.querySelector('.v-progressBar').setAttribute('aria-valuemax', duration)
+		})
+	}
+
+	addEvents() {
+		if (this.options.progressBar) {
+			this.progressBar.addEventListener('input', this.onInputProgressBar)
+			this.progressBar.addEventListener('change', this.onChangeProgressBar)
+		}
+
+		this.controlBar.addEventListener('click', this.onClickOnControlBar)
+	}
+
+	onInputProgressBar(e) {
+		this.playerInstance.progressBarIsMoving = true
+		const target = e.target
+
+		target.style.setProperty('--value', `${target.value}%`)
+		this.playerInstance
+			.getCurrentTime()
+			.then((seconds) => target.setAttribute('aria-valuenow', seconds))
+
+		this.playerInstance.onProgressChanged(e)
+	}
+
+	onChangeProgressBar() {
+		this.playerInstance.progressBarIsMoving = false
+	}
+
+	onClickOnControlBar(e) {
+		const target = e.target
+
+		const validateTargetPlayPauseButton = validateTarget({
+			target: target,
+			selectorString: '.v-playPauseButton',
+			nodeName: ['button']
+		})
+		const validateTargetVolume = validateTarget({
+			target: target,
+			selectorString: '.v-volumeButton',
+			nodeName: ['button']
+		})
+		const validateTargetFullscreen = validateTarget({
+			target: target,
+			selectorString: '.v-fullscreenButton',
+			nodeName: ['button']
+		})
+
+		if (validateTargetPlayPauseButton) {
+			this.togglePlayPause(e)
+		} else if (validateTargetVolume) {
+			this.toggleVolume(e)
+		} else if (validateTargetFullscreen) {
+			this.toggleFullscreen(e)
+		}
+	}
+
+	/**
+	 * Toggle the volume on the video
+	 */
+	toggleVolume(e) {
+		e.preventDefault()
+
+		if (this.volumeButton.classList.contains('v-muted')) {
+			this.playerInstance.unMute()
+			this.volumeButton.setAttribute('aria-label', 'Mute')
+		} else {
+			this.playerInstance.mute()
+			this.volumeButton.setAttribute('aria-label', 'Unmute')
+		}
+	}
+
+	/**
+	 * Toggle the fullscreen of the video
+	 */
+	toggleFullscreen(e) {
+		e.preventDefault()
+		if (this.playerInstance.isFullScreen) {
+			this.playerInstance.exitFullscreen()
+			this.fullscreenButton.setAttribute('aria-label', 'Enter fullscreen')
+		} else {
+			this.playerInstance.requestFullscreen()
+			this.fullscreenButton.setAttribute('aria-label', 'Exit fullscreen')
+		}
+	}
+
+	/**
+	 * Get template
+	 * @param {Object} data Template's data
+	 * @returns {HTMLElement} Template
+	 */
+	getTemplate() {
+		return <Template options={this.options} isMuted={this.player.muted} mode={this.mode} />
+	}
+
+	/**
+	 * Unbind event listeners
+	 */
+	removeEvents() {
+		if (this.options.progressBar) {
+			this.progressBar.removeEventListener('change', this.onInputProgressBar)
+			this.progressBar.removeEventListener('change', this.onChangeProgressBar)
+		}
+
+		this.controlBar.removeEventListener('click', this.onClickOnControlBar)
+	}
+
+	destroy() {
+		this.removeEvents()
+	}
 }

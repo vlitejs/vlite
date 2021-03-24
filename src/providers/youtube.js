@@ -9,55 +9,50 @@ let youtubeQueue = []
  * @module vlitejs/Player/PlayerYoutube
  */
 class PlayerYoutube extends vlitejs.Player {
-	isApiReady() {
-		return new window.Promise((resolve) => {
-			if (typeof window.YT !== 'undefined') {
-				resolve()
-			} else {
-				youtubeQueue.push(this)
-			}
-		})
+	init() {
+		this.waitUntilVideoIsReady()
+			.then(() => this.onPlayerReady())
+			.catch(() => youtubeQueue.push(this))
 	}
 
-	initReady() {
-		super.initReady()
-
-		// Init Youtube player with API
-		this.initYoutubePlayer()
+	waitUntilVideoIsReady() {
+		return new window.Promise((resolve, reject) => {
+			if (typeof window.YT !== 'undefined') {
+				this.initYoutubePlayer().then(resolve)
+			} else {
+				reject()
+			}
+		})
 	}
 
 	/**
 	 * Initialize the Youtube player
 	 */
 	initYoutubePlayer() {
-		this.instancePlayer = new window.YT.Player(this.element.getAttribute('id'), {
-			videoId: this.element.getAttribute('data-youtube-id'),
-			height: '100%',
-			width: '100%',
-			playerVars: {
-				showinfo: 0,
-				modestbranding: 0,
-				autohide: 1,
-				rel: 0,
-				fs: this.options.fullscreen ? 1 : 0,
-				wmode: 'transparent',
-				playsinline: this.options.playsinline ? 1 : 0,
-				controls: this.skinDisabled ? 1 : 0
-			},
-			events: {
-				onReady: (data) => this.onPlayerReady(data),
-				onStateChange: (state) => this.onPlayerStateChange(state)
-			}
+		return new window.Promise((resolve, reject) => {
+			this.instancePlayer = new window.YT.Player(this.element.getAttribute('id'), {
+				videoId: this.element.getAttribute('data-youtube-id'),
+				height: '100%',
+				width: '100%',
+				playerVars: {
+					showinfo: 0,
+					modestbranding: 0,
+					autohide: 1,
+					rel: 0,
+					fs: this.options.fullscreen ? 1 : 0,
+					wmode: 'transparent',
+					playsinline: this.options.playsinline ? 1 : 0,
+					controls: 0
+				},
+				events: {
+					onReady: (data) => {
+						this.element = data.target.getIframe()
+						resolve()
+					},
+					onStateChange: (state) => this.onPlayerStateChange(state)
+				}
+			})
 		})
-	}
-
-	/**
-	 * Function executed when the player is ready
-	 * @param {Object} data Youtube datas from the player API
-	 */
-	onPlayerReady(data) {
-		this.element = data.target.getIframe()
-		super.playerIsReady()
 	}
 
 	/**
@@ -75,24 +70,22 @@ class PlayerYoutube extends vlitejs.Player {
 	onPlayerStateChange(e) {
 		if (e.data === window.YT.PlayerState.UNSTARTED) {
 			if (this.options.controls && this.options.time) {
-				super.updateDuration()
+				this.onDurationChange()
 			}
 		} else if (e.data === window.YT.PlayerState.ENDED) {
-			super.onVideoEnded()
+			this.onVideoEnded()
 		} else if (e.data === window.YT.PlayerState.PLAYING) {
-			this.loading(false)
+			this.instanceParent.loading(false)
 
 			if (this.options.controls) {
-				setInterval(() => {
-					super.onTimeUpdate()
-				}, 100)
+				setInterval(() => this.onTimeUpdate(), 100)
 			}
 
-			super.afterPlayPause('play')
+			this.afterPlayPause('play')
 		} else if (e.data === window.YT.PlayerState.PAUSED) {
-			super.afterPlayPause('pause')
+			this.afterPlayPause('pause')
 		} else if (e.data === window.YT.PlayerState.BUFFERING) {
-			this.loading(true)
+			this.instanceParent.loading(true)
 		}
 	}
 
@@ -166,18 +159,18 @@ class PlayerYoutube extends vlitejs.Player {
 	}
 }
 
-function onYoutubeApiReady() {
-	youtubeQueue.forEach((item) => item.initReady())
-	youtubeQueue = []
-}
-
 if (typeof window.YT === 'undefined') {
 	const script = document.createElement('script')
 	script.async = true
 	script.type = 'text/javascript'
 	script.src = 'https://youtube.com/iframe_api'
 
-	window.onYouTubeIframeAPIReady = () => onYoutubeApiReady()
+	window.onYouTubeIframeAPIReady = () => {
+		youtubeQueue.forEach((itemClass) => {
+			itemClass.initYoutubePlayer().then(() => itemClass.onPlayerReady())
+		})
+		youtubeQueue = []
+	}
 	document.getElementsByTagName('body')[0].appendChild(script)
 }
 

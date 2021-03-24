@@ -16,12 +16,12 @@ export default class Subtitle {
 
 	init() {
 		this.render()
-		this.captions = this.player.wrapperPlayer.querySelector('.v-captions')
+		this.captions = this.player.container.querySelector('.v-captions')
 		this.addEvents()
 	}
 
 	render() {
-		this.player.wrapperPlayer.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 	}
 
 	addEvents() {
