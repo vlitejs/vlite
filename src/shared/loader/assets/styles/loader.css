@@ -22,7 +22,7 @@
 		z-index: 5;
 		display: flex;
 		align-items: center;
-		transition: opacity var(--transition300msEase), visibility var(--transition300msEase);
+		transition: opacity var(--transition250msEase), visibility var(--transition250msEase);
 	}
 
 	&-loaderContent {

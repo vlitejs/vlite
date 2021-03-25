@@ -1,5 +1,19 @@
 .v {
-	&-playerIcon {
+	&-controlButton {
+		position: relative;
+		display: inline-block;
+		width: 40px;
+		height: 100%;
+		transition: opacity var(--transition250msEase);
+		opacity: var(--defaultControlsOpacity);
+		padding: 0;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	&-controlButtonIcon {
 		display: none;
 		position: absolute;
 		top: 50%;
@@ -7,29 +21,20 @@
 		transform: translateX(-50%) translateY(-50%);
 
 		svg {
-			transition: opacity var(--transition300msEase);
 			fill: var(--colorControl);
-			opacity: var(--defaultControlsOpacity);
 			width: var(--controlIconWidth);
 			height: var(--controlIconHeight);
 		}
 	}
 
 	&-playPauseButton {
-		position: relative;
 		float: left;
-		width: 40px;
-		height: 100%;
 		flex-shrink: 0;
-
-		&:hover svg {
-			opacity: 1;
-		}
 	}
 
 	&-time {
 		color: var(--colorControl);
-		font-size: 12px;
+		font-size: 14px;
 		float: left;
 		height: 100%;
 		display: flex;
@@ -39,10 +44,9 @@
 
 	&-progressBar {
 		-webkit-appearance: none;
-		border-radius: 3px;
 		margin: 0;
 		height: var(--heightProgressBar);
-		transition: height var(--transition300msEase), top var(--transition300msEase);
+		transition: height var(--transition250msEase), top var(--transition250msEase);
 		z-index: 1;
 		cursor: pointer;
 		width: calc(100% - 2 * var(--offsetLeftRightControlBar));
@@ -54,7 +58,7 @@
 		&::-webkit-slider-runnable-track {
 			height: 100%;
 			border: none;
-			border-radius: 0;
+			border-radius: var(--heightProgressBar);
 			background: linear-gradient(
 				to right,
 				var(--orange) var(--value, 0),
@@ -82,48 +86,30 @@
 	}
 
 	&-volumeButton {
-		position: relative;
-		display: inline-block;
-		width: 40px;
-		height: 100%;
-
-		&:not(.v-muted) {
+		&:not(.v-pressed) {
 			.v-iconVolumeHigh {
 				display: block;
 			}
 		}
 
-		&.v-muted {
+		&.v-pressed {
 			.v-iconVolumeMute {
 				display: block;
 			}
 		}
-
-		&:hover svg {
-			opacity: 1;
-		}
 	}
 
 	&-fullscreenButton {
-		position: relative;
-		display: inline-block;
-		width: 40px;
-		height: 100%;
-
-		&:not(.v-exit) {
+		&:not(.v-pressed) {
 			.v-iconFullscreen {
 				display: block;
 			}
 		}
 
-		&.v-exit {
+		&.v-pressed {
 			.v-iconShrink {
 				display: block;
 			}
-		}
-
-		&:hover svg {
-			opacity: 1;
 		}
 	}
 
@@ -135,7 +121,7 @@
 		text-align: right;
 		padding-left: var(--offsetLeftRightControlBar);
 		padding-right: var(--offsetLeftRightControlBar);
-		transition: opacity var(--transition300msEase);
+		transition: opacity var(--transition250msEase);
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;

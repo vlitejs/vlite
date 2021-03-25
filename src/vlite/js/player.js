@@ -37,7 +37,7 @@ export default class Player {
 			// Autoplay on video is authorize only when the video is muted
 			!this.element.muted && this.mute()
 
-			this.togglePlayPause()
+			this.instanceParent.togglePlayPause()
 		}
 	}
 
@@ -156,7 +156,7 @@ export default class Player {
 			this.element.parentNode[requestFn]()
 			this.isFullScreen = true
 			this.container.classList.add('v-fullscreenButton-display')
-			this.container.querySelector('.v-fullscreenButton').classList.add('v-exit')
+			this.container.querySelector('.v-fullscreenButton').classList.add('v-pressed')
 		}
 	}
 
@@ -170,7 +170,7 @@ export default class Player {
 			document[cancelFn]()
 
 			this.container.classList.remove('v-fullscreenButton-display')
-			this.container.querySelector('.v-fullscreenButton').classList.remove('v-exit')
+			this.container.querySelector('.v-fullscreenButton').classList.remove('v-pressed')
 
 			this.isFullScreen = false
 		}

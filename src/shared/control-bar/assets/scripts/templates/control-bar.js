@@ -11,9 +11,9 @@ export default function ({ options = {}, isMuted, mode }) {
 	return (
 		<div className={`v-controlBar v-style${capitalized(mode)}`}>
 			{options.playPause && (
-				<button className="v-playPauseButton" aria-label="Play">
-					<span className="v-playerIcon v-iconPlay" innerHTML={svgPlay}></span>
-					<span className="v-playerIcon v-iconPause" innerHTML={svgPause}></span>
+				<button className="v-playPauseButton v-controlButton" aria-label="Play">
+					<span className="v-controlButtonIcon v-iconPlay" innerHTML={svgPlay}></span>
+					<span className="v-controlButtonIcon v-iconPause" innerHTML={svgPause}></span>
 				</button>
 			)}
 			{options.time && (
@@ -36,15 +36,15 @@ export default function ({ options = {}, isMuted, mode }) {
 				/>
 			)}
 			{options.volume && (
-				<button className={`v-volumeButton${isMuted ? ' v-muted' : ''}`}>
-					<span className="v-playerIcon v-iconVolumeHigh" innerHTML={svgVolumeHigh}></span>
-					<span className="v-playerIcon v-iconVolumeMute" innerHTML={svgVolumeMute}></span>
+				<button className={`v-volumeButton v-controlButton${isMuted ? ' v-pressed' : ''}`}>
+					<span className="v-controlButtonIcon v-iconVolumeHigh" innerHTML={svgVolumeHigh}></span>
+					<span className="v-controlButtonIcon v-iconVolumeMute" innerHTML={svgVolumeMute}></span>
 				</button>
 			)}
 			{options.fullscreen && (
-				<button className="v-fullscreenButton" aria-label="Enter fullscreen">
-					<span className="v-playerIcon v-iconFullscreen" innerHTML={svgFullscreen}></span>
-					<span className="v-playerIcon v-iconShrink" innerHTML={svgFullscreenExit}></span>
+				<button className="v-fullscreenButton v-controlButton" aria-label="Enter fullscreen">
+					<span className="v-controlButtonIcon v-iconFullscreen" innerHTML={svgFullscreen}></span>
+					<span className="v-controlButtonIcon v-iconShrink" innerHTML={svgFullscreenExit}></span>
 				</button>
 			)}
 		</div>

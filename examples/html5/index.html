@@ -10,7 +10,7 @@
 	<!-- <video id="player-html5" class="vlite-js" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video> -->
 	<video controls muted id="player-html5" class="vlite-js" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4">
         <track label="French" kind="subtitles" srclang="fr" src="./View_From_A_Blue_Moon_Trailer-HD.fr.vtt" default>
-        <track label="English" kind="subtitles" srclang="en" src="./View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+        <track label="English" kind="subtitles" srclang="en" src="./View_From_A_Blue_Moon_Trailer-HD.en.vtt">
     </video>
     </video>
 	<script src="../../dist/vlite.js"></script>
@@ -20,7 +20,7 @@
 		new vlitejs({
 			selector: '#player-html5',
 			options: {
-				autoplay: false,
+				autoplay: true,
 				controls: true,
 				playPause: true,
 				progressBar: true,

@@ -6,10 +6,10 @@
 	--backgroundControlBar: linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%);
 	--colorControl: #fff;
 	--colorGradient: linear-gradient(135deg, #ff0053, #ee5b35);
-	--defaultControlsOpacity: 0.85;
-	--controlIconWidth: 26px;
-	--controlIconHeight: 26px;
-	--transition300msEase: 0.3s ease;
+	--defaultControlsOpacity: 0.9;
+	--controlIconWidth: 28px;
+	--controlIconHeight: 28px;
+	--transition250msEase: 0.25s ease;
 	--orange: #ff7f15;
 	--backgroundProgressBar: rgba(0 0 0 / 25%);
 	--outlineColor: #51a7e8;

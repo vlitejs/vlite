@@ -7,12 +7,12 @@
 		height: 70px;
 		transform: translateX(-50%) translateY(-50%);
 		z-index: 2;
-		transition: opacity var(--transition300msEase);
+		transition: opacity var(--transition250msEase);
 		transition-delay: 100ms;
 
 		svg {
 			fill: var(--colorControl);
-			transition: opacity var(--transition300msEase);
+			transition: opacity var(--transition250msEase);
 			opacity: var(--defaultControlsOpacity);
 			width: 100%;
 			height: 100%;
