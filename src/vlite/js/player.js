@@ -165,17 +165,17 @@ export default class Player {
 
 	/**
 	 * Exit the fullscreen
+	 * @param {Object} options
+	 * @param {Boolean} options.escKey The exit is trigger by the esk key
 	 */
-	exitFullscreen() {
+	exitFullscreen({ escKey = false }) {
 		const { cancelFn } = this.instanceParent.supportFullScreen
 
 		if (document[cancelFn]) {
-			document[cancelFn]()
-
+			!escKey && document[cancelFn]()
+			this.isFullScreen = false
 			this.container.classList.remove('v-fullscreenButton-display')
 			this.container.querySelector('.v-fullscreenButton').classList.remove('v-pressed')
-
-			this.isFullScreen = false
 		}
 	}
 

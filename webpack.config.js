@@ -35,6 +35,18 @@ const generator = ({ entry, library = false, isProduction }) => {
 					]
 				},
 				{
+					test: /\.(ts|tsx)$/,
+					include: path.resolve(__dirname, './src'),
+					use: [
+						{
+							loader: 'babel-loader'
+						},
+						{
+							loader: 'ts-loader'
+						}
+					]
+				},
+				{
 					test: /\.css$/,
 					include: path.resolve(__dirname, './src'),
 					use: [

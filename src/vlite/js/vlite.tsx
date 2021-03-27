@@ -20,12 +20,13 @@ import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
 import PosterTemplate from 'shared/poster/assets/scripts/poster'
 import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
+import { interfaceVliteProviders, interfaceVlitePlugins, interfaceDefaultOptions, Options } from 'shared/assets/interfaces/interfaces'
 
-const vliteProviders = {
+const vliteProviders: interfaceVliteProviders = {
 	html5: PlayerHtml5
 }
-const vlitePlugins = {}
-const DEFAULT_OPTIONS = {
+const vlitePlugins: interfaceVlitePlugins = {}
+const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
 		autoplay: false,
 		controls: true,
@@ -52,11 +53,31 @@ const DEFAULT_OPTIONS = {
 	}
 }
 
+
 /**
  * vlitejs entrypoint
  * @module vLite/entrypoint
  */
 class vlitejs {
+	Player: any;
+	element: HTMLElement;
+	plugins: Array<string>;
+	onReady: Function;
+	delayAutoHide: number;
+	mode: string;
+	touchSupport: Boolean;
+	supportFullScreen: any;
+	options: Options;
+	isPaused: Boolean;
+	autoHideGranted: Boolean;
+	container: HTMLElement;
+	instancePlayer: any;
+	controlBar: any;
+	registerPlugin: any;
+	registerProvider: any;
+	timerAutoHide: any;
+	// ReturnType<typeof setTimeout>;
+
 	/**
 	 * @constructor
 	 * @param {Object} options
@@ -66,9 +87,10 @@ class vlitejs {
 	 * @param {Object} options.plugins Player plugins
 	 * @param {Function} options.onReady Callback function when the player is ready
 	 */
-	constructor({ selector, options = {}, provider = 'html5', plugins = [], onReady }) {
+	constructor({ selector, options, provider = 'html5', plugins = [], onReady }: {selector: string|HTMLElement; options: Options; provider: string; plugins: Array<string>; onReady: Function;}) {
 		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
+			// @ts-ignore: Object is possibly 'null'.
 			this.element = document.querySelector(selector)
 		} else if (selector instanceof HTMLElement) {
 			this.element = selector
@@ -78,6 +100,8 @@ class vlitejs {
 
 		this.plugins = plugins
 		this.onReady = onReady
+		this.timerAutoHide = null
+		this.isPaused = true
 		this.delayAutoHide = 3000
 		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
 		this.touchSupport = isTouch()
@@ -104,8 +128,8 @@ class vlitejs {
 
 		// Add play inline attribute
 		if (this.options.playsinline) {
-			this.element.setAttribute('playsinline', true)
-			this.element.setAttribute('webkit-playsinline', true)
+			this.element.setAttribute('playsinline', '')
+			this.element.setAttribute('webkit-playsinline', '')
 		}
 
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
@@ -115,12 +139,13 @@ class vlitejs {
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 
-		const ProviderInstance = vliteProviders[provider]
+		const ProviderInstance: any = vliteProviders[provider]
 		if (!ProviderInstance) {
 			throw new Error(`vlitejs :: Unknown provider "${provider}"`)
 		}
 
 		this.wrapElement()
+		this.container = (this.element.parentNode as HTMLElement)
 
 		this.instancePlayer = new ProviderInstance({
 			element: this.element,
@@ -142,13 +167,13 @@ class vlitejs {
 
 		this.render()
 		this.addEvents()
-		this.getPluginInstance(this.plugins).forEach(({ id, Plugin }) => {
-			const plugin = new Plugin({ player: this.instancePlayer })
+		this.getPluginInstance(this.plugins).forEach((item: any) => {
+			const plugin = new item.Plugin({ player: this.instancePlayer })
 			if (plugin.providers.includes(provider) && plugin.types.includes(this.mode)) {
 				plugin.init()
 			} else {
 				throw new Error(
-					`vlitejs :: The "${id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
+					`vlitejs :: The "${item.id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
 				)
 			}
 		})
@@ -159,11 +184,11 @@ class vlitejs {
 	 * @param {Array} plugins List of plugins to enabled
 	 * @returns {Array} List of plugins instances to enabled
 	 */
-	getPluginInstance(plugins) {
-		const pluginsInstance = []
+	getPluginInstance(plugins: Array<string>) {
+		const pluginsInstance:any = []
 		const pluginsIds = Object.keys(vlitePlugins)
 
-		plugins.forEach((id) => {
+		plugins.forEach((id: string) => {
 			if (pluginsIds.includes(id)) {
 				pluginsInstance.push({ id, Plugin: vlitePlugins[id] })
 			} else {
@@ -178,11 +203,9 @@ class vlitejs {
 	 * The player is initialized and ready
 	 * @param {Class} response Player instance
 	 */
-	onCallbackReady(response) {
+	onCallbackReady(response: any) {
 		this.loading(false)
-
-		// Execute the callback function
-		typeof this.callback === 'function' && this.callback(this)
+		this.onReady instanceof Function && this.onReady(response)
 	}
 
 	/**
@@ -199,10 +222,10 @@ class vlitejs {
 	 * Render the video element
 	 * @returns {HTMLElement} Generated HTML
 	 */
-	renderVideoElement() {
+	renderVideoElement(): Element {
 		return (
 			<>
-				<OverlayTemplate fastForward={!this.touchSupport} />
+				<OverlayTemplate />
 				<LoaderTemplate />
 				{this.options.poster && <PosterTemplate posterUrl={this.options.poster} />}
 				{this.options.bigPlay && <BigPlayTemplate />}
@@ -215,7 +238,7 @@ class vlitejs {
 	 * Render the aido element
 	 * @returns {HTMLElement} Generated HTML
 	 */
-	renderAudioElement() {
+	renderAudioElement(): Element {
 		return this.controlBar.getTemplate()
 	}
 
@@ -234,7 +257,7 @@ class vlitejs {
 	 * On click on the player
 	 * @param {Object} e Event data
 	 */
-	onClickOnPlayer(e) {
+	onClickOnPlayer(e: Event) {
 		const target = e.target
 		const validateTargetPlayPauseButton = validateTarget({
 			target: target,
@@ -250,7 +273,7 @@ class vlitejs {
 	/**
 	 * Toggle the video status (play|pause)
 	 */
-	togglePlayPause(e) {
+	togglePlayPause(e: Event|KeyboardEvent) {
 		e && e.preventDefault()
 
 		if (this.mode === 'video' && this.container.classList.contains('v-firstStart')) {
@@ -266,7 +289,7 @@ class vlitejs {
 	 * On keyup event on the media element
 	 * @param {Object} e Event listener datas
 	 */
-	onKeyup(e) {
+	onKeyup(e: KeyboardEvent) {
 		// Stop and start the auto hide timer on selected key code
 		const validKeyCode = [9, 32, 37, 39]
 		if (this.autoHideGranted && validKeyCode.includes(e.keyCode)) {
@@ -290,8 +313,8 @@ class vlitejs {
 	 * Trigger the video fast forward (front and rear)
 	 * @param {String} direction Direction (backward|forward)
 	 */
-	fastForward(direction) {
-		this.instancePlayer.getCurrentTime().then((seconds) => {
+	fastForward(direction: string) {
+		this.instancePlayer.getCurrentTime().then((seconds: number) => {
 			this.instancePlayer.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
 		})
 	}
@@ -300,7 +323,7 @@ class vlitejs {
 	 * On double click on the player
 	 * @param {Object} e Event data
 	 */
-	onDoubleClickOnPlayer(e) {
+	onDoubleClickOnPlayer(e: Event) {
 		const target = e.target
 		const validateTargetOverlay = validateTarget({
 			target: target,
@@ -324,12 +347,10 @@ class vlitejs {
 			'v-loading',
 			`v-style${capitalized(this.mode)}`
 		)
-		wrapper.setAttribute('tabindex', 0)
-		this.element.parentNode.insertBefore(wrapper, this.element)
+		wrapper.setAttribute('tabindex', '0')
+		const parentElement = (this.element.parentNode as HTMLElement)
+		parentElement.insertBefore(wrapper, this.element)
 		wrapper.appendChild(this.element)
-
-		// Store the reference
-		this.container = wrapper
 	}
 
 	/**
@@ -347,6 +368,7 @@ class vlitejs {
 	 */
 	stopAutoHideTimer() {
 		if (this.mode === 'video') {
+			// @ts-ignore: Object is possibly 'null'.
 			this.container.querySelector('.v-controlBar').classList.remove('hidden')
 			clearTimeout(this.timerAutoHide)
 		}
@@ -358,27 +380,29 @@ class vlitejs {
 	startAutoHideTimer() {
 		if (this.mode === 'video' && !this.isPaused) {
 			this.timerAutoHide = setTimeout(() => {
+				// @ts-ignore: Object is possibly 'null'.
 				this.container.querySelector('.v-controlBar').classList.add('hidden')
 			}, this.delayAutoHide)
 		}
 	}
 
 	/**
-	 * On fullscreen change
+	 * On fullscreen change (espace key pressed)
 	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 	 * @param {Object} e Event data
 	 */
-	onChangeFullScreen(e) {
-		!document[this.supportFullScreen.isFullScreen] &&
-			this.isFullScreen &&
-			this.exitFullscreen(e.target)
+	onChangeFullScreen(e: Event) {
+		if (!document[this.supportFullScreen.isFullScreen] &&
+			this.instancePlayer.isFullScreen) {
+			this.instancePlayer.exitFullscreen({ escKey: true })
+		}
 	}
 
 	/**
 	 * Update the loader status
 	 * @param {Boolean} state Status of the loader
 	 */
-	loading(state) {
+	loading(state: Boolean) {
 		this.container.classList[state ? 'add' : 'remove']('v-loading')
 	}
 
@@ -387,15 +411,17 @@ class vlitejs {
 	 */
 	destroy() {
 		this.instancePlayer.destroy()
-		this.options.controls && this.controlBar.destroy()
+		this.controlBar && this.controlBar.destroy()
 	}
 }
 
 // Expose the Player instance, used by the provider API
-vlitejs.Player = Player
+// @ts-ignore
+Player = Player
 
 // Expose the provider registration
-vlitejs.registerProvider = (id, instance) => {
+// @ts-ignore
+vlitejs.registerProvider = (id: string, instance: any) => {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vliteProviders).includes(id)) {
 			vliteProviders[id] = instance
@@ -407,7 +433,8 @@ vlitejs.registerProvider = (id, instance) => {
 }
 
 // Expose the plugin registration
-vlitejs.registerPlugin = (id, instance) => {
+// @ts-ignore
+vlitejs.registerPlugin = (id: string, instance: any) => {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vlitePlugins).includes(id)) {
 			vlitePlugins[id] = instance

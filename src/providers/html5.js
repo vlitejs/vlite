@@ -7,7 +7,6 @@ import Player from '../vlite/js/player'
 export default class PlayerHtml5 extends Player {
 	init() {
 		this.waitUntilVideoIsReady().then((response) => {
-			console.log(response)
 			this.onDurationChange()
 			this.onPlayerReady()
 		})
