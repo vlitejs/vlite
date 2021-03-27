@@ -1,7 +1,8 @@
 if (typeof vlitejs === 'undefined') {
-	throw new TypeError('vlitejs :: The library is not available.')
+	throw new Error('vlitejs :: The library is not available.')
 }
 
+const providerObjectName = 'Vimeo'
 let vimeoQueue = []
 
 /**
@@ -9,6 +10,9 @@ let vimeoQueue = []
  * @module vlitejs/Player/PlayerVimeo
  */
 class PlayerVimeo extends vlitejs.Player {
+	/**
+	 * Initialize the player when the API is ready
+	 */
 	init() {
 		this.waitUntilVideoIsReady()
 			.then(() => {
@@ -18,9 +22,14 @@ class PlayerVimeo extends vlitejs.Player {
 			.catch(() => vimeoQueue.push(this))
 	}
 
+	/**
+	 * Wait until the API is ready
+	 * @returns {Promise} The player is ready
+	 */
 	waitUntilVideoIsReady() {
 		return new window.Promise((resolve, reject) => {
-			if (typeof window.Vimeo !== 'undefined') {
+			// Initialize the player if the API is already available or reject
+			if (typeof window[providerObjectName] !== 'undefined') {
 				this.initVimeoPlayer().then(resolve)
 			} else {
 				reject()
@@ -29,7 +38,7 @@ class PlayerVimeo extends vlitejs.Player {
 	}
 
 	/**
-	 * Initialize the Vimeo player
+	 * Initialize the player
 	 */
 	initVimeoPlayer() {
 		return new window.Promise((resolve, reject) => {
@@ -75,7 +84,7 @@ class PlayerVimeo extends vlitejs.Player {
 
 	/**
 	 * Get the player current time
-	 * @returns {Float|Integer} Current time of the video
+	 * @returns {(Float|Integer)} Current time of the video
 	 */
 	getCurrentTime() {
 		return new window.Promise((resolve) => {
@@ -85,7 +94,7 @@ class PlayerVimeo extends vlitejs.Player {
 
 	/**
 	 * Set the new current time for the player
-	 * @param {Float|Integer} Current time video
+	 * @param {(Float|Integer)} Current time video
 	 */
 	setCurrentTime(newTime) {
 		this.instancePlayer.setCurrentTime(newTime)
@@ -93,7 +102,7 @@ class PlayerVimeo extends vlitejs.Player {
 
 	/**
 	 * Get the player duration
-	 * @returns {Float|Integer} Duration of the video
+	 * @returns {(Float|Integer)} Duration of the video
 	 */
 	getDuration() {
 		return new window.Promise((resolve) => {
@@ -168,7 +177,7 @@ class PlayerVimeo extends vlitejs.Player {
 	}
 
 	/**
-	 * Unbind event listeners
+	 * Remove event listeners
 	 */
 	removeSpecificEvents() {
 		this.options.time && this.instancePlayer.off('durationchange', this.onDurationChange)
@@ -189,12 +198,14 @@ class PlayerVimeo extends vlitejs.Player {
 	}
 }
 
-if (typeof window.YT === 'undefined') {
+// Load the player API if it is not available
+if (typeof window[providerObjectName] === 'undefined') {
 	const script = document.createElement('script')
 	script.async = true
 	script.type = 'text/javascript'
 	script.src = 'https://player.vimeo.com/api/player.js'
 	script.onload = () => {
+		// Run the queue when the provider API is ready
 		vimeoQueue.forEach((itemClass) => {
 			itemClass.initVimeoPlayer().then(() => {
 				itemClass.addSpecificEvents()

@@ -3,12 +3,21 @@ import validateTarget from 'validate-target'
 import Template from './templates/control-bar'
 
 export default class ControlBar {
+	/**
+	 * @constructor
+	 * @param {Object} options
+	 * @param {HTMLElement} options.container CSS selector or HTML element
+	 * @param {Object} options.options Player options
+	 * @param {String} options.mode Player mode
+	 * @param {Class} options.playerInstance Player instance
+	 */
 	constructor({ container, options, mode, playerInstance }) {
 		this.container = container
-		this.player = this.container.querySelector('.vlite-js')
 		this.options = options
 		this.mode = mode
 		this.playerInstance = playerInstance
+
+		this.player = this.container.querySelector('.vlite-js')
 
 		this.onInputProgressBar = this.onInputProgressBar.bind(this)
 		this.onChangeProgressBar = this.onChangeProgressBar.bind(this)
@@ -17,6 +26,9 @@ export default class ControlBar {
 		this.toggleFullscreen = this.toggleFullscreen.bind(this)
 	}
 
+	/**
+	 * Initialize the player when the API is ready
+	 */
 	init() {
 		this.controlBar = this.container.querySelector('.v-controlBar')
 		this.progressBar = this.controlBar.querySelector('.v-progressBar')
@@ -30,12 +42,18 @@ export default class ControlBar {
 		this.addEvents()
 	}
 
+	/**
+	 * On player ready
+	 */
 	onPlayerReady() {
 		this.playerInstance.getDuration().then((duration) => {
 			this.container.querySelector('.v-progressBar').setAttribute('aria-valuemax', duration)
 		})
 	}
 
+	/**
+	 * Add event listeners
+	 */
 	addEvents() {
 		if (this.options.progressBar) {
 			this.progressBar.addEventListener('input', this.onInputProgressBar)
@@ -45,6 +63,10 @@ export default class ControlBar {
 		this.controlBar.addEventListener('click', this.onClickOnControlBar)
 	}
 
+	/**
+	 * On input event on the progress bar
+	 * @param {Object} e Event data
+	 */
 	onInputProgressBar(e) {
 		this.playerInstance.progressBarIsMoving = true
 		const target = e.target
@@ -57,10 +79,18 @@ export default class ControlBar {
 		this.playerInstance.onProgressChanged(e)
 	}
 
+	/**
+	 * On change event on the progress bar
+	 * @param {Object} e Event data
+	 */
 	onChangeProgressBar() {
 		this.playerInstance.progressBarIsMoving = false
 	}
 
+	/**
+	 * On click on the control bar
+	 * @param {Object} e Event data
+	 */
 	onClickOnControlBar(e) {
 		const target = e.target
 
@@ -90,12 +120,12 @@ export default class ControlBar {
 	}
 
 	/**
-	 * Toggle the volume on the video
+	 * Toggle the volume
 	 */
 	toggleVolume(e) {
 		e.preventDefault()
 
-		if (this.volumeButton.classList.contains('v-muted')) {
+		if (this.volumeButton.classList.contains('v-pressed')) {
 			this.playerInstance.unMute()
 			this.volumeButton.setAttribute('aria-label', 'Mute')
 		} else {
@@ -105,10 +135,11 @@ export default class ControlBar {
 	}
 
 	/**
-	 * Toggle the fullscreen of the video
+	 * Toggle the fullscreen
 	 */
 	toggleFullscreen(e) {
 		e.preventDefault()
+
 		if (this.playerInstance.isFullScreen) {
 			this.playerInstance.exitFullscreen()
 			this.fullscreenButton.setAttribute('aria-label', 'Enter fullscreen')
@@ -119,16 +150,16 @@ export default class ControlBar {
 	}
 
 	/**
-	 * Get template
+	 * Get the template
 	 * @param {Object} data Template's data
-	 * @returns {HTMLElement} Template
+	 * @returns {HTMLElement} Generated HTML
 	 */
 	getTemplate() {
 		return <Template options={this.options} isMuted={this.player.muted} mode={this.mode} />
 	}
 
 	/**
-	 * Unbind event listeners
+	 * Remove event listeners
 	 */
 	removeEvents() {
 		if (this.options.progressBar) {
@@ -139,7 +170,11 @@ export default class ControlBar {
 		this.controlBar.removeEventListener('click', this.onClickOnControlBar)
 	}
 
+	/**
+	 * Destroy the control bar
+	 */
 	destroy() {
 		this.removeEvents()
+		this.controlBar.remove()
 	}
 }

@@ -2,21 +2,21 @@ if (typeof vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
-const providerObjectName = 'YT'
-let youtubeQueue = []
+let sampleQueue = []
+const providerObjectName = 'sample'
 
 /**
- * vlitejs Player Youtube
- * @module vlitejs/Player/PlayerYoutube
+ * vlitejs Sample provider
+ * @module vlitejs/Player/SampleProvider
  */
-class PlayerYoutube extends vlitejs.Player {
+class SampleProvider extends vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
 	 */
 	init() {
 		this.waitUntilVideoIsReady()
 			.then(() => this.onPlayerReady())
-			.catch(() => youtubeQueue.push(this))
+			.catch(() => sampleQueue.push(this))
 	}
 
 	/**
@@ -27,7 +27,7 @@ class PlayerYoutube extends vlitejs.Player {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the player if the API is already available or reject
 			if (typeof window[providerObjectName] !== 'undefined') {
-				this.initYoutubePlayer().then(resolve)
+				this.initSamplePlayer().then(resolve)
 			} else {
 				reject()
 			}
@@ -37,30 +37,11 @@ class PlayerYoutube extends vlitejs.Player {
 	/**
 	 * Initialize the player
 	 */
-	initYoutubePlayer() {
+	initSamplePlayer() {
 		return new window.Promise((resolve, reject) => {
-			this.instancePlayer = new window.YT.Player(this.element.getAttribute('id'), {
-				videoId: this.element.getAttribute('data-youtube-id'),
-				height: '100%',
-				width: '100%',
-				playerVars: {
-					showinfo: 0,
-					modestbranding: 0,
-					autohide: 1,
-					rel: 0,
-					fs: this.options.fullscreen ? 1 : 0,
-					wmode: 'transparent',
-					playsinline: this.options.playsinline ? 1 : 0,
-					controls: 0
-				},
-				events: {
-					onReady: (data) => {
-						this.element = data.target.getIframe()
-						resolve()
-					},
-					onStateChange: (state) => this.onPlayerStateChange(state)
-				}
-			})
+			// Initialize the Player with the API
+			// Resolve the promise when the player is ready
+			// this.instancePlayer =
 		})
 	}
 
@@ -70,32 +51,6 @@ class PlayerYoutube extends vlitejs.Player {
 	 */
 	getInstance() {
 		return this.instancePlayer
-	}
-
-	/**
-	 * Function executed when the player state changed
-	 * @param {Object} e Event listener datas
-	 */
-	onPlayerStateChange(e) {
-		if (e.data === window.YT.PlayerState.UNSTARTED) {
-			if (this.options.controls && this.options.time) {
-				this.onDurationChange()
-			}
-		} else if (e.data === window.YT.PlayerState.ENDED) {
-			this.onVideoEnded()
-		} else if (e.data === window.YT.PlayerState.PLAYING) {
-			this.instanceParent.loading(false)
-
-			if (this.options.controls) {
-				setInterval(() => this.onTimeUpdate(), 100)
-			}
-
-			this.afterPlayPause('play')
-		} else if (e.data === window.YT.PlayerState.PAUSED) {
-			this.afterPlayPause('pause')
-		} else if (e.data === window.YT.PlayerState.BUFFERING) {
-			this.instanceParent.loading(true)
-		}
 	}
 
 	/**
@@ -173,16 +128,15 @@ if (typeof window[providerObjectName] === 'undefined') {
 	const script = document.createElement('script')
 	script.async = true
 	script.type = 'text/javascript'
-	script.src = 'https://youtube.com/iframe_api'
-
-	// Run the queue when the provider API is ready
-	window.onYouTubeIframeAPIReady = () => {
-		youtubeQueue.forEach((itemClass) => {
-			itemClass.initYoutubePlayer().then(() => itemClass.onPlayerReady())
+	script.src = 'PROVIDER_API_URL'
+	script.onload = () => {
+		// Run the queue when the provider API is ready
+		sampleQueue.forEach((itemClass) => {
+			itemClass.initSamplePlayer().then(() => itemClass.onPlayerReady())
 		})
-		youtubeQueue = []
+		sampleQueue = []
 	}
 	document.getElementsByTagName('body')[0].appendChild(script)
 }
 
-export default PlayerYoutube
+export default SampleProvider

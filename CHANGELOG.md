@@ -1,6 +1,18 @@
-# 3.0.4
+# CHANGELOG
 
-#### Updates
+## 4.0.0
+
+### ⚠ Breaking changes
+
+### New features
+
+### Updates
+
+### Removes
+
+## 3.0.4
+
+### Updates
 
 - Bumps `@babel/preset-env` from 7.4.5 to 7.7.7
 - Bumps `file-loader` from 1.1.11 to 5.0.2
@@ -27,27 +39,27 @@
 - Bumps `css-loader` from 1.0.0 to 3.4.0
 - Bumps `babel-eslint` from 8.0.1 to 10.0.3
 
-# 3.0.3
+## 3.0.3
 
-#### Fixes
+### Fixes
 
 - Fixed strict node engine version break with different node version [#6](https://github.com/yoriiis/vlitejs/issues/6)
 
-# 3.0.2
+## 3.0.2
 
-#### Updates
+### Updates
 
 - Update docs and add `.eslintignore`
 
-# 3.0.1
+## 3.0.1
 
-#### Updates
+### Updates
 
 - Update `engines` in `package.json` (node and npm)
 
-# 3.0.0
+## 3.0.0
 
-#### New features
+### New features
 
 - Add all sources of the vLitejs project, including:
   - CSS
@@ -71,11 +83,11 @@
 - Add `CHANGELOG` file
 - Add `.editorconfig` file
 
-#### Removed
+### Removed
 
 - Remove specific build file for `html5` player only or `youtube` player only. We keep only one bundle compatible with `html5` and `youtube`
 
-#### Updates
+### Updates
 
 - Rename the export of the `vLite` constructor to`vlitejs`
 - Rename `timeline` option to `progressBar`
@@ -83,54 +95,54 @@
 - Rename CSS class prefixes from `.vl-` to `.v-`
 - Rename all CSS class with [FUN](https://benfrain.com/enduring-css-writing-style-sheets-rapidly-changing-long-lived-projects/#h-H2_5) methodology
 
-#### Fixes
+### Fixes
 
 - Fix autoplay option that does not work with browser policy without user gesture. Muted option is forced to solved the problem.
 
-# 2.0.1
+## 2.0.1
 
-#### New features
+### New features
 
 - Add `playsinline` support
 - Add fast-forward on the video (+ or - 10s) only on no touch devices
 
-#### Updates
+### Updates
 
 - Optimize `unBindEvents` function
 
-#### Fixes
+### Fixes
 
 - Fix bug with native control for touch devices
 
-# 2.0.0
+## 2.0.0
 
-#### New features
+### New features
 
 - Add prefix `.vl-` before all CSS classes use by vlitejs to prevent conflicts
 - Add keyboard shortcut (spacebar) to control the video
 - Add option `autoHide` to hide the control bar if the user is inactive
 - Add loader linked to `seeking` and `seeked` events
 
-# 1.1.2
+## 1.1.2
 
-#### New features
+### New features
 
 - Add progress bar hover and transition
 
-#### Fixes
+### Fixes
 
 - Prevent click catch by Youtube iframe which block player click
 
-# 1.1.1
+## 1.1.1
 
-#### New features
+### New features
 
 - Add `UMD` compatibility
 - Add package on [npm](https://www.npmjs.com/package/vlitejs)
 
-# 1.1.0
+## 1.1.0
 
-#### New features
+### New features
 
 - First release of vLitejs
 - Update README

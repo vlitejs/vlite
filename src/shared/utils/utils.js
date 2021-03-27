@@ -1,10 +1,16 @@
+/**
+ * Capitalized the first character of a string
+ * @param {String} string
+ * @returns {String} Capitalized string
+ */
 export function capitalized(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 /**
  * Convert video time second to 00:00 display
- * @param {Float|Integer} time Current time
+ * @param {(Float|Integer)} time Current time
+ * @returns {String} Formatted time
  */
 export function formatVideoTime(time) {
 	const ms = time * 1000
@@ -32,6 +38,7 @@ export function isTouch() {
 
 /**
  * Check fullscreen support API on different browsers and cached prefixs
+ * @returns {Object} Fullscreen utils functions
  */
 export function checkSupportFullScreen() {
 	const prefixs = ['', 'moz', 'webkit', 'ms', 'o']

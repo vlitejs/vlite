@@ -6,7 +6,8 @@ import Player from '../vlite/js/player'
  */
 export default class PlayerHtml5 extends Player {
 	init() {
-		this.waitUntilVideoIsReady().then(() => {
+		this.waitUntilVideoIsReady().then((response) => {
+			console.log(response)
 			this.onDurationChange()
 			this.onPlayerReady()
 		})
@@ -15,11 +16,11 @@ export default class PlayerHtml5 extends Player {
 
 	/**
 	 * Wait until the video is ready
-	 * @returns {Promise} Loading of the video with a Promise
+	 * @returns {Promise<Event>} The video is ready
 	 */
 	waitUntilVideoIsReady() {
 		return new window.Promise((resolve, reject) => {
-			this.element.addEventListener('loadedmetadata', resolve, { once: true })
+			this.element.addEventListener('canplay', resolve, { once: true })
 		})
 	}
 
@@ -56,7 +57,7 @@ export default class PlayerHtml5 extends Player {
 
 	/**
 	 * Get the player current time
-	 * @returns {Float|Integer} Current time of the video
+	 * @returns {(Float|Integer)} Current time of the video
 	 */
 	getCurrentTime() {
 		return new window.Promise((resolve) => resolve(this.element.currentTime))
@@ -64,7 +65,7 @@ export default class PlayerHtml5 extends Player {
 
 	/**
 	 * Set the new current time for the player
-	 * @param {Float|Integer} Current time video
+	 * @param {(Float|Integer)} Current time video
 	 */
 	setCurrentTime(newTime) {
 		this.element.currentTime = newTime
@@ -72,7 +73,7 @@ export default class PlayerHtml5 extends Player {
 
 	/**
 	 * Get the player duration
-	 * @returns {Float|Integer} Duration of the video
+	 * @returns {(Float|Integer)} Duration of the video
 	 */
 	getDuration() {
 		return new window.Promise((resolve) => resolve(this.element.duration))
@@ -147,7 +148,7 @@ export default class PlayerHtml5 extends Player {
 	}
 
 	/**
-	 * Unbind event listeners
+	 * Remove event listeners
 	 */
 	removeSpecificEvents() {
 		this.options.time && this.element.removeEventListener('durationchange', this.onDurationChange)

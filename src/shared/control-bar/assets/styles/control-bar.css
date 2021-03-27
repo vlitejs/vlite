@@ -11,6 +11,12 @@
 		&:hover {
 			opacity: 1;
 		}
+
+		svg {
+			fill: var(--colorControl);
+			width: var(--controlIconWidth);
+			height: var(--controlIconHeight);
+		}
 	}
 
 	&-controlButtonIcon {
@@ -19,12 +25,6 @@
 		top: 50%;
 		left: 50%;
 		transform: translateX(-50%) translateY(-50%);
-
-		svg {
-			fill: var(--colorControl);
-			width: var(--controlIconWidth);
-			height: var(--controlIconHeight);
-		}
 	}
 
 	&-playPauseButton {
@@ -66,6 +66,17 @@
 			);
 		}
 
+		&::-moz-range-track {
+			height: 100%;
+			border: none;
+			border-radius: var(--heightProgressBar);
+			background: linear-gradient(
+				to right,
+				var(--orange) var(--value, 0),
+				var(--backgroundProgressBar) var(--value, 0)
+			);
+		}
+
 		&::-webkit-slider-thumb {
 			-webkit-appearance: none;
 			width: 12px;
@@ -76,12 +87,13 @@
 			margin-top: -3px;
 		}
 
-		&::-ms-track {
-			width: 100%;
-			cursor: pointer;
-			background: transparent;
-			border-color: transparent;
-			color: transparent;
+		&::-moz-range-thumb {
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			border: none;
+			background: var(--orange);
+			margin-top: -3px;
 		}
 	}
 

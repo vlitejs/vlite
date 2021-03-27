@@ -9,15 +9,18 @@ export default class Player {
 	/**
 	 * Instanciate the constructor
 	 * @constructor
-	 * @param {HTMLElement} element Player HTML element
+	 * @param {Object} options
+	 * @param {HTMLElement} options.element Player HTML element
+	 * @param {HTMLElement} options.container Player HTML container
+	 * @param {Function} options.onCallbackReady Player on ready function
+	 * @param {Class} options.instanceParent vlitejs instance
 	 * @param {Object} options Player options
 	 */
-	constructor({ element, container, options, plugins = [], onReady, instanceParent }) {
+	constructor({ element, container, options, onCallbackReady, instanceParent }) {
 		this.element = element
 		this.container = container
 		this.options = options
-		this.plugins = plugins
-		this.onReady = onReady
+		this.onCallbackReady = onCallbackReady
 		this.instanceParent = instanceParent
 
 		this.progressBarIsMoving = false
@@ -27,14 +30,14 @@ export default class Player {
 	}
 
 	/**
-	 * Function executed when the player is ready
+	 * On the player is ready
 	 */
 	onPlayerReady() {
-		this.onReady(this)
+		this.onCallbackReady(this)
 
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
-			// Autoplay on video is authorize only when the video is muted
+			// Autoplay on video is authorize only when the media element is muted
 			!this.element.muted && this.mute()
 
 			this.instanceParent.togglePlayPause()
@@ -42,7 +45,7 @@ export default class Player {
 	}
 
 	/**
-	 * Update player duration
+	 * On duration change
 	 */
 	onDurationChange() {
 		if (this.options.time) {
@@ -53,7 +56,7 @@ export default class Player {
 	}
 
 	/**
-	 * Function executed when is video is ended
+	 * On video ended
 	 */
 	onVideoEnded() {
 		this.container.classList.replace('v-playing', 'v-paused')
@@ -71,7 +74,7 @@ export default class Player {
 	}
 
 	/**
-	 * Play the video
+	 * Play the media element
 	 */
 	play() {
 		if (this.container.classList.contains('v-firstStart')) {
@@ -95,7 +98,7 @@ export default class Player {
 	}
 
 	/**
-	 * Pause the video
+	 * Pause the media element
 	 */
 	pause() {
 		this.methodPause()
@@ -110,7 +113,7 @@ export default class Player {
 	}
 
 	/**
-	 * Function executed after the play or pause method
+	 * Callback function after the play|pause
 	 */
 	afterPlayPause() {
 		if (this.instanceParent.autoHideGranted) {
@@ -122,31 +125,31 @@ export default class Player {
 	}
 
 	/**
-	 * Mute the volume on the video
+	 * Mute the volume on the media element
 	 */
 	mute() {
 		this.methodMute()
-		this.container.querySelector('.v-volumeButton').classList.add('v-muted')
+		this.container.querySelector('.v-volumeButton').classList.add('v-pressed')
 	}
 
 	/**
-	 * Toggle the volume on the video
+	 * Unmute the volume on the media element
 	 */
 	unMute() {
 		this.methodUnMute()
-		this.container.querySelector('.v-volumeButton').classList.remove('v-muted')
+		this.container.querySelector('.v-volumeButton').classList.remove('v-pressed')
 	}
 
 	/**
-	 * Update the current time of the video
-	 * @param {Float|Integer} newTime New current time of the video
+	 * Update the current time of the media element
+	 * @param {(Float|Integer)} newTime New current time of the media element
 	 */
 	seekTo(newTime) {
 		this.setCurrentTime(newTime)
 	}
 
 	/**
-	 * Request fullscreen after user action
+	 * Request the fullscreen
 	 */
 	requestFullscreen() {
 		const { requestFn } = this.instanceParent.supportFullScreen
@@ -161,7 +164,7 @@ export default class Player {
 	}
 
 	/**
-	 * Exit fullscreen after user action
+	 * Exit the fullscreen
 	 */
 	exitFullscreen() {
 		const { cancelFn } = this.instanceParent.supportFullScreen
@@ -177,7 +180,9 @@ export default class Player {
 	}
 
 	/**
-	 * Update current time displaying in the control bar and the width of the progress bar
+	 * On time update
+	 * Update current time displaying in the control bar
+	 * Udpdate the progress bar
 	 */
 	onTimeUpdate() {
 		if (this.options.time) {
@@ -197,7 +202,7 @@ export default class Player {
 	}
 
 	/**
-	 * Unbind event listeners
+	 * Remove event listeners
 	 */
 	removeEvents() {
 		this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
@@ -209,7 +214,7 @@ export default class Player {
 
 	/**
 	 * Destroy the player
-	 * Remove event listeners, player instance and player HTML
+	 * Remove event listeners, player instance and DOM
 	 */
 	destroy() {
 		this.pause()

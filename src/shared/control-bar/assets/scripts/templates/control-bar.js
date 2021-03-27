@@ -7,6 +7,14 @@ import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
 import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
 import { capitalized } from 'shared/utils/utils'
 
+/**
+ * Big play template
+ * @param {Object} options
+ * @param {Object} options.options Player options
+ * @param {Boolean} options.isMuted Player is muted
+ * @param {String} options.mode Media mode (video|audio)
+ * @returns {HTMLElement} Generated HTML
+ */
 export default function ({ options = {}, isMuted, mode }) {
 	return (
 		<div className={`v-controlBar v-style${capitalized(mode)}`}>

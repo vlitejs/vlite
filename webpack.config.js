@@ -116,46 +116,68 @@ const generator = ({ entry, library = false, isProduction }) => {
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
+	const configs = []
 
-	const configVlitejs = generator({
-		entry: {
-			vlite: './src/vlite/config.js'
+	const providers = [
+		{
+			entrykey: 'providers/youtube',
+			library: 'vlitejsYoutube',
+			path: './src/providers/youtube'
 		},
-		library: 'vlitejs',
-		isProduction
-	})
-	const configProviderYoutube = generator({
-		entry: {
-			'providers/youtube': './src/providers/youtube'
-		},
-		library: 'vlitejsYoutube',
-		isProduction
-	})
-	const configProviderVimeo = generator({
-		entry: {
-			'providers/vimeo': './src/providers/vimeo'
-		},
-		library: 'vlitejsVimeo',
-		isProduction
-	})
-	const configPluginSubtitle = generator({
-		entry: {
-			'plugins/subtitle': './src/plugins/subtitle'
-		},
-		library: 'vlitejsSubtitle',
-		isProduction
-	})
-	const configDemo = generator({
-		entry: {
-			demo: './src/demo/config.js'
-		},
-		isProduction
-	})
-	return [
-		configVlitejs,
-		configProviderYoutube,
-		configProviderVimeo,
-		configPluginSubtitle,
-		configDemo
+		{
+			entrykey: 'providers/vimeo',
+			'providers/youtube': 'vlitejsVimeo',
+			path: './src/providers/vimeo'
+		}
 	]
+	const plugins = [
+		{
+			entrykey: 'plugins/subtitle',
+			library: 'vlitejsSubtitle',
+			path: './src/plugins/subtitle/config'
+		},
+		{
+			entrykey: 'plugins/picture-in-picture',
+			library: 'vlitejsPictureInPicture',
+			path: './src/plugins/picture-in-picture/config'
+		}
+	]
+
+	const configsProviders = providers.map((provider) =>
+		generator({
+			entry: {
+				[provider.entrykey]: provider.path
+			},
+			library: provider.library,
+			isProduction
+		})
+	)
+	const configsPlugins = plugins.map((plugin) =>
+		generator({
+			entry: {
+				[plugin.entrykey]: plugin.path
+			},
+			library: plugin.library,
+			isProduction
+		})
+	)
+
+	configs.push(
+		generator({
+			entry: {
+				vlite: './src/vlite/config.js'
+			},
+			library: 'vlitejs',
+			isProduction
+		}),
+		generator({
+			entry: {
+				demo: './src/demo/config.js'
+			},
+			isProduction
+		}),
+		...configsProviders,
+		...configsPlugins
+	)
+	return configs
 }

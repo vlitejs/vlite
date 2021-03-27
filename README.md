@@ -4,15 +4,15 @@
 </a>
 
 import vlitejs from 'vlitejs'
-import vlitejs from 'vlitejs/dist/vlite.css'
-import vlitejs from 'vlitejs/dist/vlite.js'
-import youtube from 'vlitejs/providers/youtube'
+import vlitejs from 'vlitejs/vlite.css'
+import vlitejs from 'vlitejs/vlite.js'
+import youtube from 'vlitejs/providers/youtube/index.js'
 import vimeo from 'vlitejs/providers/vimeo'
 import pictureInPicture from 'vlitejs/plugins/picture-in-picture'
 
 </p><br /><br />
 <p align="center">
-    <img alt="vLitejs" src="https://img.shields.io/badge/vLitejs-v3.0.4-ff7f15.svg?style=for-the-badge">
+    <img alt="vLitejs" src="https://img.shields.io/badge/vLitejs-v4.0.0-ff7f15.svg?style=for-the-badge">
     <img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge" />
     <img alt="npm" src="https://img.shields.io/npm/v/vlitejs?style=for-the-badge">
     <img alt="Node.js" src="https://img.shields.io/node/v/vlitejs?style=for-the-badge">
@@ -47,12 +47,12 @@ vLitejs is a **fast** and **lightweight** Javascript library to customize and sk
 
 The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs.com/package/vlitejs).
 
-```
-npm i --save-dev vlitejs
+```bash
+npm install vlitejs --save
 ```
 
-```
-yarn add --dev vlitejs
+```bash
+yarn add vlitejs
 ```
 
 ## Demo
