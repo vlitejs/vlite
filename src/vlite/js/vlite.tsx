@@ -231,7 +231,7 @@ class vlitejs {
 		this.container.appendChild(
 			<>{this.mode === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
 		)
-		this.controlBar.init()
+		this.options.controls && this.controlBar.init()
 	}
 
 	/**
@@ -433,7 +433,7 @@ class vlitejs {
 
 // Expose the Player instance, used by the provider API
 // @ts-ignore
-Player = Player
+vlitejs.Player = Player
 
 // Expose the provider registration
 // @ts-ignore

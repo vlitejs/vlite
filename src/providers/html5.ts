@@ -6,7 +6,7 @@ import Player from '../vlite/js/player'
  */
 export default class PlayerHtml5 extends Player {
 	init() {
-		this.waitUntilVideoIsReady().then((response) => {
+		this.waitUntilVideoIsReady().then(() => {
 			this.onDurationChange()
 			this.onPlayerReady()
 		})
@@ -17,7 +17,7 @@ export default class PlayerHtml5 extends Player {
 	 * Wait until the video is ready
 	 * @returns {Promise<Event>} The video is ready
 	 */
-	waitUntilVideoIsReady() {
+	waitUntilVideoIsReady(): Promise<Event> {
 		return new window.Promise((resolve, reject) => {
 			this.element.addEventListener('canplay', resolve, { once: true })
 		})
@@ -31,15 +31,15 @@ export default class PlayerHtml5 extends Player {
 		if (this.options.controls) {
 			if (this.options.time) {
 				// On durationchange event, update duration if value is different
-				this.element.addEventListener('durationchange', this.onDurationChange.bind(this))
+				this.element.addEventListener('durationchange', super.onDurationChange.bind(this))
 			}
 
 			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.element.addEventListener('timeupdate', this.onTimeUpdate.bind(this))
+			this.element.addEventListener('timeupdate', super.onTimeUpdate.bind(this))
 		}
 
 		// On ended event, show poster and reset progressBar and time
-		this.element.addEventListener('ended', this.onVideoEnded.bind(this))
+		this.element.addEventListener('ended', super.onVideoEnded.bind(this))
 		this.element.addEventListener('playing', this.onPlaying.bind(this))
 		this.element.addEventListener('waiting', this.onWaiting.bind(this))
 		this.element.addEventListener('seeking', this.onSeeking.bind(this))
@@ -50,42 +50,32 @@ export default class PlayerHtml5 extends Player {
 	 * Get the player instance
 	 * @returns {Object} Video element
 	 */
-	getInstance() {
+	getInstance(): HTMLElement {
 		return this.element
 	}
 
 	/**
 	 * Get the player current time
-	 * @returns {(Float|Integer)} Current time of the video
+	 * @returns {Promise<Number>} Current time of the video
 	 */
-	getCurrentTime() {
+	getCurrentTime(): Promise<number> {
 		return new window.Promise((resolve) => resolve(this.element.currentTime))
 	}
 
 	/**
 	 * Set the new current time for the player
-	 * @param {(Float|Integer)} Current time video
+	 * @param {Number} Current time video
 	 */
-	setCurrentTime(newTime) {
+	setCurrentTime(newTime: number) {
 		this.element.currentTime = newTime
 	}
 
 	/**
 	 * Get the player duration
-	 * @returns {(Float|Integer)} Duration of the video
+	 * @returns {Promise<number>} Duration of the video
 	 */
-	getDuration() {
+	getDuration(): Promise<number> {
 		return new window.Promise((resolve) => resolve(this.element.duration))
-	}
-
-	/**
-	 * Function executed on the video progress changed
-	 * @param {Object} e Event listener datas
-	 */
-	onProgressChanged(e) {
-		this.getDuration().then((duration) => {
-			this.setCurrentTime((e.target.value * duration) / 100)
-		})
 	}
 
 	/**

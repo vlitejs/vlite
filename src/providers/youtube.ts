@@ -1,15 +1,34 @@
-if (typeof vlitejs === 'undefined') {
+declare global {
+	interface Window {
+		vlitejs: {
+			Player: any
+		}
+		YT: {
+			Player: any
+			PlayerState: {
+				BUFFERING: any
+				ENDED: any
+				PLAYING: any
+				PAUSED: any
+				UNSTARTED: any
+			}
+		}
+		onYouTubeIframeAPIReady: Function
+	}
+}
+
+if (typeof window.vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
 const providerObjectName = 'YT'
-let youtubeQueue = []
+let youtubeQueue: Array<any> = []
 
 /**
  * vlitejs Player Youtube
  * @module vlitejs/Player/PlayerYoutube
  */
-class PlayerYoutube extends vlitejs.Player {
+class PlayerYoutube extends window.vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
 	 */
@@ -23,7 +42,7 @@ class PlayerYoutube extends vlitejs.Player {
 	 * Wait until the API is ready
 	 * @returns {Promise} The player is ready
 	 */
-	waitUntilVideoIsReady() {
+	waitUntilVideoIsReady(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the player if the API is already available or reject
 			if (typeof window[providerObjectName] !== 'undefined') {
@@ -37,7 +56,7 @@ class PlayerYoutube extends vlitejs.Player {
 	/**
 	 * Initialize the player
 	 */
-	initYoutubePlayer() {
+	initYoutubePlayer(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
 			this.instancePlayer = new window.YT.Player(this.element.getAttribute('id'), {
 				videoId: this.element.getAttribute('data-youtube-id'),
@@ -54,11 +73,11 @@ class PlayerYoutube extends vlitejs.Player {
 					controls: 0
 				},
 				events: {
-					onReady: (data) => {
+					onReady: (data: any) => {
 						this.element = data.target.getIframe()
 						resolve()
 					},
-					onStateChange: (state) => this.onPlayerStateChange(state)
+					onStateChange: (e: any) => this.onPlayerStateChange(e)
 				}
 			})
 		})
@@ -68,7 +87,7 @@ class PlayerYoutube extends vlitejs.Player {
 	 * Get the player instance
 	 * @returns {Object} Youtube API instance
 	 */
-	getInstance() {
+	getInstance(): any {
 		return this.instancePlayer
 	}
 
@@ -76,7 +95,7 @@ class PlayerYoutube extends vlitejs.Player {
 	 * Function executed when the player state changed
 	 * @param {Object} e Event listener datas
 	 */
-	onPlayerStateChange(e) {
+	onPlayerStateChange(e: any) {
 		if (e.data === window.YT.PlayerState.UNSTARTED) {
 			if (this.options.controls && this.options.time) {
 				this.onDurationChange()
@@ -100,36 +119,26 @@ class PlayerYoutube extends vlitejs.Player {
 
 	/**
 	 * Set the new current time for the player
-	 * @param {(Float|Integer)} Current time video
+	 * @param {Number} Current time video
 	 */
-	setCurrentTime(newTime) {
+	setCurrentTime(newTime: number) {
 		this.instancePlayer.seekTo(newTime)
 	}
 
 	/**
 	 * Get the player current time
-	 * @returns {(Float|Integer)} Current time of the video
+	 * @returns {Promise<number>} Current time of the video
 	 */
-	getCurrentTime() {
+	getCurrentTime(): Promise<number> {
 		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
 	}
 
 	/**
 	 * Get the player duration
-	 * @returns {(Float|Integer)} Duration of the video
+	 * @returns {Promise<number>} Duration of the video
 	 */
-	getDuration() {
+	getDuration(): Promise<number> {
 		return new window.Promise((resolve) => resolve(this.instancePlayer.getDuration()))
-	}
-
-	/**
-	 * Function executed on the video progress changed
-	 * @param {Object} e Event listener datas
-	 */
-	onProgressChanged(e) {
-		this.getDuration().then((duration) => {
-			this.setCurrentTime((e.target.value * duration) / 100)
-		})
 	}
 
 	/**
@@ -177,7 +186,7 @@ if (typeof window[providerObjectName] === 'undefined') {
 
 	// Run the queue when the provider API is ready
 	window.onYouTubeIframeAPIReady = () => {
-		youtubeQueue.forEach((itemClass) => {
+		youtubeQueue.forEach((itemClass: any) => {
 			itemClass.initYoutubePlayer().then(() => itemClass.onPlayerReady())
 		})
 		youtubeQueue = []

@@ -1,9 +1,9 @@
 import { FullScreenSupport } from 'shared/assets/interfaces/interfaces'
 
 declare global {
-    interface Document {
-        [key: string]: any;
-    }
+	interface Document {
+		[key: string]: any
+	}
 }
 
 /**
@@ -17,7 +17,7 @@ export function capitalized(string: string): string {
 
 /**
  * Convert video time second to 00:00 display
- * @param {(Float|Integer)} time Current time
+ * @param {Number} time Current time
  * @returns {String} Formatted time
  */
 export function formatVideoTime(time: number): string {
@@ -35,9 +35,9 @@ export function formatVideoTime(time: number): string {
 }
 
 declare global {
-    interface Window {
-        DocumentTouch: any;
-    }
+	interface Window {
+		DocumentTouch: any
+	}
 }
 
 /**
@@ -74,5 +74,11 @@ export function getBrowserPrefix(): string {
 
 	const prefixs = ['webkit', 'moz', 'ms']
 
-	return prefixs.find((prefix: string) => document[prefix + 'ExitFullscreen'] instanceof Function || document[`${prefix}CancelFullScreen`] instanceof Function) || ''
+	return (
+		prefixs.find(
+			(prefix: string) =>
+				document[prefix + 'ExitFullscreen'] instanceof Function ||
+				document[`${prefix}CancelFullScreen`] instanceof Function
+		) || ''
+	)
 }

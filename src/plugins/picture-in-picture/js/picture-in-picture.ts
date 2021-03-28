@@ -1,6 +1,17 @@
 import svgPictureInPicture from 'shared/assets/svgs/picture-in-picture.svg'
+import { Options } from 'shared/assets/interfaces/interfaces'
+
+interface Player {
+	container: HTMLElement
+	element: HTMLVideoElement
+	options: Options
+}
 
 export default class PictureInPicture {
+	player: Player
+	video: HTMLVideoElement
+	pipButton!: HTMLElement
+
 	providers = ['html5']
 	types = ['video']
 
@@ -9,7 +20,7 @@ export default class PictureInPicture {
 	 * @param {Object} options
 	 * @param {Class} options.player Player class instance
 	 */
-	constructor({ player }) {
+	constructor({ player }: { player: Player }) {
 		this.player = player
 		this.video = this.player.element
 
@@ -22,10 +33,10 @@ export default class PictureInPicture {
 	 * Initialize
 	 */
 	init() {
-		if (this.isPipApiAvailable()) {
+		if (this.isPipApiAvailable() && this.player.options.controls) {
 			this.render()
 
-			this.pipButton = this.player.container.querySelector('.v-pipButton')
+			this.pipButton = this.player.container.querySelector('.v-pipButton') as HTMLElement
 
 			this.addEvents()
 		}
@@ -35,8 +46,10 @@ export default class PictureInPicture {
 	 * Check if the PictureInPicture API is available and not disabled
 	 * @returns {Boolean} PictureInPicture API status
 	 */
-	isPipApiAvailable() {
-		return 'pictureInPictureEnabled' in document && !this.video.disablePictureInPicture
+	isPipApiAvailable(): Boolean {
+		return (
+			'pictureInPictureEnabled' in document && !this.video.hasAttribute('disablePictureInPicture')
+		)
 	}
 
 	/**
@@ -44,12 +57,17 @@ export default class PictureInPicture {
 	 */
 	render() {
 		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
-		this.player.container.querySelector('.v-fullscreenButton').insertAdjacentHTML(
-			'beforebegin',
-			`
-			    <button class="v-pipButton v-controlButton">${svgPictureInPicture}</button>
-			`
-		)
+
+		const fullscreenButton = this.player.container.querySelector(
+			'.v-fullscreenButton'
+		) as HTMLElement
+		const template = `<button class="v-pipButton v-controlButton">${svgPictureInPicture}</button>`
+		if (fullscreenButton) {
+			fullscreenButton.insertAdjacentHTML('beforebegin', template)
+		} else {
+			const controlBar = this.player.container.querySelector('.v-controlBar')
+			controlBar && controlBar.insertAdjacentHTML('beforeend', template)
+		}
 	}
 
 	/**
@@ -65,13 +83,16 @@ export default class PictureInPicture {
 	 * On click on the PIP button
 	 * @param {Object} e Event data
 	 */
-	async onClickOnPipButton(e) {
+	async onClickOnPipButton(e: Event) {
 		e.preventDefault()
 
 		try {
-			this.video !== document.pictureInPictureElement
-				? await this.video.requestPictureInPicture()
-				: await document.exitPictureInPicture()
+			if (this.video !== document.pictureInPictureElement) {
+				// @ts-ignore
+				await this.video.requestPictureInPicture()
+			} else {
+				await document.exitPictureInPicture()
+			}
 		} catch (error) {
 			console.warn(`vlitejs :: ${error}`)
 		}
@@ -81,11 +102,11 @@ export default class PictureInPicture {
 	 * On enter the PIP
 	 * @param {Object} e Event data
 	 */
-	onEnterPictureInPicture(e) {}
+	onEnterPictureInPicture(e: Event) {}
 
 	/**
 	 * On leave the PIP
 	 * @param {Object} e Event data
 	 */
-	onLeavePictureInPicture(e) {}
+	onLeavePictureInPicture(e: Event) {}
 }

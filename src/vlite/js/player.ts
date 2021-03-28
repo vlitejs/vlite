@@ -6,18 +6,7 @@ import { Options } from 'shared/assets/interfaces/interfaces'
  * vlitejs Player
  * @module vlitejs/Player
  */
-export default abstract class Player {
-	abstract getDuration: Function
-	abstract getCurrentTime: Function
-	abstract setCurrentTime: Function
-	abstract removeEvents: Function
-	abstract removeInstance: Function
-	abstract removeSpecificEvents: Function
-	abstract methodPlay: Function
-	abstract methodPause: Function
-	abstract methodMute: Function
-	abstract methodUnMute: Function
-
+export default class Player {
 	element: HTMLAudioElement | HTMLVideoElement
 	container: HTMLElement
 	options: Options
@@ -85,8 +74,10 @@ export default abstract class Player {
 	onDurationChange() {
 		if (this.options.time) {
 			this.getDuration().then((duration: number) => {
-				// @ts-ignore: Object is possibly 'null'.
-				this.container.querySelector('.v-duration').innerHTML = formatVideoTime(duration)
+				const durationElement = this.container.querySelector('.v-duration')
+				if (durationElement) {
+					durationElement.innerHTML = formatVideoTime(duration)
+				}
 			})
 		}
 	}
@@ -98,16 +89,19 @@ export default abstract class Player {
 		this.container.classList.replace('v-playing', 'v-paused')
 		this.container.classList.add('v-firstStart')
 
-		if (this.options.poster) {
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-poster').classList.add('v-active')
+		const posterElement = this.container.querySelector('.v-poster')
+		if (this.options.poster && posterElement) {
+			posterElement.classList.add('v-active')
 		}
 
 		if (this.options.controls) {
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-progressSeek').style.width = '0%'
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-progressInput').setAttribute('value', 0)
+			const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
+			if (progressBar) {
+				progressBar.value = '0'
+				progressBar.style.setProperty('--value', '0%')
+				progressBar.removeAttribute('aria-valuenow')
+			}
+
 			// @ts-ignore: Object is possibly 'null'.
 			this.container.querySelector('.v-currentTime').innerHTML = '00:00'
 		}
@@ -131,12 +125,14 @@ export default abstract class Player {
 		this.methodPlay()
 		this.isPaused = false
 		this.container.classList.replace('v-paused', 'v-playing')
-		// @ts-ignore: Object is possibly 'null'.
-		this.container.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Pause')
 
-		if (this.instanceParent.mode === 'video' && this.options.bigPlay) {
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-bigPlay').setAttribute('aria-label', 'Pause')
+		// TODO: Manage if element not exist for all functions
+		const playPauseButton = this.container.querySelector('.v-playPauseButton')
+		playPauseButton && playPauseButton.setAttribute('aria-label', 'Pause')
+
+		const bigPlayButton = this.container.querySelector('.v-bigPlay')
+		if (this.instanceParent.mode === 'video' && bigPlayButton) {
+			bigPlayButton.setAttribute('aria-label', 'Pause')
 		}
 		this.afterPlayPause()
 	}
@@ -240,19 +236,21 @@ export default abstract class Player {
 	 */
 	onTimeUpdate() {
 		if (this.options.time) {
-			Promise.all([this.getCurrentTime(), this.getDuration()]).then(([seconds, duration]) => {
-				const currentTime = Math.round(seconds)
-				const width = (currentTime * 100) / duration
-				const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
+			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
+				([seconds, duration]: [number, number]) => {
+					const currentTime = Math.round(seconds)
+					const width = (currentTime * 100) / duration
+					const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
 
-				if (!this.progressBarIsMoving && progressBar) {
-					progressBar.value = `${width}`
+					if (!this.progressBarIsMoving && progressBar) {
+						progressBar.value = `${width}`
+					}
+					progressBar.style.setProperty('--value', `${width}%`)
+
+					// @ts-ignore: Object is possibly 'null'.
+					this.container.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
 				}
-				progressBar.style.setProperty('--value', `${width}%`)
-
-				// @ts-ignore: Object is possibly 'null'.
-				this.container.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
-			})
+			)
 		}
 	}
 
@@ -262,12 +260,61 @@ export default abstract class Player {
 	 */
 	destroy() {
 		this.pause()
-		this.removeEvents()
 		this.options.controls && this.controlBar && this.controlBar.removeEvents()
-
-		typeof this.removeSpecificEvents === 'function' && this.removeSpecificEvents()
-		typeof this.removeInstance === 'function' && this.removeInstance()
-
+		this.removeSpecificEvents()
+		this.removeInstance()
 		this.container.remove()
+	}
+
+	init() {
+		throw new Error('You have to implement the function "init".')
+	}
+
+	waitUntilVideoIsReady() {
+		throw new Error('You have to implement the function "waitUntilVideoIsReady".')
+	}
+
+	getInstance() {
+		throw new Error('You have to implement the function "getInstance".')
+	}
+
+	getCurrentTime(): Promise<number> {
+		throw new Error('You have to implement the function "getCurrentTime".')
+	}
+
+	setCurrentTime(newTime: number) {
+		throw new Error('You have to implement the function "setCurrentTime".')
+	}
+
+	getDuration(): Promise<number> {
+		throw new Error('You have to implement the function "getDuration".')
+	}
+
+	methodPlay() {
+		throw new Error('You have to implement the function "methodPlay".')
+	}
+
+	methodPause() {
+		throw new Error('You have to implement the function "methodPause".')
+	}
+
+	methodMute() {
+		throw new Error('You have to implement the function "methodMute".')
+	}
+
+	methodUnMute() {
+		throw new Error('You have to implement the function "methodUnMute".')
+	}
+
+	removeSpecificEvents() {
+		throw new Error('You have to implement the function "removeSpecificEvents".')
+	}
+
+	removeInstance() {
+		throw new Error('You have to implement the function "removeInstance".')
+	}
+
+	removeEvents() {
+		throw new Error('You have to implement the function "removeEvents".')
 	}
 }

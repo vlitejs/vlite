@@ -1,15 +1,26 @@
-if (typeof vlitejs === 'undefined') {
+declare global {
+	interface Window {
+		vlitejs: {
+			Player: any
+		}
+		Sample: {
+			Player: any
+		}
+	}
+}
+
+if (typeof window.vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
-let sampleQueue = []
-const providerObjectName = 'sample'
+let sampleQueue: Array<any> = []
+const providerObjectName = 'Sample'
 
 /**
  * vlitejs Sample provider
  * @module vlitejs/Player/SampleProvider
  */
-class SampleProvider extends vlitejs.Player {
+class SampleProvider extends window.vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
 	 */
@@ -23,7 +34,7 @@ class SampleProvider extends vlitejs.Player {
 	 * Wait until the API is ready
 	 * @returns {Promise} The player is ready
 	 */
-	waitUntilVideoIsReady() {
+	waitUntilVideoIsReady(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the player if the API is already available or reject
 			if (typeof window[providerObjectName] !== 'undefined') {
@@ -37,11 +48,12 @@ class SampleProvider extends vlitejs.Player {
 	/**
 	 * Initialize the player
 	 */
-	initSamplePlayer() {
+	initSamplePlayer(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the Player with the API
 			// Resolve the promise when the player is ready
 			// this.instancePlayer =
+			// resolve()
 		})
 	}
 
@@ -49,42 +61,32 @@ class SampleProvider extends vlitejs.Player {
 	 * Get the player instance
 	 * @returns {Object} Youtube API instance
 	 */
-	getInstance() {
+	getInstance(): any {
 		return this.instancePlayer
 	}
 
 	/**
 	 * Set the new current time for the player
-	 * @param {(Float|Integer)} Current time video
+	 * @param {Number} Current time video
 	 */
-	setCurrentTime(newTime) {
+	setCurrentTime(newTime: number) {
 		this.instancePlayer.seekTo(newTime)
 	}
 
 	/**
 	 * Get the player current time
-	 * @returns {(Float|Integer)} Current time of the video
+	 * @returns {Promise<number>} Current time of the video
 	 */
-	getCurrentTime() {
+	getCurrentTime(): Promise<number> {
 		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
 	}
 
 	/**
 	 * Get the player duration
-	 * @returns {(Float|Integer)} Duration of the video
+	 * @returns {Promise<number>} Duration of the video
 	 */
-	getDuration() {
+	getDuration(): Promise<number> {
 		return new window.Promise((resolve) => resolve(this.instancePlayer.getDuration()))
-	}
-
-	/**
-	 * Function executed on the video progress changed
-	 * @param {Object} e Event listener datas
-	 */
-	onProgressChanged(e) {
-		this.getDuration().then((duration) => {
-			this.setCurrentTime((e.target.value * duration) / 100)
-		})
 	}
 
 	/**
@@ -131,7 +133,7 @@ if (typeof window[providerObjectName] === 'undefined') {
 	script.src = 'PROVIDER_API_URL'
 	script.onload = () => {
 		// Run the queue when the provider API is ready
-		sampleQueue.forEach((itemClass) => {
+		sampleQueue.forEach((itemClass: any) => {
 			itemClass.initSamplePlayer().then(() => itemClass.onPlayerReady())
 		})
 		sampleQueue = []

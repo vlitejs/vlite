@@ -1,8 +1,23 @@
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
+import { Options } from 'shared/assets/interfaces/interfaces'
+
+interface Player {
+	container: HTMLElement
+	element: HTMLVideoElement
+	options: Options
+}
 
 export default class Subtitle {
+	player: Player
+	video: HTMLVideoElement
+	tracks: Array<TextTrack>
+	activeTrack!: TextTrack | null
+	captions!: HTMLElement
+	subtitleButton!: HTMLElement
+	subtitlesList!: HTMLElement
+
 	providers = ['html5']
 	types = ['video']
 
@@ -11,13 +26,10 @@ export default class Subtitle {
 	 * @param {Object} options
 	 * @param {Class} options.player Player class instance
 	 */
-	constructor({ player }) {
-		this._this = this
+	constructor({ player }: { player: Player }) {
 		this.player = player
 		this.video = this.player.element
-		const textTracks = this.video.textTracks
-		this.tracks = textTracks ? Array.from(textTracks) : null
-		this.cues = null
+		this.tracks = Array.from(this.video.textTracks)
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
 		this.onClickOnSubtitlesList = this.onClickOnSubtitlesList.bind(this)
@@ -27,20 +39,14 @@ export default class Subtitle {
 	 * Initialize
 	 */
 	init() {
-		if (this.tracks.length) {
-			this.defaultTrack = this.getActiveTrack()
+		if (this.tracks.length && this.player.options.controls) {
 			this.hideTracks()
 
 			this.render()
 
-			this.captions = this.player.container.querySelector('.v-captions')
-			this.subtitleButton = this.player.container.querySelector('.v-subtitleButton')
-			this.subtitlesList = this.player.container.querySelector('.v-subtitlesList')
-
-			const currentLanguage = this.subtitlesList
-				.querySelector('.v-active')
-				.getAttribute('data-language')
-			this.activeTrack = this.getTrackByLanguage(currentLanguage)
+			this.captions = this.player.container.querySelector('.v-captions') as HTMLElement
+			this.subtitleButton = this.player.container.querySelector('.v-subtitleButton') as HTMLElement
+			this.subtitlesList = this.player.container.querySelector('.v-subtitlesList') as HTMLElement
 
 			this.addEvents()
 		}
@@ -54,21 +60,17 @@ export default class Subtitle {
 	}
 
 	/**
-	 * Get the active tracks with the default attribute in the DOM or the first one
-	 * @returns {TextTrack} The active TextTrack
-	 */
-	getActiveTrack() {
-		return this.tracks.find((track) => track.mode === 'showing') || this.tracks[0]
-	}
-
-	/**
 	 * Render the plugin DOM
 	 */
 	render() {
 		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
-		this.player.container.querySelector('.v-volumeButton').insertAdjacentHTML(
-			'beforebegin',
-			`
+
+		// TODO: Manage insert position
+		const volumeButton = this.player.container.querySelector('.v-volumeButton')
+		volumeButton &&
+			volumeButton.insertAdjacentHTML(
+				'beforebegin',
+				`
 				<div class="v-subtitle">
 					<button class="v-subtitleButton v-controlButton v-pressed">
 						<span class="v-controlButtonIcon v-iconSubtitleOn">${svgSubtitleOn}</span>
@@ -96,7 +98,7 @@ export default class Subtitle {
 					</div>
 				</div>
 			`
-		)
+			)
 	}
 
 	/**
@@ -111,7 +113,7 @@ export default class Subtitle {
 	 * On click on the subtitle button
 	 * @param {Object} e Event data
 	 */
-	onClickOnSubtitleButton(e) {
+	onClickOnSubtitleButton(e: Event) {
 		e.preventDefault()
 		this.subtitlesList.classList.toggle('v-active')
 	}
@@ -120,10 +122,10 @@ export default class Subtitle {
 	 * On click on the subtitle list
 	 * @param {Object} e Event data
 	 */
-	onClickOnSubtitlesList(e) {
+	onClickOnSubtitlesList(e: Event) {
 		e.preventDefault()
 
-		const target = e.target
+		const target = e.target as HTMLElement
 		const isActive = target.classList.contains('v-active')
 		const trackActive = this.subtitlesList.querySelector('.v-active')
 		const language = target.getAttribute('data-language')
@@ -139,12 +141,12 @@ export default class Subtitle {
 
 			if (language !== 'off') {
 				this.activeTrack = this.getTrackByLanguage(language)
-				this.updateCues()
+				this.activeTrack && this.updateCues()
 			} else {
 				this.subtitleButton.classList.add('v-pressed')
 				this.captions.classList.remove('v-active')
 				this.captions.innerHTML = ''
-				this.updateCues({ disabled: true })
+				this.activeTrack && this.updateCues({ isDisabled: true })
 			}
 		}
 	}
@@ -154,51 +156,55 @@ export default class Subtitle {
 	 * @param {String} language Language of the track
 	 * @returns {TextTrack} TextTrack for the current language
 	 */
-	getTrackByLanguage(language) {
-		return this.tracks.find((track) => track.language === language)
+	getTrackByLanguage(language: string): TextTrack | null {
+		return this.tracks.find((track) => track.language === language) || null
 	}
 
 	/**
 	 * Update the cues to add enter and exit callback functions
 	 * @param {Object} options
-	 * @param {Boolean} options.disabled Disable cues
+	 * @param {Boolean} options.isDisabled Disable cues
 	 */
-	updateCues({ disabled = false } = {}) {
-		const cues = [...this.activeTrack.cues]
-		const activeCues = this.activeTrack.activeCues
+	updateCues({ isDisabled = false }: { isDisabled?: Boolean } = {}) {
+		if (this.activeTrack && this.activeTrack.cues && this.activeTrack.cues.length) {
+			const cues = Array.from(this.activeTrack.cues)
+			const activeCues = this.activeTrack.activeCues
 
-		const _this = this
+			const _this = this
 
-		const onEnter = function () {
-			_this.addCue(this)
+			const onEnter = function () {
+				// @ts-ignore
+				_this.addCue(this)
+			}
+
+			const onExit = function () {
+				// @ts-ignore
+				_this.hideCue(this)
+			}
+
+			cues.forEach((cue) => {
+				cue.onenter = isDisabled ? null : onEnter
+				cue.onexit = isDisabled ? null : onExit
+			})
+
+			!isDisabled && activeCues && activeCues.length && this.addCue(activeCues[0])
 		}
-
-		const onExit = function () {
-			_this.hideCue(this)
-		}
-
-		cues.forEach((cue) => {
-			cue.onenter = disabled ? null : onEnter
-			cue.onexit = disabled ? null : onExit
-		})
-
-		!disabled && activeCues.length && this.addCue(activeCues[0])
 	}
 
 	/**
 	 * Add the custom cue
-	 * @param {VTTCue} cue Current cue to add
+	 * @param {TextTrackCue} cue Current cue to add
 	 */
-	addCue(cue) {
+	addCue(cue: TextTrackCue) {
+		// @ts-ignore
 		this.captions.innerHTML = cue.text
 		this.captions.classList.add('v-active')
 	}
 
 	/**
 	 * Hide the custom cue
-	 * @param {VTTCue} cue Current cue to hide
 	 */
-	hideCue(cue) {
+	hideCue() {
 		this.captions.classList.remove('v-active')
 	}
 }

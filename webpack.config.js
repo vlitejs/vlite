@@ -138,7 +138,7 @@ module.exports = (env, argv) => {
 		},
 		{
 			entrykey: 'providers/vimeo',
-			'providers/youtube': 'vlitejsVimeo',
+			library: 'vlitejsVimeo',
 			path: './src/providers/vimeo'
 		}
 	]

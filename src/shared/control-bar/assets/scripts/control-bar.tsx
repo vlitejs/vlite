@@ -95,16 +95,19 @@ export default class ControlBar {
 	 * On input event on the progress bar
 	 * @param {Object} e Event data
 	 */
-	onInputProgressBar(e: any) {
+	onInputProgressBar(e: Event) {
 		this.playerInstance.progressBarIsMoving = true
-		const target = e.target
+		const target = e.target as HTMLInputElement
 
 		target.style.setProperty('--value', `${target.value}%`)
 		this.playerInstance
 			.getCurrentTime()
 			.then((seconds: number) => target.setAttribute('aria-valuenow', `${seconds}`))
 
-		this.playerInstance.onProgressChanged(e)
+		this.playerInstance.getDuration().then((duration: number) => {
+			const target = e.target as HTMLInputElement
+			this.playerInstance.setCurrentTime((parseInt(target.value) * duration) / 100)
+		})
 	}
 
 	/**
@@ -202,8 +205,9 @@ export default class ControlBar {
 	 * Remove event listeners
 	 */
 	removeEvents() {
+		// TODO: Check all remove events and destroy
 		if (this.options.progressBar) {
-			this.progressBar && this.progressBar.removeEventListener('change', this.onInputProgressBar)
+			this.progressBar && this.progressBar.removeEventListener('input', this.onInputProgressBar)
 			this.progressBar && this.progressBar.removeEventListener('change', this.onChangeProgressBar)
 		}
 

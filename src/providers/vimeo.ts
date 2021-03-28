@@ -1,15 +1,28 @@
-if (typeof vlitejs === 'undefined') {
-	throw new Error('vlitejs :: The library is not available.')
+declare global {
+	interface Window {
+		vlitejs: {
+			Player: any
+		}
+		Vimeo: {
+			Player: any
+		}
+	}
+}
+
+if (typeof window.vlitejs === 'undefined') {
+	throw new Error('vlitejs :: The library "vlitejs" is not available.')
 }
 
 const providerObjectName = 'Vimeo'
-let vimeoQueue = []
+let vimeoQueue: Array<any> = []
 
 /**
  * vlitejs Player Vimeo
  * @module vlitejs/Player/PlayerVimeo
  */
-class PlayerVimeo extends vlitejs.Player {
+class PlayerVimeo extends window.vlitejs.Player {
+	instancePlayer: any
+
 	/**
 	 * Initialize the player when the API is ready
 	 */
@@ -26,7 +39,7 @@ class PlayerVimeo extends vlitejs.Player {
 	 * Wait until the API is ready
 	 * @returns {Promise} The player is ready
 	 */
-	waitUntilVideoIsReady() {
+	waitUntilVideoIsReady(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the player if the API is already available or reject
 			if (typeof window[providerObjectName] !== 'undefined') {
@@ -40,7 +53,7 @@ class PlayerVimeo extends vlitejs.Player {
 	/**
 	 * Initialize the player
 	 */
-	initVimeoPlayer() {
+	initVimeoPlayer(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
 			this.instancePlayer = new window.Vimeo.Player(this.element.getAttribute('id'), {
 				id: this.element.getAttribute('data-vimeo-id'),
@@ -78,45 +91,35 @@ class PlayerVimeo extends vlitejs.Player {
 	 * Get the player instance
 	 * @returns {Object} Vimeo API instance
 	 */
-	getInstance() {
+	getInstance(): any {
 		return this.instancePlayer
 	}
 
 	/**
 	 * Get the player current time
-	 * @returns {(Float|Integer)} Current time of the video
+	 * @returns {Promise<Number>} Current time of the video
 	 */
-	getCurrentTime() {
+	getCurrentTime(): Promise<number> {
 		return new window.Promise((resolve) => {
-			this.instancePlayer.getCurrentTime().then((seconds) => resolve(seconds))
+			this.instancePlayer.getCurrentTime().then((seconds: number) => resolve(seconds))
 		})
 	}
 
 	/**
 	 * Set the new current time for the player
-	 * @param {(Float|Integer)} Current time video
+	 * @param {Number} Current time video
 	 */
-	setCurrentTime(newTime) {
+	setCurrentTime(newTime: number) {
 		this.instancePlayer.setCurrentTime(newTime)
 	}
 
 	/**
 	 * Get the player duration
-	 * @returns {(Float|Integer)} Duration of the video
+	 * @returns {Promise<Number>} Duration of the video
 	 */
-	getDuration() {
+	getDuration(): Promise<number> {
 		return new window.Promise((resolve) => {
-			this.instancePlayer.getDuration().then((duration) => resolve(duration))
-		})
-	}
-
-	/**
-	 * Function executed on the video progress changed
-	 * @param {Object} e Event listener datas
-	 */
-	onProgressChanged(e) {
-		this.getDuration().then((duration) => {
-			this.setCurrentTime((e.target.value * duration) / 100)
+			this.instancePlayer.getDuration().then((duration: number) => resolve(duration))
 		})
 	}
 
@@ -206,7 +209,7 @@ if (typeof window[providerObjectName] === 'undefined') {
 	script.src = 'https://player.vimeo.com/api/player.js'
 	script.onload = () => {
 		// Run the queue when the provider API is ready
-		vimeoQueue.forEach((itemClass) => {
+		vimeoQueue.forEach((itemClass: any) => {
 			itemClass.initVimeoPlayer().then(() => {
 				itemClass.addSpecificEvents()
 				itemClass.onPlayerReady()
