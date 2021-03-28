@@ -4,7 +4,7 @@ import { createElement } from 'jsx-dom'
  * Loader template
  * @returns {HTMLElement} Generated HTML
  */
-export default function () {
+export default function (): JSX.Element {
 	return (
 		<div className="v-loader">
 			<div className="v-loaderContent">

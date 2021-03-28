@@ -1,3 +1,5 @@
+import { FullScreenSupport } from 'shared/assets/interfaces/interfaces'
+
 declare global {
     interface Document {
         [key: string]: any;
@@ -52,7 +54,7 @@ export function isTouch(): Boolean {
  * Check fullscreen support API on different browsers and cached prefixs
  * @returns {Object} Fullscreen utils functions
  */
-export function checkSupportFullScreen() : Object {
+export function checkSupportFullScreen(): FullScreenSupport {
 	const prefix = getBrowserPrefix()
 
 	return {

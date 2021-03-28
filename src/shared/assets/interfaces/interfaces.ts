@@ -1,3 +1,15 @@
+export interface interfaceVliteProviders {
+	[key: string]: any;
+}
+
+export interface interfaceVlitePlugins {
+	[key: string]: any;
+}
+
+export interface interfacePluginsInstance {
+	id: string;
+    Plugin: any;
+}
 
 export interface FullScreenSupport {
 	requestFn: string;
@@ -22,16 +34,8 @@ export interface Options {
 	muted: Boolean;
 }
 
-export interface interfaceVlitePlugins {
-	[key: string]: any;
-}
-
-export interface interfaceVliteProviders {
-	[key: string]: any;
-}
-
 export interface interfaceDefaultOptions{
 	[key: string]: {
-		[key: string]: Boolean|null|string;
-	}
+        [key: string]: any;
+    }
 }

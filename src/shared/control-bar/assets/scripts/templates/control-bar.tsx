@@ -6,6 +6,7 @@ import svgVolumeMute from 'shared/assets/svgs/volume-mute.svg'
 import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
 import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
 import { capitalized } from 'shared/utils/utils'
+import { Options } from 'shared/assets/interfaces/interfaces'
 
 /**
  * Big play template
@@ -15,7 +16,16 @@ import { capitalized } from 'shared/utils/utils'
  * @param {String} options.mode Media mode (video|audio)
  * @returns {HTMLElement} Generated HTML
  */
-export default function ({ options = {}, isMuted, mode }) {
+export default function ({
+	options,
+	isMuted,
+	mode
+}: {
+	options: Options
+	isMuted: Boolean
+	mode: string
+}): JSX.Element {
+	const ariaValueMin = 0
 	return (
 		<div className={`v-controlBar v-style${capitalized(mode)}`}>
 			{options.playPause && (
@@ -38,9 +48,8 @@ export default function ({ options = {}, isMuted, mode }) {
 					max="100"
 					step="0.01"
 					value="0"
-					orient="horizontal"
 					aria-label="Seek"
-					aria-valuemin="0"
+					aria-valuemin={ariaValueMin}
 				/>
 			)}
 			{options.volume && (

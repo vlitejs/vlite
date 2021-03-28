@@ -6,7 +6,7 @@ import { createElement } from 'jsx-dom'
  * @param {Object} options.posterUrl Poster url
  * @returns {HTMLElement} Generated HTML
  */
-export default function ({ posterUrl = '' }) {
+export default function ({ posterUrl = '' }: { posterUrl: string }): JSX.Element {
 	const style = {
 		backgroundImage: posterUrl && `url(${posterUrl})`
 	}

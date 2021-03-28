@@ -2,4 +2,4 @@
 import './assets/styles/loader.css'
 
 // import JS
-import './assets/scripts/loader'
+import './assets/scripts/loader.tsx'
