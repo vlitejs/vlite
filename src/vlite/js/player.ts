@@ -132,16 +132,20 @@ export default class Player {
 			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
 				([seconds, duration]: [number, number]) => {
 					const currentTime = Math.round(seconds)
-					const width = (currentTime * 100) / duration
+
 					const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
-
-					if (!this.progressBarIsMoving && progressBar) {
-						progressBar.value = `${width}`
+					if (progressBar) {
+						const width = (currentTime * 100) / duration
+						if (!this.progressBarIsMoving) {
+							progressBar.value = `${width}`
+						}
+						progressBar.style.setProperty('--value', `${width}%`)
 					}
-					progressBar.style.setProperty('--value', `${width}%`)
 
-					// @ts-ignore: Object is possibly 'null'.
-					this.container.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
+					const currentTimeElement = this.container.querySelector('.v-currentTime')
+					if (currentTimeElement) {
+						currentTimeElement.innerHTML = formatVideoTime(currentTime)
+					}
 				}
 			)
 		}
@@ -154,21 +158,21 @@ export default class Player {
 		this.container.classList.replace('v-playing', 'v-paused')
 		this.container.classList.add('v-firstStart')
 
-		const posterElement = this.container.querySelector('.v-poster')
-		if (this.options.poster && posterElement) {
-			posterElement.classList.add('v-active')
+		const poster = this.container.querySelector('.v-poster')
+		if (this.options.poster && poster) {
+			poster.classList.add('v-active')
 		}
 
-		if (this.options.controls) {
-			const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
-			if (progressBar) {
-				progressBar.value = '0'
-				progressBar.style.setProperty('--value', '0%')
-				progressBar.removeAttribute('aria-valuenow')
-			}
+		const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
+		if (progressBar) {
+			progressBar.value = '0'
+			progressBar.style.setProperty('--value', '0%')
+			progressBar.removeAttribute('aria-valuenow')
+		}
 
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-currentTime').innerHTML = '00:00'
+		const currentTime = this.container.querySelector('.v-currentTime')
+		if (currentTime) {
+			currentTime.innerHTML = '00:00'
 		}
 	}
 
@@ -179,9 +183,9 @@ export default class Player {
 		if (this.container.classList.contains('v-firstStart')) {
 			this.container.classList.remove('v-firstStart')
 
-			if (this.vliteInstance.type === 'video' && this.options.poster) {
-				// @ts-ignore: Object is possibly 'null'.
-				this.container.querySelector('.v-poster').classList.remove('v-active')
+			const poster = this.container.querySelector('.v-poster')
+			if (this.vliteInstance.type === 'video' && poster) {
+				poster.classList.remove('v-active')
 			}
 
 			this.vliteInstance.type === 'video' && this.container.focus()
@@ -191,9 +195,10 @@ export default class Player {
 		this.isPaused = false
 		this.container.classList.replace('v-paused', 'v-playing')
 
-		// TODO: Manage if element not exist for all functions
 		const playPauseButton = this.container.querySelector('.v-playPauseButton')
-		playPauseButton && playPauseButton.setAttribute('aria-label', 'Pause')
+		if (playPauseButton) {
+			playPauseButton.setAttribute('aria-label', 'Pause')
+		}
 
 		const bigPlayButton = this.container.querySelector('.v-bigPlay')
 		if (this.vliteInstance.type === 'video' && bigPlayButton) {
@@ -209,12 +214,15 @@ export default class Player {
 		this.methodPause()
 		this.isPaused = true
 		this.container.classList.replace('v-playing', 'v-paused')
-		// @ts-ignore: Object is possibly 'null'.
-		this.container.querySelector('.v-playPauseButton').setAttribute('aria-label', 'Play')
 
-		if (this.vliteInstance.type === 'video' && this.options.bigPlay) {
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-bigPlay').setAttribute('aria-label', 'Play')
+		const playPauseButton = this.container.querySelector('.v-playPauseButton')
+		if (playPauseButton) {
+			playPauseButton.setAttribute('aria-label', 'Play')
+		}
+
+		const bigPlay = this.container.querySelector('.v-bigPlay')
+		if (this.vliteInstance.type === 'video' && bigPlay) {
+			bigPlay.setAttribute('aria-label', 'Play')
 		}
 		this.afterPlayPause()
 	}
@@ -225,9 +233,7 @@ export default class Player {
 	afterPlayPause() {
 		if (this.vliteInstance.autoHideGranted) {
 			this.vliteInstance.stopAutoHideTimer()
-			if (!this.isPaused) {
-				this.vliteInstance.startAutoHideTimer()
-			}
+			!this.isPaused && this.vliteInstance.startAutoHideTimer()
 		}
 	}
 
@@ -236,8 +242,11 @@ export default class Player {
 	 */
 	mute() {
 		this.methodMute()
-		// @ts-ignore: Object is possibly 'null'.
-		this.container.querySelector('.v-volumeButton').classList.add('v-pressed')
+
+		const volumeButton = this.container.querySelector('.v-volumeButton')
+		if (volumeButton) {
+			volumeButton.classList.add('v-pressed')
+		}
 	}
 
 	/**
@@ -245,8 +254,11 @@ export default class Player {
 	 */
 	unMute() {
 		this.methodUnMute()
-		// @ts-ignore: Object is possibly 'null'.
-		this.container.querySelector('.v-volumeButton').classList.remove('v-pressed')
+
+		const volumeButton = this.container.querySelector('.v-volumeButton')
+		if (volumeButton) {
+			volumeButton.classList.remove('v-pressed')
+		}
 	}
 
 	/**
@@ -270,8 +282,11 @@ export default class Player {
 			this.container[requestFn]()
 			this.isFullScreen = true
 			this.container.classList.add('v-fullscreenButton-display')
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-fullscreenButton').classList.add('v-pressed')
+
+			const fullscreenButton = this.container.querySelector('.v-fullscreenButton')
+			if (fullscreenButton) {
+				fullscreenButton.classList.add('v-pressed')
+			}
 		}
 	}
 
@@ -289,8 +304,11 @@ export default class Player {
 			this.isFullScreen = false
 
 			this.container.classList.remove('v-fullscreenButton-display')
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-fullscreenButton').classList.remove('v-pressed')
+
+			const fullscreenButton = this.container.querySelector('.v-fullscreenButton')
+			if (fullscreenButton) {
+				fullscreenButton.classList.remove('v-pressed')
+			}
 		}
 	}
 

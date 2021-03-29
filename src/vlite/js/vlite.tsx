@@ -161,17 +161,16 @@ class vlitejs {
 		})
 		this.playerInstance.init()
 
-		if (this.options.controls) {
-			this.controlBar = new ControlBar({
-				container: this.container,
-				options: this.options,
-				type: this.type,
-				playerInstance: this.playerInstance
-			})
-		}
+		this.controlBar = new ControlBar({
+			container: this.container,
+			options: this.options,
+			type: this.type,
+			playerInstance: this.playerInstance
+		})
 
 		this.render()
 		this.addEvents()
+
 		initializePlugins({
 			plugins,
 			provider,
@@ -348,9 +347,9 @@ class vlitejs {
 	 * Stop the auto hide timer and show the video control bar
 	 */
 	stopAutoHideTimer() {
-		if (this.type === 'video') {
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-controlBar').classList.remove('hidden')
+		const controlBar = this.container.querySelector('.v-controlBar')
+		if (this.type === 'video' && controlBar) {
+			controlBar.classList.remove('hidden')
 			clearTimeout(this.timerAutoHide)
 		}
 	}
@@ -359,10 +358,10 @@ class vlitejs {
 	 * Start the auto hide timer and hide the video control bar after a delay
 	 */
 	startAutoHideTimer() {
-		if (this.type === 'video' && !this.isPaused) {
+		const controlBar = this.container.querySelector('.v-controlBar')
+		if (this.type === 'video' && !this.isPaused && controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				// @ts-ignore: Object is possibly 'null'.
-				this.container.querySelector('.v-controlBar').classList.add('hidden')
+				controlBar.classList.add('hidden')
 			}, this.delayAutoHide)
 		}
 	}
@@ -401,7 +400,7 @@ class vlitejs {
 	destroy() {
 		this.removeEvents()
 		this.playerInstance.destroy()
-		this.controlBar && this.controlBar.destroy()
+		this.controlBar.destroy()
 	}
 }
 

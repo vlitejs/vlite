@@ -9,10 +9,10 @@ export default class ControlBar {
 	type: string
 	playerInstance: any
 	player: HTMLAudioElement | HTMLVideoElement
-	controlBar?: HTMLElement
-	progressBar?: HTMLElement
-	volumeButton?: HTMLElement
-	fullscreenButton?: HTMLElement
+	controlBar: HTMLElement | null
+	progressBar: HTMLElement | null
+	volumeButton: HTMLElement | null
+	fullscreenButton: HTMLElement | null
 
 	/**
 	 * @constructor
@@ -38,6 +38,11 @@ export default class ControlBar {
 		this.type = type
 		this.playerInstance = playerInstance
 
+		this.controlBar = null
+		this.progressBar = null
+		this.volumeButton = null
+		this.fullscreenButton = null
+
 		// @ts-ignore: Object is possibly 'null'.
 		this.player = this.container.querySelector('.vlite-js')
 
@@ -53,17 +58,20 @@ export default class ControlBar {
 	 * Initialize the player when the API is ready
 	 */
 	init() {
-		// @ts-ignore: Object is possibly 'null'.
 		this.controlBar = this.container.querySelector('.v-controlBar')
-		// @ts-ignore: Object is possibly 'null'.
-		this.progressBar = this.controlBar.querySelector('.v-progressBar')
-		// @ts-ignore: Object is possibly 'null'.
-		this.volumeButton = this.controlBar.querySelector('.v-volumeButton')
-		// @ts-ignore: Object is possibly 'null'.
-		this.fullscreenButton = this.controlBar.querySelector('.v-fullscreenButton')
-
-		if (this.options.volume && this.volumeButton) {
-			this.volumeButton.setAttribute('aria-label', this.player.muted ? 'Unmute' : 'Mute')
+		if (this.controlBar) {
+			if (this.options.progressBar) {
+				this.progressBar = this.controlBar.querySelector('.v-progressBar')
+			}
+			if (this.options.progressBar) {
+				this.volumeButton = this.controlBar.querySelector('.v-volumeButton')
+			}
+			if (this.options.progressBar) {
+				this.fullscreenButton = this.controlBar.querySelector('.v-fullscreenButton')
+			}
+			if (this.options.volume && this.volumeButton) {
+				this.volumeButton.setAttribute('aria-label', this.player.muted ? 'Unmute' : 'Mute')
+			}
 		}
 
 		this.addEvents()
@@ -74,8 +82,9 @@ export default class ControlBar {
 	 */
 	onPlayerReady() {
 		this.playerInstance.getDuration().then((duration: number) => {
-			// @ts-ignore: Object is possibly 'null'.
-			this.container.querySelector('.v-progressBar').setAttribute('aria-valuemax', `${duration}`)
+			if (this.progressBar) {
+				this.progressBar.setAttribute('aria-valuemax', `${duration}`)
+			}
 		})
 	}
 
@@ -83,7 +92,7 @@ export default class ControlBar {
 	 * Add event listeners
 	 */
 	addEvents() {
-		if (this.options.progressBar && this.progressBar) {
+		if (this.progressBar) {
 			this.progressBar.addEventListener('input', this.onInputProgressBar)
 			this.progressBar.addEventListener('change', this.onChangeProgressBar)
 		}
@@ -166,14 +175,12 @@ export default class ControlBar {
 	toggleVolume(e: Event) {
 		e.preventDefault()
 
-		if (this.volumeButton) {
-			if (this.volumeButton.classList.contains('v-pressed')) {
-				this.playerInstance.unMute()
-				this.volumeButton && this.volumeButton.setAttribute('aria-label', 'Mute')
-			} else {
-				this.playerInstance.mute()
-				this.volumeButton && this.volumeButton.setAttribute('aria-label', 'Unmute')
-			}
+		if (this.volumeButton!.classList.contains('v-pressed')) {
+			this.playerInstance.unMute()
+			this.volumeButton!.setAttribute('aria-label', 'Mute')
+		} else {
+			this.playerInstance.mute()
+			this.volumeButton!.setAttribute('aria-label', 'Unmute')
 		}
 	}
 
@@ -185,10 +192,10 @@ export default class ControlBar {
 
 		if (this.playerInstance.isFullScreen) {
 			this.playerInstance.exitFullscreen()
-			this.fullscreenButton && this.fullscreenButton.setAttribute('aria-label', 'Enter fullscreen')
+			this.fullscreenButton!.setAttribute('aria-label', 'Enter fullscreen')
 		} else {
 			this.playerInstance.requestFullscreen()
-			this.fullscreenButton && this.fullscreenButton.setAttribute('aria-label', 'Exit fullscreen')
+			this.fullscreenButton!.setAttribute('aria-label', 'Exit fullscreen')
 		}
 	}
 
@@ -205,10 +212,9 @@ export default class ControlBar {
 	 * Remove event listeners
 	 */
 	removeEvents() {
-		// TODO: Check all remove events and destroy
-		if (this.options.progressBar) {
-			this.progressBar && this.progressBar.removeEventListener('input', this.onInputProgressBar)
-			this.progressBar && this.progressBar.removeEventListener('change', this.onChangeProgressBar)
+		if (this.progressBar) {
+			this.progressBar.removeEventListener('input', this.onInputProgressBar)
+			this.progressBar.removeEventListener('change', this.onChangeProgressBar)
 		}
 
 		this.controlBar && this.controlBar.removeEventListener('click', this.onClickOnControlBar)
