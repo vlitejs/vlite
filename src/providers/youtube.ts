@@ -100,7 +100,7 @@ class PlayerYoutube extends window.vlitejs.Player {
 				break
 
 			case window.YT.PlayerState.PLAYING:
-				this.instanceParent.loading(false)
+				this.vliteInstance.loading(false)
 
 				if (this.options.controls) {
 					setInterval(() => {
@@ -116,7 +116,7 @@ class PlayerYoutube extends window.vlitejs.Player {
 				break
 
 			case window.YT.PlayerState.BUFFERING:
-				this.instanceParent.loading(true)
+				this.vliteInstance.loading(true)
 				break
 		}
 	}

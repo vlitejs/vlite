@@ -38,16 +38,6 @@ export function formatVideoTime(time: number): string {
 }
 
 /**
- * Check if browser support touch event
- * @returns {Boolean} Touch event support
- */
-export function isTouch(): Boolean {
-	return (
-		'ontouchstart' in window || (window.DocumentTouch && document instanceof window.DocumentTouch)
-	)
-}
-
-/**
  * Check fullscreen support API on different browsers and cached prefixs
  * @returns {Object} Fullscreen utils functions
  */

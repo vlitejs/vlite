@@ -6,7 +6,7 @@ import { Options } from 'shared/assets/interfaces/interfaces'
 export default class ControlBar {
 	container: HTMLElement
 	options: Options
-	mode: string
+	type: string
 	playerInstance: any
 	player: HTMLAudioElement | HTMLVideoElement
 	controlBar?: HTMLElement
@@ -19,23 +19,23 @@ export default class ControlBar {
 	 * @param {Object} options
 	 * @param {HTMLElement} options.container CSS selector or HTML element
 	 * @param {Object} options.options Player options
-	 * @param {String} options.mode Player mode
+	 * @param {String} options.type Player type (video|audio)
 	 * @param {Class} options.playerInstance Player instance
 	 */
 	constructor({
 		container,
 		options,
-		mode,
+		type,
 		playerInstance
 	}: {
 		container: HTMLElement
 		options: Options
-		mode: string
+		type: string
 		playerInstance: any
 	}) {
 		this.container = container
 		this.options = options
-		this.mode = mode
+		this.type = type
 		this.playerInstance = playerInstance
 
 		// @ts-ignore: Object is possibly 'null'.
@@ -198,7 +198,7 @@ export default class ControlBar {
 	 * @returns {HTMLElement} Generated HTML
 	 */
 	getTemplate(): JSX.Element {
-		return <Template options={this.options} isMuted={this.player.muted} mode={this.mode} />
+		return <Template options={this.options} isMuted={this.player.muted} type={this.type} />
 	}
 
 	/**

@@ -82,6 +82,7 @@
 			transform: translateY(-50%);
 			width: 20px;
 			display: none;
+			fill: var(--orange);
 		}
 
 		&.v-active svg {

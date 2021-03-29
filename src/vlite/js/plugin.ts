@@ -50,23 +50,23 @@ export function registerPlugin(id: string, instance: any): undefined {
  * @param {Object} options
  * @param {Array} options.plugins Plugins list
  * @param {String} options.provider Player provider
- * @param {Array} options.mode Player mode (video|audio)
+ * @param {Array} options.type Player type (video|audio)
  * @param {Array} options.playerInstance Player instance
  */
 export function initializePlugins({
 	plugins,
 	provider,
-	mode,
+	type,
 	playerInstance
 }: {
 	plugins: Array<any>
 	provider: string
-	mode: string
+	type: string
 	playerInstance: any
 }) {
 	getPluginInstance(plugins).forEach(({ id, Plugin }: { id: string; Plugin: any }) => {
 		const plugin = new Plugin({ player: playerInstance })
-		if (plugin.providers.includes(provider) && plugin.types.includes(mode)) {
+		if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
 			plugin.init()
 		} else {
 			throw new Error(

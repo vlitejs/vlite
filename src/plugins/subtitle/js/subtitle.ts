@@ -79,18 +79,13 @@ export default class Subtitle {
 					<div class="v-subtitlesList">
 						<ul>
 							<li>
-								<button class="v-trackButton v-active" data-language="off">
-									${svgCheck}Off
-								</button>
+								<button class="v-trackButton v-active" data-language="off">${svgCheck}Off</button>
 							</li>
 							${this.tracks
 								.map(
 									(track) =>
 										`<li>
-											<button class="v-trackButton" data-language="${track.language}">
-												${svgCheck}
-												${track.label}
-											</button>
+											<button class="v-trackButton" data-language="${track.language}">${svgCheck}${track.label}</button>
 										</li>`
 								)
 								.join(' ')}

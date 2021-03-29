@@ -12,14 +12,14 @@
         <track label="French" kind="subtitles" srclang="fr" src="./View_From_A_Blue_Moon_Trailer-HD.fr.vtt" default>
         <track label="English" kind="subtitles" srclang="en" src="./View_From_A_Blue_Moon_Trailer-HD.en.vtt">
     </video>
-    </video>
+    <button id="destroy">Destroy</button>
 	<script src="../../dist/vlite.js"></script>
     <script src="../../dist/plugins/subtitle.js"></script>
     <script src="../../dist/plugins/picture-in-picture.js"></script>
 	<script>
         vlitejs.registerPlugin('subtitle', vlitejsSubtitle)
         vlitejs.registerPlugin('picture-in-picture', vlitejsPictureInPicture)
-		new vlitejs({
+		const myVlite = new vlitejs({
 			selector: '#player-html5',
 			options: {
 				autoplay: false,
@@ -39,6 +39,12 @@
 				//Ready
 			}
 		});
+
+        document.querySelector('#destroy').addEventListener('click', e => {
+            e.preventDefault()
+            console.log(myVlite)
+            myVlite.destroy()
+        })
 	</script>
 </body>
 </html>

@@ -13,21 +13,21 @@ import { Options } from 'shared/assets/interfaces/interfaces'
  * @param {Object} options
  * @param {Object} options.options Player options
  * @param {Boolean} options.isMuted Player is muted
- * @param {String} options.mode Media mode (video|audio)
+ * @param {String} options.type Player type (video|audio)
  * @returns {HTMLElement} Generated HTML
  */
 export default function ({
 	options,
 	isMuted,
-	mode
+	type
 }: {
 	options: Options
 	isMuted: Boolean
-	mode: string
+	type: string
 }): JSX.Element {
 	const ariaValueMin = 0
 	return (
-		<div className={`v-controlBar v-style${capitalized(mode)}`}>
+		<div className={`v-controlBar v-style${capitalized(type)}`}>
 			{options.playPause && (
 				<button className="v-playPauseButton v-controlButton" aria-label="Play">
 					<span className="v-controlButtonIcon v-iconPlay" innerHTML={svgPlay}></span>

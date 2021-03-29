@@ -11,7 +11,7 @@
 import Player from './player'
 import { createElement, Fragment } from 'jsx-dom'
 import validateTarget from 'validate-target'
-import { capitalized, isTouch, checkSupportFullScreen } from 'shared/utils/utils'
+import { capitalized, checkSupportFullScreen } from 'shared/utils/utils'
 import LoaderTemplate from 'shared/loader/assets/scripts/loader'
 import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
@@ -64,8 +64,7 @@ class vlitejs {
 	plugins: Array<string>
 	onReady: Function
 	delayAutoHide: number
-	mode: string
-	touchSupport: Boolean
+	type: string
 	supportFullScreen: FullScreenSupport
 	options: Options
 	isPaused: Boolean
@@ -113,8 +112,7 @@ class vlitejs {
 		this.onReady = onReady
 		this.isPaused = true
 		this.delayAutoHide = 3000
-		this.mode = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
-		this.touchSupport = isTouch()
+		this.type = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
 
 		// Check fullscreen support API on different browsers and cached prefixs
 		this.supportFullScreen = checkSupportFullScreen()
@@ -133,9 +131,9 @@ class vlitejs {
 			options.loop = true
 		}
 
-		this.options = { ...DEFAULT_OPTIONS[this.mode], ...options }
+		this.options = { ...DEFAULT_OPTIONS[this.type], ...options }
 		this.autoHideGranted =
-			this.mode === 'video' && !!this.options.autoHide && !!this.options.controls
+			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
 
 		// Add play inline attribute
 		if (this.options.playsinline) {
@@ -159,7 +157,7 @@ class vlitejs {
 			container: this.container,
 			options: this.options,
 			onCallbackReady: this.onCallbackReady.bind(this),
-			instanceParent: this
+			vliteInstance: this
 		})
 		this.playerInstance.init()
 
@@ -167,7 +165,7 @@ class vlitejs {
 			this.controlBar = new ControlBar({
 				container: this.container,
 				options: this.options,
-				mode: this.mode,
+				type: this.type,
 				playerInstance: this.playerInstance
 			})
 		}
@@ -177,7 +175,7 @@ class vlitejs {
 		initializePlugins({
 			plugins,
 			provider,
-			mode: this.mode,
+			type: this.type,
 			playerInstance: this.playerInstance
 		})
 	}
@@ -192,7 +190,7 @@ class vlitejs {
 			'v-firstStart',
 			'v-paused',
 			'v-loading',
-			`v-style${capitalized(this.mode)}`
+			`v-style${capitalized(this.type)}`
 		)
 		wrapper.setAttribute('tabindex', '0')
 		const parentElement = this.element.parentNode as HTMLElement
@@ -205,7 +203,7 @@ class vlitejs {
 	 */
 	render() {
 		this.container.appendChild(
-			<>{this.mode === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
+			<>{this.type === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
 		)
 		this.options.controls && this.controlBar.init()
 	}
@@ -273,8 +271,9 @@ class vlitejs {
 			selectorString: '.v-overlay',
 			nodeName: ['div']
 		})
+
 		if (validateTargetOverlay) {
-			this.playerInstance.toggleFullscreen(e)
+			this.controlBar.toggleFullscreen(e)
 		}
 	}
 
@@ -349,7 +348,7 @@ class vlitejs {
 	 * Stop the auto hide timer and show the video control bar
 	 */
 	stopAutoHideTimer() {
-		if (this.mode === 'video') {
+		if (this.type === 'video') {
 			// @ts-ignore: Object is possibly 'null'.
 			this.container.querySelector('.v-controlBar').classList.remove('hidden')
 			clearTimeout(this.timerAutoHide)
@@ -360,7 +359,7 @@ class vlitejs {
 	 * Start the auto hide timer and hide the video control bar after a delay
 	 */
 	startAutoHideTimer() {
-		if (this.mode === 'video' && !this.isPaused) {
+		if (this.type === 'video' && !this.isPaused) {
 			this.timerAutoHide = window.setTimeout(() => {
 				// @ts-ignore: Object is possibly 'null'.
 				this.container.querySelector('.v-controlBar').classList.add('hidden')

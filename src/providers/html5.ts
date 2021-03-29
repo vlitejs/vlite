@@ -112,28 +112,28 @@ export default class PlayerHtml5 extends Player {
 	 * Function executed when the video is waiting
 	 */
 	onWaiting() {
-		this.instanceParent.loading(true)
+		this.vliteInstance.loading(true)
 	}
 
 	/**
 	 * Function executed when the video is playing
 	 */
 	onPlaying() {
-		this.instanceParent.loading(false)
+		this.vliteInstance.loading(false)
 	}
 
 	/**
 	 * Function executed when the video is seeking
 	 */
 	onSeeking() {
-		this.instanceParent.loading(true)
+		this.vliteInstance.loading(true)
 	}
 
 	/**
 	 * Function executed when the video seek is done
 	 */
 	onSeeked() {
-		this.instanceParent.loading(false)
+		this.vliteInstance.loading(false)
 	}
 
 	/**
