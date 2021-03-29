@@ -8,7 +8,6 @@
  * @copyright 2021 Joris DANIEL <https://yoriiis.github.io/vlitejs>
  **/
 
-import PlayerHtml5 from '../../providers/html5'
 import Player from './player'
 import { createElement, Fragment } from 'jsx-dom'
 import validateTarget from 'validate-target'
@@ -19,18 +18,15 @@ import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
 import PosterTemplate from 'shared/poster/assets/scripts/poster'
 import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
 import {
-	interfaceVliteProviders,
-	interfaceVlitePlugins,
 	interfaceDefaultOptions,
 	Options,
-	FullScreenSupport,
-	interfacePluginsInstance
+	FullScreenSupport
 } from 'shared/assets/interfaces/interfaces'
+import { registerProvider, getProviderInstance } from './provider'
+import { getPluginInstance, registerPlugin, initializePlugins } from './plugin'
 
-const vliteProviders: interfaceVliteProviders = {
-	html5: PlayerHtml5
-}
-const vlitePlugins: interfaceVlitePlugins = {}
+type TimerHandle = number
+
 const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
 		autoplay: false,
@@ -57,8 +53,6 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		muted: false
 	}
 }
-
-type TimerHandle = number
 
 /**
  * vlitejs entrypoint
@@ -155,10 +149,7 @@ class vlitejs {
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 
-		const ProviderInstance: any = vliteProviders[provider]
-		if (!ProviderInstance) {
-			throw new Error(`vlitejs :: Unknown provider "${provider}"`)
-		}
+		const ProviderInstance = getProviderInstance(provider)
 
 		this.wrapElement()
 		this.container = this.element.parentNode as HTMLElement
@@ -183,36 +174,12 @@ class vlitejs {
 
 		this.render()
 		this.addEvents()
-		this.getPluginInstance(this.plugins).forEach((item: any) => {
-			const plugin = new item.Plugin({ player: this.playerInstance })
-			if (plugin.providers.includes(provider) && plugin.types.includes(this.mode)) {
-				plugin.init()
-			} else {
-				throw new Error(
-					`vlitejs :: The "${item.id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
-				)
-			}
+		initializePlugins({
+			plugins,
+			provider,
+			mode: this.mode,
+			playerInstance: this.playerInstance
 		})
-	}
-
-	/**
-	 * Get plugins instances from the registered list
-	 * @param {Array} plugins List of plugins to enabled
-	 * @returns {Array} List of plugins instances to enabled
-	 */
-	getPluginInstance(plugins: Array<string>): Array<interfacePluginsInstance> {
-		const pluginsInstance: Array<interfacePluginsInstance> = []
-		const pluginsIds = Object.keys(vlitePlugins)
-
-		plugins.forEach((id: string) => {
-			if (pluginsIds.includes(id)) {
-				pluginsInstance.push({ id, Plugin: vlitePlugins[id] })
-			} else {
-				throw new Error(`vlitejs :: Unknown plugin "${id}".`)
-			}
-		})
-
-		return pluginsInstance
 	}
 
 	/**
@@ -437,28 +404,10 @@ vlitejs.Player = Player
 
 // Expose the provider registration
 // @ts-ignore
-vlitejs.registerProvider = (id: string, instance: any) => {
-	if (typeof instance !== 'undefined') {
-		if (!Object.keys(vliteProviders).includes(id)) {
-			vliteProviders[id] = instance
-			return
-		}
-		throw new Error(`vlitejs :: The provider id "${id}" is already registered.`)
-	}
-	throw new Error(`vlitejs :: The provider id "${id}" is undefined.`)
-}
+vlitejs.registerProvider = registerProvider
 
 // Expose the plugin registration
 // @ts-ignore
-vlitejs.registerPlugin = (id: string, instance: any) => {
-	if (typeof instance !== 'undefined') {
-		if (!Object.keys(vlitePlugins).includes(id)) {
-			vlitePlugins[id] = instance
-			return
-		}
-		throw new Error(`vlitejs :: The plugin id "${id}" is already registered.`)
-	}
-	throw new Error(`vlitejs :: The plugin id "${id}" is undefined.`)
-}
+vlitejs.registerPlugin = registerPlugin
 
 export default vlitejs
