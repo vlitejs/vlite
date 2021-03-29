@@ -1,6 +1,6 @@
 {
 	"name": "vlitejs",
-	"version": "3.1.0",
+	"version": "4.0.0",
 	"description": "vLitejs is a fast and lightweight Javascript library for customizing HTML5 and Youtube video players in Javascript with a minimalist theme",
 	"keywords": [
 		"html5",
@@ -17,6 +17,9 @@
 	"repository": "https://github.com/yoriiis/vlitejs.git",
 	"license": "MIT",
 	"author": "Yoriiis aka Joris DANIEL",
+	"files": [
+		"dist"
+	],
 	"main": "dist/vlite/js/vlite.js",
 	"scripts": {
 		"build": "rm -rf ./dist/ && webpack --mode=production",
