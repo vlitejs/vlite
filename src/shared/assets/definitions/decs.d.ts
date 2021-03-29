@@ -1,1 +1,1 @@
-declare module "validate-target"
+declare module 'validate-target'

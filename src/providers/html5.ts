@@ -7,10 +7,10 @@ import Player from '../vlite/js/player'
 export default class PlayerHtml5 extends Player {
 	init() {
 		this.waitUntilVideoIsReady().then(() => {
-			this.onDurationChange()
-			this.onPlayerReady()
+			super.onDurationChange()
+			super.onPlayerReady()
+			this.addSpecificEvents()
 		})
-		this.addSpecificEvents()
 	}
 
 	/**
@@ -141,12 +141,19 @@ export default class PlayerHtml5 extends Player {
 	 */
 	removeSpecificEvents() {
 		this.options.time && this.element.removeEventListener('durationchange', this.onDurationChange)
-
 		this.element.removeEventListener('timeupdate', this.onTimeUpdate)
 		this.element.removeEventListener('playing', this.onPlaying)
 		this.element.removeEventListener('waiting', this.onWaiting)
 		this.element.removeEventListener('seeking', this.onSeeking)
 		this.element.removeEventListener('seeked', this.onSeeked)
 		this.element.removeEventListener('ended', this.onVideoEnded)
+	}
+
+	/**
+	 * Remove the Vimeo player (instance, events)
+	 */
+	destroy() {
+		this.removeSpecificEvents()
+		super.destroy()
 	}
 }

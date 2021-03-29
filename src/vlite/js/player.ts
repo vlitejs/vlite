@@ -53,6 +53,46 @@ export default class Player {
 		this.delayAutoHide = 3000
 	}
 
+	init() {
+		throw new Error('You have to implement the function "init".')
+	}
+
+	waitUntilVideoIsReady() {
+		throw new Error('You have to implement the function "waitUntilVideoIsReady".')
+	}
+
+	getInstance() {
+		throw new Error('You have to implement the function "getInstance".')
+	}
+
+	getCurrentTime(): Promise<number> {
+		throw new Error('You have to implement the function "getCurrentTime".')
+	}
+
+	setCurrentTime(newTime: number) {
+		throw new Error('You have to implement the function "setCurrentTime".')
+	}
+
+	getDuration(): Promise<number> {
+		throw new Error('You have to implement the function "getDuration".')
+	}
+
+	methodPlay() {
+		throw new Error('You have to implement the function "methodPlay".')
+	}
+
+	methodPause() {
+		throw new Error('You have to implement the function "methodPause".')
+	}
+
+	methodMute() {
+		throw new Error('You have to implement the function "methodMute".')
+	}
+
+	methodUnMute() {
+		throw new Error('You have to implement the function "methodUnMute".')
+	}
+
 	/**
 	 * On the player is ready
 	 */
@@ -79,6 +119,31 @@ export default class Player {
 					durationElement.innerHTML = formatVideoTime(duration)
 				}
 			})
+		}
+	}
+
+	/**
+	 * On time update
+	 * Update current time displaying in the control bar
+	 * Udpdate the progress bar
+	 */
+	onTimeUpdate() {
+		if (this.options.time) {
+			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
+				([seconds, duration]: [number, number]) => {
+					const currentTime = Math.round(seconds)
+					const width = (currentTime * 100) / duration
+					const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
+
+					if (!this.progressBarIsMoving && progressBar) {
+						progressBar.value = `${width}`
+					}
+					progressBar.style.setProperty('--value', `${width}%`)
+
+					// @ts-ignore: Object is possibly 'null'.
+					this.container.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
+				}
+			)
 		}
 	}
 
@@ -230,91 +295,12 @@ export default class Player {
 	}
 
 	/**
-	 * On time update
-	 * Update current time displaying in the control bar
-	 * Udpdate the progress bar
-	 */
-	onTimeUpdate() {
-		if (this.options.time) {
-			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
-				([seconds, duration]: [number, number]) => {
-					const currentTime = Math.round(seconds)
-					const width = (currentTime * 100) / duration
-					const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
-
-					if (!this.progressBarIsMoving && progressBar) {
-						progressBar.value = `${width}`
-					}
-					progressBar.style.setProperty('--value', `${width}%`)
-
-					// @ts-ignore: Object is possibly 'null'.
-					this.container.querySelector('.v-currentTime').innerHTML = formatVideoTime(currentTime)
-				}
-			)
-		}
-	}
-
-	/**
 	 * Destroy the player
 	 * Remove event listeners, player instance and DOM
 	 */
 	destroy() {
 		this.pause()
 		this.options.controls && this.controlBar && this.controlBar.removeEvents()
-		this.removeSpecificEvents()
-		this.removeInstance()
 		this.container.remove()
-	}
-
-	init() {
-		throw new Error('You have to implement the function "init".')
-	}
-
-	waitUntilVideoIsReady() {
-		throw new Error('You have to implement the function "waitUntilVideoIsReady".')
-	}
-
-	getInstance() {
-		throw new Error('You have to implement the function "getInstance".')
-	}
-
-	getCurrentTime(): Promise<number> {
-		throw new Error('You have to implement the function "getCurrentTime".')
-	}
-
-	setCurrentTime(newTime: number) {
-		throw new Error('You have to implement the function "setCurrentTime".')
-	}
-
-	getDuration(): Promise<number> {
-		throw new Error('You have to implement the function "getDuration".')
-	}
-
-	methodPlay() {
-		throw new Error('You have to implement the function "methodPlay".')
-	}
-
-	methodPause() {
-		throw new Error('You have to implement the function "methodPause".')
-	}
-
-	methodMute() {
-		throw new Error('You have to implement the function "methodMute".')
-	}
-
-	methodUnMute() {
-		throw new Error('You have to implement the function "methodUnMute".')
-	}
-
-	removeSpecificEvents() {
-		throw new Error('You have to implement the function "removeSpecificEvents".')
-	}
-
-	removeInstance() {
-		throw new Error('You have to implement the function "removeInstance".')
-	}
-
-	removeEvents() {
-		throw new Error('You have to implement the function "removeEvents".')
 	}
 }

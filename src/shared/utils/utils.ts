@@ -4,6 +4,9 @@ declare global {
 	interface Document {
 		[key: string]: any
 	}
+	interface Window {
+		DocumentTouch: any
+	}
 }
 
 /**
@@ -32,12 +35,6 @@ export function formatVideoTime(time: number): string {
 	timeInString += sec
 
 	return timeInString
-}
-
-declare global {
-	interface Window {
-		DocumentTouch: any
-	}
 }
 
 /**

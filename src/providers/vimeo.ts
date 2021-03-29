@@ -184,7 +184,6 @@ class PlayerVimeo extends window.vlitejs.Player {
 	 */
 	removeSpecificEvents() {
 		this.options.time && this.instancePlayer.off('durationchange', this.onDurationChange)
-
 		this.instancePlayer.off('timeupdate', this.onTimeUpdate)
 		this.instancePlayer.off('playing', this.onPlaying)
 		this.instancePlayer.off('waiting', this.onWaiting)
@@ -194,10 +193,12 @@ class PlayerVimeo extends window.vlitejs.Player {
 	}
 
 	/**
-	 * Remove the Vimeo instance
+	 * Remove the Vimeo player (instance, events)
 	 */
-	removeInstance() {
+	destroy() {
+		this.removeSpecificEvents()
 		this.instancePlayer.destroy()
+		super.destroy()
 	}
 }
 

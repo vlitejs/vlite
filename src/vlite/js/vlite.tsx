@@ -73,8 +73,8 @@ class vlitejs {
 	container: HTMLElement
 	playerInstance: any
 	controlBar: any
-	registerPlugin: any
-	registerProvider: any
+	registerPlugin!: Function
+	registerProvider!: Function
 	timerAutoHide!: TimerHandle
 
 	/**
@@ -183,12 +183,21 @@ class vlitejs {
 	}
 
 	/**
-	 * The player is initialized and ready
-	 * @param {Class} playerInstance Player instance
+	 * Wrap the media element
 	 */
-	onCallbackReady(playerInstance: any) {
-		this.loading(false)
-		this.onReady instanceof Function && this.onReady(playerInstance)
+	wrapElement() {
+		const wrapper = document.createElement('div')
+		wrapper.classList.add(
+			'v-vlite',
+			'v-firstStart',
+			'v-paused',
+			'v-loading',
+			`v-style${capitalized(this.mode)}`
+		)
+		wrapper.setAttribute('tabindex', '0')
+		const parentElement = this.element.parentNode as HTMLElement
+		parentElement.insertBefore(wrapper, this.element)
+		wrapper.appendChild(this.element)
 	}
 
 	/**
@@ -229,10 +238,10 @@ class vlitejs {
 	 * Add evnets listeners
 	 */
 	addEvents() {
-		this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
 		this.container.addEventListener('click', this.onClickOnPlayer)
 		this.container.addEventListener('dblclick', this.onDoubleClickOnPlayer)
 		this.container.addEventListener('keyup', this.onKeyup)
+		this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
 		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
 
@@ -250,6 +259,22 @@ class vlitejs {
 
 		if (validateTargetPlayPauseButton) {
 			this.togglePlayPause(e)
+		}
+	}
+
+	/**
+	 * On double click on the player
+	 * @param {Object} e Event data
+	 */
+	onDoubleClickOnPlayer(e: Event) {
+		const target = e.target
+		const validateTargetOverlay = validateTarget({
+			target: target,
+			selectorString: '.v-overlay',
+			nodeName: ['div']
+		})
+		if (validateTargetOverlay) {
+			this.playerInstance.toggleFullscreen(e)
 		}
 	}
 
@@ -277,57 +302,6 @@ class vlitejs {
 		}
 	}
 
-	togglePlayPause(e: Event | KeyboardEvent) {
-		e.preventDefault()
-
-		this.container.classList.contains('v-paused')
-			? this.playerInstance.play()
-			: this.playerInstance.pause()
-	}
-	/**
-	 * Trigger the video fast forward (front and rear)
-	 * @param {String} direction Direction (backward|forward)
-	 */
-	fastForward(direction: string) {
-		this.playerInstance.getCurrentTime().then((seconds: number) => {
-			this.playerInstance.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
-		})
-	}
-
-	/**
-	 * On double click on the player
-	 * @param {Object} e Event data
-	 */
-	onDoubleClickOnPlayer(e: Event) {
-		const target = e.target
-		const validateTargetOverlay = validateTarget({
-			target: target,
-			selectorString: '.v-overlay',
-			nodeName: ['div']
-		})
-		if (validateTargetOverlay) {
-			this.playerInstance.toggleFullscreen(e)
-		}
-	}
-
-	/**
-	 * Wrapa the media element
-	 */
-	wrapElement() {
-		const wrapper = document.createElement('div')
-		wrapper.classList.add(
-			'v-vlite',
-			'v-firstStart',
-			'v-paused',
-			'v-loading',
-			`v-style${capitalized(this.mode)}`
-		)
-		wrapper.setAttribute('tabindex', '0')
-		const parentElement = this.element.parentNode as HTMLElement
-		parentElement.insertBefore(wrapper, this.element)
-		wrapper.appendChild(this.element)
-	}
-
 	/**
 	 * On mousemove on the player
 	 */
@@ -336,6 +310,39 @@ class vlitejs {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
 		}
+	}
+
+	/**
+	 * On fullscreen change (espace key pressed)
+	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+	 * @param {Object} e Event data
+	 */
+	onChangeFullScreen(e: Event) {
+		if (!document[this.supportFullScreen.isFullScreen] && this.playerInstance.isFullScreen) {
+			this.playerInstance.exitFullscreen({ escKey: true })
+		}
+	}
+
+	/**
+	 * On toggle play/pause
+	 * @param {(Event|KeyboardEvent)} e Event data
+	 */
+	togglePlayPause(e: Event | KeyboardEvent) {
+		e.preventDefault()
+
+		this.container.classList.contains('v-paused')
+			? this.playerInstance.play()
+			: this.playerInstance.pause()
+	}
+
+	/**
+	 * Trigger the video fast forward (front and rear)
+	 * @param {String} direction Direction (backward|forward)
+	 */
+	fastForward(direction: string) {
+		this.playerInstance.getCurrentTime().then((seconds: number) => {
+			this.playerInstance.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
+		})
 	}
 
 	/**
@@ -362,14 +369,12 @@ class vlitejs {
 	}
 
 	/**
-	 * On fullscreen change (espace key pressed)
-	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-	 * @param {Object} e Event data
+	 * The player is initialized and ready
+	 * @param {Class} playerInstance Player instance
 	 */
-	onChangeFullScreen(e: Event) {
-		if (!document[this.supportFullScreen.isFullScreen] && this.playerInstance.isFullScreen) {
-			this.playerInstance.exitFullscreen({ escKey: true })
-		}
+	onCallbackReady(playerInstance: any) {
+		this.loading(false)
+		this.onReady instanceof Function && this.onReady(playerInstance)
 	}
 
 	/**
@@ -380,16 +385,19 @@ class vlitejs {
 		this.container.classList[state ? 'add' : 'remove']('v-loading')
 	}
 
+	/**
+	 * Remove events listeners
+	 */
 	removeEvents() {
-		this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
 		this.container.removeEventListener('click', this.onClickOnPlayer)
 		this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
 		this.container.removeEventListener('keyup', this.onKeyup)
+		this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
 		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
 
 	/**
-	 * Destroy the player instance
+	 * Destroy the player
 	 */
 	destroy() {
 		this.removeEvents()

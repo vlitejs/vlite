@@ -6,11 +6,11 @@ declare global {
 		YT: {
 			Player: any
 			PlayerState: {
-				BUFFERING: any
-				ENDED: any
-				PLAYING: any
-				PAUSED: any
-				UNSTARTED: any
+				BUFFERING: Number
+				ENDED: Number
+				PLAYING: Number
+				PAUSED: Number
+				UNSTARTED: Number
 			}
 		}
 		onYouTubeIframeAPIReady: Function
@@ -77,10 +77,48 @@ class PlayerYoutube extends window.vlitejs.Player {
 						this.element = data.target.getIframe()
 						resolve()
 					},
-					onStateChange: (e: any) => this.onPlayerStateChange(e)
+					onStateChange: (e: Event) => this.onPlayerStateChange(e)
 				}
 			})
 		})
+	}
+
+	/**
+	 * Function executed when the player state changed
+	 * @param {Object} e Event listener datas
+	 */
+	onPlayerStateChange(e: any) {
+		switch (e.data) {
+			case window.YT.PlayerState.UNSTARTED:
+				if (this.options.controls && this.options.time) {
+					super.onDurationChange()
+				}
+				break
+
+			case window.YT.PlayerState.ENDED:
+				super.onVideoEnded()
+				break
+
+			case window.YT.PlayerState.PLAYING:
+				this.instanceParent.loading(false)
+
+				if (this.options.controls) {
+					setInterval(() => {
+						super.onTimeUpdate()
+					}, 100)
+				}
+
+				super.afterPlayPause('play')
+				break
+
+			case window.YT.PlayerState.PAUSED:
+				super.afterPlayPause('pause')
+				break
+
+			case window.YT.PlayerState.BUFFERING:
+				this.instanceParent.loading(true)
+				break
+		}
 	}
 
 	/**
@@ -92,29 +130,11 @@ class PlayerYoutube extends window.vlitejs.Player {
 	}
 
 	/**
-	 * Function executed when the player state changed
-	 * @param {Object} e Event listener datas
+	 * Get the player current time
+	 * @returns {Promise<number>} Current time of the video
 	 */
-	onPlayerStateChange(e: any) {
-		if (e.data === window.YT.PlayerState.UNSTARTED) {
-			if (this.options.controls && this.options.time) {
-				this.onDurationChange()
-			}
-		} else if (e.data === window.YT.PlayerState.ENDED) {
-			this.onVideoEnded()
-		} else if (e.data === window.YT.PlayerState.PLAYING) {
-			this.instanceParent.loading(false)
-
-			if (this.options.controls) {
-				setInterval(() => this.onTimeUpdate(), 100)
-			}
-
-			this.afterPlayPause('play')
-		} else if (e.data === window.YT.PlayerState.PAUSED) {
-			this.afterPlayPause('pause')
-		} else if (e.data === window.YT.PlayerState.BUFFERING) {
-			this.instanceParent.loading(true)
-		}
+	getCurrentTime(): Promise<number> {
+		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
 	}
 
 	/**
@@ -123,14 +143,6 @@ class PlayerYoutube extends window.vlitejs.Player {
 	 */
 	setCurrentTime(newTime: number) {
 		this.instancePlayer.seekTo(newTime)
-	}
-
-	/**
-	 * Get the player current time
-	 * @returns {Promise<number>} Current time of the video
-	 */
-	getCurrentTime(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
 	}
 
 	/**
@@ -170,10 +182,11 @@ class PlayerYoutube extends window.vlitejs.Player {
 	}
 
 	/**
-	 * Remove the Youtube instance
+	 * Remove the Youtube player (instance)
 	 */
-	removeInstance() {
+	destroy() {
 		this.instancePlayer.destroy()
+		super.destroy()
 	}
 }
 
