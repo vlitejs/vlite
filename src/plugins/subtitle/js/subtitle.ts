@@ -183,6 +183,10 @@ export default class Subtitle {
 			})
 
 			!isDisabled && activeCues && activeCues.length && this.addCue(activeCues[0])
+
+			this.player.container.dispatchEvent(
+				new CustomEvent(isDisabled ? 'trackdisabled' : 'trackenabled')
+			)
 		}
 	}
 

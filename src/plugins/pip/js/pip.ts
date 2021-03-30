@@ -1,4 +1,4 @@
-import svgPictureInPicture from 'shared/assets/svgs/picture-in-picture.svg'
+import svgPip from 'shared/assets/svgs/pip.svg'
 import { Options } from 'shared/assets/interfaces/interfaces'
 
 interface Player {
@@ -7,7 +7,7 @@ interface Player {
 	options: Options
 }
 
-export default class PictureInPicture {
+export default class PIP {
 	player: Player
 	video: HTMLVideoElement
 	pipButton!: HTMLElement
@@ -25,8 +25,8 @@ export default class PictureInPicture {
 		this.video = this.player.element
 
 		this.onClickOnPipButton = this.onClickOnPipButton.bind(this)
-		this.onEnterPictureInPicture = this.onEnterPictureInPicture.bind(this)
-		this.onLeavePictureInPicture = this.onLeavePictureInPicture.bind(this)
+		this.onEnterPip = this.onEnterPip.bind(this)
+		this.onLeavePip = this.onLeavePip.bind(this)
 	}
 
 	/**
@@ -43,8 +43,8 @@ export default class PictureInPicture {
 	}
 
 	/**
-	 * Check if the PictureInPicture API is available and not disabled
-	 * @returns {Boolean} PictureInPicture API status
+	 * Check if the PIP API is available and not disabled
+	 * @returns {Boolean} PIP API status
 	 */
 	isPipApiAvailable(): Boolean {
 		return (
@@ -61,7 +61,7 @@ export default class PictureInPicture {
 		const fullscreenButton = this.player.container.querySelector(
 			'.v-fullscreenButton'
 		) as HTMLElement
-		const template = `<button class="v-pipButton v-controlButton">${svgPictureInPicture}</button>`
+		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
 		if (fullscreenButton) {
 			fullscreenButton.insertAdjacentHTML('beforebegin', template)
 		} else {
@@ -75,8 +75,8 @@ export default class PictureInPicture {
 	 */
 	addEvents() {
 		this.pipButton.addEventListener('click', this.onClickOnPipButton)
-		this.video.addEventListener('enterpictureinpicture', this.onEnterPictureInPicture)
-		this.video.addEventListener('leavepictureinpicture', this.onLeavePictureInPicture)
+		this.video.addEventListener('enterpictureinpicture', this.onEnterPip)
+		this.video.addEventListener('leavepictureinpicture', this.onLeavePip)
 	}
 
 	/**
@@ -102,11 +102,15 @@ export default class PictureInPicture {
 	 * On enter the PIP
 	 * @param {Object} e Event data
 	 */
-	onEnterPictureInPicture(e: Event) {}
+	onEnterPip(e: Event) {
+		this.player.container.dispatchEvent(new CustomEvent('enterpip'))
+	}
 
 	/**
 	 * On leave the PIP
 	 * @param {Object} e Event data
 	 */
-	onLeavePictureInPicture(e: Event) {}
+	onLeavePip(e: Event) {
+		this.player.container.dispatchEvent(new CustomEvent('leavepip'))
+	}
 }

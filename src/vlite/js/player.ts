@@ -118,6 +118,8 @@ export default class Player {
 				if (durationElement) {
 					durationElement.innerHTML = formatVideoTime(duration)
 				}
+
+				this.container.dispatchEvent(new CustomEvent('durationchange'))
 			})
 		}
 	}
@@ -146,6 +148,8 @@ export default class Player {
 					if (currentTimeElement) {
 						currentTimeElement.innerHTML = formatVideoTime(currentTime)
 					}
+
+					this.container.dispatchEvent(new CustomEvent('timeupdate'))
 				}
 			)
 		}
@@ -174,6 +178,8 @@ export default class Player {
 		if (currentTime) {
 			currentTime.innerHTML = '00:00'
 		}
+
+		this.container.dispatchEvent(new CustomEvent('ended'))
 	}
 
 	/**
@@ -205,6 +211,8 @@ export default class Player {
 			bigPlayButton.setAttribute('aria-label', 'Pause')
 		}
 		this.afterPlayPause()
+
+		this.container.dispatchEvent(new CustomEvent('play'))
 	}
 
 	/**
@@ -225,6 +233,8 @@ export default class Player {
 			bigPlay.setAttribute('aria-label', 'Play')
 		}
 		this.afterPlayPause()
+
+		this.container.dispatchEvent(new CustomEvent('pause'))
 	}
 
 	/**
@@ -247,6 +257,8 @@ export default class Player {
 		if (volumeButton) {
 			volumeButton.classList.add('v-pressed')
 		}
+
+		this.container.dispatchEvent(new CustomEvent('volumechange'))
 	}
 
 	/**
@@ -259,6 +271,8 @@ export default class Player {
 		if (volumeButton) {
 			volumeButton.classList.remove('v-pressed')
 		}
+
+		this.container.dispatchEvent(new CustomEvent('volumechange'))
 	}
 
 	/**
@@ -267,6 +281,7 @@ export default class Player {
 	 */
 	seekTo(newTime: number) {
 		this.setCurrentTime(newTime)
+		this.container.dispatchEvent(new CustomEvent('seeked'))
 	}
 
 	/**
@@ -287,6 +302,8 @@ export default class Player {
 			if (fullscreenButton) {
 				fullscreenButton.classList.add('v-pressed')
 			}
+
+			this.container.dispatchEvent(new CustomEvent('enterfullscreen'))
 		}
 	}
 
@@ -309,6 +326,8 @@ export default class Player {
 			if (fullscreenButton) {
 				fullscreenButton.classList.remove('v-pressed')
 			}
+
+			this.container.dispatchEvent(new CustomEvent('exitfullscreen'))
 		}
 	}
 

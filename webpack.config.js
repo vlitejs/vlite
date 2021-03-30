@@ -149,9 +149,9 @@ module.exports = (env, argv) => {
 			path: './src/plugins/subtitle/config'
 		},
 		{
-			entrykey: 'plugins/picture-in-picture',
-			library: 'vlitejsPictureInPicture',
-			path: './src/plugins/picture-in-picture/config'
+			entrykey: 'plugins/pip',
+			library: 'vlitejsPip',
+			path: './src/plugins/pip/config'
 		}
 	]
 

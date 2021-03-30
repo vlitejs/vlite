@@ -381,6 +381,7 @@ class vlitejs {
 	 */
 	loading(state: Boolean) {
 		this.container.classList[state ? 'add' : 'remove']('v-loading')
+		this.container.dispatchEvent(new CustomEvent('progress'))
 	}
 
 	/**

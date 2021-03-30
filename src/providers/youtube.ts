@@ -107,12 +107,6 @@ class PlayerYoutube extends window.vlitejs.Player {
 						super.onTimeUpdate()
 					}, 100)
 				}
-
-				super.afterPlayPause('play')
-				break
-
-			case window.YT.PlayerState.PAUSED:
-				super.afterPlayPause('pause')
 				break
 
 			case window.YT.PlayerState.BUFFERING:
