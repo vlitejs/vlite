@@ -21,6 +21,16 @@
 - **API plugin** - Register plugin and create new
 - **Accessibility** - W3C and [a11y](https://www.a11yproject.com) valid
 
+## The competition size
+
+|              | vLitejs <br /> `4.0.0` | Plyr <br /> `3.6.4` | Videojs <br /> `7.11.4` |
+| ------------ | :--------------------: | :-----------------: | :---------------------: |
+| Uncompressed |        **81Ko**        |        310Ko        |         2000Ko          |
+| Compressed   |        **32Ko**        |        120Ko        |          537Ko          |
+| Gzip         |        **8Ko**         |        30Ko         |          149Ko          |
+
+---
+
 ## Installation
 
 `vLitejs` is available as a package on [npm](https://www.npmjs.com/package/vlitejs) and [Github](https://github.com/yoriiis/vlitejs).
