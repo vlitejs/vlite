@@ -58,15 +58,18 @@ export default class PIP {
 	render() {
 		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
+		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
+		const controlBar = this.player.container.querySelector('.v-controlBar')
 		const fullscreenButton = this.player.container.querySelector(
 			'.v-fullscreenButton'
 		) as HTMLElement
-		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
-		if (fullscreenButton) {
-			fullscreenButton.insertAdjacentHTML('beforebegin', template)
-		} else {
-			const controlBar = this.player.container.querySelector('.v-controlBar')
-			controlBar && controlBar.insertAdjacentHTML('beforeend', template)
+
+		if (controlBar) {
+			if (fullscreenButton) {
+				fullscreenButton.insertAdjacentHTML('beforebegin', template)
+			} else {
+				controlBar.insertAdjacentHTML('beforeend', template)
+			}
 		}
 	}
 

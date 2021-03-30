@@ -41,3 +41,8 @@ export interface interfaceDefaultOptions {
 		[key: string]: any
 	}
 }
+
+export interface InsertPosition {
+	selector: string
+	position: string
+}

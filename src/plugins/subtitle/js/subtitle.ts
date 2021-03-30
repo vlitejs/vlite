@@ -1,7 +1,7 @@
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
-import { Options } from 'shared/assets/interfaces/interfaces'
+import { Options, InsertPosition } from 'shared/assets/interfaces/interfaces'
 
 interface Player {
 	container: HTMLElement
@@ -65,12 +65,21 @@ export default class Subtitle {
 	render() {
 		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
-		// TODO: Manage insert position
-		const volumeButton = this.player.container.querySelector('.v-volumeButton')
-		volumeButton &&
-			volumeButton.insertAdjacentHTML(
-				'beforebegin',
-				`
+		const controlBar = this.player.container.querySelector('.v-controlBar')
+		const insertPosition = this.getInsertPosition()
+		const targetElement = this.player.container.querySelector(insertPosition.selector)
+		if (controlBar && targetElement) {
+			// @ts-ignore
+			targetElement.insertAdjacentHTML(insertPosition.position as string, this.getTemplate())
+		}
+	}
+
+	/**
+	 * Get template
+	 * @returns {String} String template
+	 */
+	getTemplate(): string {
+		return `
 				<div class="v-subtitle">
 					<button class="v-subtitleButton v-controlButton v-pressed">
 						<span class="v-controlButtonIcon v-iconSubtitleOn">${svgSubtitleOn}</span>
@@ -93,7 +102,40 @@ export default class Subtitle {
 					</div>
 				</div>
 			`
-			)
+	}
+
+	/**
+	 * Get the insertion position according to the available controls
+	 * @returns {Object} Selector and position for the subtitle button
+	 */
+	getInsertPosition(): InsertPosition {
+		const pipButton = this.player.container.querySelector('.v-pipButton')
+		if (this.player.options.progressBar) {
+			return {
+				selector: '.v-progressBar',
+				position: 'afterend'
+			}
+		} else if (this.player.options.volume) {
+			return {
+				selector: '.v-volumeButton',
+				position: 'beforebegin'
+			}
+		} else if (pipButton) {
+			return {
+				selector: '.v-pipButton',
+				position: 'beforebegin'
+			}
+		} else if (this.player.options.fullscreen) {
+			return {
+				selector: '.v-fullscreenButton',
+				position: 'beforebegin'
+			}
+		} else {
+			return {
+				selector: '.v-controlBar',
+				position: 'beforeend'
+			}
+		}
 	}
 
 	/**
