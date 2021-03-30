@@ -2,13 +2,24 @@
 
 ![vLitejs](https://img.shields.io/badge/vlitejs-v4.0.0-ff7f15.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![Gitter Chat](https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge)](https://gitter.im/vlitejs/vlitejs)
 
-`vLitejs` is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video, HTML5 audio, Youtube video and Vimeo video player. Only **5Kb** on production with gzip, vLitejs has no dependency with any framework or library and is written in **Javascript native**.
+`vLitejs` is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video & audio, Youtube and Vimeo. `vLitejs` has no dependency with any framework or library and is written in **Javascript native**.
 
-## Philosophy
+[![Image of vLitejs](./examples/assets/screenshot.jpg)](https://yoriiis.github.io/vlitejs)
 
-`vLitejs` was created with the minimum functionality required for a video player with a custom theme. The performance and weight of the library are therefore very important and this is the main vision of vLitejs.
+## Features
 
-The library is composed of a Javascript `Player` class, extended by Youtube and HTML5 videos. It is therefore possible to add other popular video services in the future.
+- **HTML5 video**, **HTML5 audio**, **Youtube**, **Vimeo**
+- **Customizable** - Enable/disable control buttons
+- **Picture-in-Picture** - Supports picture-in-picture mode
+- **Multiple captions** - Supports for multiple caption tracks (VTT)
+- **No frameworks** - No dependency with any framework or library and written in Javascript native
+- **Playsinline** - Supports the playsinline attribute
+- **Shortcuts** - Supports keyboard shortcuts
+- **Fullscreen** - Supports native fullscreen
+- **Events** - Standardized events across all providers
+- **API provider** - Register provider and create new
+- **API plugin** - Register plugin and create new
+- **Accessibility** - W3C and [a11y](https://www.a11yproject.com) valid
 
 ## Installation
 
@@ -113,6 +124,53 @@ new vlitejs({
 | `leavepip`        | Sent when the video switches out of picture in picture mode                                                 |
 | `trackenabled`    | Sent when a track is enabled and displayed                                                                  |
 | `trackdisabled`   | Sent when a track is disabled and hidden                                                                    |
+
+## API
+
+### Providers
+
+#### Register a plugin
+
+```js
+import vlitejsYoutube from 'vlitejs/providers/youtube'
+
+vlitejs.registerPlugin('youtube', vlitejsYoutube)
+
+new vlitejs({
+  selector: '#player',
+  provider: 'youtube'
+})
+```
+
+#### List of providers
+
+| Provider  | Path                        | Description                                                                                    |
+| --------- | --------------------------- | ---------------------------------------------------------------------------------------------- |
+| `youtube` | `vlitejs/providers/youtube` | [Youtube player API](https://developers.google.com/youtube/iframe_api_reference) compatibility |
+| `vimeo`   | `vlitejs/providers/vimeo`   | [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics) compatibility                |
+
+### Plugins
+
+#### Register a plugin
+
+```js
+import vlitejsSubtitle from 'vlitejs/plugins/subtitle'
+import vlitejsSubtitle from 'vlitejs/plugins/subtitle.css'
+
+vlitejs.registerPlugin('subtitle', vlitejsSubtitle)
+
+new vlitejs({
+  selector: '#player',
+  plugins: ['subtitle']
+})
+```
+
+#### List of plugins
+
+| Plugin     | Path                      | Description                                |
+| ---------- | ------------------------- | ------------------------------------------ |
+| `subtitle` | `vlitejs/plugin/subtitle` | Supports for multiple caption tracks (VTT) |
+| `pip`      | `vlitejs/plugin/pip`      | Supports for picture-in-picture mode       |
 
 ## Licence
 
