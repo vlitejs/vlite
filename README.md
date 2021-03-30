@@ -1,126 +1,124 @@
-<br /><p align="center">
-<a href="https://yoriiis.github.io/vlitejs" title="vLitejs">
-<img src="https://yoriiis.github.io/vlitejs/images/logo-vlite.svg" alt="vLitejs" width="200px" />
-</a>
+# vLitejs
 
-import vlitejs from 'vlitejs'
-import vlitejs from 'vlitejs/vlite.css'
-import vlitejs from 'vlitejs/vlite.js'
-import youtube from 'vlitejs/providers/youtube/index.js'
-import vimeo from 'vlitejs/providers/vimeo'
-import pictureInPicture from 'vlitejs/plugins/picture-in-picture'
+![vLitejs](https://img.shields.io/badge/vlitejs-v4.0.0-ff7f15.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![Gitter Chat](https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge)](https://gitter.im/vlitejs/vlitejs)
 
-</p><br /><br />
-<p align="center">
-    <img alt="vLitejs" src="https://img.shields.io/badge/vLitejs-v4.0.0-ff7f15.svg?style=for-the-badge">
-    <img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge" />
-    <img alt="npm" src="https://img.shields.io/npm/v/vlitejs?style=for-the-badge">
-    <img alt="Node.js" src="https://img.shields.io/node/v/vlitejs?style=for-the-badge">
-    <a href="https://gitter.im/vlitejs/vlitejs">
-        <img alt="Support" src="https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge">
-    </a>
-    <a href="https://bundlephobia.com/result?p=fela@latest">
-        <img alt="Bundlephobia" src="https://img.shields.io/bundlephobia/minzip/vlitejs?style=for-the-badge">
-    </a>
-    <a href="https://npmjs.com/package/vlitejs">
-        <img alt="Npm downloads" src="https://img.shields.io/npm/dm/vlitejs?color=fb3e44&label=npm%20downloads&style=for-the-badge">
-    </a>
-</p>
+`vLitejs` is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video, HTML5 audio, Youtube video and Vimeo video player. Only **5Kb** on production with gzip, vLitejs has no dependency with any framework or library and is written in **Javascript native**.
 
-<p align="center">
-    <strong>Visit <a href="https://yoriiis.github.io/vlitejs" title="yoriiis.github.io/vlitejs">yoriiis.github.io/vlitejs</a> to get started with vLitejs.</strong>
-</p>
+## Philosophy
 
----
+`vLitejs` was created with the minimum functionality required for a video player with a custom theme. The performance and weight of the library are therefore very important and this is the main vision of vLitejs.
 
-## The new smallest Javascript video library
-
-vLitejs is a **fast** and **lightweight** Javascript library to customize and skin native HTML5 video and Youtube video. Only **5Kb** on production with gzip, vLitejs has no dependency with any framework or library and is write in **Javascript native**.<br /><br />
-
-<p align="center">
-    <a href="https://yoriiis.github.io/vlitejs/demo" title="vLitejs demo">
-        <img src="https://yoriiis.github.io/vlitejs/images/demo.jpg" alt="vLitejs demo" width="500px" />
-    </a>
-</p>
+The library is composed of a Javascript `Player` class, extended by Youtube and HTML5 videos. It is therefore possible to add other popular video services in the future.
 
 ## Installation
 
-The plugin is available as the `vlitejs` package name on [npm](https://www.npmjs.com/package/vlitejs).
+`vLitejs` is available as a package on [npm](https://www.npmjs.com/package/vlitejs) and [Github](https://github.com/yoriiis/vlitejs).
 
 ```bash
-npm install vlitejs --save
+npm install vlitejs --save-dev
 ```
 
 ```bash
-yarn add vlitejs
+yarn add vlitejs  --dev
 ```
 
 ## Demo
 
-Online demo is available on [yoriiis.github.io/vlitejs/demo](https://yoriiis.github.io/vlitejs/demo).
+Online demo is available on [yoriiis.github.io/vlitejs](https://yoriiis.github.io/vlitejs).
 
-The project includes also several examples of vLitejs implementation.
+The project includes also several examples of `vLitejs` implementation in the directory `./examples`.
 
 ## How it works
 
-HTML5 and Youtube video players use the same minimalist structure with native HTML5 `<video>` tag.
+### HTML
 
-### HTML5 video
-
-- `{{idSelector}}` - Unique HTML id
-- `{{videoSource}}` - Video path
+#### HTML5 video
 
 ```html
-<video id="{{idSelector}}" class="vlite-js" src="{{videoSource}}"></video>
+<video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
 ```
 
-### Youtube video
-
-- `{{idSelector}}` - Unique HTML id
-- `{{videoId}}` - Youtube video id
+#### HTML5 audio
 
 ```html
-<video id="{{idSelector}}" class="vlite-js" data-youtube-id="{{videoId}}"></video>
+<audio id="player" class="vlite-js" src="/path/to/audio.mp3"></audio>
 ```
 
-### Options
-
-Each video players has its own options object. For more flexibility, vLitejs accepts two possibilities for passed them. Available options are available on the [vLitejs website](https://yoriiis.github.io/vlitejs).
-
-#### Options in HTML
+#### Youtube video
 
 ```html
-<video id="player" data-options='{"autoplay": false, "controls": true}'></video>
+<div id="player" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></div>
 ```
+
+#### Vimeo video
+
+```html
+<div id="player" class="vlite-js" data-vimeo-id="1084537"></div>
+```
+
+---
+
+### Javascript
 
 ```javascript
+import vlitejs from 'vlitejs'
+
 new vlitejs({
   selector: '#player'
 })
 ```
 
-#### Option in Javascript constructor
+### Options
 
-Options object passed to the constructor.
+| Options       |      Type      | Default | Description                                                                          |
+| ------------- | :------------: | :-----: | ------------------------------------------------------------------------------------ |
+| `autoplay`    |    Boolean     |  false  | Enable the autoplay of the media                                                     |
+| `controls`    |    Boolean     |  true   | Display the control bar of the media                                                 |
+| `playPause`   |    Boolean     |  true   | Display the play/pause button on the control bar                                     |
+| `time`        |    Boolean     |  true   | Display the time information on the control bar                                      |
+| `progressBar` |    Boolean     |  true   | Display the progress bar on the control bar                                          |
+| `volume`      |    Boolean     |  true   | Display the volume button on the control bar                                         |
+| `fullscreen`  |    Boolean     |  true   | Display the fullscreen button on the control bar                                     |
+| `poster`      |  String\|null  |  null   | Personalize the poster url of the video                                              |
+| `autoHide`    |    Boolean     |  false  | Enable auto hide the control bar in the event of inactivity after a period of 3000ms |
+| `onReady`     | Function\|null |  null   | Callback function when the player is ready                                           |
 
-```javascript
-new vlitejs({
-  options: {
-    autoplay: false,
-    controls: true
-  }
-})
-```
+### Methods
 
-## Browsers support
+| Method                | Parameters | Description                 |
+| --------------------- | :--------: | --------------------------- |
+| `play()`              |     -      | Start the playback          |
+| `pause()`             |     -      | Pause the playback          |
+| `mute()`              |     -      | Mute the volume             |
+| `unMmute()`           |     -      | Unmute the volume           |
+| `seekTo(newTime)`     |   Number   | Seek to a current time (ms) |
+| `requestFullscreen()` |     -      | Request the fullscreen      |
+| `exitFullscreen()`    |     -      | Exit the fullscreen         |
+| `destroy()`           |     -      | Destroy the player          |
+| `getInstance()`       |     -      | Get the player instance     |
 
-The project is fully compatible with the most popular web browsers. More information about the HTML5 video support on <a href="https://caniuse.com/#feat=video" target="_blank" title="Video element - Can I use">Can I Use</a>. HTML and CSS files are W3C valid.
+### Events
+
+| Event Type        | Description                                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| `play`            | Sent when the playback state is no longer paused, as a result of the play method, or the autoplay attribute |
+| `pause`           | Sent when the playback state is changed to paused                                                           |
+| `ended`           | Sent when playback completes                                                                                |
+| `progress`        | Sent periodically to inform interested parties of progress downloading the media.                           |
+| `volumechange`    | Sent when the audio volume changes                                                                          |
+| `timeupdate`      | The time indicated by the element's `currentTime` attribute has changed                                     |
+| `enterfullscreen` | Sent when the video switches into of full-screen mode                                                       |
+| `exitfullscreen`  | Sent when the video switches out of full-screen mode                                                        |
+| `enterpip`        | Sent when the video switches into of picture in picture mode                                                |
+| `leavepip`        | Sent when the video switches out of picture in picture mode                                                 |
+| `trackenabled`    | Sent when a track is enabled and displayed                                                                  |
+| `trackdisabled`   | Sent when a track is disabled and hidden                                                                    |
 
 ## Licence
 
-vLitejs and his documentation are licensed under the [MIT License](http://opensource.org/licenses/MIT).<br />
+vLitejs is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br />
 Created with ♥ by [@yoriiis](http://github.com/yoriiis).
 
 ## Contributors
 
-Many thanks to Maxime LEROUGE for its contribution and <a href="https://www.behance.net/victorshm" target="_blank" title="Victor Schirm">Victor Schirm</a> for the vLitejs logo 👍
+Many thanks to <a href="https://www.behance.net/victorshm" target="_blank" title="Victor Schirm">Victor Schirm</a> for the `vLitejs` logo 👍

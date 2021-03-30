@@ -23,10 +23,7 @@
 	"main": "dist/vlite/js/vlite.js",
 	"scripts": {
 		"build": "rm -rf ./dist/ && webpack --mode=production",
-		"build:jsdoc": "jsdoc --configure ./jsdoc.json",
-		"build:mkdocs": "rm -rf ./site/ && npm run build && npm run build:mkdocs:only && npm run create:demo",
-		"build:mkdocs:only": "mkdocs build",
-		"create:demo": "cp -rv ./dist/. ./site/dist/",
+		"create:demo": "mkdir demo",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
 		"test:eslint": "eslint ./src --ignore-pattern dist",
 		"test:eslint:fix": "eslint ./src --ignore-pattern dist --fix",
