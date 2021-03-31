@@ -4,7 +4,7 @@
 
 `vLitejs` is a fast and lightweight JavaScript library to customize and skin video and audio player. Written in JavaScript native without dependency, it is built around an API of Providers and Plugins.
 
-HTML5 video and audio players are includes by default. Youtube and Vimeo providers can be loaded on demand by the [Provider API](#Providers). Plugins can also be loaded on demand by the [Plugin API](#Plugins). The library is built to be extended be these API, others Providers and Plugins can be created and loaded by the library.
+HTML5 video and audio players are includes by default. Youtube and Vimeo providers can be loaded on demand by the [Provider API](#Provider-API). Plugins can also be loaded on demand by the [Plugin API](#Plugin-API). The library is built to be extended be these API, others Providers and Plugins can be created and loaded by the library.
 
 ## Why `vLitejs`?
 
@@ -31,8 +31,8 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - **Customizable** - Choose the control elements you want to display.
 - **No dependency** - Written in Javascript native without any framework.
 - **Fullscreen** - Supports native fullscreen API.
-- [**Provider API**](#Providers) - Use the available providers or create your own.
-- [**Plugin API**](#Plugins) - Use the available plugins or create your own.
+- [**Provider API**](#Provider-API) - Use the available providers or create your own.
+- [**Plugin API**](#Plugin-API) - Use the available plugins or create your own.
 - [**Events**](#Events) - Standardized events across all web browsers and providers.
 - **Subtitles** - Supports multiple subtitle tracks (VTT).
 - **Picture-in-Picture** - Supports Picture-in-Picture API.
