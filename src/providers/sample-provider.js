@@ -1,19 +1,8 @@
-declare global {
-	interface Window {
-		vlitejs: {
-			Player: any
-		}
-		Sample: {
-			Player: any
-		}
-	}
-}
-
 if (typeof window.vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
-let sampleQueue: Array<any> = []
+let sampleQueue = []
 const providerObjectName = 'Sample'
 
 /**
@@ -26,7 +15,13 @@ class SampleProvider extends window.vlitejs.Player {
 	 */
 	init() {
 		this.waitUntilVideoIsReady()
-			.then(() => this.onPlayerReady())
+			.then(() => {
+				super.onPlayerReady()
+
+				// Return the player instance to vlitejs
+				// The context is exposed into the onReady callback function
+				return this
+			})
 			.catch(() => sampleQueue.push(this))
 	}
 
@@ -34,7 +29,7 @@ class SampleProvider extends window.vlitejs.Player {
 	 * Wait until the API is ready
 	 * @returns {Promise} The player is ready
 	 */
-	waitUntilVideoIsReady(): Promise<void> {
+	waitUntilVideoIsReady() {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the player if the API is already available or reject
 			if (typeof window[providerObjectName] !== 'undefined') {
@@ -48,7 +43,7 @@ class SampleProvider extends window.vlitejs.Player {
 	/**
 	 * Initialize the player
 	 */
-	initSamplePlayer(): Promise<void> {
+	initSamplePlayer() {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the Player with the API
 			// Resolve the promise when the player is ready
@@ -61,7 +56,7 @@ class SampleProvider extends window.vlitejs.Player {
 	 * Get the player instance
 	 * @returns {Object} Youtube API instance
 	 */
-	getInstance(): any {
+	getInstance() {
 		return this.instancePlayer
 	}
 
@@ -77,7 +72,7 @@ class SampleProvider extends window.vlitejs.Player {
 	 * Get the player current time
 	 * @returns {Promise<number>} Current time of the video
 	 */
-	getCurrentTime(): Promise<number> {
+	getCurrentTime() {
 		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
 	}
 
@@ -85,7 +80,7 @@ class SampleProvider extends window.vlitejs.Player {
 	 * Get the player duration
 	 * @returns {Promise<number>} Duration of the video
 	 */
-	getDuration(): Promise<number> {
+	getDuration() {
 		return new window.Promise((resolve) => resolve(this.instancePlayer.getDuration()))
 	}
 
@@ -133,7 +128,7 @@ if (typeof window[providerObjectName] === 'undefined') {
 	script.src = 'PROVIDER_API_URL'
 	script.onload = () => {
 		// Run the queue when the provider API is ready
-		sampleQueue.forEach((itemClass: any) => {
+		sampleQueue.forEach((itemClass) => {
 			itemClass.initSamplePlayer().then(() => itemClass.onPlayerReady())
 		})
 		sampleQueue = []

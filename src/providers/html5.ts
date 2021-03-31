@@ -5,11 +5,19 @@ import Player from '../vlite/js/player'
  * @module vlitejs/Player/PlayerHtml5
  */
 export default class PlayerHtml5 extends Player {
-	init() {
-		this.waitUntilVideoIsReady().then(() => {
+	/**
+	 * Initialize the player
+	 * @returns {Promise<any>}
+	 */
+	init(): Promise<any> {
+		return this.waitUntilVideoIsReady().then(() => {
 			super.onDurationChange()
-			super.onPlayerReady()
 			this.addSpecificEvents()
+			super.onPlayerReady()
+
+			// Return the player instance to vlitejs
+			// The context is exposed into the onReady callback function
+			return this
 		})
 	}
 

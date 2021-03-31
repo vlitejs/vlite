@@ -156,10 +156,12 @@ class vlitejs {
 			element: this.element,
 			container: this.container,
 			options: this.options,
-			onCallbackReady: this.onCallbackReady.bind(this),
 			vliteInstance: this
 		})
-		this.playerInstance.init()
+		this.playerInstance.init().then((response: any) => {
+			this.loading(false)
+			this.onReady instanceof Function && this.onReady(response)
+		})
 
 		this.controlBar = new ControlBar({
 			container: this.container,
@@ -364,15 +366,6 @@ class vlitejs {
 				controlBar.classList.add('hidden')
 			}, this.delayAutoHide)
 		}
-	}
-
-	/**
-	 * The player is initialized and ready
-	 * @param {Class} playerInstance Player instance
-	 */
-	onCallbackReady(playerInstance: any) {
-		this.loading(false)
-		this.onReady instanceof Function && this.onReady(playerInstance)
 	}
 
 	/**

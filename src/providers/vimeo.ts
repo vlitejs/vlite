@@ -25,12 +25,17 @@ class PlayerVimeo extends window.vlitejs.Player {
 
 	/**
 	 * Initialize the player when the API is ready
+	 * @returns {Promise<any>}
 	 */
-	init() {
-		this.waitUntilVideoIsReady()
+	init(): Promise<any> {
+		return this.waitUntilVideoIsReady()
 			.then(() => {
 				this.addSpecificEvents()
-				this.onPlayerReady()
+				super.onPlayerReady()
+
+				// Return the player instance to vlitejs
+				// The context is exposed into the onReady callback function
+				return this
 			})
 			.catch(() => vimeoQueue.push(this))
 	}

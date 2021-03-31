@@ -10,7 +10,6 @@ export default class Player {
 	element: HTMLAudioElement | HTMLVideoElement
 	container: HTMLElement
 	options: Options
-	onCallbackReady: Function
 	vliteInstance: any
 	progressBarIsMoving: Boolean
 	isFullScreen: Boolean
@@ -24,7 +23,6 @@ export default class Player {
 	 * @param {Object} options
 	 * @param {HTMLElement} options.element Player HTML element
 	 * @param {HTMLElement} options.container Player HTML container
-	 * @param {Function} options.onCallbackReady Player on ready function
 	 * @param {Class} options.vliteInstance vlitejs instance
 	 * @param {Object} options Player options
 	 */
@@ -32,7 +30,6 @@ export default class Player {
 		element,
 		container,
 		options,
-		onCallbackReady,
 		vliteInstance
 	}: {
 		element: HTMLAudioElement | HTMLVideoElement
@@ -44,7 +41,6 @@ export default class Player {
 		this.element = element
 		this.container = container as HTMLElement
 		this.options = options
-		this.onCallbackReady = onCallbackReady
 		this.vliteInstance = vliteInstance
 
 		this.progressBarIsMoving = false
@@ -97,8 +93,6 @@ export default class Player {
 	 * On the player is ready
 	 */
 	onPlayerReady() {
-		this.onCallbackReady(this)
-
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the media element is muted

@@ -122,13 +122,13 @@ The `vlitejs` constructor accepts the following parameters:
 Initialize the player with a CSS selector string.
 
 ```javascript
-const player = new vlitejs('#player');
+const vlitePlayer = new vlitejs('#player');
 ```
 
 Or, initialize the player with an `HTMLElement`.
 
 ```js
-const player = new vlitejs(document.querySelector('#player'));
+const vlitePlayer = new vlitejs(document.querySelector('#player'));
 ```
 
 #### Configure the player
@@ -143,7 +143,7 @@ The second arguments of the contructor is an object with the following parameter
 | `onReady`  | `Function \| null` |  `null`   | Callback function executed when the player is ready |
 
 ```javascript
-const player = new vlitejs('#player', {
+const vlitePlayer = new vlitejs('#player', {
   options: {},
   onReady: (player) => {},
   provider: 'html5',
@@ -171,12 +171,12 @@ The player controls can be customized with the following parameters:
 | `muted`       |   `Boolean`    | `false` |     Video     | Whether to muted the current media                        |
 | `autoHide`    |   `Boolean`    | `false` |     Video     | Auto hide the control bar in the event of inactivity (3s) |
 
-> The `autoplay` parameter automatically activates the` muted` option because the feature requires a user gesture.
+> The `autoplay` parameter automatically activates the` muted` option because the API can only be initiated by a user gesture.
 
 Example of customization for the `autoplay` and the `poster`.
 
 ```javascript
-const player = new vlitejs('#player', {
+const vlitePlayer = new vlitejs('#player', {
   options: {
     autoplay: true,
     poster: '/path/to/poster.jpg'
@@ -184,86 +184,132 @@ const player = new vlitejs('#player', {
 });
 ```
 
-#### Player ready
+### Player ready
 
-The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen the `canplay|loadedmetadata` event. The Youtube and Vimeo provider listen respectively to the `onready` event returned by the API.
+The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube and Vimeo provider listen respectively to the `onready` event returned by the API.
 
-The `player` parameter on the `onReady` function returns the player instance. You can use it to interact with the player instance and the [player methods](#Player-methods).
+The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Player-methods).
 
 ```javascript
-const player = new vlitejs('#player', {
+const vlitePlayer = new vlitejs('#player', {
   onReady: (player) => {
     // The player is ready
   }
 });
 ```
 
-## API
+### Provider API
 
-### Providers
+#### Register a provider
 
-#### Register a plugin
+First, import `vlitejs` and the provider with the following path: `vlitejs/providers/<PROVIDER_NAME>`.
 
 ```js
+import 'vlitejs/vlite.css';
+import vlitejs from 'vlitejs';
 import vlitejsYoutube from 'vlitejs/providers/youtube';
+```
 
-vlitejs.registerPlugin('youtube', vlitejsYoutube);
+Then, register the provider to `vLitejs`.
 
+```js
+vlitejs.registerProvider('youtube', vlitejsYoutube);
+```
+
+Finally, add the provider to the constructor.
+
+```js
 new vlitejs({
   selector: '#player',
   provider: 'youtube'
 });
 ```
 
-#### List of providers
+> The name of the provider declared as the first parameter of the `registerProvider` function must correspond to the value of the `provider` parameter in the constructor.
 
-| Provider  | Path                        | Description                                                                                    |
-| --------- | --------------------------- | ---------------------------------------------------------------------------------------------- |
-| `youtube` | `vlitejs/providers/youtube` | [Youtube player API](https://developers.google.com/youtube/iframe_api_reference) compatibility |
-| `vimeo`   | `vlitejs/providers/vimeo`   | [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics) compatibility                |
+#### Available providers
 
-### Plugins
+| Provider name | Path                        | Description                                                                                   |
+| ------------- | --------------------------- | --------------------------------------------------------------------------------------------- |
+| `youtube`     | `vlitejs/providers/youtube` | [Youtube player API](https://developers.google.com/youtube/iframe_api_reference) capabilities |
+| `vimeo`       | `vlitejs/providers/vimeo`   | [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics) capabilities                |
+
+#### Create a provider
+
+The Provider API allows you to create other providers than those referenced by `vLitejs`.
+
+To start your new provider development, you can use the [sample-provider.js](https://github.com/yoriiis/vlitejs/blob/main/src/providers/sample-provider.js) file which is made for you. You can also get inspiration from the [youtube.ts](https://github.com/yoriiis/vlitejs/blob/main/src/providers/youtube.ts) and [vimeo.ts](https://github.com/yoriiis/vlitejs/blob/main/src/providers/vimeo.ts) provider files.
+
+The provider needs to be an ES6 JavaScript class that extends the `vlitejs.Player` class or `window.vlitejs.Player` if the library is loaded in HTML. In all cases, the library needs to be available.
+
+The `init` function is called by `vLitejs` to initialize the provider. The function `init` needs:
+
+- To return a Promise which return the context of the player `this`
+- Call the `onPlayerReady` when the player is ready (the function is exposed by the parent class)
+
+TODO: detail others functions?
+
+Providers usually use an API / SDK, the provider file needs to load it and process the initialization queue.
+
+And finally, have fun!
+
+### Plugin API
 
 #### Register a plugin
 
+First, import `vlitejs` and the plugin with the following path: `vlitejs/plugins/<PLUGIN_NAME>`. Plugins usually have CSS files, you can load them too.
+
 ```js
+import 'vlitejs/plugins/subtitle.css';
+import vlitejs from 'vlitejs';
 import vlitejsSubtitle from 'vlitejs/plugins/subtitle';
-import vlitejsSubtitle from 'vlitejs/plugins/subtitle.css';
+```
 
+Then, register the plugin to `vLitejs`.
+
+```js
 vlitejs.registerPlugin('subtitle', vlitejsSubtitle);
+```
 
+Finally, add the plugin to the constructor.
+
+```js
 new vlitejs({
   selector: '#player',
   plugins: ['subtitle']
 });
 ```
 
-#### List of plugins
+> The name of the plugin declared as the first parameter of the `registerPlugin` function must correspond to the value of the `plugin` parameter in the constructor.
 
-| Plugin     | Path                      | Description                                |
-| ---------- | ------------------------- | ------------------------------------------ |
-| `subtitle` | `vlitejs/plugin/subtitle` | Supports for multiple caption tracks (VTT) |
-| `pip`      | `vlitejs/plugin/pip`      | Supports for picture-in-picture mode       |
+#### Available plugins
 
-### Player methods
+| Plugin name | Path                       | Description                                |
+| ----------- | -------------------------- | ------------------------------------------ |
+| `subtitle`  | `vlitejs/plugins/subtitle` | Supports for multiple caption tracks (VTT) |
+| `pip`       | `vlitejs/plugins/pip`      | Supports for picture-in-picture mode       |
 
-The player instance available into the `onReady` function allows to use the available methods.
+#### Create a plugin
 
-| Method                | Parameters | Description                 |
-| --------------------- | :--------: | --------------------------- |
-| `play()`              |     -      | Start the playback          |
-| `pause()`             |     -      | Pause the playback          |
-| `mute()`              |     -      | Mute the volume             |
-| `unMmute()`           |     -      | Unmute the volume           |
-| `seekTo(newTime)`     |  `Number`  | Seek to a current time (ms) |
-| `requestFullscreen()` |     -      | Request the fullscreen      |
-| `exitFullscreen()`    |     -      | Exit the fullscreen         |
-| `destroy()`           |     -      | Destroy the player          |
-| `getInstance()`       |     -      | Get the player instance     |
+The Plugin API allows you to create other plugins than those referenced by `vLitejs`.
+
+To start your new plugin development, you can use the [sample-plugin.js](https://github.com/yoriiis/vlitejs/blob/main/src/providers/sample-plugin.js) file which is made for you. You can also get inspiration from the [subtitle.ts](https://github.com/yoriiis/vlitejs/blob/main/src/plugins/subtitle.ts) and [pip.ts](https://github.com/yoriiis/vlitejs/blob/main/src/plugins/pip.ts) plugin files.
+
+The plugin needs to be an ES6 JavaScript class. `vLitejs` will automatically expose on the plugin constructor an object with the player instance. The `init` function is called by `vLitejs` to initialize the plugin.
+
+```js
+export default class SamplePlugin {
+  constructor({ player }) {}
+
+  init() {
+    // The plugin is initialize
+  }
+}
+```
 
 ### Events
 
-`vLitejs` exposes the following events, standardized across all providers.
+`vLitejs` exposes the following native `CustomEvent` on the player container element. Events are standardized across all providers even Youtube and Vimeo.
 
 | Event Type        | Description                                                                                                 |
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -280,17 +326,68 @@ The player instance available into the `onReady` function allows to use the avai
 | `trackenabled`    | Sent when a track is enabled and displayed                                                                  |
 | `trackdisabled`   | Sent when a track is disabled and hidden                                                                    |
 
+Example of a listener when the video trigger a play.
+
+```javascript
+const vlitePlayer = new vlitejs('#player');
+
+player.container.addEventListener('play', () => {
+  // The video starts playing
+});
+```
+
+### Player methods
+
+The player instance exposed the following methods:
+
+| Method                | Parameters | Description                 |
+| --------------------- | :--------: | --------------------------- |
+| `play()`              |     -      | Start the playback          |
+| `pause()`             |     -      | Pause the playback          |
+| `mute()`              |     -      | Mute the volume             |
+| `unMmute()`           |     -      | Unmute the volume           |
+| `seekTo(newTime)`     |  `Number`  | Seek to a current time (ms) |
+| `requestFullscreen()` |     -      | Request the fullscreen      |
+| `exitFullscreen()`    |     -      | Exit the fullscreen         |
+| `getInstance()`       |     -      | Get the player instance     |
+| `destroy()`           |     -      | Destroy the player          |
+
+Example of a video muted when the player is ready.
+
+```javascript
+const vlitePlayer = new vlitejs('#player', {
+  onReady: (player) => {
+    player.mute();
+  }
+});
+```
+
+Example of a video muted when the button `.btn-mute` is pressed.
+
+```html
+<video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
+<button class="btn-mute">Mute</button>
+```
+
+```js
+const vlitePlayer = new vlitejs('#player');
+
+document.querySelector('.btn-mute').addEventListener('click', () => {
+  vlitePlayer.playerInstance.mute();
+});
+```
+
 ## Shortcuts
 
 The player accepts the following keyboard shortcuts when in focus.
 
-| Key               | Action               |
-| ----------------- | -------------------- |
-| <kbd>space</kbd>  | Toggle playback      |
-| <kbd>&larr;</kbd> | Seek backward (10s)  |
-| <kbd>&rarr;</kbd> | Seek forward (10s)   |
-| <kbd>&uarr;</kbd> | Increase volume (5%) |
-| <kbd>&darr;</kbd> | Decrease volume (5%) |
+|        Key        | Action                |
+| :---------------: | --------------------- |
+| <kbd>space</kbd>  | Toggle playback       |
+| <kbd>&larr;</kbd> | Seek backward (-10s)  |
+| <kbd>&rarr;</kbd> | Seek forward (+10s)   |
+| <kbd>&uarr;</kbd> | Increase volume (+5%) |
+| <kbd>&darr;</kbd> | Decrease volume (-5%) |
 
 ## Browser support
 

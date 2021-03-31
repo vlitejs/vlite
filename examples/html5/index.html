@@ -20,6 +20,8 @@
 	<script>
         vlitejs.registerPlugin('subtitle', vlitejsSubtitle)
         vlitejs.registerPlugin('pip', vlitejsPip)
+
+        // TODO: Move the selector into the first parameter
 		const myVlite = new vlitejs({
 			selector: '#player-html5',
 			options: {
@@ -40,7 +42,8 @@
 			onReady: (player) => {
 				//Ready
                 console.log(player)
-                player.container.addEventListener('play', () => console.log('play'))
+
+                <!-- player.container.addEventListener('play', () => console.log('play')) -->
                 player.container.addEventListener('pause', () => console.log('pause'))
                 player.container.addEventListener('ended', () => console.log('ended'))
                 player.container.addEventListener('progress', () => console.log('progress'))
@@ -57,8 +60,6 @@
 
         document.querySelector('#destroy').addEventListener('click', e => {
             e.preventDefault()
-            console.log(myVlite)
-            myVlite.destroy()
         })
 	</script>
 </body>

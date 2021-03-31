@@ -31,10 +31,17 @@ let youtubeQueue: Array<any> = []
 class PlayerYoutube extends window.vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
+	 * @returns {Promise<any>}
 	 */
-	init() {
-		this.waitUntilVideoIsReady()
-			.then(() => this.onPlayerReady())
+	init(): Promise<any> {
+		return this.waitUntilVideoIsReady()
+			.then(() => {
+				super.onPlayerReady()
+
+				// Return the player instance to vlitejs
+				// The context is exposed into the onReady callback function
+				return this
+			})
 			.catch(() => youtubeQueue.push(this))
 	}
 
