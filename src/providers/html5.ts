@@ -19,6 +19,7 @@ export default class PlayerHtml5 extends Player {
 	 */
 	waitUntilVideoIsReady(): Promise<Event> {
 		return new window.Promise((resolve, reject) => {
+			// TODO: use `loadedmetadata` on iOS
 			this.element.addEventListener('canplay', resolve, { once: true })
 		})
 	}

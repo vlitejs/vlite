@@ -7,7 +7,7 @@ interface Player {
 	options: Options
 }
 
-export default class PIP {
+export default class PiP {
 	player: Player
 	video: HTMLVideoElement
 	pipButton!: HTMLElement

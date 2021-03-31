@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>vLitejs</title>
 	<link rel="stylesheet" href="../../dist/vlite.css" />
 	<link rel="stylesheet" href="../../dist/plugins/subtitle.css" />
@@ -27,12 +28,13 @@
 				playPause: true,
 				progressBar: true,
 				time: true,
-				volume: true,
+				volume: true, // TODO: add keyboard shortcut
 				fullscreen: true,
 				poster: '../assets/poster.jpg',
 				bigPlay: true,
 				autoHide: true,
-				playsinline: true
+                playsinline: true,
+				loop: true // TODO: not working
 			},
             plugins: ['subtitle', 'pip'],
 			onReady: (player) => {
