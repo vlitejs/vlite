@@ -25,19 +25,12 @@ class PlayerVimeo extends window.vlitejs.Player {
 
 	/**
 	 * Initialize the player when the API is ready
-	 * @returns {Promise<any>}
 	 */
-	init(): Promise<any> {
-		return this.waitUntilVideoIsReady()
-			.then(() => {
-				this.addSpecificEvents()
-				super.onPlayerReady()
-
-				// Return the player instance to vlitejs
-				// The context is exposed into the onReady callback function
-				return this
-			})
-			.catch(() => vimeoQueue.push(this))
+	init() {
+		this.waitUntilVideoIsReady().then(() => {
+			this.addSpecificEvents()
+			super.onPlayerReady()
+		})
 	}
 
 	/**
@@ -50,7 +43,7 @@ class PlayerVimeo extends window.vlitejs.Player {
 			if (typeof window[providerObjectName] !== 'undefined') {
 				this.initVimeoPlayer().then(resolve)
 			} else {
-				reject()
+				vimeoQueue.push(this)
 			}
 		})
 	}
@@ -74,17 +67,7 @@ class PlayerVimeo extends window.vlitejs.Player {
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
 	addSpecificEvents() {
-		if (this.options.controls) {
-			if (this.options.time) {
-				// On durationchange event, update duration if value is different
-				this.instancePlayer.on('durationchange', this.onDurationChange.bind(this))
-			}
-
-			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.instancePlayer.on('timeupdate', this.onTimeUpdate.bind(this))
-		}
-
-		// On ended event, show poster and reset progressBar and time
+		this.instancePlayer.on('timeupdate', this.onTimeUpdate.bind(this))
 		this.instancePlayer.on('ended', this.onVideoEnded.bind(this))
 		this.instancePlayer.on('playing', this.onPlaying.bind(this))
 		this.instancePlayer.on('waiting', this.onWaiting.bind(this))
@@ -143,6 +126,26 @@ class PlayerVimeo extends window.vlitejs.Player {
 	}
 
 	/**
+	 * Set volume method of the player
+	 * @param {Number} volume New volume
+	 */
+	methodSetVolume(volume: number) {
+		this.instancePlayer.setVolume(volume)
+	}
+
+	/**
+	 * Get volume method of the player
+	 * @returns {Promise<Number>} Player volume
+	 */
+	methodGetVolume(): Promise<number> {
+		return new window.Promise((resolve) => {
+			this.instancePlayer.getVolume().then((volume: number) => {
+				resolve(volume)
+			})
+		})
+	}
+
+	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
@@ -160,35 +163,34 @@ class PlayerVimeo extends window.vlitejs.Player {
 	 * Function executed when the video is waiting
 	 */
 	onWaiting() {
-		this.vliteInstance.loading(true)
+		this.loading(true)
 	}
 
 	/**
 	 * Function executed when the video is playing
 	 */
 	onPlaying() {
-		this.vliteInstance.loading(false)
+		this.loading(false)
 	}
 
 	/**
 	 * Function executed when the video is seeking
 	 */
 	onSeeking() {
-		this.vliteInstance.loading(true)
+		this.loading(true)
 	}
 
 	/**
 	 * Function executed when the video seek is done
 	 */
 	onSeeked() {
-		this.vliteInstance.loading(false)
+		this.loading(false)
 	}
 
 	/**
 	 * Remove event listeners
 	 */
 	removeSpecificEvents() {
-		this.options.time && this.instancePlayer.off('durationchange', this.onDurationChange)
 		this.instancePlayer.off('timeupdate', this.onTimeUpdate)
 		this.instancePlayer.off('playing', this.onPlaying)
 		this.instancePlayer.off('waiting', this.onWaiting)

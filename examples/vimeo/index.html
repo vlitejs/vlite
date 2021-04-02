@@ -13,8 +13,7 @@
 	<script src="../../dist/providers/vimeo.js"></script>
 	<script>
         vlitejs.registerProvider('vimeo', vlitejsVimeo)
-		new vlitejs({
-			selector: '#player-vimeo1',
+		new vlitejs('#player-vimeo1', {
 			options: {
 				autoplay: false,
 				controls: true,
@@ -31,10 +30,14 @@
             provider: 'vimeo',
 			onReady: (player) => {
 				//Ready
+                player.container.addEventListener('volumechange', () => {
+                    player.getVolume().then(volume => {
+                        console.log('volumechange', volume)
+                    })
+                })
 			}
 		});
-        new vlitejs({
-			selector: '#player-vimeo2',
+        new vlitejs('#player-vimeo2', {
 			options: {
 				autoplay: false,
 				controls: true,

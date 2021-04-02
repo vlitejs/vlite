@@ -31,18 +31,11 @@ let youtubeQueue: Array<any> = []
 class PlayerYoutube extends window.vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
-	 * @returns {Promise<any>}
 	 */
-	init(): Promise<any> {
-		return this.waitUntilVideoIsReady()
-			.then(() => {
-				super.onPlayerReady()
-
-				// Return the player instance to vlitejs
-				// The context is exposed into the onReady callback function
-				return this
-			})
-			.catch(() => youtubeQueue.push(this))
+	init() {
+		this.waitUntilVideoIsReady().then(() => {
+			super.onPlayerReady()
+		})
 	}
 
 	/**
@@ -51,11 +44,11 @@ class PlayerYoutube extends window.vlitejs.Player {
 	 */
 	waitUntilVideoIsReady(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
-			// Initialize the player if the API is already available or reject
+			// Initialize the player if the API is already available
 			if (typeof window[providerObjectName] !== 'undefined') {
 				this.initYoutubePlayer().then(resolve)
 			} else {
-				reject()
+				youtubeQueue.push(this)
 			}
 		})
 	}
@@ -96,18 +89,12 @@ class PlayerYoutube extends window.vlitejs.Player {
 	 */
 	onPlayerStateChange(e: any) {
 		switch (e.data) {
-			case window.YT.PlayerState.UNSTARTED:
-				if (this.options.controls && this.options.time) {
-					super.onDurationChange()
-				}
-				break
-
 			case window.YT.PlayerState.ENDED:
 				super.onVideoEnded()
 				break
 
 			case window.YT.PlayerState.PLAYING:
-				this.vliteInstance.loading(false)
+				super.loading(false)
 
 				if (this.options.controls) {
 					setInterval(() => {
@@ -117,7 +104,7 @@ class PlayerYoutube extends window.vlitejs.Player {
 				break
 
 			case window.YT.PlayerState.BUFFERING:
-				this.vliteInstance.loading(true)
+				super.loading(true)
 				break
 		}
 	}
@@ -169,6 +156,22 @@ class PlayerYoutube extends window.vlitejs.Player {
 	}
 
 	/**
+	 * Set volume method of the player
+	 * @param {Number} volume New volume
+	 */
+	methodSetVolume(volume: number) {
+		this.instancePlayer.setVolume(volume * 100)
+	}
+
+	/**
+	 * Get volume method of the player
+	 * @returns {Promise<Number>} Player volume
+	 */
+	methodGetVolume(): Promise<number> {
+		return new window.Promise((resolve) => resolve(this.instancePlayer.getVolume() / 100))
+	}
+
+	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
@@ -201,7 +204,9 @@ if (typeof window[providerObjectName] === 'undefined') {
 	// Run the queue when the provider API is ready
 	window.onYouTubeIframeAPIReady = () => {
 		youtubeQueue.forEach((itemClass: any) => {
-			itemClass.initYoutubePlayer().then(() => itemClass.onPlayerReady())
+			itemClass.initYoutubePlayer().then(() => {
+				itemClass.onPlayerReady()
+			})
 		})
 		youtubeQueue = []
 	}

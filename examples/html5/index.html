@@ -21,33 +21,37 @@
         vlitejs.registerPlugin('subtitle', vlitejsSubtitle)
         vlitejs.registerPlugin('pip', vlitejsPip)
 
-        // TODO: Move the selector into the first parameter
-		const myVlite = new vlitejs({
-			selector: '#player-html5',
+		const myVlite = new vlitejs('#player-html5', {
 			options: {
 				autoplay: false,
 				controls: true,
 				playPause: true,
 				progressBar: true,
 				time: true,
-				volume: true, // TODO: add keyboard shortcut
+				volume: true,
 				fullscreen: true,
 				poster: '../assets/poster.jpg',
 				bigPlay: true,
 				autoHide: true,
                 playsinline: true,
-				loop: true // TODO: not working
+				loop: false,
+                muted: false
 			},
             plugins: ['subtitle', 'pip'],
-			onReady: (player) => {
+			onReady: function(player) {
 				//Ready
                 console.log(player)
 
-                <!-- player.container.addEventListener('play', () => console.log('play')) -->
+                player.container.addEventListener('play', () => console.log('play'))
                 player.container.addEventListener('pause', () => console.log('pause'))
                 player.container.addEventListener('ended', () => console.log('ended'))
                 player.container.addEventListener('progress', () => console.log('progress'))
-                player.container.addEventListener('volumechange', () => console.log('volumechange'))
+                player.container.addEventListener('volumechange', () => {
+                    player.getVolume().then(volume => {
+                    console.log('volumechange', volume)
+
+                    })
+                })
                 player.container.addEventListener('timeupdate', () => console.log('timeupdate'))
                 player.container.addEventListener('enterfullscreen', () => console.log('enterfullscreen'))
                 player.container.addEventListener('exitfullscreen', () => console.log('exitfullscreen'))

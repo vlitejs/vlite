@@ -1,4 +1,5 @@
 import { createElement } from 'jsx-dom'
+import { formatVideoTime } from 'shared/utils/utils'
 import validateTarget from 'validate-target'
 import Template from './templates/control-bar'
 import { Options } from 'shared/assets/interfaces/interfaces'
@@ -13,6 +14,7 @@ export default class ControlBar {
 	progressBar: HTMLElement | null
 	volumeButton: HTMLElement | null
 	fullscreenButton: HTMLElement | null
+	durationElement: HTMLElement | null
 
 	/**
 	 * @constructor
@@ -42,6 +44,7 @@ export default class ControlBar {
 		this.progressBar = null
 		this.volumeButton = null
 		this.fullscreenButton = null
+		this.durationElement = null
 
 		// @ts-ignore: Object is possibly 'null'.
 		this.player = this.container.querySelector('.vlite-js')
@@ -63,13 +66,16 @@ export default class ControlBar {
 			if (this.options.progressBar) {
 				this.progressBar = this.controlBar.querySelector('.v-progressBar')
 			}
-			if (this.options.progressBar) {
+			if (this.options.volume) {
 				this.volumeButton = this.controlBar.querySelector('.v-volumeButton')
 			}
-			if (this.options.progressBar) {
+			if (this.options.fullscreen) {
 				this.fullscreenButton = this.controlBar.querySelector('.v-fullscreenButton')
 			}
-			if (this.options.volume && this.volumeButton) {
+			if (this.options.time) {
+				this.durationElement = this.controlBar.querySelector('.v-duration')
+			}
+			if (this.volumeButton) {
 				this.volumeButton.setAttribute('aria-label', this.player.muted ? 'Unmute' : 'Mute')
 			}
 		}
@@ -84,6 +90,9 @@ export default class ControlBar {
 		this.playerInstance.getDuration().then((duration: number) => {
 			if (this.progressBar) {
 				this.progressBar.setAttribute('aria-valuemax', `${duration}`)
+			}
+			if (this.durationElement) {
+				this.durationElement.innerHTML = formatVideoTime(duration)
 			}
 		})
 	}

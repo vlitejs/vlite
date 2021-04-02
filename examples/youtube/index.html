@@ -14,8 +14,7 @@
 	<script src="../../dist/providers/youtube.js"></script>
 	<script>
         vlitejs.registerProvider('youtube', vlitejsYoutube)
-		new vlitejs({
-			selector: '#player-yt1',
+		new vlitejs('#player-yt1', {
 			options: {
 				autoplay: false,
 				controls: true,
@@ -27,15 +26,17 @@
 				poster: '../assets/poster.jpg',
 				bigPlay: true,
 				autoHide: true,
-				playsinline: true
+				playsinline: true,
+                loop: true
 			},
             provider: 'youtube',
 			onReady: (player) => {
 				//Ready
+                console.log(player)
+
 			}
 		});
-        new vlitejs({
-			selector: '#player-yt2',
+        new vlitejs('#player-yt2', {
 			options: {
 				autoplay: false,
 				controls: true,
@@ -52,10 +53,16 @@
             provider: 'youtube',
 			onReady: (player) => {
 				//Ready
+                console.log(player)
+                player.container.addEventListener('volumechange', () => {
+                    player.getVolume().then(volume => {
+                    console.log('volumechange', volume)
+
+                    })
+                })
 			}
 		});
-        new vlitejs({
-			selector: '#player-yt3',
+        new vlitejs('#player-yt3', {
 			options: {
 				autoplay: false,
 				controls: true,
@@ -72,6 +79,7 @@
             provider: 'youtube',
 			onReady: (player) => {
 				//Ready
+                console.log(player)
 			}
 		});
 	</script>

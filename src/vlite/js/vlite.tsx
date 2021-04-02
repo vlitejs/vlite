@@ -22,8 +22,8 @@ import {
 	Options,
 	FullScreenSupport
 } from 'shared/assets/interfaces/interfaces'
-import { registerProvider, getProviderInstance } from './provider'
-import { getPluginInstance, registerPlugin, initializePlugins } from './plugin'
+import { registerProvider, getProviderInstance } from '../../providers/provider'
+import { getPluginInstance, registerPlugin, initializePlugins } from '../../plugins/plugin'
 
 type TimerHandle = number
 
@@ -60,7 +60,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
  */
 class vlitejs {
 	Player: any
-	element: HTMLElement
+	element: HTMLVideoElement | HTMLAudioElement
 	plugins: Array<string>
 	onReady: Function
 	delayAutoHide: number
@@ -78,31 +78,32 @@ class vlitejs {
 
 	/**
 	 * @constructor
+	 * @param {(String|HTMLElement)} selector CSS selector or HTML element
 	 * @param {Object} options
-	 * @param {(String|HTMLElement)} options.selector CSS selector or HTML element
 	 * @param {Object} options.options Player options
 	 * @param {String} options.provider Player provider
 	 * @param {Object} options.plugins Player plugins
 	 * @param {Function} options.onReady Callback function when the player is ready
 	 */
-	constructor({
-		selector,
-		options,
-		provider = 'html5',
-		plugins = [],
-		onReady
-	}: {
-		selector: string | HTMLElement
-		options: Options
-		provider: string
-		plugins: Array<string>
-		onReady: Function
-	}) {
+	constructor(
+		selector: string | HTMLElement,
+		{
+			options,
+			provider = 'html5',
+			plugins = [],
+			onReady
+		}: {
+			options: Options
+			provider: string
+			plugins: Array<string>
+			onReady: Function
+		}
+	) {
 		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
 			// @ts-ignore: Object is possibly 'null'.
 			this.element = document.querySelector(selector)
-		} else if (selector instanceof HTMLElement) {
+		} else if (selector instanceof HTMLVideoElement || selector instanceof HTMLAudioElement) {
 			this.element = selector
 		} else {
 			throw new TypeError('vlitejs :: The element or selector supplied is not valid.')
@@ -120,26 +121,35 @@ class vlitejs {
 		// Update config from element attributes
 		if (this.element.hasAttribute('autoplay')) {
 			options.autoplay = true
+		} else if (options.autoplay) {
+			this.element.setAttribute('autoplay', '')
+			this.element.autoplay = true
 		}
+
 		if (this.element.hasAttribute('playsinline')) {
 			options.playsinline = true
+		} else if (options.playsinline) {
+			this.element.setAttribute('playsinline', '')
+			this.element.setAttribute('webkit-playsinline', '')
 		}
+
 		if (this.element.hasAttribute('muted')) {
 			options.muted = true
+		} else if (options.muted) {
+			this.element.setAttribute('muted', '')
+			this.element.muted = true
 		}
+
 		if (this.element.hasAttribute('loop')) {
 			options.loop = true
+		} else if (options.loop) {
+			this.element.setAttribute('loop', '')
+			this.element.loop = true
 		}
 
 		this.options = { ...DEFAULT_OPTIONS[this.type], ...options }
 		this.autoHideGranted =
 			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
-
-		// Add play inline attribute
-		if (this.options.playsinline) {
-			this.element.setAttribute('playsinline', '')
-			this.element.setAttribute('webkit-playsinline', '')
-		}
 
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
@@ -158,10 +168,7 @@ class vlitejs {
 			options: this.options,
 			vliteInstance: this
 		})
-		this.playerInstance.init().then((response: any) => {
-			this.loading(false)
-			this.onReady instanceof Function && this.onReady(response)
-		})
+		this.playerInstance.init()
 
 		this.controlBar = new ControlBar({
 			container: this.container,
@@ -299,6 +306,10 @@ class vlitejs {
 		} else if (e.keyCode === 39) {
 			// Forward the media element on arrow right press
 			this.fastForward('forward')
+		} else if (e.keyCode === 38) {
+			this.increaseVolume()
+		} else if (e.keyCode === 40) {
+			this.decreaseVolume()
 		}
 	}
 
@@ -342,6 +353,24 @@ class vlitejs {
 	fastForward(direction: string) {
 		this.playerInstance.getCurrentTime().then((seconds: number) => {
 			this.playerInstance.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
+		})
+	}
+
+	/**
+	 * Increase the player volume
+	 */
+	increaseVolume() {
+		const volume = this.playerInstance.getVolume().then((volume: number) => {
+			this.playerInstance.setVolume(volume + 0.05)
+		})
+	}
+
+	/**
+	 * Decrease the player volume
+	 */
+	decreaseVolume() {
+		const volume = this.playerInstance.getVolume().then((volume: number) => {
+			this.playerInstance.setVolume(volume - 0.05)
 		})
 	}
 

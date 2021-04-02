@@ -16,6 +16,14 @@ export default class Player {
 	isPaused: null | Boolean
 	delayAutoHide: number
 	controlBar!: any
+	controlBarElement: HTMLElement | null
+	poster: HTMLElement | null
+	bigPlayButton: HTMLElement | null
+	playPauseButton: HTMLElement | null
+	currentTimeElement: HTMLElement | null
+	progressBar: HTMLInputElement | null
+	volumeButton: HTMLElement | null
+	fullscreenButton: HTMLElement | null
 
 	/**
 	 * Instanciate the constructor
@@ -47,6 +55,15 @@ export default class Player {
 		this.isFullScreen = false
 		this.isPaused = null
 		this.delayAutoHide = 3000
+
+		this.controlBarElement = null
+		this.poster = null
+		this.bigPlayButton = null
+		this.playPauseButton = null
+		this.currentTimeElement = null
+		this.progressBar = null
+		this.volumeButton = null
+		this.fullscreenButton = null
 	}
 
 	init() {
@@ -81,6 +98,14 @@ export default class Player {
 		throw new Error('You have to implement the function "methodPause".')
 	}
 
+	methodSetVolume(newVolume: number) {
+		throw new Error('You have to implement the function "methodSetVolume".')
+	}
+
+	methodGetVolume(): Promise<number> {
+		throw new Error('You have to implement the function "methodGetVolume".')
+	}
+
 	methodMute() {
 		throw new Error('You have to implement the function "methodMute".')
 	}
@@ -93,6 +118,31 @@ export default class Player {
 	 * On the player is ready
 	 */
 	onPlayerReady() {
+		this.controlBarElement = this.container.querySelector('.v-controlBar')
+		if (this.controlBarElement) {
+			if (this.options.poster) {
+				this.poster = this.controlBarElement.querySelector('.v-poster')
+			}
+			if (this.options.bigPlay) {
+				this.bigPlayButton = this.controlBarElement.querySelector('.v-bigPlay')
+			}
+			if (this.options.playPause) {
+				this.playPauseButton = this.controlBarElement.querySelector('.v-playPauseButton')
+			}
+			if (this.options.time) {
+				this.currentTimeElement = this.controlBarElement.querySelector('.v-currentTime')
+			}
+			if (this.options.progressBar) {
+				this.progressBar = this.controlBarElement.querySelector('.v-progressBar')
+			}
+			if (this.options.volume) {
+				this.volumeButton = this.controlBarElement.querySelector('.v-volumeButton')
+			}
+			if (this.options.fullscreen) {
+				this.fullscreenButton = this.controlBarElement.querySelector('.v-fullscreenButton')
+			}
+		}
+
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the media element is muted
@@ -100,22 +150,18 @@ export default class Player {
 
 			this.play()
 		}
+
+		this.loading(false)
+		this.vliteInstance.controlBar.onPlayerReady()
+		this.vliteInstance.onReady instanceof Function && this.vliteInstance.onReady.call(this, this)
 	}
 
 	/**
-	 * On duration change
+	 * Loading bridge between the player and vlite
+	 * @param {Boolean} status Loading status
 	 */
-	onDurationChange() {
-		if (this.options.time) {
-			this.getDuration().then((duration: number) => {
-				const durationElement = this.container.querySelector('.v-duration')
-				if (durationElement) {
-					durationElement.innerHTML = formatVideoTime(duration)
-				}
-
-				this.container.dispatchEvent(new CustomEvent('durationchange'))
-			})
-		}
+	loading(status: Boolean) {
+		this.vliteInstance.loading(status)
 	}
 
 	/**
@@ -129,18 +175,16 @@ export default class Player {
 				([seconds, duration]: [number, number]) => {
 					const currentTime = Math.round(seconds)
 
-					const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
-					if (progressBar) {
+					if (this.progressBar) {
 						const width = (currentTime * 100) / duration
 						if (!this.progressBarIsMoving) {
-							progressBar.value = `${width}`
+							this.progressBar.value = `${width}`
 						}
-						progressBar.style.setProperty('--value', `${width}%`)
+						this.progressBar.style.setProperty('--value', `${width}%`)
 					}
 
-					const currentTimeElement = this.container.querySelector('.v-currentTime')
-					if (currentTimeElement) {
-						currentTimeElement.innerHTML = formatVideoTime(currentTime)
+					if (this.currentTimeElement) {
+						this.currentTimeElement.innerHTML = formatVideoTime(currentTime)
 					}
 
 					this.container.dispatchEvent(new CustomEvent('timeupdate'))
@@ -153,24 +197,25 @@ export default class Player {
 	 * On video ended
 	 */
 	onVideoEnded() {
-		this.container.classList.replace('v-playing', 'v-paused')
-		this.container.classList.add('v-firstStart')
-
-		const poster = this.container.querySelector('.v-poster')
-		if (this.options.poster && poster) {
-			poster.classList.add('v-active')
+		if (this.options.loop) {
+			this.play()
+		} else {
+			this.container.classList.replace('v-playing', 'v-paused')
+			this.container.classList.add('v-firstStart')
 		}
 
-		const progressBar = this.container.querySelector('.v-progressBar') as HTMLInputElement
-		if (progressBar) {
-			progressBar.value = '0'
-			progressBar.style.setProperty('--value', '0%')
-			progressBar.removeAttribute('aria-valuenow')
+		if (this.options.poster && this.poster) {
+			this.poster.classList.add('v-active')
 		}
 
-		const currentTime = this.container.querySelector('.v-currentTime')
-		if (currentTime) {
-			currentTime.innerHTML = '00:00'
+		if (this.progressBar) {
+			this.progressBar.value = '0'
+			this.progressBar.style.setProperty('--value', '0%')
+			this.progressBar.removeAttribute('aria-valuenow')
+		}
+
+		if (this.currentTimeElement) {
+			this.currentTimeElement.innerHTML = '00:00'
 		}
 
 		this.container.dispatchEvent(new CustomEvent('ended'))
@@ -183,26 +228,22 @@ export default class Player {
 		if (this.container.classList.contains('v-firstStart')) {
 			this.container.classList.remove('v-firstStart')
 
-			const poster = this.container.querySelector('.v-poster')
-			if (this.vliteInstance.type === 'video' && poster) {
-				poster.classList.remove('v-active')
+			if (this.vliteInstance.type === 'video' && this.poster) {
+				this.poster.classList.remove('v-active')
 			}
-
-			this.vliteInstance.type === 'video' && this.container.focus()
 		}
 
 		this.methodPlay()
 		this.isPaused = false
 		this.container.classList.replace('v-paused', 'v-playing')
+		this.vliteInstance.type === 'video' && this.container.focus()
 
-		const playPauseButton = this.container.querySelector('.v-playPauseButton')
-		if (playPauseButton) {
-			playPauseButton.setAttribute('aria-label', 'Pause')
+		if (this.playPauseButton) {
+			this.playPauseButton.setAttribute('aria-label', 'Pause')
 		}
 
-		const bigPlayButton = this.container.querySelector('.v-bigPlay')
-		if (this.vliteInstance.type === 'video' && bigPlayButton) {
-			bigPlayButton.setAttribute('aria-label', 'Pause')
+		if (this.vliteInstance.type === 'video' && this.bigPlayButton) {
+			this.bigPlayButton.setAttribute('aria-label', 'Pause')
 		}
 		this.afterPlayPause()
 
@@ -217,14 +258,12 @@ export default class Player {
 		this.isPaused = true
 		this.container.classList.replace('v-playing', 'v-paused')
 
-		const playPauseButton = this.container.querySelector('.v-playPauseButton')
-		if (playPauseButton) {
-			playPauseButton.setAttribute('aria-label', 'Play')
+		if (this.playPauseButton) {
+			this.playPauseButton.setAttribute('aria-label', 'Play')
 		}
 
-		const bigPlay = this.container.querySelector('.v-bigPlay')
-		if (this.vliteInstance.type === 'video' && bigPlay) {
-			bigPlay.setAttribute('aria-label', 'Play')
+		if (this.vliteInstance.type === 'video' && this.bigPlayButton) {
+			this.bigPlayButton.setAttribute('aria-label', 'Play')
 		}
 		this.afterPlayPause()
 
@@ -242,14 +281,47 @@ export default class Player {
 	}
 
 	/**
+	 * Set player volume
+	 * @param {Number} volume New volume
+	 */
+	setVolume(volume: number) {
+		if (volume > 1) {
+			volume = 1
+		} else if (volume <= 0) {
+			volume = 0
+			if (this.volumeButton) {
+				this.volumeButton.classList.add('v-pressed')
+			}
+		} else {
+			if (this.volumeButton) {
+				this.volumeButton.classList.remove('v-pressed')
+			}
+		}
+
+		this.methodSetVolume(volume)
+		this.container.dispatchEvent(new CustomEvent('volumechange'))
+	}
+
+	/**
+	 * Get player volume
+	 * @returns {Promise<Number>} Player volume
+	 */
+	getVolume(): Promise<number> {
+		return new window.Promise((resolve) => {
+			this.methodGetVolume().then((volume: number) => {
+				resolve(volume)
+			})
+		})
+	}
+
+	/**
 	 * Mute the volume on the media element
 	 */
 	mute() {
 		this.methodMute()
 
-		const volumeButton = this.container.querySelector('.v-volumeButton')
-		if (volumeButton) {
-			volumeButton.classList.add('v-pressed')
+		if (this.volumeButton) {
+			this.volumeButton.classList.add('v-pressed')
 		}
 
 		this.container.dispatchEvent(new CustomEvent('volumechange'))
@@ -261,9 +333,8 @@ export default class Player {
 	unMute() {
 		this.methodUnMute()
 
-		const volumeButton = this.container.querySelector('.v-volumeButton')
-		if (volumeButton) {
-			volumeButton.classList.remove('v-pressed')
+		if (this.volumeButton) {
+			this.volumeButton.classList.remove('v-pressed')
 		}
 
 		this.container.dispatchEvent(new CustomEvent('volumechange'))
@@ -292,9 +363,8 @@ export default class Player {
 			this.isFullScreen = true
 			this.container.classList.add('v-fullscreenButton-display')
 
-			const fullscreenButton = this.container.querySelector('.v-fullscreenButton')
-			if (fullscreenButton) {
-				fullscreenButton.classList.add('v-pressed')
+			if (this.fullscreenButton) {
+				this.fullscreenButton.classList.add('v-pressed')
 			}
 
 			this.container.dispatchEvent(new CustomEvent('enterfullscreen'))
@@ -316,9 +386,8 @@ export default class Player {
 
 			this.container.classList.remove('v-fullscreenButton-display')
 
-			const fullscreenButton = this.container.querySelector('.v-fullscreenButton')
-			if (fullscreenButton) {
-				fullscreenButton.classList.remove('v-pressed')
+			if (this.fullscreenButton) {
+				this.fullscreenButton.classList.remove('v-pressed')
 			}
 
 			this.container.dispatchEvent(new CustomEvent('exitfullscreen'))

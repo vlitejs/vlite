@@ -7,17 +7,11 @@ import Player from '../vlite/js/player'
 export default class PlayerHtml5 extends Player {
 	/**
 	 * Initialize the player
-	 * @returns {Promise<any>}
 	 */
-	init(): Promise<any> {
-		return this.waitUntilVideoIsReady().then(() => {
-			super.onDurationChange()
+	init() {
+		this.waitUntilVideoIsReady().then(() => {
 			this.addSpecificEvents()
 			super.onPlayerReady()
-
-			// Return the player instance to vlitejs
-			// The context is exposed into the onReady callback function
-			return this
 		})
 	}
 
@@ -37,17 +31,7 @@ export default class PlayerHtml5 extends Player {
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
 	addSpecificEvents() {
-		if (this.options.controls) {
-			if (this.options.time) {
-				// On durationchange event, update duration if value is different
-				this.element.addEventListener('durationchange', super.onDurationChange.bind(this))
-			}
-
-			// On timeupdate event, update currentTime displaying in the control bar and the width of the progress bar
-			this.element.addEventListener('timeupdate', super.onTimeUpdate.bind(this))
-		}
-
-		// On ended event, show poster and reset progressBar and time
+		this.element.addEventListener('timeupdate', super.onTimeUpdate.bind(this))
 		this.element.addEventListener('ended', super.onVideoEnded.bind(this))
 		this.element.addEventListener('playing', this.onPlaying.bind(this))
 		this.element.addEventListener('waiting', this.onWaiting.bind(this))
@@ -102,6 +86,22 @@ export default class PlayerHtml5 extends Player {
 	}
 
 	/**
+	 * Set volume method of the player
+	 * @param {Number} volume New volume
+	 */
+	methodSetVolume(volume: number) {
+		this.element.volume = volume
+	}
+
+	/**
+	 * Get volume method of the player
+	 * @returns {Promise<Number>} Player volume
+	 */
+	methodGetVolume(): Promise<number> {
+		return new window.Promise((resolve) => resolve(this.element.volume))
+	}
+
+	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
@@ -121,35 +121,34 @@ export default class PlayerHtml5 extends Player {
 	 * Function executed when the video is waiting
 	 */
 	onWaiting() {
-		this.vliteInstance.loading(true)
+		this.loading(true)
 	}
 
 	/**
 	 * Function executed when the video is playing
 	 */
 	onPlaying() {
-		this.vliteInstance.loading(false)
+		this.loading(false)
 	}
 
 	/**
 	 * Function executed when the video is seeking
 	 */
 	onSeeking() {
-		this.vliteInstance.loading(true)
+		this.loading(true)
 	}
 
 	/**
 	 * Function executed when the video seek is done
 	 */
 	onSeeked() {
-		this.vliteInstance.loading(false)
+		this.loading(false)
 	}
 
 	/**
 	 * Remove event listeners
 	 */
 	removeSpecificEvents() {
-		this.options.time && this.element.removeEventListener('durationchange', this.onDurationChange)
 		this.element.removeEventListener('timeupdate', this.onTimeUpdate)
 		this.element.removeEventListener('playing', this.onPlaying)
 		this.element.removeEventListener('waiting', this.onWaiting)
