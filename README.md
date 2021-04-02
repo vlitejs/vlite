@@ -155,21 +155,21 @@ const vlitePlayer = new vlitejs('#player', {
 
 The player controls can be customized with the following parameters:
 
-| Options       |      Type      | Default |     Media     | Description                                               |
-| ------------- | :------------: | :-----: | :-----------: | --------------------------------------------------------- |
-| `autoplay`    |   `Boolean`    | `false` | Video & Audio | Enable the autoplay of the media                          |
-| `controls`    |   `Boolean`    | `true`  |     Video     | Display the control bar of the media                      |
-| `playPause`   |   `Boolean`    | `true`  | Video & Audio | Display the play/pause button on the control bar          |
-| `progressBar` |   `Boolean`    | `true`  | Video & Audio | Display the progress bar on the control bar               |
-| `time`        |   `Boolean`    | `true`  | Video & Audio | Display the time information on the control bar           |
-| `volume`      |   `Boolean`    | `true`  | Video & Audio | Display the volume button on the control bar              |
-| `fullscreen`  |   `Boolean`    | `true`  |     Video     | Display the fullscreen button on the control bar          |
-| `poster`      | `String\|null` | `null`  |     Video     | Personalize the poster url of the video                   |
-| `bigPlay`     |   `Boolean`    | `true`  |     Video     | Display the big play button on the poster                 |
-| `playsinline` |   `Boolean`    | `false` |     Video     | Add the `playsinline` attribute to the video              |
-| `loop`        |   `Boolean`    | `false` | Video & Audio | Whether to loop the current media                         |
-| `muted`       |   `Boolean`    | `false` |     Video     | Whether to muted the current media                        |
-| `autoHide`    |   `Boolean`    | `false` |     Video     | Auto hide the control bar in the event of inactivity (3s) |
+| Options       |      Type      | Default |    Media    | Description                                               |
+| ------------- | :------------: | :-----: | :---------: | --------------------------------------------------------- |
+| `autoplay`    |   `Boolean`    | `false` | Video-Audio | Enable the autoplay of the media                          |
+| `controls`    |   `Boolean`    | `true`  |    Video    | Display the control bar of the media                      |
+| `playPause`   |   `Boolean`    | `true`  | Video-Audio | Display the play/pause button on the control bar          |
+| `progressBar` |   `Boolean`    | `true`  | Video-Audio | Display the progress bar on the control bar               |
+| `time`        |   `Boolean`    | `true`  | Video-Audio | Display the time information on the control bar           |
+| `volume`      |   `Boolean`    | `true`  | Video-Audio | Display the volume button on the control bar              |
+| `fullscreen`  |   `Boolean`    | `true`  |    Video    | Display the fullscreen button on the control bar          |
+| `poster`      | `String\|null` | `null`  |    Video    | Personalize the poster url of the video                   |
+| `bigPlay`     |   `Boolean`    | `true`  |    Video    | Display the big play button on the poster                 |
+| `playsinline` |   `Boolean`    | `false` |    Video    | Add the `playsinline` attribute to the video              |
+| `loop`        |   `Boolean`    | `false` | Video-Audio | Whether to loop the current media                         |
+| `muted`       |   `Boolean`    | `false` |    Video    | Whether to muted the current media                        |
+| `autoHide`    |   `Boolean`    | `false` |    Video    | Auto hide the control bar in the event of inactivity (3s) |
 
 > The `autoplay` parameter automatically activates the` muted` option because the API can only be initiated by a user gesture.
 
@@ -193,6 +193,7 @@ The function exposes the `player` parameter as the player instance. You can use 
 ```javascript
 const vlitePlayer = new vlitejs('#player', {
   onReady: (player) => {
+    // TODO: example without the arrow function (context this = player)
     // The player is ready
   }
 });
@@ -317,6 +318,7 @@ export default class SamplePlugin {
 | `pause`           | Sent when the playback state is changed to paused                                                           |
 | `ended`           | Sent when playback completes                                                                                |
 | `progress`        | Sent periodically to inform interested parties of progress downloading the media.                           |
+| `seeked`          | Sent when the current time has changed.                                                                     |
 | `volumechange`    | Sent when the audio volume changes                                                                          |
 | `timeupdate`      | The time indicated by the element's `currentTime` attribute has changed                                     |
 | `enterfullscreen` | Sent when the video switches into of full-screen mode                                                       |
@@ -340,17 +342,22 @@ player.container.addEventListener('play', () => {
 
 The player instance exposed the following methods:
 
-| Method                | Parameters | Description                 |
-| --------------------- | :--------: | --------------------------- |
-| `play()`              |     -      | Start the playback          |
-| `pause()`             |     -      | Pause the playback          |
-| `mute()`              |     -      | Mute the volume             |
-| `unMmute()`           |     -      | Unmute the volume           |
-| `seekTo(newTime)`     |  `Number`  | Seek to a current time (ms) |
-| `requestFullscreen()` |     -      | Request the fullscreen      |
-| `exitFullscreen()`    |     -      | Exit the fullscreen         |
-| `getInstance()`       |     -      | Get the player instance     |
-| `destroy()`           |     -      | Destroy the player          |
+| Method                | Parameters |  Promise  | Description                 |
+| --------------------- | :--------: | :-------: | --------------------------- |
+| `play()`              |     -      |     -     | Start the playback          |
+| `pause()`             |     -      |     -     | Pause the playback          |
+| `setVolume()`         |  `Number`  |     -     | Set the volume (0-1)        |
+| `getVolume()`         |     -      | `Promise` | Get the volume              |
+| `setCurrentTime()`    |  `Number`  |     -     | Set the current time        |
+| `getCurrentTime()`    |     -      | `Promise` | Get the current time        |
+| `getDuration()`       |     -      | `Promise` | Get the duration            |
+| `mute()`              |     -      |     -     | Mute the volume             |
+| `unMmute()`           |     -      |     -     | Unmute the volume           |
+| `seekTo(newTime)`     |  `Number`  |     -     | Seek to a current time (ms) |
+| `requestFullscreen()` |     -      |     -     | Request the fullscreen      |
+| `exitFullscreen()`    |     -      |     -     | Exit the fullscreen         |
+| `getInstance()`       |     -      |     -     | Get the player instance     |
+| `destroy()`           |     -      |     -     | Destroy the player          |
 
 Example of a video muted when the player is ready.
 
