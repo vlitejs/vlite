@@ -99,16 +99,17 @@
 
 	&-volumeButton {
 		transition: transform var(--transition250msEase), opacity var(--transition250msEase);
+		flex-shrink: 0;
 
 		&:not(.v-pressed) {
 			.v-iconVolumeHigh {
-				display: block;
+				display: flex;
 			}
 		}
 
 		&.v-pressed {
 			.v-iconVolumeMute {
-				display: block;
+				display: flex;
 			}
 		}
 
@@ -120,13 +121,13 @@
 	&-fullscreenButton {
 		&:not(.v-pressed) {
 			.v-iconFullscreen {
-				display: block;
+				display: flex;
 			}
 		}
 
 		&.v-pressed {
 			.v-iconShrink {
-				display: block;
+				display: flex;
 			}
 		}
 	}
@@ -159,13 +160,13 @@
 				order: 1;
 			}
 
-			.v-time {
+			.v-progressBar {
 				order: 2;
 			}
 
-			.v-progressBar {
+			.v-time {
 				order: 3;
-				padding: 0 10px;
+				padding: 0 8px 0 12px;
 			}
 
 			.v-volumeButton {

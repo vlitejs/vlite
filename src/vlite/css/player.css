@@ -73,7 +73,7 @@
 	&.v-paused {
 		.v-playPauseButton {
 			.v-iconPlay {
-				display: block;
+				display: flex;
 			}
 		}
 
@@ -98,7 +98,7 @@
 
 		.v-playPauseButton {
 			.v-iconPause {
-				display: block;
+				display: flex;
 			}
 		}
 	}
