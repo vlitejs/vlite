@@ -11,7 +11,5 @@ export default class SamplePlugin {
 	/**
 	 * Initialize the plugin
 	 */
-	init() {
-		// The plugin is initialized
-	}
+	init() {}
 }

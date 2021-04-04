@@ -9,8 +9,8 @@ The plugin's API allows you to extends the capabilities of `vLitejs` and add cus
 | `subtitle`  | `window.VlitejsSubtitle` | `vlitejs/plugins/subtitle` |    `html5`     |     `video`      | Supports for multiple caption tracks (VTT) |
 | `pip`       | `window.VlitejsPip`      | `vlitejs/plugins/pip`      |    `html5`     |     `video`      | Supports for picture-in-picture mode       |
 
-_&sup1;Providers: `html5|youtube|vimeo`_
-_&sup2;Media type: `video|audio`_
+- _&sup1;Providers: `html5|youtube|vimeo`_
+- _&sup2;Media type: `video|audio`_
 
 ## Register a plugin
 
