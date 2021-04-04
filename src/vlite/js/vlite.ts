@@ -9,7 +9,6 @@
  **/
 
 import Player from './player'
-import { createElement, Fragment } from 'jsx-dom'
 import validateTarget from 'validate-target'
 import { capitalized, checkSupportFullScreen } from 'shared/utils/utils'
 import LoaderTemplate from 'shared/loader/assets/scripts/loader'
@@ -210,33 +209,31 @@ class vlitejs {
 	 * Build the DOM of the player
 	 */
 	render() {
-		this.container.appendChild(
-			<>{this.type === 'audio' ? this.renderAudioElement() : this.renderVideoElement()}</>
-		)
+		const template = this.type === 'audio' ? this.renderAudioElement() : this.renderVideoElement()
+		this.container.insertAdjacentHTML('beforeend', template)
+
 		this.options.controls && this.controlBar.init()
 	}
 
 	/**
 	 * Render the video element
-	 * @returns {HTMLElement} Generated HTML
+	 * @returns {String} Generated HTML
 	 */
-	renderVideoElement(): Element {
-		return (
-			<>
-				<OverlayTemplate />
-				<LoaderTemplate />
-				{this.options.poster && <PosterTemplate posterUrl={this.options.poster} />}
-				{this.options.bigPlay && <BigPlayTemplate />}
-				{this.options.controls && this.controlBar.getTemplate()}
-			</>
-		)
+	renderVideoElement(): string {
+		return `
+            ${OverlayTemplate()}
+            ${LoaderTemplate()}
+            ${this.options.poster ? PosterTemplate({ posterUrl: this.options.poster }) : ''}
+            ${this.options.bigPlay ? BigPlayTemplate() : ''}
+            ${this.options.controls ? this.controlBar.getTemplate() : ''}
+        `
 	}
 
 	/**
 	 * Render the aido element
-	 * @returns {HTMLElement} Generated HTML
+	 * @returns {String} Generated HTML
 	 */
-	renderAudioElement(): Element {
+	renderAudioElement(): string {
 		return this.controlBar.getTemplate()
 	}
 

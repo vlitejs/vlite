@@ -30,7 +30,6 @@
 		"*.css": "postcss",
 		"*.html": "html",
 		"*.ts": "typescript",
-		"*.tsx": "typescriptreact",
 		"*.json": "json"
 	},
 	"files.trimTrailingWhitespace": true,

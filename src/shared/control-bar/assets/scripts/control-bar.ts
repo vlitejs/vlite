@@ -1,4 +1,3 @@
-import { createElement } from 'jsx-dom'
 import { formatVideoTime } from 'shared/utils/utils'
 import validateTarget from 'validate-target'
 import Template from './templates/control-bar'
@@ -211,10 +210,10 @@ export default class ControlBar {
 	/**
 	 * Get the template
 	 * @param {Object} data Template's data
-	 * @returns {HTMLElement} Generated HTML
+	 * @returns {String} Generated HTML
 	 */
-	getTemplate(): JSX.Element {
-		return <Template options={this.options} isMuted={this.player.muted} type={this.type} />
+	getTemplate(): string {
+		return `${Template({ options: this.options, isMuted: this.player.muted, type: this.type })}`
 	}
 
 	/**

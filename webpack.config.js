@@ -35,7 +35,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 					]
 				},
 				{
-					test: /\.(ts|tsx)$/,
+					test: /\.ts$/,
 					include: path.resolve(__dirname, './src'),
 					use: [
 						{
@@ -75,7 +75,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 			]
 		},
 		resolve: {
-			extensions: ['.js', '.ts', '.tsx', '.css'],
+			extensions: ['.js', '.ts', '.css'],
 			alias: {
 				shared: path.resolve(__dirname, './src/shared')
 			}

@@ -1,5 +1,5 @@
 // Import JS
-import vlitejs from './js/vlite.tsx'
+import vlitejs from './js/vlite.ts'
 
 // Import CSS
 import 'shared/assets/styles/reset-vlite.css'

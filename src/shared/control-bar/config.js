@@ -2,4 +2,4 @@
 import './assets/styles/control-bar.css'
 
 // import JS
-import './assets/scripts/control-bar.tsx'
+import './assets/scripts/control-bar.ts'

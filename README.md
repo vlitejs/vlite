@@ -8,7 +8,7 @@ HTML5 video and audio players are includes by default. Youtube and Vimeo provide
 
 ## Why `vLitejs`?
 
-- If you are concerned about your app's loading performance, this library makes sense as it is extremely lightweight compared to the competition (only 8 KB Gzip).
+- If you are concerned about your app's loading performance, this library makes sense as it is extremely lightweight compared to the competition (only 7 KB Gzip).
 - It is quite rare to need to be compatible with HTML5, Youtube and Vimeo. The library contains by default only HTML5 capabilities and exposed the Provider API to extend the library with other providers.
 - If you need specific behaviors, the Plugin API allows to extends the library capabilities.
 - If you need to create a video/audio player with a custom skin harmonized across all web browsers.
@@ -16,8 +16,8 @@ HTML5 video and audio players are includes by default. Youtube and Vimeo provide
 |              | vLitejs |  Plyr  | Videojs |
 | ------------ | :-----: | :----: | :-----: |
 | Uncompressed |  81 KB  | 310 KB | 2000 KB |
-| Compressed   |  32 KB  | 120 KB | 537 KB  |
-| Gzip         |  8 KB   | 30 KB  | 149 KB  |
+| Compressed   |  27 KB  | 120 KB | 537 KB  |
+| Gzip         |  6 KB   | 30 KB  | 149 KB  |
 
 _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
@@ -320,7 +320,7 @@ export default class SamplePlugin {
 | `progress`        | Sent periodically to inform interested parties of progress downloading the media.                           |
 | `seeked`          | Sent when the current time has changed.                                                                     |
 | `volumechange`    | Sent when the audio volume changes                                                                          |
-| `timeupdate`      | The time indicated by the element's `currentTime` attribute has changed                                     |
+| `timeupdate`      | The time indicated by the element's `currentTime` attribute has changed.                                    |
 | `enterfullscreen` | Sent when the video switches into of full-screen mode                                                       |
 | `exitfullscreen`  | Sent when the video switches out of full-screen mode                                                        |
 | `enterpip`        | Sent when the video switches into of picture in picture mode                                                |
@@ -342,22 +342,22 @@ player.container.addEventListener('play', () => {
 
 The player instance exposed the following methods:
 
-| Method                | Parameters |  Promise  | Description                 |
-| --------------------- | :--------: | :-------: | --------------------------- |
-| `play()`              |     -      |     -     | Start the playback          |
-| `pause()`             |     -      |     -     | Pause the playback          |
-| `setVolume()`         |  `Number`  |     -     | Set the volume (0-1)        |
-| `getVolume()`         |     -      | `Promise` | Get the volume              |
-| `setCurrentTime()`    |  `Number`  |     -     | Set the current time        |
-| `getCurrentTime()`    |     -      | `Promise` | Get the current time        |
-| `getDuration()`       |     -      | `Promise` | Get the duration            |
-| `mute()`              |     -      |     -     | Mute the volume             |
-| `unMmute()`           |     -      |     -     | Unmute the volume           |
-| `seekTo(newTime)`     |  `Number`  |     -     | Seek to a current time (ms) |
-| `requestFullscreen()` |     -      |     -     | Request the fullscreen      |
-| `exitFullscreen()`    |     -      |     -     | Exit the fullscreen         |
-| `getInstance()`       |     -      |     -     | Get the player instance     |
-| `destroy()`           |     -      |     -     | Destroy the player          |
+| Method                | Parameters |  Promise  | Description                    |
+| --------------------- | :--------: | :-------: | ------------------------------ |
+| `play()`              |     -      |     -     | Start the playback             |
+| `pause()`             |     -      |     -     | Pause the playback             |
+| `setVolume()`         |  `Number`  |     -     | Set the volume between 0 and 1 |
+| `getVolume()`         |     -      | `Promise` | Get the volume                 |
+| `setCurrentTime()`    |  `Number`  |     -     | Set the current time in ms     |
+| `getCurrentTime()`    |     -      | `Promise` | Get the current time           |
+| `getDuration()`       |     -      | `Promise` | Get the duration               |
+| `mute()`              |     -      |     -     | Mute the volume                |
+| `unMmute()`           |     -      |     -     | Unmute the volume              |
+| `seekTo(newTime)`     |  `Number`  |     -     | Seek to a current time in ms   |
+| `requestFullscreen()` |     -      |     -     | Request the fullscreen         |
+| `exitFullscreen()`    |     -      |     -     | Exit the fullscreen            |
+| `getInstance()`       |     -      |     -     | Get the player instance        |
+| `destroy()`           |     -      |     -     | Destroy the player             |
 
 Example of a video muted when the player is ready.
 

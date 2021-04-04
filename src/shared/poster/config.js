@@ -2,4 +2,4 @@
 import './assets/styles/poster.css'
 
 // import JS
-import './assets/scripts/poster.tsx'
+import './assets/scripts/poster.ts'

@@ -2,4 +2,4 @@
 import './assets/styles/overlay.css'
 
 // import JS
-import './assets/scripts/overlay.tsx'
+import './assets/scripts/overlay.ts'

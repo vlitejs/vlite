@@ -3,17 +3,7 @@ module.exports = function (api) {
 
 	api.cache(true)
 
-	const plugins = [
-		'@babel/plugin-transform-modules-commonjs',
-		'@babel/proposal-class-properties',
-		[
-			'@babel/plugin-transform-react-jsx',
-			{
-				pragma: 'createElement',
-				pragmaFrag: 'Fragment'
-			}
-		]
-	]
+	const plugins = ['@babel/plugin-transform-modules-commonjs', '@babel/proposal-class-properties']
 
 	return {
 		presets,
