@@ -2,20 +2,26 @@
 
 ![vLitejs](https://img.shields.io/badge/vlitejs-v4.0.0-ff7f15.svg?style=for-the-badge) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![Gitter Chat](https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge)](https://gitter.im/vlitejs/vlitejs)
 
-`vLitejs` is a fast and lightweight JavaScript library to customize and skin video and audio player. Written in JavaScript native without dependency, it is built around an API of Providers and Plugins.
+<div style="max-width: 250px; margin: 0 auto; text-align: center;">
+    <img src="./assets/svgs/logo.svg" alt="vLitejs logo" />
+</div>
 
-HTML5 video and audio players are includes by default. Youtube and Vimeo providers can be loaded on demand by the [Provider API](#Provider-API). Plugins can also be loaded on demand by the [Plugin API](#Plugin-API). The library is built to be extended be these API, others Providers and Plugins can be created and loaded by the library.
+`vLitejs` is a fast and lightweight JavaScript library to customize and skin a video and audio player. Written in native JavaScript without dependency, it is built around an API of providers and plugins to extend these capabilities and keep the core with the minimal functionnalities.
+
+HTML5 video and audio players are automatically included. Other providers like Youtube or Vimeo can be loaded on demand with the [Provider API](./src/providers/README.md). Plugins uses the same logic and can be loaded on demand by the [Plugin API](/src/plugins/README.md). Others providers and plugins can be created and loaded by the library.
 
 ## Why `vLitejs`?
 
-- If you are concerned about your app's loading performance, this library makes sense as it is extremely lightweight compared to the competition (only 7 KB Gzip).
-- It is quite rare to need to be compatible with HTML5, Youtube and Vimeo. The library contains by default only HTML5 capabilities and exposed the Provider API to extend the library with other providers.
-- If you need specific behaviors, the Plugin API allows to extends the library capabilities.
-- If you need to create a video/audio player with a custom skin harmonized across all web browsers.
+- If you are concerned about your app's loading performance, this library makes sense as it is extremely lightweight compared to the competition (only 6 KB).
+- It is quite rare to need to be compatible with HTML5, Youtube and Vimeo at the same time. The library contains by default only HTML5 capabilities and exposed the Provider API to extend capabilities with other providers.
+- If you need specific behaviors, the plugin API allows to extends the library capabilities.
+- If you need to create a video or audio player with a custom skin harmonized for all web browsers.
+
+Bundle sizes of `vLitejs` compared to the competition:
 
 |              | vLitejs |  Plyr  | Videojs |
 | ------------ | :-----: | :----: | :-----: |
-| Uncompressed |  81 KB  | 310 KB | 2000 KB |
+| Uncompressed |  69 KB  | 310 KB | 2000 KB |
 | Compressed   |  27 KB  | 120 KB | 537 KB  |
 | Gzip         |  6 KB   | 30 KB  | 149 KB  |
 
@@ -23,53 +29,55 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 ---
 
-<!-- [![Image of vLitejs](./examples/assets/screenshot.jpg)](https://yoriiis.github.io/vlitejs) -->
-
 ## Features
 
 - **Video & audio** - HTML5 video, HTML5 audio, Youtube, Vimeo.
-- **Customizable** - Choose the control elements you want to display.
-- **No dependency** - Written in Javascript native without any framework.
+- **Customization** - Choose the control elements you want to display.
+- **No dependency** - Written in native Javascript without any framework.
 - **Fullscreen** - Supports native fullscreen API.
-- [**Provider API**](#Provider-API) - Use the available providers or create your own.
-- [**Plugin API**](#Plugin-API) - Use the available plugins or create your own.
-- [**Events**](#Events) - Standardized events across all web browsers and providers.
+- [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
+- [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
+- [**Events**](#Events) - Standardized events for all web browsers and providers.
 - **Subtitles** - Supports multiple subtitle tracks (VTT).
 - **Picture-in-Picture** - Supports Picture-in-Picture API.
 - **Playsinline** - Supports the `playsinline` attribute.
+- **SVG icons** - SVG are inlined into the library, no sprites to includes.
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
+
+[![Image of vLitejs](./assets/images/screenshot.jpg)](https://yoriiis.github.io/vlitejs)
 
 ---
 
 ## Installation
 
-`vLitejs` is available on npm as [vlitejs](https://www.npmjs.com/package/vlitejs) and as [vLitejs on GitHub](https://github.com/yoriiis/vlitejs).
+### NPM
+
+NPM is the recommended installation method. Install `vlitejs` in your project with the following command:
 
 ```bash
 npm install vlitejs --save-dev
-```
-
-```bash
+# or
 yarn add vlitejs  --dev
 ```
 
-`vLitejs` is also available over the `jsDeliver` CDN.
+### CDN
 
-<!-- prettier-ignore -->
+You can also download and include with a script tag. The library will be registered as the global variable `window.Vlitejs`
+
 ```html
 <link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
 <script src="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.js" crossorigin></script>
 ```
 
-## Demo
+## Examples
 
-The project includes several examples of `vLitejs` implementation in the directory `./examples`. If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
+The project includes several examples of `vLitejs` implementation in the directory `examples` at the root directory. If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
 
-- [HTML5 video]()
-- [HTML5 audio]()
-- [Youtube]()
-- [Vimeo]()
+- [HTML5 video](https://codepen.io/pen/?template=VwPWeyE)
+- [HTML5 audio](https://codepen.io/pen/?template=RwKgrBd)
+- [Youtube](https://codepen.io/pen/?template=zYNzrJp)
+- [Vimeo](https://codepen.io/pen/?template=zYNzrmp)
 
 ## How it works
 
@@ -101,51 +109,49 @@ The project includes several examples of `vLitejs` implementation in the directo
 
 ---
 
-### Javascript
+### Initialize the player
 
-#### Initialize the player
-
-Import `vLitejs` styles and the JavaScript library as an ES6 modules.
+Import `vLitejs` styleheet and the JavaScript library as an ES6 modules.
 
 ```javascript
 import 'vlitejs/vlite.css';
-import vlitejs from 'vlitejs';
+import Vlitejs from 'vlitejs';
 ```
 
-The `vlitejs` constructor accepts the following parameters:
+The `Vlitejs` constructor accepts the following parameters:
 
-| Arguments |          Type           | Default | Description                                                      |
-| --------- | :---------------------: | :-----: | ---------------------------------------------------------------- |
-| selector  | `String \| HTMLElement` | `null`  | Unique CSS selector string or `HTMLElement` to target the player |
-| config    |        `Object`         |  `{}`   | Player configuration                                             |
+| Arguments |         Type          | Default | Description                                                      |
+| --------- | :-------------------: | :-----: | ---------------------------------------------------------------- |
+| selector  | `String\|HTMLElement` | `null`  | Unique CSS selector string or `HTMLElement` to target the player |
+| config    |       `Object`        |  `{}`   | Player configuration                                             |
 
 Initialize the player with a CSS selector string.
 
 ```javascript
-const vlitePlayer = new vlitejs('#player');
+new Vlitejs('#player');
 ```
 
 Or, initialize the player with an `HTMLElement`.
 
 ```js
-const vlitePlayer = new vlitejs(document.querySelector('#player'));
+new Vlitejs(document.querySelector('#player'));
 ```
 
-#### Configure the player
+### Configure the player
 
 The second arguments of the contructor is an object with the following parameters:
 
-| Arguments  |        Type        |  Default  | Description                                         |
-| ---------- | :----------------: | :-------: | --------------------------------------------------- |
-| `options`  |      `Object`      |   `{}`    | Player options                                      |
-| `provider` |      `String`      | `'html5'` | Player provider                                     |
-| `plugins`  |      `Array`       |   `[]`    | Player plugins                                      |
-| `onReady`  | `Function \| null` |  `null`   | Callback function executed when the player is ready |
+| Arguments  |       Type       |  Default  | Description                                         |
+| ---------- | :--------------: | :-------: | --------------------------------------------------- |
+| `options`  |     `Object`     |   `{}`    | Player options                                      |
+| `onReady`  | `Function\|null` |  `null`   | Callback function executed when the player is ready |
+| `provider` |     `String`     | `'html5'` | Player provider                                     |
+| `plugins`  |     `Array`      |   `[]`    | Player plugins                                      |
 
 ```javascript
-const vlitePlayer = new vlitejs('#player', {
+new Vlitejs('#player', {
   options: {},
-  onReady: (player) => {},
+  onReady: function (player) {},
   provider: 'html5',
   plugins: []
 });
@@ -155,30 +161,32 @@ const vlitePlayer = new vlitejs('#player', {
 
 The player controls can be customized with the following parameters:
 
-| Options       |      Type      | Default |    Media    | Description                                               |
-| ------------- | :------------: | :-----: | :---------: | --------------------------------------------------------- |
-| `autoplay`    |   `Boolean`    | `false` | Video-Audio | Enable the autoplay of the media                          |
-| `controls`    |   `Boolean`    | `true`  |    Video    | Display the control bar of the media                      |
-| `playPause`   |   `Boolean`    | `true`  | Video-Audio | Display the play/pause button on the control bar          |
-| `progressBar` |   `Boolean`    | `true`  | Video-Audio | Display the progress bar on the control bar               |
-| `time`        |   `Boolean`    | `true`  | Video-Audio | Display the time information on the control bar           |
-| `volume`      |   `Boolean`    | `true`  | Video-Audio | Display the volume button on the control bar              |
-| `fullscreen`  |   `Boolean`    | `true`  |    Video    | Display the fullscreen button on the control bar          |
-| `poster`      | `String\|null` | `null`  |    Video    | Personalize the poster url of the video                   |
-| `bigPlay`     |   `Boolean`    | `true`  |    Video    | Display the big play button on the poster                 |
-| `playsinline` |   `Boolean`    | `false` |    Video    | Add the `playsinline` attribute to the video              |
-| `loop`        |   `Boolean`    | `false` | Video-Audio | Whether to loop the current media                         |
-| `muted`       |   `Boolean`    | `false` |    Video    | Whether to muted the current media                        |
-| `autoHide`    |   `Boolean`    | `false` |    Video    | Auto hide the control bar in the event of inactivity (3s) |
+| Options             |      Type      | Default | Description                                               |
+| ------------------- | :------------: | :-----: | --------------------------------------------------------- |
+| `autoplay`          |   `Boolean`    | `false` | Enable the autoplay of the media                          |
+| `controls`&sup1;    |   `Boolean`    | `true`  | Display the control bar of the video                      |
+| `playPause`         |   `Boolean`    | `true`  | Display the play/pause button on the control bar          |
+| `progressBar`       |   `Boolean`    | `true`  | Display the progress bar on the control bar               |
+| `time`              |   `Boolean`    | `true`  | Display the time information on the control bar           |
+| `volume`            |   `Boolean`    | `true`  | Display the volume button on the control bar              |
+| `fullscreen`&sup1;  |   `Boolean`    | `true`  | Display the fullscreen button on the control bar          |
+| `poster`&sup1;      | `String\|null` | `null`  | Personalize the poster url of the video                   |
+| `bigPlay`&sup1;     |   `Boolean`    | `true`  | Display the big play button on the poster video           |
+| `playsinline`&sup1; |   `Boolean`    | `false` | Add the `playsinline` attribute to the video              |
+| `loop`              |   `Boolean`    | `false` | Whether to loop the current media                         |
+| `muted`&sup1;       |   `Boolean`    | `false` | Whether to muted the current media                        |
+| `autoHide`&sup1;    |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity (3s) |
 
-> The `autoplay` parameter automatically activates the` muted` option because the API can only be initiated by a user gesture.
+_&sup1; Options available only on a video player, not on an audio player._
 
-Example of customization for the `autoplay` and the `poster`.
+> The `autoplay` parameter automatically activates the `muted` option because the API can only be initiated by a user gesture.
+
+Example of customization for the `autoHide` and the `poster` options.
 
 ```javascript
-const vlitePlayer = new vlitejs('#player', {
+new Vlitejs('#player', {
   options: {
-    autoplay: true,
+    autoHide: true,
     poster: '/path/to/poster.jpg'
   }
 });
@@ -186,43 +194,47 @@ const vlitePlayer = new vlitejs('#player', {
 
 ### Player ready
 
-The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube and Vimeo provider listen respectively to the `onready` event returned by the API.
+The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube and Vimeo provider listen to the `onready` event returned by their API.
 
 The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Player-methods).
 
+Example of a player muted when ready:
+
 ```javascript
-const vlitePlayer = new vlitejs('#player', {
-  onReady: (player) => {
-    // TODO: example without the arrow function (context this = player)
-    // The player is ready
+new Vlitejs('#player', {
+  onReady: function (player) {
+    this.player.mute();
   }
 });
 ```
 
+> The `onReady` function can also be written with an arrow function.
+
 ### Events
 
-`vLitejs` exposes the following native `CustomEvent` on the player container element. Events are standardized across all providers even Youtube and Vimeo.
+`vLitejs` exposes the following native `CustomEvent` on the player container element. Events are standardized for all providers, even for Youtube and Vimeo.
 
-| Event Type        | Description                                                                                                 |
-| ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| `play`            | Sent when the playback state is no longer paused, as a result of the play method, or the autoplay attribute |
-| `pause`           | Sent when the playback state is changed to paused                                                           |
-| `ended`           | Sent when playback completes                                                                                |
-| `progress`        | Sent periodically to inform interested parties of progress downloading the media.                           |
-| `seeked`          | Sent when the current time has changed.                                                                     |
-| `volumechange`    | Sent when the audio volume changes                                                                          |
-| `timeupdate`      | The time indicated by the element's `currentTime` attribute has changed.                                    |
-| `enterfullscreen` | Sent when the video switches into of full-screen mode                                                       |
-| `exitfullscreen`  | Sent when the video switches out of full-screen mode                                                        |
-| `enterpip`        | Sent when the video switches into of picture in picture mode                                                |
-| `leavepip`        | Sent when the video switches out of picture in picture mode                                                 |
-| `trackenabled`    | Sent when a track is enabled and displayed                                                                  |
-| `trackdisabled`   | Sent when a track is disabled and hidden                                                                    |
+| Event Type              | Description                                                                             |
+| ----------------------- | --------------------------------------------------------------------------------------- |
+| `play`                  | Sent when the playback state is no longer paused, after the play method or the autoplay |
+| `pause`                 | Sent when the playback state is changed to paused                                       |
+| `ended`                 | Sent when playback completes                                                            |
+| `progress`              | Sent periodically to inform interested parties of progress downloading the media.       |
+| `volumechange`          | Sent when audio volume changes                                                          |
+| `timeupdate`            | Sent when the `currentTime` of the media has changed                                    |
+| `enterfullscreen`&sup1; | Sent when the video switches to fullscreen mode                                         |
+| `exitfullscreen`&sup1;  | Sent when the video exits fullscreen mode                                               |
+| `enterpip`&sup1;        | Sent when the video switches to picture-in-picture mode                                 |
+| `leavepip`&sup1;        | Sent when the video exits of picture-in-picture mode                                    |
+| `trackenabled`&sup1;    | Sent when a track is enabled and displayed                                              |
+| `trackdisabled`&sup1;   | Sent when a track is disabled and hidden                                                |
 
-Example of a listener when the video trigger a play.
+_&sup1; Options available only on a video player, not on an audio player._
+
+Example listener when the media triggers a play event.
 
 ```javascript
-const vlitePlayer = new vlitejs('#player');
+const vlitePlayer = new Vlitejs('#player');
 
 player.container.addEventListener('play', () => {
   // The video starts playing
@@ -237,29 +249,29 @@ The player instance exposed the following methods:
 | --------------------- | :--------: | :-------: | --------------------------------- |
 | `play()`              |     -      |     -     | Start the playback                |
 | `pause()`             |     -      |     -     | Pause the playback                |
-| `setVolume()`         |  `Number`  |     -     | Set the volume between 0 and 1    |
+| `setVolume(volume)`   |  `Number`  |     -     | Set the volume between 0 and 1    |
 | `getVolume()`         |     -      | `Promise` | Get the volume                    |
 | `getCurrentTime()`    |     -      | `Promise` | Get the current time              |
 | `getDuration()`       |     -      | `Promise` | Get the duration                  |
 | `mute()`              |     -      |     -     | Mute the volume                   |
 | `unMmute()`           |     -      |     -     | Unmute the volume                 |
-| `seekTo(newTime)`     |  `Number`  |     -     | Seek to a current time in seconds |
+| `seekTo(time)`        |  `Number`  |     -     | Seek to a current time in seconds |
 | `requestFullscreen()` |     -      |     -     | Request the fullscreen            |
 | `exitFullscreen()`    |     -      |     -     | Exit the fullscreen               |
 | `getInstance()`       |     -      |     -     | Get the player instance           |
 | `destroy()`           |     -      |     -     | Destroy the player                |
 
-Example of a video muted when the player is ready.
+Example of the media duration recovered when the player is ready.
 
 ```javascript
-const vlitePlayer = new vlitejs('#player', {
+new Vlitejs('#player', {
   onReady: (player) => {
-    player.mute();
+    player.getDuration().then((duration) => {});
   }
 });
 ```
 
-Example of a video muted when the button `.btn-mute` is pressed.
+Second example of a video muted when the button `.btn-mute` is pressed.
 
 ```html
 <video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
@@ -267,7 +279,7 @@ Example of a video muted when the button `.btn-mute` is pressed.
 ```
 
 ```js
-const vlitePlayer = new vlitejs('#player');
+const vlitePlayer = new Vlitejs('#player');
 
 document.querySelector('.btn-mute').addEventListener('click', () => {
   vlitePlayer.playerInstance.mute();
@@ -278,13 +290,14 @@ document.querySelector('.btn-mute').addEventListener('click', () => {
 
 The player accepts the following keyboard shortcuts when in focus.
 
-|        Key        | Action                |
-| :---------------: | --------------------- |
-| <kbd>space</kbd>  | Toggle playback       |
-| <kbd>&larr;</kbd> | Seek backward (-10s)  |
-| <kbd>&rarr;</kbd> | Seek forward (+10s)   |
-| <kbd>&uarr;</kbd> | Increase volume (+5%) |
-| <kbd>&darr;</kbd> | Decrease volume (-5%) |
+|        Key        | Action                  |
+| :---------------: | ----------------------- |
+| <kbd>space</kbd>  | Toggle playback         |
+|  <kbd>Esc</kbd>   | Exit the fullscreen     |
+| <kbd>&larr;</kbd> | Seek backward of `10s`  |
+| <kbd>&rarr;</kbd> | Seek forward of `10s`   |
+| <kbd>&uarr;</kbd> | Increase volume of `5%` |
+| <kbd>&darr;</kbd> | Decrease volume of `5%` |
 
 ## Browser support
 
@@ -306,3 +319,5 @@ Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the `vLite
 ## Licence
 
 `vLitejs` is licensed under the [MIT License](https://opensource.org/licenses/MIT). Created with &#9825; by [@yoriiis](http://github.com/yoriiis).
+
+TODO: Parler des SVG ?
