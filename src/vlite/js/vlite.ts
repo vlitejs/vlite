@@ -125,26 +125,14 @@ class vlitejs {
 			this.element.autoplay = true
 		}
 
-		if (this.element.hasAttribute('playsinline')) {
-			options.playsinline = true
-		} else if (options.playsinline) {
-			this.element.setAttribute('playsinline', '')
-			this.element.setAttribute('webkit-playsinline', '')
-		}
-
-		if (this.element.hasAttribute('muted')) {
-			options.muted = true
-		} else if (options.muted) {
-			this.element.setAttribute('muted', '')
-			this.element.muted = true
-		}
-
-		if (this.element.hasAttribute('loop')) {
-			options.loop = true
-		} else if (options.loop) {
-			this.element.setAttribute('loop', '')
-			this.element.loop = true
-		}
+		const domAttributes = ['playsinline', 'muted', 'loop']
+		domAttributes.forEach((item) => {
+			if (this.element.hasAttribute(item)) {
+				options[item] = true
+			} else if (options[item]) {
+				this.element.setAttribute(item, '')
+			}
+		})
 
 		this.options = { ...DEFAULT_OPTIONS[this.type], ...options }
 		this.autoHideGranted =
