@@ -40,6 +40,9 @@ jobs:
       - name: Test Typescript
         run: npm run test:type-check
 
+      - name: Test markdown
+        run: npm run test:markdown
+
       - name: Build
         run: npm run build
 
