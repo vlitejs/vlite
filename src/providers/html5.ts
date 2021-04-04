@@ -1,10 +1,30 @@
 import Player from '../vlite/js/player'
+import { playerParameters } from 'shared/assets/interfaces/interfaces'
+
+interface configEvent {
+	type: string
+	listener: EventListener
+}
 
 /**
  * vlitejs Player HTML5
  * @module vlitejs/Player/PlayerHtml5
  */
 export default class PlayerHtml5 extends Player {
+	events: Array<configEvent>
+
+	constructor({ ...args }: playerParameters) {
+		super({ ...args })
+		this.events = [
+			{ type: 'timeupdate', listener: super.onTimeUpdate },
+			{ type: 'ended', listener: super.onVideoEnded },
+			{ type: 'playing', listener: this.onPlaying },
+			{ type: 'waiting', listener: this.onWaiting },
+			{ type: 'seeking', listener: this.onSeeking },
+			{ type: 'seeked', listener: this.onSeeked }
+		]
+	}
+
 	/**
 	 * Initialize the player
 	 */
@@ -31,12 +51,9 @@ export default class PlayerHtml5 extends Player {
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
 	addSpecificEvents() {
-		this.element.addEventListener('timeupdate', super.onTimeUpdate.bind(this))
-		this.element.addEventListener('ended', super.onVideoEnded.bind(this))
-		this.element.addEventListener('playing', this.onPlaying.bind(this))
-		this.element.addEventListener('waiting', this.onWaiting.bind(this))
-		this.element.addEventListener('seeking', this.onSeeking.bind(this))
-		this.element.addEventListener('seeked', this.onSeeked.bind(this))
+		this.events.forEach((event) => {
+			this.element.addEventListener(event.type, event.listener.bind(this))
+		})
 	}
 
 	/**
@@ -149,12 +166,9 @@ export default class PlayerHtml5 extends Player {
 	 * Remove event listeners
 	 */
 	removeSpecificEvents() {
-		this.element.removeEventListener('timeupdate', this.onTimeUpdate)
-		this.element.removeEventListener('playing', this.onPlaying)
-		this.element.removeEventListener('waiting', this.onWaiting)
-		this.element.removeEventListener('seeking', this.onSeeking)
-		this.element.removeEventListener('seeked', this.onSeeked)
-		this.element.removeEventListener('ended', this.onVideoEnded)
+		this.events.forEach((event) => {
+			this.element.removeEventListener(event.type, event.listener)
+		})
 	}
 
 	/**
