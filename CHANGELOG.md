@@ -14,10 +14,10 @@
 - Add Audio provider
 - Add subtitle plugin
 - Add Picture-in-Picture plugin
-- Add Provider API
-- Add Plugin API
+- Add a provider API
+- Add a plugin API
 - Add `sample-provider.js` and `sample-plugin.js`
-- Add events dispatch on media actions (`play`, `pause`, etc.)
+- Adds events fired on media actions (`play`, `pause`, etc.)
 - Add A11Y compatibility (`<button>`, `<input type="range">`, `aria-*`, `:focus-visible`)
 - Add the volume up/down shortcuts
 - Update DOM attributes from options and vice versa (`autoplay`, `playsinline`, `muted`, `loop`)

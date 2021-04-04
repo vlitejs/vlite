@@ -2,7 +2,7 @@ if (typeof window.Vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
-let sampleQueue = []
+let providerQueue = []
 const providerObjectName = 'Sample'
 
 /**
@@ -14,15 +14,7 @@ class SampleProvider extends window.Vlitejs.Player {
 	 * Initialize the player when the API is ready
 	 */
 	init() {
-		this.waitUntilVideoIsReady()
-			.then(() => {
-				super.onPlayerReady()
-
-				// Return the player instance to vlitejs
-				// The context is exposed into the onReady callback function
-				return this
-			})
-			.catch(() => sampleQueue.push(this))
+		this.waitUntilVideoIsReady().then(super.onPlayerReady.bind(this))
 	}
 
 	/**
@@ -33,17 +25,20 @@ class SampleProvider extends window.Vlitejs.Player {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the player if the API is already available or reject
 			if (typeof window[providerObjectName] !== 'undefined') {
-				this.initSamplePlayer().then(resolve)
+				this.initPlayer().then(resolve)
 			} else {
-				reject()
+				// Push the instance to the queue to initialize it later
+				providerQueue.push(this)
 			}
 		})
 	}
 
 	/**
-	 * Initialize the player
+	 * Initialize the player with the provider API/SDK
+	 * The promise is resolved when the player is instanciated and ready
+	 * @returns {Promise} The player is instanciated
 	 */
-	initSamplePlayer() {
+	initPlayer() {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the Player with the API
 			// Resolve the promise when the player is ready
@@ -54,7 +49,7 @@ class SampleProvider extends window.Vlitejs.Player {
 
 	/**
 	 * Get the player instance
-	 * @returns {Object} Youtube API instance
+	 * @returns {Object} Player API instance
 	 */
 	getInstance() {
 		return this.instancePlayer
@@ -113,14 +108,14 @@ class SampleProvider extends window.Vlitejs.Player {
 	}
 
 	/**
-	 * Remove the Youtube instance
+	 * Remove the player instance
 	 */
 	removeInstance() {
 		this.instancePlayer.destroy()
 	}
 }
 
-// Load the player API if it is not available
+// Load the player API/SDK if it is not available
 if (typeof window[providerObjectName] === 'undefined') {
 	const script = document.createElement('script')
 	script.async = true
@@ -128,10 +123,10 @@ if (typeof window[providerObjectName] === 'undefined') {
 	script.src = 'PROVIDER_API_URL'
 	script.onload = () => {
 		// Run the queue when the provider API is ready
-		sampleQueue.forEach((itemClass) => {
-			itemClass.initSamplePlayer().then(() => itemClass.onPlayerReady())
+		providerQueue.forEach((itemClass) => {
+			itemClass.initPlayer().then(() => itemClass.onPlayerReady())
 		})
-		sampleQueue = []
+		providerQueue = []
 	}
 	document.getElementsByTagName('body')[0].appendChild(script)
 }

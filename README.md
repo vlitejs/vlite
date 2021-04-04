@@ -17,7 +17,7 @@ HTML5 video and audio players are automatically included. Other providers like Y
 - If you need specific behaviors, the plugin API allows to extends the library capabilities.
 - If you need to create a video or audio player with a custom skin harmonized for all web browsers.
 
-Bundle sizes of `vLitejs` compared to the competition:
+`vLitejs` bundle sizes of compared to the competition:
 
 |              | vLitejs |  Plyr  | Videojs |
 | ------------ | :-----: | :----: | :-----: |
@@ -38,6 +38,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
 - [**Events**](#Events) - Standardized events for all web browsers and providers.
+- **Autoload API** - Youtube and Vimeo API are automatically loaded by their provider.
 - **Subtitles** - Supports multiple subtitle tracks (VTT).
 - **Picture-in-Picture** - Supports Picture-in-Picture API.
 - **Playsinline** - Supports the `playsinline` attribute.
@@ -63,7 +64,7 @@ yarn add vlitejs  --dev
 
 ### CDN
 
-You can also download and include with a script tag. The library will be registered as the global variable `window.Vlitejs`
+You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`
 
 ```html
 <link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
@@ -319,5 +320,3 @@ Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the `vLite
 ## Licence
 
 `vLitejs` is licensed under the [MIT License](https://opensource.org/licenses/MIT). Created with &#9825; by [@yoriiis](http://github.com/yoriiis).
-
-TODO: Parler des SVG ?
