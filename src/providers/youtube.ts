@@ -126,14 +126,6 @@ class PlayerYoutube extends window.vlitejs.Player {
 	}
 
 	/**
-	 * Set the new current time for the player
-	 * @param {Number} Current time video
-	 */
-	setCurrentTime(newTime: number) {
-		this.instancePlayer.seekTo(newTime)
-	}
-
-	/**
 	 * Get the player duration
 	 * @returns {Promise<number>} Duration of the video
 	 */
@@ -183,6 +175,14 @@ class PlayerYoutube extends window.vlitejs.Player {
 	 */
 	methodUnMute() {
 		this.instancePlayer.unMute()
+	}
+
+	/**
+	 * Set the new current time for the player
+	 * @param {Number} Current time video
+	 */
+	methodSeekTo(newTime: number) {
+		this.instancePlayer.seekTo(newTime)
 	}
 
 	/**

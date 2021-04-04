@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>vLitejs</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>vLitejs - Audio</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<link rel="stylesheet" href="../../dist/vlite.css" />
 </head>
 <body>
@@ -20,8 +20,21 @@
 				volume: true,
 			},
 			onReady: (player) => {
-				//Ready
-			}
+                console.log(player)
+
+				player.container.addEventListener('play', () => console.log('play'))
+				player.container.addEventListener('pause', () => console.log('pause'))
+				player.container.addEventListener('ended', () => console.log('ended'))
+				player.container.addEventListener('progress', () => console.log('progress'))
+				player.container.addEventListener('volumechange', () => console.log('volumechange'))
+				player.container.addEventListener('timeupdate', () => console.log('timeupdate'))
+				player.container.addEventListener('enterfullscreen', () => console.log('enterfullscreen'))
+				player.container.addEventListener('exitfullscreen', () => console.log('exitfullscreen'))
+				player.container.addEventListener('enterpip', () => console.log('enterpip'))
+				player.container.addEventListener('leavepip', () => console.log('leavepip'))
+				player.container.addEventListener('trackenabled', () => console.log('trackenabled'))
+				player.container.addEventListener('trackdisabled', () => console.log('trackdisabled'))
+            }
 		});
 	</script>
 </body>

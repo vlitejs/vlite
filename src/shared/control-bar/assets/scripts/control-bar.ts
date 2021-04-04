@@ -123,7 +123,7 @@ export default class ControlBar {
 
 		this.playerInstance.getDuration().then((duration: number) => {
 			const target = e.target as HTMLInputElement
-			this.playerInstance.setCurrentTime((parseInt(target.value) * duration) / 100)
+			this.playerInstance.seekTo((parseInt(target.value) * duration) / 100)
 		})
 	}
 

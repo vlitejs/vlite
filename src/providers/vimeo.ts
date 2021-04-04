@@ -1,3 +1,5 @@
+import { playerParameters } from 'shared/assets/interfaces/interfaces'
+
 declare global {
 	interface Window {
 		vlitejs: {
@@ -7,6 +9,11 @@ declare global {
 			Player: any
 		}
 	}
+}
+
+interface configEvent {
+	type: string
+	listener: EventListener
 }
 
 if (typeof window.vlitejs === 'undefined') {
@@ -22,6 +29,19 @@ let vimeoQueue: Array<any> = []
  */
 class PlayerVimeo extends window.vlitejs.Player {
 	instancePlayer: any
+	events: Array<configEvent>
+
+	constructor({ ...args }: playerParameters) {
+		super({ ...args })
+		this.events = [
+			{ type: 'timeupdate', listener: super.onTimeUpdate },
+			{ type: 'ended', listener: super.onVideoEnded },
+			{ type: 'playing', listener: this.onPlaying },
+			{ type: 'waiting', listener: this.onWaiting },
+			{ type: 'seeking', listener: this.onSeeking },
+			{ type: 'seeked', listener: this.onSeeked }
+		]
+	}
 
 	/**
 	 * Initialize the player when the API is ready
@@ -67,12 +87,9 @@ class PlayerVimeo extends window.vlitejs.Player {
 	 * All listeners are created on class properties to facilitate the deletion of events
 	 */
 	addSpecificEvents() {
-		this.instancePlayer.on('timeupdate', this.onTimeUpdate.bind(this))
-		this.instancePlayer.on('ended', this.onVideoEnded.bind(this))
-		this.instancePlayer.on('playing', this.onPlaying.bind(this))
-		this.instancePlayer.on('waiting', this.onWaiting.bind(this))
-		this.instancePlayer.on('seeking', this.onSeeking.bind(this))
-		this.instancePlayer.on('seeked', this.onSeeked.bind(this))
+		this.events.forEach((event) => {
+			this.instancePlayer.on(event.type, event.listener.bind(this))
+		})
 	}
 
 	/**
@@ -91,14 +108,6 @@ class PlayerVimeo extends window.vlitejs.Player {
 		return new window.Promise((resolve) => {
 			this.instancePlayer.getCurrentTime().then((seconds: number) => resolve(seconds))
 		})
-	}
-
-	/**
-	 * Set the new current time for the player
-	 * @param {Number} Current time video
-	 */
-	setCurrentTime(newTime: number) {
-		this.instancePlayer.setCurrentTime(newTime)
 	}
 
 	/**
@@ -160,6 +169,14 @@ class PlayerVimeo extends window.vlitejs.Player {
 	}
 
 	/**
+	 * Set the new current time for the player
+	 * @param {Number} Current time video
+	 */
+	methodSeekTo(newTime: number) {
+		this.instancePlayer.setCurrentTime(newTime)
+	}
+
+	/**
 	 * Function executed when the video is waiting
 	 */
 	onWaiting() {
@@ -191,12 +208,9 @@ class PlayerVimeo extends window.vlitejs.Player {
 	 * Remove event listeners
 	 */
 	removeSpecificEvents() {
-		this.instancePlayer.off('timeupdate', this.onTimeUpdate)
-		this.instancePlayer.off('playing', this.onPlaying)
-		this.instancePlayer.off('waiting', this.onWaiting)
-		this.instancePlayer.off('seeking', this.onSeeking)
-		this.instancePlayer.off('seeked', this.onSeeked)
-		this.instancePlayer.off('ended', this.onVideoEnded)
+		this.events.forEach((event) => {
+			this.instancePlayer.on(event.type, event.listener)
+		})
 	}
 
 	/**

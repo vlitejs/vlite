@@ -71,8 +71,8 @@ export default class Player {
 		throw new Error('You have to implement the function "getCurrentTime".')
 	}
 
-	setCurrentTime(newTime: number) {
-		throw new Error('You have to implement the function "setCurrentTime".')
+	methodSeekTo(newTime: number) {
+		throw new Error('You have to implement the function "methodSeekTo".')
 	}
 
 	getDuration(): Promise<number> {
@@ -334,8 +334,7 @@ export default class Player {
 	 * @param {Number} newTime New current time of the media element
 	 */
 	seekTo(newTime: number) {
-		this.setCurrentTime(newTime)
-		this.container.dispatchEvent(new CustomEvent('seeked'))
+		this.methodSeekTo(newTime)
 	}
 
 	/**

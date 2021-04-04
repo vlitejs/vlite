@@ -233,22 +233,21 @@ player.container.addEventListener('play', () => {
 
 The player instance exposed the following methods:
 
-| Method                | Parameters |  Promise  | Description                    |
-| --------------------- | :--------: | :-------: | ------------------------------ |
-| `play()`              |     -      |     -     | Start the playback             |
-| `pause()`             |     -      |     -     | Pause the playback             |
-| `setVolume()`         |  `Number`  |     -     | Set the volume between 0 and 1 |
-| `getVolume()`         |     -      | `Promise` | Get the volume                 |
-| `setCurrentTime()`    |  `Number`  |     -     | Set the current time in ms     |
-| `getCurrentTime()`    |     -      | `Promise` | Get the current time           |
-| `getDuration()`       |     -      | `Promise` | Get the duration               |
-| `mute()`              |     -      |     -     | Mute the volume                |
-| `unMmute()`           |     -      |     -     | Unmute the volume              |
-| `seekTo(newTime)`     |  `Number`  |     -     | Seek to a current time in ms   |
-| `requestFullscreen()` |     -      |     -     | Request the fullscreen         |
-| `exitFullscreen()`    |     -      |     -     | Exit the fullscreen            |
-| `getInstance()`       |     -      |     -     | Get the player instance        |
-| `destroy()`           |     -      |     -     | Destroy the player             |
+| Method                | Parameters |  Promise  | Description                       |
+| --------------------- | :--------: | :-------: | --------------------------------- |
+| `play()`              |     -      |     -     | Start the playback                |
+| `pause()`             |     -      |     -     | Pause the playback                |
+| `setVolume()`         |  `Number`  |     -     | Set the volume between 0 and 1    |
+| `getVolume()`         |     -      | `Promise` | Get the volume                    |
+| `getCurrentTime()`    |     -      | `Promise` | Get the current time              |
+| `getDuration()`       |     -      | `Promise` | Get the duration                  |
+| `mute()`              |     -      |     -     | Mute the volume                   |
+| `unMmute()`           |     -      |     -     | Unmute the volume                 |
+| `seekTo(newTime)`     |  `Number`  |     -     | Seek to a current time in seconds |
+| `requestFullscreen()` |     -      |     -     | Request the fullscreen            |
+| `exitFullscreen()`    |     -      |     -     | Exit the fullscreen               |
+| `getInstance()`       |     -      |     -     | Get the player instance           |
+| `destroy()`           |     -      |     -     | Destroy the player                |
 
 Example of a video muted when the player is ready.
 

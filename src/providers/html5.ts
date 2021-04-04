@@ -73,14 +73,6 @@ export default class PlayerHtml5 extends Player {
 	}
 
 	/**
-	 * Set the new current time for the player
-	 * @param {Number} Current time video
-	 */
-	setCurrentTime(newTime: number) {
-		this.element.currentTime = newTime
-	}
-
-	/**
 	 * Get the player duration
 	 * @returns {Promise<number>} Duration of the video
 	 */
@@ -132,6 +124,14 @@ export default class PlayerHtml5 extends Player {
 	methodUnMute() {
 		this.element.muted = false
 		this.element.removeAttribute('muted')
+	}
+
+	/**
+	 * Set the new current time for the player
+	 * @param {Number} Current time video
+	 */
+	methodSeekTo(newTime: number) {
+		this.element.currentTime = newTime
 	}
 
 	/**
