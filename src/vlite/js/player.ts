@@ -26,7 +26,6 @@ export default class Player {
 	fullscreenButton: HTMLElement | null
 
 	/**
-	 * Instanciate the constructor
 	 * @constructor
 	 * @param {Object} options
 	 * @param {HTMLElement} options.element Player HTML element

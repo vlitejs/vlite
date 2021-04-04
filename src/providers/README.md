@@ -93,5 +93,3 @@ There are two possible scenario:
 - The API is not available: push the instance into the queue (`providerQueue`)
 
 At the end of the sample file, the queue is processed and each player initialized. Then call the `super.onPlayerReady()` function when the player is ready.
-
-And finally, have fun!
