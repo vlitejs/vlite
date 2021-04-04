@@ -69,3 +69,21 @@ export function getBrowserPrefix(): string {
 		) || ''
 	)
 }
+
+/**
+ * Get CSS transition duration value
+ * @param {HTMLElement} target - Target element to calculate from
+ * @param {Boolean} isMilliseconds - Should the duration be returned in milliseconds or not
+ * @returns {Number} Transition duration in seconds or milliseconds
+ */
+export function getCSSTransitionDuration({
+	target,
+	isMilliseconds = false
+}: {
+	target: HTMLElement
+	isMilliseconds: Boolean
+}) {
+	return (
+		parseFloat(window.getComputedStyle(target).transitionDuration) * (isMilliseconds ? 1000 : 1)
+	)
+}

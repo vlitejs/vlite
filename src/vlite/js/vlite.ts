@@ -10,7 +10,7 @@
 
 import Player from './player'
 import validateTarget from 'validate-target'
-import { capitalized, checkSupportFullScreen } from 'shared/utils/utils'
+import { capitalized, checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'
 import LoaderTemplate from 'shared/loader/assets/scripts/loader'
 import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
@@ -289,8 +289,10 @@ class vlitejs {
 			// Forward the media element on arrow right press
 			this.fastForward('forward')
 		} else if (e.keyCode === 38) {
+			this.animateVolumeButton()
 			this.increaseVolume()
 		} else if (e.keyCode === 40) {
+			this.animateVolumeButton()
 			this.decreaseVolume()
 		}
 	}
@@ -354,6 +356,22 @@ class vlitejs {
 		const volume = this.playerInstance.getVolume().then((volume: number) => {
 			this.playerInstance.setVolume(volume - 0.05)
 		})
+	}
+
+	/**
+	 * Animate the volume button in CSS
+	 */
+	animateVolumeButton() {
+		const volumeButton = this.container.querySelector('.v-volumeButton') as HTMLElement
+
+		if (volumeButton) {
+			const duration = getCSSTransitionDuration({
+				target: volumeButton,
+				isMilliseconds: true
+			})
+			volumeButton.classList.add('v-animate')
+			setTimeout(() => volumeButton.classList.remove('v-animate'), duration)
+		}
 	}
 
 	/**

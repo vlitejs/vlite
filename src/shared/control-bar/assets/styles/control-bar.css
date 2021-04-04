@@ -98,6 +98,8 @@
 	}
 
 	&-volumeButton {
+		transition: transform var(--transition250msEase), opacity var(--transition250msEase);
+
 		&:not(.v-pressed) {
 			.v-iconVolumeHigh {
 				display: block;
@@ -108,6 +110,10 @@
 			.v-iconVolumeMute {
 				display: block;
 			}
+		}
+
+		&.v-animate {
+			transform: translateY(-3px);
 		}
 	}
 
