@@ -7,12 +7,12 @@
 	<link rel="stylesheet" href="../../dist/vlite.css" />
 </head>
 <body>
-	<div id="player-vimeo1" class="vlite-js" data-vimeo-id="1084537"></div>
+	<div id="player-vimeo" class="vlite-js" data-vimeo-id="1084537"></div>
 	<script src="../../dist/vlite.js"></script>
 	<script src="../../dist/providers/vimeo.js"></script>
 	<script>
 		Vlitejs.registerProvider('vimeo', VlitejsVimeo)
-		new Vlitejs('#player-vimeo1', {
+		new Vlitejs('#player-vimeo', {
 			options: {
 				autoplay: false,
 				controls: true,
@@ -30,18 +30,14 @@
 			onReady: (player) => {
                 console.log(player)
 
-				player.container.addEventListener('play', () => console.log('play'))
-				player.container.addEventListener('pause', () => console.log('pause'))
-				player.container.addEventListener('ended', () => console.log('ended'))
-				player.container.addEventListener('progress', () => console.log('progress'))
-				player.container.addEventListener('volumechange', () => console.log('volumechange'))
-				player.container.addEventListener('timeupdate', () => console.log('timeupdate'))
-				player.container.addEventListener('enterfullscreen', () => console.log('enterfullscreen'))
-				player.container.addEventListener('exitfullscreen', () => console.log('exitfullscreen'))
-				player.container.addEventListener('enterpip', () => console.log('enterpip'))
-				player.container.addEventListener('leavepip', () => console.log('leavepip'))
-				player.container.addEventListener('trackenabled', () => console.log('trackenabled'))
-				player.container.addEventListener('trackdisabled', () => console.log('trackdisabled'))
+				player.container.addEventListener('play', () => console.log('play'));
+				player.container.addEventListener('pause', () => console.log('pause'));
+				player.container.addEventListener('ended', () => console.log('ended'));
+				player.container.addEventListener('progress', () => console.log('progress'));
+				player.container.addEventListener('volumechange', () => console.log('volumechange'));
+				player.container.addEventListener('timeupdate', () => console.log('timeupdate'));
+				player.container.addEventListener('enterfullscreen', () => console.log('enterfullscreen'));
+				player.container.addEventListener('exitfullscreen', () => console.log('exitfullscreen'));
             }
 		});
 	</script>
