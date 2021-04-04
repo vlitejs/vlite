@@ -1,11 +1,9 @@
 :root {
 	--heightControlBar: 50px;
 	--heightProgressBar: 5px;
-	--heightProgressBarHover: 5px;
 	--offsetLeftRightControlBar: 10px;
 	--backgroundControlBar: linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%);
 	--colorControl: #fff;
-	--colorGradient: linear-gradient(135deg, #ff0053, #ee5b35);
 	--defaultControlsOpacity: 0.9;
 	--controlIconWidth: 28px;
 	--controlIconHeight: 28px;
