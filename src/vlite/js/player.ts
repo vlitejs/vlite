@@ -1,6 +1,6 @@
 // Import SVG icons
 import { formatVideoTime } from 'shared/utils/utils'
-import { Options } from 'shared/assets/interfaces/interfaces'
+import { Options, playerParameters } from 'shared/assets/interfaces/interfaces'
 
 /**
  * vlitejs Player
@@ -31,21 +31,10 @@ export default class Player {
 	 * @param {Object} options
 	 * @param {HTMLElement} options.element Player HTML element
 	 * @param {HTMLElement} options.container Player HTML container
+	 * @param {Object} options.options Player options
 	 * @param {Class} options.vliteInstance vlitejs instance
-	 * @param {Object} options Player options
 	 */
-	constructor({
-		element,
-		container,
-		options,
-		vliteInstance
-	}: {
-		element: HTMLAudioElement | HTMLVideoElement
-		container: HTMLElement
-		options: Options
-		onCallbackReady: Function
-		vliteInstance: any
-	}) {
+	constructor({ element, container, options, vliteInstance }: playerParameters) {
 		this.element = element
 		this.container = container as HTMLElement
 		this.options = options

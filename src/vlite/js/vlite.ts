@@ -16,15 +16,17 @@ import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
 import PosterTemplate from 'shared/poster/assets/scripts/poster'
 import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
-import {
-	interfaceDefaultOptions,
-	Options,
-	FullScreenSupport
-} from 'shared/assets/interfaces/interfaces'
+import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
 import { registerProvider, getProviderInstance } from '../../providers/provider'
 import { getPluginInstance, registerPlugin, initializePlugins } from '../../plugins/plugin'
 
 type TimerHandle = number
+
+export interface interfaceDefaultOptions {
+	[key: string]: {
+		[key: string]: any
+	}
+}
 
 const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
@@ -118,17 +120,12 @@ class vlitejs {
 		this.supportFullScreen = checkSupportFullScreen()
 
 		// Update config from element attributes
-		if (this.element.hasAttribute('autoplay')) {
-			options.autoplay = true
-		} else if (options.autoplay) {
-			this.element.setAttribute('autoplay', '')
-			this.element.autoplay = true
-		}
-
-		const domAttributes = ['playsinline', 'muted', 'loop']
-		domAttributes.forEach((item) => {
+		const domAttributes: Array<string> = ['autoplay', 'playsinline', 'muted', 'loop']
+		domAttributes.forEach((item: string) => {
 			if (this.element.hasAttribute(item)) {
+				// @ts-ignore
 				options[item] = true
+				// @ts-ignore
 			} else if (options[item]) {
 				this.element.setAttribute(item, '')
 			}

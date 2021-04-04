@@ -1,5 +1,5 @@
 import svgPip from 'shared/assets/svgs/pip.svg'
-import { Options } from 'shared/assets/interfaces/interfaces'
+import { Options, playerParameters } from 'shared/assets/interfaces/interfaces'
 
 interface Player {
 	container: HTMLElement
@@ -8,21 +8,29 @@ interface Player {
 }
 
 export default class PiP {
-	player: Player
-	video: HTMLVideoElement
+	element: HTMLAudioElement | HTMLVideoElement
+	container: HTMLElement
+	options: Options
+	vliteInstance: any
 	pipButton!: HTMLElement
 
 	providers = ['html5']
 	types = ['video']
 
 	/**
+	 * Instanciate the constructor
 	 * @constructor
 	 * @param {Object} options
-	 * @param {Class} options.player Player class instance
+	 * @param {HTMLElement} options.element Player HTML element
+	 * @param {HTMLElement} options.container Player HTML container
+	 * @param {Object} options.options Player options
+	 * @param {Class} options.vliteInstance vlitejs instance
 	 */
-	constructor({ player }: { player: Player }) {
-		this.player = player
-		this.video = this.player.element
+	constructor({ element, container, options, vliteInstance }: playerParameters) {
+		this.element = element
+		this.container = container
+		this.options = options
+		this.vliteInstance = vliteInstance
 
 		this.onClickOnPipButton = this.onClickOnPipButton.bind(this)
 		this.onEnterPip = this.onEnterPip.bind(this)
@@ -33,10 +41,10 @@ export default class PiP {
 	 * Initialize
 	 */
 	init() {
-		if (this.isPipApiAvailable() && this.player.options.controls) {
+		if (this.isPipApiAvailable() && this.options.controls) {
 			this.render()
 
-			this.pipButton = this.player.container.querySelector('.v-pipButton') as HTMLElement
+			this.pipButton = this.container.querySelector('.v-pipButton') as HTMLElement
 
 			this.addEvents()
 		}
@@ -48,7 +56,7 @@ export default class PiP {
 	 */
 	isPipApiAvailable(): Boolean {
 		return (
-			'pictureInPictureEnabled' in document && !this.video.hasAttribute('disablePictureInPicture')
+			'pictureInPictureEnabled' in document && !this.element.hasAttribute('disablePictureInPicture')
 		)
 	}
 
@@ -56,13 +64,11 @@ export default class PiP {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
 		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
-		const controlBar = this.player.container.querySelector('.v-controlBar')
-		const fullscreenButton = this.player.container.querySelector(
-			'.v-fullscreenButton'
-		) as HTMLElement
+		const controlBar = this.container.querySelector('.v-controlBar')
+		const fullscreenButton = this.container.querySelector('.v-fullscreenButton') as HTMLElement
 
 		if (controlBar) {
 			if (fullscreenButton) {
@@ -78,8 +84,8 @@ export default class PiP {
 	 */
 	addEvents() {
 		this.pipButton.addEventListener('click', this.onClickOnPipButton)
-		this.video.addEventListener('enterpictureinpicture', this.onEnterPip)
-		this.video.addEventListener('leavepictureinpicture', this.onLeavePip)
+		this.element.addEventListener('enterpictureinpicture', this.onEnterPip)
+		this.element.addEventListener('leavepictureinpicture', this.onLeavePip)
 	}
 
 	/**
@@ -90,9 +96,9 @@ export default class PiP {
 		e.preventDefault()
 
 		try {
-			if (this.video !== document.pictureInPictureElement) {
+			if (this.element !== document.pictureInPictureElement) {
 				// @ts-ignore
-				await this.video.requestPictureInPicture()
+				await this.element.requestPictureInPicture()
 			} else {
 				await document.exitPictureInPicture()
 			}
@@ -106,7 +112,7 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onEnterPip(e: Event) {
-		this.player.container.dispatchEvent(new CustomEvent('enterpip'))
+		this.container.dispatchEvent(new CustomEvent('enterpip'))
 	}
 
 	/**
@@ -114,6 +120,6 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onLeavePip(e: Event) {
-		this.player.container.dispatchEvent(new CustomEvent('leavepip'))
+		this.container.dispatchEvent(new CustomEvent('leavepip'))
 	}
 }

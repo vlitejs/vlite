@@ -1,23 +1,15 @@
-// TODO: Centralized all interface here?
-
-export interface interfaceVliteProviders {
-	[key: string]: any
-}
-
-export interface interfaceVlitePlugins {
-	[key: string]: any
-}
-
-export interface interfacePluginsInstance {
-	id: string
-	Plugin: any
-}
-
 export interface FullScreenSupport {
 	requestFn: string
 	cancelFn: string
 	changeEvent: string
 	isFullScreen: string
+}
+
+export interface playerParameters {
+	element: HTMLAudioElement | HTMLVideoElement
+	container: HTMLElement
+	options: Options
+	vliteInstance: any
 }
 
 export interface Options {
@@ -34,15 +26,5 @@ export interface Options {
 	playsinline: Boolean
 	loop: Boolean
 	muted: Boolean
-}
-
-export interface interfaceDefaultOptions {
-	[key: string]: {
-		[key: string]: any
-	}
-}
-
-export interface InsertPosition {
-	selector: string
-	position: string
+	[key: string]: Boolean | null | string
 }

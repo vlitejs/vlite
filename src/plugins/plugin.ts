@@ -1,7 +1,11 @@
-import {
-	interfaceVlitePlugins,
-	interfacePluginsInstance
-} from 'shared/assets/interfaces/interfaces'
+export interface interfaceVlitePlugins {
+	[key: string]: any
+}
+
+export interface interfacePluginsInstance {
+	id: string
+	Plugin: any
+}
 
 const vlitePlugins: interfaceVlitePlugins = {}
 
@@ -65,7 +69,12 @@ export function initializePlugins({
 	playerInstance: any
 }) {
 	getPluginInstance(plugins).forEach(({ id, Plugin }: { id: string; Plugin: any }) => {
-		const plugin = new Plugin({ player: playerInstance })
+		const plugin = new Plugin({
+			element: playerInstance.element,
+			container: playerInstance.container,
+			options: playerInstance.options,
+			vliteInstance: playerInstance.vliteInstance
+		})
 		if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
 			plugin.init()
 		} else {

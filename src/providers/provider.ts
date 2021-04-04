@@ -1,5 +1,8 @@
 import PlayerHtml5 from './html5'
-import { interfaceVliteProviders } from 'shared/assets/interfaces/interfaces'
+
+interface interfaceVliteProviders {
+	[key: string]: any
+}
 
 const vliteProviders: interfaceVliteProviders = {
 	html5: PlayerHtml5
