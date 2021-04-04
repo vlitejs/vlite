@@ -12,6 +12,10 @@ export interface playerParameters {
 	vliteInstance: any
 }
 
+export interface pluginParameter {
+	playerInstance: playerParameters
+}
+
 export interface Options {
 	autoplay: Boolean
 	controls: Boolean

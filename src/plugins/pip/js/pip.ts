@@ -1,36 +1,20 @@
 import svgPip from 'shared/assets/svgs/pip.svg'
-import { Options, playerParameters } from 'shared/assets/interfaces/interfaces'
-
-interface Player {
-	container: HTMLElement
-	element: HTMLVideoElement
-	options: Options
-}
+import { Options, pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 export default class PiP {
-	element: HTMLAudioElement | HTMLVideoElement
-	container: HTMLElement
-	options: Options
-	vliteInstance: any
+	playerInstance: any
 	pipButton!: HTMLElement
 
-	providers = ['html5']
+	providers = ['html5'] // TODO: describe these parameter
 	types = ['video']
 
 	/**
-	 * Instanciate the constructor
 	 * @constructor
 	 * @param {Object} options
-	 * @param {HTMLElement} options.element Player HTML element
-	 * @param {HTMLElement} options.container Player HTML container
-	 * @param {Object} options.options Player options
-	 * @param {Class} options.vliteInstance vlitejs instance
+	 * @param {Class} options.playerInstance Player instance
 	 */
-	constructor({ element, container, options, vliteInstance }: playerParameters) {
-		this.element = element
-		this.container = container
-		this.options = options
-		this.vliteInstance = vliteInstance
+	constructor({ playerInstance }: pluginParameter) {
+		this.playerInstance = playerInstance
 
 		this.onClickOnPipButton = this.onClickOnPipButton.bind(this)
 		this.onEnterPip = this.onEnterPip.bind(this)
@@ -41,10 +25,10 @@ export default class PiP {
 	 * Initialize
 	 */
 	init() {
-		if (this.isPipApiAvailable() && this.options.controls) {
+		if (this.isPipApiAvailable() && this.playerInstance.options.controls) {
 			this.render()
 
-			this.pipButton = this.container.querySelector('.v-pipButton') as HTMLElement
+			this.pipButton = this.playerInstance.container.querySelector('.v-pipButton') as HTMLElement
 
 			this.addEvents()
 		}
@@ -56,7 +40,8 @@ export default class PiP {
 	 */
 	isPipApiAvailable(): Boolean {
 		return (
-			'pictureInPictureEnabled' in document && !this.element.hasAttribute('disablePictureInPicture')
+			'pictureInPictureEnabled' in document &&
+			!this.playerInstance.element.hasAttribute('disablePictureInPicture')
 		)
 	}
 
@@ -64,11 +49,13 @@ export default class PiP {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.playerInstance.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
 		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
-		const controlBar = this.container.querySelector('.v-controlBar')
-		const fullscreenButton = this.container.querySelector('.v-fullscreenButton') as HTMLElement
+		const controlBar = this.playerInstance.container.querySelector('.v-controlBar')
+		const fullscreenButton = this.playerInstance.container.querySelector(
+			'.v-fullscreenButton'
+		) as HTMLElement
 
 		if (controlBar) {
 			if (fullscreenButton) {
@@ -84,8 +71,8 @@ export default class PiP {
 	 */
 	addEvents() {
 		this.pipButton.addEventListener('click', this.onClickOnPipButton)
-		this.element.addEventListener('enterpictureinpicture', this.onEnterPip)
-		this.element.addEventListener('leavepictureinpicture', this.onLeavePip)
+		this.playerInstance.element.addEventListener('enterpictureinpicture', this.onEnterPip)
+		this.playerInstance.element.addEventListener('leavepictureinpicture', this.onLeavePip)
 	}
 
 	/**
@@ -96,9 +83,9 @@ export default class PiP {
 		e.preventDefault()
 
 		try {
-			if (this.element !== document.pictureInPictureElement) {
+			if (this.playerInstance.element !== document.pictureInPictureElement) {
 				// @ts-ignore
-				await this.element.requestPictureInPicture()
+				await this.playerInstance.element.requestPictureInPicture()
 			} else {
 				await document.exitPictureInPicture()
 			}
@@ -112,7 +99,7 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onEnterPip(e: Event) {
-		this.container.dispatchEvent(new CustomEvent('enterpip'))
+		this.playerInstance.container.dispatchEvent(new CustomEvent('enterpip'))
 	}
 
 	/**
@@ -120,6 +107,6 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onLeavePip(e: Event) {
-		this.container.dispatchEvent(new CustomEvent('leavepip'))
+		this.playerInstance.container.dispatchEvent(new CustomEvent('leavepip'))
 	}
 }

@@ -70,10 +70,7 @@ export function initializePlugins({
 }) {
 	getPluginInstance(plugins).forEach(({ id, Plugin }: { id: string; Plugin: any }) => {
 		const plugin = new Plugin({
-			element: playerInstance.element,
-			container: playerInstance.container,
-			options: playerInstance.options,
-			vliteInstance: playerInstance.vliteInstance
+			playerInstance
 		})
 		if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
 			plugin.init()
