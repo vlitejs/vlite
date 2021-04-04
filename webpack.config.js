@@ -128,29 +128,30 @@ const generator = ({ entry, library = false, isProduction }) => {
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
+	const libraryName = 'Vlitejs'
 	const configs = []
 
 	const providers = [
 		{
 			entrykey: 'providers/youtube',
-			library: 'vlitejsYoutube',
+			library: `${libraryName}Youtube`,
 			path: './src/providers/youtube'
 		},
 		{
 			entrykey: 'providers/vimeo',
-			library: 'vlitejsVimeo',
+			library: `${libraryName}Vimeo`,
 			path: './src/providers/vimeo'
 		}
 	]
 	const plugins = [
 		{
 			entrykey: 'plugins/subtitle',
-			library: 'vlitejsSubtitle',
+			library: `${libraryName}Subtitle`,
 			path: './src/plugins/subtitle/config'
 		},
 		{
 			entrykey: 'plugins/pip',
-			library: 'vlitejsPip',
+			library: `${libraryName}Pip`,
 			path: './src/plugins/pip/config'
 		}
 	]
@@ -179,7 +180,7 @@ module.exports = (env, argv) => {
 			entry: {
 				vlite: './src/vlite/config.js'
 			},
-			library: 'vlitejs',
+			library: 'Vlitejs',
 			isProduction
 		}),
 		generator({

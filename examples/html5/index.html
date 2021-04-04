@@ -13,10 +13,10 @@
 	<script src="../../dist/plugins/subtitle.js"></script>
 	<script src="../../dist/plugins/pip.js"></script>
 	<script>
-		vlitejs.registerPlugin('subtitle', vlitejsSubtitle);
-		vlitejs.registerPlugin('pip', vlitejsPip);
+		Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
+		Vlitejs.registerPlugin('pip', VlitejsPip);
 
-		const myVlite = new vlitejs('#player-html5', {
+		new Vlitejs('#player-html5', {
 			options: {
 				autoplay: false,
 				controls: true,

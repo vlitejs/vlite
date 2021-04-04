@@ -1,6 +1,6 @@
 declare global {
 	interface Window {
-		vlitejs: {
+		Vlitejs: {
 			Player: any
 		}
 		YT: {
@@ -17,7 +17,7 @@ declare global {
 	}
 }
 
-if (typeof window.vlitejs === 'undefined') {
+if (typeof window.Vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
@@ -28,7 +28,7 @@ let youtubeQueue: Array<any> = []
  * vlitejs Player Youtube
  * @module vlitejs/Player/PlayerYoutube
  */
-class PlayerYoutube extends window.vlitejs.Player {
+class PlayerYoutube extends window.Vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
 	 */

@@ -2,7 +2,7 @@ import { playerParameters } from 'shared/assets/interfaces/interfaces'
 
 declare global {
 	interface Window {
-		vlitejs: {
+		Vlitejs: {
 			Player: any
 		}
 		Vimeo: {
@@ -16,7 +16,7 @@ interface configEvent {
 	listener: EventListener
 }
 
-if (typeof window.vlitejs === 'undefined') {
+if (typeof window.Vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library "vlitejs" is not available.')
 }
 
@@ -27,7 +27,7 @@ let vimeoQueue: Array<any> = []
  * vlitejs Player Vimeo
  * @module vlitejs/Player/PlayerVimeo
  */
-class PlayerVimeo extends window.vlitejs.Player {
+class PlayerVimeo extends window.Vlitejs.Player {
 	instancePlayer: any
 	events: Array<configEvent>
 

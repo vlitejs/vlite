@@ -4,6 +4,7 @@
 
 ### ⚠ Breaking changes
 
+- Rename `vlitejs` to `Vlitejs` to make sure the constructor name starts with a capital
 - Remove `nativeControlsForTouch`
 - Remove `data-options` DOM attributes in favor of options from the JS constructor
 

@@ -1,4 +1,4 @@
-if (typeof window.vlitejs === 'undefined') {
+if (typeof window.Vlitejs === 'undefined') {
 	throw new Error('vlitejs :: The library is not available.')
 }
 
@@ -9,7 +9,7 @@ const providerObjectName = 'Sample'
  * vlitejs Sample provider
  * @module vlitejs/Player/SampleProvider
  */
-class SampleProvider extends window.vlitejs.Player {
+class SampleProvider extends window.Vlitejs.Player {
 	/**
 	 * Initialize the player when the API is ready
 	 */
