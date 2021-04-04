@@ -4,11 +4,35 @@
 
 ### ⚠ Breaking changes
 
+- Remove `nativeControlsForTouch`
+- Remove `data-options` DOM attributes in favor of options from the JS constructor
+
 ### New features
+
+- Add Vimeo provider
+- Add Audio provider
+- Add subtitle plugin
+- Add Picture-in-Picture plugin
+- Add Provider API
+- Add Plugin API
+- Add `sample-provider.js` and `sample-plugin.js`
+- Add events dispatch on media actions (`play`, `pause`, etc.)
+- Add A11Y compatibility (`<button>`, `<input type="range">`, `aria-*`, `:focus-visible`)
+- Add the volume up/down shortcuts
+- Update DOM attributes from options and vice versa (`autoplay`, `playsinline`, `muted`, `loop`)
+- Add Typescript
 
 ### Updates
 
-### Removes
+- Replace Travis by GitHub Action
+- Update to webpack v5
+- Update Babel config and `.browserslistrc`
+- Move `formatVideoTime`, `checkSupportFullScreen`, `isTouch` to utils
+- Split code into components (`loader`, `overlay`, `big-play`, `poster`, `control-bar`)
+
+### Fixes
+
+- Fix the `loop` and `muted` attributes
 
 ## 3.0.4
 
