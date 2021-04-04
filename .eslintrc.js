@@ -32,7 +32,6 @@ module.exports = {
 	globals: {
 		document: false,
 		navigator: false,
-		window: false,
-		vlitejs: false
+		window: false
 	}
 }
