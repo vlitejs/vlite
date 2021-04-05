@@ -10,6 +10,7 @@
 
 ### New features
 
+- New design and new icons
 - Add Vimeo provider
 - Add Audio provider
 - Add subtitle plugin

@@ -8,7 +8,6 @@ export default class ControlBar {
 	options: Options
 	type: string
 	playerInstance: any
-	player: HTMLAudioElement | HTMLVideoElement
 	controlBar: HTMLElement | null
 	progressBar: HTMLElement | null
 	volumeButton: HTMLElement | null
@@ -44,9 +43,6 @@ export default class ControlBar {
 		this.volumeButton = null
 		this.fullscreenButton = null
 		this.durationElement = null
-
-		// @ts-ignore: Object is possibly 'null'.
-		this.player = this.container.querySelector('.vlite-js')
 
 		this.onInputProgressBar = this.onInputProgressBar.bind(this)
 		this.onChangeProgressBar = this.onChangeProgressBar.bind(this)
