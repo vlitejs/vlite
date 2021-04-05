@@ -49,6 +49,9 @@ jobs:
       - name: Build example
         run: npm run build:example
 
+      - name: Build gh-pages
+        run: npm run build:gh-pages
+
       - name: Create demo
         run: npm run create:demo
 
@@ -59,7 +62,7 @@ jobs:
             github.event_name != 'pull_request'
         with:
           name: demo
-          path: demo
+          path: gh-pages/dist
 
   deploy-gh-pages:
     runs-on: ubuntu-latest
@@ -76,13 +79,15 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: demo
-          path: demo
+          # The path is mandatory with actions/download-artifact@v2
+          # https://github.com/actions/download-artifact#compatibility-between-v1-and-v2
+          path: gh-pages/dist
 
       - name: Deploy to Github Pages
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: site
+          build_dir: gh-pages/dist
           keep_history: true
           commit_message: "Deploy to GitHub pages"
         env:

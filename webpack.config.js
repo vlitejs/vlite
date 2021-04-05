@@ -185,12 +185,6 @@ module.exports = (env, argv) => {
 			library: 'Vlitejs',
 			isProduction
 		}),
-		generator({
-			entry: {
-				'demo/demo': './src/demo/config.js'
-			},
-			isProduction
-		}),
 		...configsProviders,
 		...configsPlugins
 	)

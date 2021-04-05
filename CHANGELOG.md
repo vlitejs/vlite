@@ -18,7 +18,7 @@
 - Add a provider API
 - Add a plugin API
 - Add `sample-provider.js` and `sample-plugin.js`
-- Adds events fired on media actions (`play`, `pause`, etc.)
+- Adds custom events fired on media actions (`play`, `pause`, etc.)
 - Add A11Y compatibility (`<button>`, `<input type="range">`, `aria-*`, `:focus-visible`)
 - Add the volume up/down shortcuts
 - Update DOM attributes from options and vice versa (`autoplay`, `playsinline`, `muted`, `loop`)
