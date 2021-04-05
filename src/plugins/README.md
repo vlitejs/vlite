@@ -77,12 +77,15 @@ Here are some points to help you in your development:
 
 `vLitejs` will automatically expose on the plugin constructor the player instance in the `player` variable to allow you full access to the player. The player instance gives access to the following data:
 
-| Arguments          |     Type      | Description                                      |
-| ------------------ | :-----------: | ------------------------------------------------ |
-| `player.element`   | `HTMLElement` | Media element                                    |
-| `player.container` | `HTMLElement` | Container of the media element                   |
-| `player.options`   |   `Object`    | [Player options](../../README.md#Player-options) |
-| `player.vlitejs`   |    `Class`    | `vLitejs` instance                               |
+| Arguments             |      Type       | Description                                         |
+| --------------------- | :-------------: | --------------------------------------------------- |
+| `player.element`      |  `HTMLElement`  | Media element                                       |
+| `player.container`    |  `HTMLElement`  | Container of the media element                      |
+| `player.options`      |    `Object`     | [Player options](../../README.md#Player-options)    |
+| `player.isFullScreen` |    `Boolean`    | Is the player in fullscreen mode                    |
+| `player.isMuted`      |    `Boolean`    | Is the player muted                                 |
+| `player.isPaused`     | `null\|Boolean` | Is the player paused (`null` before the first play) |
+| `player.vlitejs`      |     `Class`     | `vLitejs` instance                                  |
 
 ### Provider and media declaration
 
