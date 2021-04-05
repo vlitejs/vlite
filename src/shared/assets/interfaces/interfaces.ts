@@ -13,7 +13,7 @@ export interface playerParameters {
 }
 
 export interface pluginParameter {
-	playerInstance: playerParameters
+	player: playerParameters
 }
 
 export interface Options {

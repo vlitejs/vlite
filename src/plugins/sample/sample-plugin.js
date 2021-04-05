@@ -2,10 +2,10 @@ export default class SamplePlugin {
 	/**
 	 * @constructor
 	 * @param {Object} options
-	 * @param {Class} options.playerInstance Player instance
+	 * @param {Class} options.player Player instance
 	 */
-	constructor({ playerInstance }) {
-		this.playerInstance = playerInstance
+	constructor({ player }) {
+		this.player = player
 	}
 
 	/**

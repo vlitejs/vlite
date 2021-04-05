@@ -2,7 +2,7 @@ import svgPip from 'shared/assets/svgs/pip.svg'
 import { Options, pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 export default class PiP {
-	playerInstance: any
+	player: any
 	pipButton!: HTMLElement
 
 	providers = ['html5'] // TODO: describe these parameter
@@ -11,10 +11,10 @@ export default class PiP {
 	/**
 	 * @constructor
 	 * @param {Object} options
-	 * @param {Class} options.playerInstance Player instance
+	 * @param {Class} options.player Player instance
 	 */
-	constructor({ playerInstance }: pluginParameter) {
-		this.playerInstance = playerInstance
+	constructor({ player }: pluginParameter) {
+		this.player = player
 
 		this.onClickOnPipButton = this.onClickOnPipButton.bind(this)
 		this.onEnterPip = this.onEnterPip.bind(this)
@@ -25,10 +25,10 @@ export default class PiP {
 	 * Initialize
 	 */
 	init() {
-		if (this.isPipApiAvailable() && this.playerInstance.options.controls) {
+		if (this.isPipApiAvailable() && this.player.options.controls) {
 			this.render()
 
-			this.pipButton = this.playerInstance.container.querySelector('.v-pipButton') as HTMLElement
+			this.pipButton = this.player.container.querySelector('.v-pipButton') as HTMLElement
 
 			this.addEvents()
 		}
@@ -41,7 +41,7 @@ export default class PiP {
 	isPipApiAvailable(): Boolean {
 		return (
 			'pictureInPictureEnabled' in document &&
-			!this.playerInstance.element.hasAttribute('disablePictureInPicture')
+			!this.player.element.hasAttribute('disablePictureInPicture')
 		)
 	}
 
@@ -49,11 +49,11 @@ export default class PiP {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.playerInstance.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
 		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
-		const controlBar = this.playerInstance.container.querySelector('.v-controlBar')
-		const fullscreenButton = this.playerInstance.container.querySelector(
+		const controlBar = this.player.container.querySelector('.v-controlBar')
+		const fullscreenButton = this.player.container.querySelector(
 			'.v-fullscreenButton'
 		) as HTMLElement
 
@@ -71,8 +71,8 @@ export default class PiP {
 	 */
 	addEvents() {
 		this.pipButton.addEventListener('click', this.onClickOnPipButton)
-		this.playerInstance.element.addEventListener('enterpictureinpicture', this.onEnterPip)
-		this.playerInstance.element.addEventListener('leavepictureinpicture', this.onLeavePip)
+		this.player.element.addEventListener('enterpictureinpicture', this.onEnterPip)
+		this.player.element.addEventListener('leavepictureinpicture', this.onLeavePip)
 	}
 
 	/**
@@ -83,9 +83,9 @@ export default class PiP {
 		e.preventDefault()
 
 		try {
-			if (this.playerInstance.element !== document.pictureInPictureElement) {
+			if (this.player.element !== document.pictureInPictureElement) {
 				// @ts-ignore
-				await this.playerInstance.element.requestPictureInPicture()
+				await this.player.element.requestPictureInPicture()
 			} else {
 				await document.exitPictureInPicture()
 			}
@@ -99,7 +99,7 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onEnterPip(e: Event) {
-		this.playerInstance.dispatchEvent('enterpip')
+		this.player.dispatchEvent('enterpip')
 	}
 
 	/**
@@ -107,6 +107,6 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onLeavePip(e: Event) {
-		this.playerInstance.dispatchEvent('leavepip')
+		this.player.dispatchEvent('leavepip')
 	}
 }

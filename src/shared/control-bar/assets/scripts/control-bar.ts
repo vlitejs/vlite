@@ -7,7 +7,7 @@ export default class ControlBar {
 	container: HTMLElement
 	options: Options
 	type: string
-	playerInstance: any
+	player: any
 	controlBar: HTMLElement | null
 	progressBar: HTMLElement | null
 	volumeButton: HTMLElement | null
@@ -20,23 +20,23 @@ export default class ControlBar {
 	 * @param {HTMLElement} options.container CSS selector or HTML element
 	 * @param {Object} options.options Player options
 	 * @param {String} options.type Player type (video|audio)
-	 * @param {Class} options.playerInstance Player instance
+	 * @param {Class} options.player Player instance
 	 */
 	constructor({
 		container,
 		options,
 		type,
-		playerInstance
+		player
 	}: {
 		container: HTMLElement
 		options: Options
 		type: string
-		playerInstance: any
+		player: any
 	}) {
 		this.container = container
 		this.options = options
 		this.type = type
-		this.playerInstance = playerInstance
+		this.player = player
 
 		this.controlBar = null
 		this.progressBar = null
@@ -71,10 +71,7 @@ export default class ControlBar {
 				this.durationElement = this.controlBar.querySelector('.v-duration')
 			}
 			if (this.volumeButton) {
-				this.volumeButton.setAttribute(
-					'aria-label',
-					this.playerInstance.isMuted ? 'Unmute' : 'Mute'
-				)
+				this.volumeButton.setAttribute('aria-label', this.player.isMuted ? 'Unmute' : 'Mute')
 			}
 		}
 
@@ -85,7 +82,7 @@ export default class ControlBar {
 	 * On player ready
 	 */
 	onPlayerReady() {
-		this.playerInstance.getDuration().then((duration: number) => {
+		this.player.getDuration().then((duration: number) => {
 			if (this.progressBar) {
 				this.progressBar.setAttribute('aria-valuemax', `${duration}`)
 			}
@@ -112,17 +109,17 @@ export default class ControlBar {
 	 * @param {Object} e Event data
 	 */
 	onInputProgressBar(e: Event) {
-		this.playerInstance.progressBarIsMoving = true
+		this.player.progressBarIsMoving = true
 		const target = e.target as HTMLInputElement
 
 		target.style.setProperty('--value', `${target.value}%`)
-		this.playerInstance
+		this.player
 			.getCurrentTime()
 			.then((seconds: number) => target.setAttribute('aria-valuenow', `${seconds}`))
 
-		this.playerInstance.getDuration().then((duration: number) => {
+		this.player.getDuration().then((duration: number) => {
 			const target = e.target as HTMLInputElement
-			this.playerInstance.seekTo((parseInt(target.value) * duration) / 100)
+			this.player.seekTo((parseInt(target.value) * duration) / 100)
 		})
 	}
 
@@ -130,7 +127,7 @@ export default class ControlBar {
 	 * On change event on the progress bar
 	 */
 	onChangeProgressBar() {
-		this.playerInstance.progressBarIsMoving = false
+		this.player.progressBarIsMoving = false
 	}
 
 	/**
@@ -171,9 +168,7 @@ export default class ControlBar {
 	togglePlayPause(e: Event) {
 		e && e.preventDefault()
 
-		this.container.classList.contains('v-paused')
-			? this.playerInstance.play()
-			: this.playerInstance.pause()
+		this.container.classList.contains('v-paused') ? this.player.play() : this.player.pause()
 	}
 
 	/**
@@ -183,10 +178,10 @@ export default class ControlBar {
 		e.preventDefault()
 
 		if (this.volumeButton!.classList.contains('v-pressed')) {
-			this.playerInstance.unMute()
+			this.player.unMute()
 			this.volumeButton!.setAttribute('aria-label', 'Mute')
 		} else {
-			this.playerInstance.mute()
+			this.player.mute()
 			this.volumeButton!.setAttribute('aria-label', 'Unmute')
 		}
 	}
@@ -197,11 +192,11 @@ export default class ControlBar {
 	toggleFullscreen(e: Event) {
 		e.preventDefault()
 
-		if (this.playerInstance.isFullScreen) {
-			this.playerInstance.exitFullscreen()
+		if (this.player.isFullScreen) {
+			this.player.exitFullscreen()
 			this.fullscreenButton!.setAttribute('aria-label', 'Enter fullscreen')
 		} else {
-			this.playerInstance.requestFullscreen()
+			this.player.requestFullscreen()
 			this.fullscreenButton!.setAttribute('aria-label', 'Exit fullscreen')
 		}
 	}
@@ -214,7 +209,7 @@ export default class ControlBar {
 	getTemplate(): string {
 		return `${Template({
 			options: this.options,
-			isMuted: this.playerInstance.isMuted,
+			isMuted: this.player.isMuted,
 			type: this.type
 		})}`
 	}

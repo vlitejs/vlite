@@ -9,7 +9,7 @@ export interface InsertPosition {
 }
 
 export default class Subtitle {
-	playerInstance: any
+	player: any
 	tracks: Array<TextTrack>
 	activeTrack!: TextTrack | null
 	captions!: HTMLElement
@@ -22,11 +22,11 @@ export default class Subtitle {
 	/**
 	 * @constructor
 	 * @param {Object} options
-	 * @param {Class} options.playerInstance Player instance
+	 * @param {Class} options.player Player instance
 	 */
-	constructor({ playerInstance }: pluginParameter) {
-		this.playerInstance = playerInstance
-		this.tracks = Array.from(this.playerInstance.element.textTracks)
+	constructor({ player }: pluginParameter) {
+		this.player = player
+		this.tracks = Array.from(this.player.element.textTracks)
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
 		this.onClickOnSubtitlesList = this.onClickOnSubtitlesList.bind(this)
@@ -36,18 +36,14 @@ export default class Subtitle {
 	 * Initialize
 	 */
 	init() {
-		if (this.tracks.length && this.playerInstance.options.controls) {
+		if (this.tracks.length && this.player.options.controls) {
 			this.hideTracks()
 
 			this.render()
 
-			this.captions = this.playerInstance.container.querySelector('.v-captions') as HTMLElement
-			this.subtitleButton = this.playerInstance.container.querySelector(
-				'.v-subtitleButton'
-			) as HTMLElement
-			this.subtitlesList = this.playerInstance.container.querySelector(
-				'.v-subtitlesList'
-			) as HTMLElement
+			this.captions = this.player.container.querySelector('.v-captions') as HTMLElement
+			this.subtitleButton = this.player.container.querySelector('.v-subtitleButton') as HTMLElement
+			this.subtitlesList = this.player.container.querySelector('.v-subtitlesList') as HTMLElement
 
 			this.addEvents()
 		}
@@ -64,11 +60,11 @@ export default class Subtitle {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.playerInstance.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
-		const controlBar = this.playerInstance.container.querySelector('.v-controlBar')
+		const controlBar = this.player.container.querySelector('.v-controlBar')
 		const insertPosition = this.getInsertPosition()
-		const targetElement = this.playerInstance.container.querySelector(insertPosition.selector)
+		const targetElement = this.player.container.querySelector(insertPosition.selector)
 		if (controlBar && targetElement) {
 			// @ts-ignore
 			targetElement.insertAdjacentHTML(insertPosition.position as string, this.getTemplate())
@@ -110,13 +106,13 @@ export default class Subtitle {
 	 * @returns {Object} Selector and position for the subtitle button
 	 */
 	getInsertPosition(): InsertPosition {
-		const pipButton = this.playerInstance.container.querySelector('.v-pipButton')
-		if (this.playerInstance.options.progressBar) {
+		const pipButton = this.player.container.querySelector('.v-pipButton')
+		if (this.player.options.progressBar) {
 			return {
 				selector: '.v-progressBar',
 				position: 'afterend'
 			}
-		} else if (this.playerInstance.options.volume) {
+		} else if (this.player.options.volume) {
 			return {
 				selector: '.v-volumeButton',
 				position: 'beforebegin'
@@ -126,7 +122,7 @@ export default class Subtitle {
 				selector: '.v-pipButton',
 				position: 'beforebegin'
 			}
-		} else if (this.playerInstance.options.fullscreen) {
+		} else if (this.player.options.fullscreen) {
 			return {
 				selector: '.v-fullscreenButton',
 				position: 'beforebegin'
@@ -227,7 +223,7 @@ export default class Subtitle {
 
 			!isDisabled && activeCues && activeCues.length && this.addCue(activeCues[0])
 
-			this.playerInstance.dispatchEvent(isDisabled ? 'trackdisabled' : 'trackenabled')
+			this.player.dispatchEvent(isDisabled ? 'trackdisabled' : 'trackenabled')
 		}
 	}
 

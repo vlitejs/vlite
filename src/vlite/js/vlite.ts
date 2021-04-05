@@ -71,7 +71,7 @@ class vlitejs {
 	isPaused: Boolean
 	autoHideGranted: Boolean
 	container: HTMLElement
-	playerInstance: any
+	player: any
 	controlBar: any
 	registerPlugin!: Function
 	registerProvider!: Function
@@ -146,19 +146,19 @@ class vlitejs {
 		this.wrapElement()
 		this.container = this.element.parentNode as HTMLElement
 
-		this.playerInstance = new ProviderInstance({
+		this.player = new ProviderInstance({
 			element: this.element,
 			container: this.container,
 			options: this.options,
 			vlitejs: this
 		})
-		this.playerInstance.init()
+		this.player.init()
 
 		this.controlBar = new ControlBar({
 			container: this.container,
 			options: this.options,
 			type: this.type,
-			playerInstance: this.playerInstance
+			player: this.player
 		})
 
 		this.render()
@@ -168,7 +168,7 @@ class vlitejs {
 			plugins,
 			provider,
 			type: this.type,
-			playerInstance: this.playerInstance
+			player: this.player
 		})
 	}
 
@@ -313,8 +313,8 @@ class vlitejs {
 	 * @param {Object} e Event data
 	 */
 	onChangeFullScreen(e: Event) {
-		if (!document[this.supportFullScreen.isFullScreen] && this.playerInstance.isFullScreen) {
-			this.playerInstance.exitFullscreen({ escKey: true })
+		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {
+			this.player.exitFullscreen({ escKey: true })
 		}
 	}
 
@@ -325,9 +325,7 @@ class vlitejs {
 	togglePlayPause(e: Event | KeyboardEvent) {
 		e.preventDefault()
 
-		this.container.classList.contains('v-paused')
-			? this.playerInstance.play()
-			: this.playerInstance.pause()
+		this.container.classList.contains('v-paused') ? this.player.play() : this.player.pause()
 	}
 
 	/**
@@ -335,8 +333,8 @@ class vlitejs {
 	 * @param {String} direction Direction (backward|forward)
 	 */
 	fastForward(direction: string) {
-		this.playerInstance.getCurrentTime().then((seconds: number) => {
-			this.playerInstance.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
+		this.player.getCurrentTime().then((seconds: number) => {
+			this.player.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
 		})
 	}
 
@@ -344,8 +342,8 @@ class vlitejs {
 	 * Increase the player volume
 	 */
 	increaseVolume() {
-		const volume = this.playerInstance.getVolume().then((volume: number) => {
-			this.playerInstance.setVolume(volume + 0.05)
+		const volume = this.player.getVolume().then((volume: number) => {
+			this.player.setVolume(volume + 0.05)
 		})
 	}
 
@@ -353,8 +351,8 @@ class vlitejs {
 	 * Decrease the player volume
 	 */
 	decreaseVolume() {
-		const volume = this.playerInstance.getVolume().then((volume: number) => {
-			this.playerInstance.setVolume(volume - 0.05)
+		const volume = this.player.getVolume().then((volume: number) => {
+			this.player.setVolume(volume - 0.05)
 		})
 	}
 
@@ -403,7 +401,7 @@ class vlitejs {
 	 */
 	loading(state: Boolean) {
 		this.container.classList[state ? 'add' : 'remove']('v-loading')
-		this.playerInstance.dispatchEvent('progress')
+		this.player.dispatchEvent('progress')
 	}
 
 	/**
@@ -422,7 +420,7 @@ class vlitejs {
 	 */
 	destroy() {
 		this.removeEvents()
-		this.playerInstance.destroy()
+		this.player.destroy()
 		this.controlBar.destroy()
 	}
 }
