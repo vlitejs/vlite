@@ -46,8 +46,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Build examples
-        run: npm run build:examples
+      - name: Build example
+        run: npm run build:example
 
       - name: Create demo
         run: npm run create:demo
