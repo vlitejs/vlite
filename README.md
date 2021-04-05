@@ -39,8 +39,8 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
 - [**Events**](#Events) - Standardized events for all web browsers and providers.
 - **Autoload API** - Youtube and Vimeo API are automatically loaded by their provider.
-- **Subtitles** - Supports multiple subtitle tracks (VTT).
-- **Picture-in-Picture** - Supports Picture-in-Picture API.
+- [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
+- [**Picture-in-Picture**](./src/plugins/pip/README.md) - Supports Picture-in-Picture API.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
