@@ -4,32 +4,28 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
-const generator = ({ entry, library = false, isProduction }) => {
-	const output = {
-		path: path.resolve(__dirname, './dist'),
-		publicPath: '/dist/',
-		filename: '[name].js'
-	}
-	if (library) {
-		output.library = {
-			name: library,
-			type: 'umd',
-			export: 'default'
-		}
-	}
+module.exports = (env, argv) => {
+	const isProduction = argv.mode === 'production'
+
 	return {
 		watch: !isProduction,
-		entry,
+		entry: {
+			html5: './examples/html5/config.js'
+		},
 		watchOptions: {
 			ignored: /node_modules/
 		},
 		devtool: isProduction ? false : 'source-map',
-		output,
+		output: {
+			path: path.resolve(__dirname, './dist'),
+			publicPath: '/dist/',
+			filename: '[name].js'
+		},
 		module: {
 			rules: [
 				{
 					test: /\.js$/,
-					include: path.resolve(__dirname, './src'),
+					include: [path.resolve(__dirname, './'), path.resolve(__dirname, '../dist')],
 					use: [
 						{
 							loader: 'babel-loader'
@@ -38,7 +34,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.ts$/,
-					include: path.resolve(__dirname, './src'),
+					include: [path.resolve(__dirname, './'), path.resolve(__dirname, '../dist')],
 					use: [
 						{
 							loader: 'babel-loader'
@@ -126,73 +122,4 @@ const generator = ({ entry, library = false, isProduction }) => {
 			splitChunks: false
 		}
 	}
-}
-
-module.exports = (env, argv) => {
-	const isProduction = argv.mode === 'production'
-	const libraryName = 'Vlitejs'
-	const configs = []
-
-	const providers = [
-		{
-			entrykey: 'providers/youtube',
-			library: `${libraryName}Youtube`,
-			path: './src/providers/youtube'
-		},
-		{
-			entrykey: 'providers/vimeo',
-			library: `${libraryName}Vimeo`,
-			path: './src/providers/vimeo'
-		}
-	]
-	const plugins = [
-		{
-			entrykey: 'plugins/subtitle',
-			library: `${libraryName}Subtitle`,
-			path: './src/plugins/subtitle/config'
-		},
-		{
-			entrykey: 'plugins/pip',
-			library: `${libraryName}Pip`,
-			path: './src/plugins/pip/config'
-		}
-	]
-
-	const configsProviders = providers.map((provider) =>
-		generator({
-			entry: {
-				[provider.entrykey]: provider.path
-			},
-			library: provider.library,
-			isProduction
-		})
-	)
-	const configsPlugins = plugins.map((plugin) =>
-		generator({
-			entry: {
-				[plugin.entrykey]: plugin.path
-			},
-			library: plugin.library,
-			isProduction
-		})
-	)
-
-	configs.push(
-		generator({
-			entry: {
-				vlite: './src/vlite/config.js'
-			},
-			library: 'Vlitejs',
-			isProduction
-		}),
-		generator({
-			entry: {
-				'demo/demo': './src/demo/config.js'
-			},
-			isProduction
-		}),
-		...configsProviders,
-		...configsPlugins
-	)
-	return configs
 }

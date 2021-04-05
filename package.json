@@ -26,8 +26,10 @@
 	"main": "dist/vlite.js",
 	"scripts": {
 		"build": "rm -rf ./dist/ && webpack --mode=production",
+		"build:example": "rm -rf ./examples/dist/ && webpack --mode=production --config=./examples/webpack.config.js",
 		"create:demo": "mkdir demo",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
+		"start:example": "rm -rf ./examples/dist/ && webpack --mode=development --config=./examples/webpack.config.js",
 		"test:eslint": "eslint ./src --ignore-pattern dist",
 		"test:eslint:fix": "eslint ./src --ignore-pattern dist --fix",
 		"test:markdown": "markdownlint '**/*.md' --ignore node_modules",
