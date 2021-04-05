@@ -75,7 +75,10 @@ export default class ControlBar {
 				this.durationElement = this.controlBar.querySelector('.v-duration')
 			}
 			if (this.volumeButton) {
-				this.volumeButton.setAttribute('aria-label', this.player.muted ? 'Unmute' : 'Mute')
+				this.volumeButton.setAttribute(
+					'aria-label',
+					this.playerInstance.isMuted ? 'Unmute' : 'Mute'
+				)
 			}
 		}
 
@@ -213,7 +216,11 @@ export default class ControlBar {
 	 * @returns {String} Generated HTML
 	 */
 	getTemplate(): string {
-		return `${Template({ options: this.options, isMuted: this.player.muted, type: this.type })}`
+		return `${Template({
+			options: this.options,
+			isMuted: this.playerInstance.isMuted,
+			type: this.type
+		})}`
 	}
 
 	/**

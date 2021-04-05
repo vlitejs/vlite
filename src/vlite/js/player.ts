@@ -13,6 +13,7 @@ export default class Player {
 	vlitejs: any
 	progressBarIsMoving: Boolean
 	isFullScreen: Boolean
+	isMuted: Boolean
 	isPaused: null | Boolean
 	delayAutoHide: number
 	controlBar!: any
@@ -42,6 +43,7 @@ export default class Player {
 
 		this.progressBarIsMoving = false
 		this.isFullScreen = false
+		this.isMuted = this.options.muted
 		this.isPaused = null
 		this.delayAutoHide = 3000
 
@@ -299,10 +301,12 @@ export default class Player {
 			volume = 1
 		} else if (volume <= 0) {
 			volume = 0
+			this.isMuted = true
 			if (this.volumeButton) {
 				this.volumeButton.classList.add('v-pressed')
 			}
 		} else {
+			this.isMuted = false
 			if (this.volumeButton) {
 				this.volumeButton.classList.remove('v-pressed')
 			}
@@ -329,6 +333,7 @@ export default class Player {
 	 */
 	mute() {
 		this.methodMute()
+		this.isMuted = true
 
 		if (this.volumeButton) {
 			this.volumeButton.classList.add('v-pressed')
@@ -342,6 +347,7 @@ export default class Player {
 	 */
 	unMute() {
 		this.methodUnMute()
+		this.isMuted = false
 
 		if (this.volumeButton) {
 			this.volumeButton.classList.remove('v-pressed')
