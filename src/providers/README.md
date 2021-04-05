@@ -52,7 +52,7 @@ new Vlitejs({
 
 The Provider API allows you to create other providers than those referenced by `vLitejs`.
 
-To start your new provider development, you can use the [sample-provider.js](https://github.com/yoriiis/vlitejs/blob/main/src/providers/sample-provider.js) file which is made for you. You can also get inspiration from the [youtube.ts](https://github.com/yoriiis/vlitejs/blob/main/src/providers/youtube.ts) and [vimeo.ts](https://github.com/yoriiis/vlitejs/blob/main/src/providers/vimeo.ts) provider files.
+To start your new provider development, you can use the [sample-provider.js](https://github.com/yoriiis/vlitejs/blob/main/src/providers/sample/sample-provider.js) file which is made for you. You can also get inspiration from the [youtube.ts](https://github.com/yoriiis/vlitejs/blob/main/src/providers/youtube.ts) and [vimeo.ts](https://github.com/yoriiis/vlitejs/blob/main/src/providers/vimeo.ts) provider files.
 
 ### Rules
 

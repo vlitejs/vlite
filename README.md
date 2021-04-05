@@ -162,25 +162,26 @@ new Vlitejs('#player', {
 
 The player controls can be customized with the following parameters:
 
-| Options             |      Type      | Default | Description                                               |
-| ------------------- | :------------: | :-----: | --------------------------------------------------------- |
-| `autoplay`          |   `Boolean`    | `false` | Enable the autoplay of the media                          |
-| `controls`&sup1;    |   `Boolean`    | `true`  | Display the control bar of the video                      |
-| `playPause`         |   `Boolean`    | `true`  | Display the play/pause button on the control bar          |
-| `progressBar`       |   `Boolean`    | `true`  | Display the progress bar on the control bar               |
-| `time`              |   `Boolean`    | `true`  | Display the time information on the control bar           |
-| `volume`            |   `Boolean`    | `true`  | Display the volume button on the control bar              |
-| `fullscreen`&sup1;  |   `Boolean`    | `true`  | Display the fullscreen button on the control bar          |
-| `poster`&sup1;      | `String\|null` | `null`  | Personalize the poster url of the video                   |
-| `bigPlay`&sup1;     |   `Boolean`    | `true`  | Display the big play button on the poster video           |
-| `playsinline`&sup1; |   `Boolean`    | `false` | Add the `playsinline` attribute to the video              |
-| `loop`              |   `Boolean`    | `false` | Whether to loop the current media                         |
-| `muted`&sup1;       |   `Boolean`    | `false` | Whether to muted the current media                        |
-| `autoHide`&sup1;    |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity (3s) |
+| Options                |      Type      | Default | Description                                               |
+| ---------------------- | :------------: | :-----: | --------------------------------------------------------- |
+| `autoplay`             |   `Boolean`    | `false` | Enable the autoplay of the media                          |
+| `controls`&sup1;&sup2; |   `Boolean`    | `true`  | Display the control bar of the video                      |
+| `playPause`            |   `Boolean`    | `true`  | Display the play/pause button on the control bar          |
+| `progressBar`          |   `Boolean`    | `true`  | Display the progress bar on the control bar               |
+| `time`                 |   `Boolean`    | `true`  | Display the time information on the control bar           |
+| `volume`               |   `Boolean`    | `true`  | Display the volume button on the control bar              |
+| `fullscreen`&sup1;     |   `Boolean`    | `true`  | Display the fullscreen button on the control bar          |
+| `poster`&sup1;         | `String\|null` | `null`  | Personalize the poster url of the video                   |
+| `bigPlay`&sup1;        |   `Boolean`    | `true`  | Display the big play button on the poster video           |
+| `playsinline`&sup1;    |   `Boolean`    | `false` | Add the `playsinline` attribute to the video              |
+| `loop`                 |   `Boolean`    | `false` | Whether to loop the current media                         |
+| `muted`&sup1;          |   `Boolean`    | `false` | Whether to muted the current media                        |
+| `autoHide`&sup1;       |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity (3s) |
 
-_&sup1; Options available only on a video player, not on an audio player._
+- _&sup1; Video only._
+- _&sup2; Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans))._
 
-> The `autoplay` parameter automatically activates the `muted` option because the API can only be initiated by a user gesture.
+> The `autoplay` parameter automatically activates the `muted` option because the API can only be initiated by a user gesture (see [Autoplay policy changes](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes)).
 
 Example of customization for the `autoHide` and the `poster` options.
 
@@ -230,7 +231,7 @@ new Vlitejs('#player', {
 | `trackenabled`&sup1;    | Sent when a track is enabled and displayed                                              |
 | `trackdisabled`&sup1;   | Sent when a track is disabled and hidden                                                |
 
-_&sup1; Options available only on a video player, not on an audio player._
+- _&sup1; Options available only on a video player, not on an audio player._
 
 Example listener when the media triggers a play event.
 
