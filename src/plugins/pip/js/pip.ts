@@ -99,7 +99,7 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onEnterPip(e: Event) {
-		this.playerInstance.container.dispatchEvent(new CustomEvent('enterpip'))
+		this.playerInstance.dispatchEvent('enterpip')
 	}
 
 	/**
@@ -107,6 +107,6 @@ export default class PiP {
 	 * @param {Object} e Event data
 	 */
 	onLeavePip(e: Event) {
-		this.playerInstance.container.dispatchEvent(new CustomEvent('leavepip'))
+		this.playerInstance.dispatchEvent('leavepip')
 	}
 }

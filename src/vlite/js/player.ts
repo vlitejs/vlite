@@ -1,6 +1,6 @@
 // Import SVG icons
 import { formatVideoTime } from 'shared/utils/utils'
-import { Options, playerParameters } from 'shared/assets/interfaces/interfaces'
+import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
 
 /**
  * vlitejs Player
@@ -16,6 +16,7 @@ export default class Player {
 	isPaused: null | Boolean
 	delayAutoHide: number
 	controlBar!: any
+	customEvents: Array<configEvent>
 	controlBarElement: HTMLElement | null
 	poster: HTMLElement | null
 	bigPlayButton: HTMLElement | null
@@ -44,6 +45,7 @@ export default class Player {
 		this.isPaused = null
 		this.delayAutoHide = 3000
 
+		this.customEvents = []
 		this.controlBarElement = null
 		this.poster = null
 		this.bigPlayButton = null
@@ -106,11 +108,12 @@ export default class Player {
 	 * On the player is ready
 	 */
 	onPlayerReady() {
+		if (this.options.poster) {
+			this.poster = this.container.querySelector('.v-poster')
+		}
+
 		this.controlBarElement = this.container.querySelector('.v-controlBar')
 		if (this.controlBarElement) {
-			if (this.options.poster) {
-				this.poster = this.controlBarElement.querySelector('.v-poster')
-			}
 			if (this.options.bigPlay) {
 				this.bigPlayButton = this.controlBarElement.querySelector('.v-bigPlay')
 			}
@@ -145,6 +148,25 @@ export default class Player {
 	}
 
 	/**
+	 * Add event listener on the container
+	 * Listen custom event on media actions
+	 * @param {String} type Event type
+	 * @param {EventListener} listener Event listener
+	 */
+	on(type: string, listener: EventListener) {
+		this.customEvents.push({ type, listener })
+		this.container.addEventListener(type, listener)
+	}
+
+	/**
+	 * Dispatch custom event on the container
+	 * @param {String} type Event type
+	 */
+	dispatchEvent(type: string) {
+		this.container.dispatchEvent(new CustomEvent(type))
+	}
+
+	/**
 	 * Loading bridge between the player and vlite
 	 * @param {Boolean} status Loading status
 	 */
@@ -175,7 +197,7 @@ export default class Player {
 						this.currentTimeElement.innerHTML = formatVideoTime(currentTime)
 					}
 
-					this.container.dispatchEvent(new CustomEvent('timeupdate'))
+					this.dispatchEvent('timeupdate')
 				}
 			)
 		}
@@ -206,7 +228,7 @@ export default class Player {
 			this.currentTimeElement.innerHTML = '00:00'
 		}
 
-		this.container.dispatchEvent(new CustomEvent('ended'))
+		this.dispatchEvent('ended')
 	}
 
 	/**
@@ -235,7 +257,7 @@ export default class Player {
 		}
 		this.afterPlayPause()
 
-		this.container.dispatchEvent(new CustomEvent('play'))
+		this.dispatchEvent('play')
 	}
 
 	/**
@@ -255,7 +277,7 @@ export default class Player {
 		}
 		this.afterPlayPause()
 
-		this.container.dispatchEvent(new CustomEvent('pause'))
+		this.dispatchEvent('pause')
 	}
 
 	/**
@@ -287,7 +309,7 @@ export default class Player {
 		}
 
 		this.methodSetVolume(volume)
-		this.container.dispatchEvent(new CustomEvent('volumechange'))
+		this.dispatchEvent('volumechange')
 	}
 
 	/**
@@ -312,7 +334,7 @@ export default class Player {
 			this.volumeButton.classList.add('v-pressed')
 		}
 
-		this.container.dispatchEvent(new CustomEvent('volumechange'))
+		this.dispatchEvent('volumechange')
 	}
 
 	/**
@@ -325,7 +347,7 @@ export default class Player {
 			this.volumeButton.classList.remove('v-pressed')
 		}
 
-		this.container.dispatchEvent(new CustomEvent('volumechange'))
+		this.dispatchEvent('volumechange')
 	}
 
 	/**
@@ -354,7 +376,7 @@ export default class Player {
 				this.fullscreenButton.classList.add('v-pressed')
 			}
 
-			this.container.dispatchEvent(new CustomEvent('enterfullscreen'))
+			this.dispatchEvent('enterfullscreen')
 		}
 	}
 
@@ -377,7 +399,7 @@ export default class Player {
 				this.fullscreenButton.classList.remove('v-pressed')
 			}
 
-			this.container.dispatchEvent(new CustomEvent('exitfullscreen'))
+			this.dispatchEvent('exitfullscreen')
 		}
 	}
 
@@ -388,6 +410,9 @@ export default class Player {
 	destroy() {
 		this.pause()
 		this.options.controls && this.controlBar && this.controlBar.removeEvents()
+		this.customEvents.forEach((event) => {
+			this.container.removeEventListener(event.type, event.listener)
+		})
 		this.container.remove()
 	}
 }

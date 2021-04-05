@@ -26,18 +26,19 @@ const player = new Vlitejs('#player-html5', {
 	onReady: function (player) {
 		console.log(player)
 
-		player.container.addEventListener('play', () => console.log('play'))
-		player.container.addEventListener('pause', () => console.log('pause'))
-		player.container.addEventListener('ended', () => console.log('ended'))
-		player.container.addEventListener('progress', () => console.log('progress'))
-		player.container.addEventListener('volumechange', () => console.log('volumechange'))
-		player.container.addEventListener('timeupdate', () => console.log('timeupdate'))
-		player.container.addEventListener('enterfullscreen', () => console.log('enterfullscreen'))
-		player.container.addEventListener('exitfullscreen', () => console.log('exitfullscreen'))
-		player.container.addEventListener('enterpip', () => console.log('enterpip'))
-		player.container.addEventListener('leavepip', () => console.log('leavepip'))
-		player.container.addEventListener('trackenabled', () => console.log('trackenabled'))
-		player.container.addEventListener('trackdisabled', () => console.log('trackdisabled'))
+		player.on('play', () => console.log('play'))
+		player.on('pause', () => console.log('pause'))
+		player.on('ended', () => console.log('ended'))
+		player.on('progress', () => console.log('progress'))
+		player.on('volumechange', () => console.log('volumechange'))
+		player.on('timeupdate', () => console.log('timeupdate'))
+		player.on('enterfullscreen', () => console.log('enterfullscreen'))
+		player.on('exitfullscreen', () => console.log('exitfullscreen'))
+		player.on('enterpip', () => console.log('enterpip'))
+		player.on('leavepip', () => console.log('leavepip'))
+		player.on('trackenabled', () => console.log('trackenabled'))
+		player.on('trackdisabled', () => console.log('trackdisabled'))
 	}
 })
+window.player = player
 /* eslint-enable no-unused-vars */

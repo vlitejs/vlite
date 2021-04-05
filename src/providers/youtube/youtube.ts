@@ -88,6 +88,8 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @param {Object} e Event listener datas
 	 */
 	onPlayerStateChange(e: any) {
+		this.rafPlaying && window.cancelAnimationFrame(this.rafPlaying)
+
 		switch (e.data) {
 			case window.YT.PlayerState.ENDED:
 				super.onVideoEnded()
@@ -95,17 +97,26 @@ class PlayerYoutube extends window.Vlitejs.Player {
 
 			case window.YT.PlayerState.PLAYING:
 				super.loading(false)
-
-				if (this.options.controls) {
-					setInterval(() => {
-						super.onTimeUpdate()
-					}, 100)
-				}
+				this.options.controls && window.requestAnimationFrame(this.onRafPlaying.bind(this))
 				break
 
 			case window.YT.PlayerState.BUFFERING:
 				super.loading(true)
 				break
+		}
+	}
+
+	/**
+	 * On request animation frame while the video is playing
+	 */
+	onRafPlaying() {
+		super.onTimeUpdate()
+
+		// Re-trigger the RAF only if the video is playing
+		if (!this.isPaused) {
+			this.rafTimeout = setTimeout(() => {
+				this.rafPlaying = window.requestAnimationFrame(this.onRafPlaying.bind(this))
+			}, 100)
 		}
 	}
 
@@ -186,9 +197,10 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	}
 
 	/**
-	 * Remove the Youtube player (instance)
+	 * Remove the Youtube player (instance, timer)
 	 */
 	destroy() {
+		clearTimeout(this.rafTimeout)
 		this.instancePlayer.destroy()
 		super.destroy()
 	}

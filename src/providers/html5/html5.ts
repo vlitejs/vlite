@@ -1,10 +1,5 @@
 import Player from '../../vlite/js/player'
-import { playerParameters } from 'shared/assets/interfaces/interfaces'
-
-interface configEvent {
-	type: string
-	listener: EventListener
-}
+import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
 
 /**
  * vlitejs Player HTML5

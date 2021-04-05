@@ -227,9 +227,7 @@ export default class Subtitle {
 
 			!isDisabled && activeCues && activeCues.length && this.addCue(activeCues[0])
 
-			this.playerInstance.container.dispatchEvent(
-				new CustomEvent(isDisabled ? 'trackdisabled' : 'trackenabled')
-			)
+			this.playerInstance.dispatchEvent(isDisabled ? 'trackdisabled' : 'trackenabled')
 		}
 	}
 

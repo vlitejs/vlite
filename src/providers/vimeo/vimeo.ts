@@ -1,4 +1,4 @@
-import { playerParameters } from 'shared/assets/interfaces/interfaces'
+import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
 
 declare global {
 	interface Window {
@@ -9,11 +9,6 @@ declare global {
 			Player: any
 		}
 	}
-}
-
-interface configEvent {
-	type: string
-	listener: EventListener
 }
 
 if (typeof window.Vlitejs === 'undefined') {
@@ -209,7 +204,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	removeSpecificEvents() {
 		this.events.forEach((event) => {
-			this.instancePlayer.on(event.type, event.listener)
+			this.instancePlayer.off(event.type, event.listener)
 		})
 	}
 

@@ -32,3 +32,8 @@ export interface Options {
 	muted: Boolean
 	[key: string]: Boolean | null | string
 }
+
+export interface configEvent {
+	type: string
+	listener: EventListener
+}

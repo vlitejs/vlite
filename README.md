@@ -200,7 +200,7 @@ The callback function `onReady` is automatically executed when the player is rea
 
 The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Player-methods).
 
-Example of a player muted when ready:
+Example of a player `muted` when ready:
 
 ```javascript
 new Vlitejs('#player', {
@@ -214,7 +214,7 @@ new Vlitejs('#player', {
 
 ### Events
 
-`vLitejs` exposes the following native `CustomEvent` on the player container element. Events are standardized for all providers, even for Youtube and Vimeo.
+`vLitejs` exposes the following native `CustomEvent` on the player instance. Events are standardized for all providers, even for Youtube and Vimeo.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |
@@ -233,12 +233,12 @@ new Vlitejs('#player', {
 
 - _&sup1; Options available only on a video player, not on an audio player._
 
-Example listener when the media triggers a play event.
+Example listener when the media triggers a `play` event.
 
 ```javascript
 const vlitePlayer = new Vlitejs('#player');
 
-player.container.addEventListener('play', () => {
+player.on('play', () => {
   // The video starts playing
 });
 ```
@@ -263,7 +263,7 @@ The player instance exposed the following methods:
 | `getInstance()`       |     -      |     -     | Get the player instance           |
 | `destroy()`           |     -      |     -     | Destroy the player                |
 
-Example of the media duration recovered when the player is ready.
+Example of the media `duration` recovered when the player is ready.
 
 ```javascript
 new Vlitejs('#player', {
@@ -273,7 +273,7 @@ new Vlitejs('#player', {
 });
 ```
 
-Second example of a video muted when the button `.btn-mute` is pressed.
+Second example of a video `muted` when the button `.btn-mute` is pressed.
 
 ```html
 <video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
