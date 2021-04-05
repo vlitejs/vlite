@@ -8,17 +8,21 @@
  * @copyright 2021 Joris DANIEL <https://yoriiis.github.io/vlitejs>
  **/
 
-import Player from './player'
+import Player from './player.ts'
 import validateTarget from 'validate-target'
-import { capitalized, checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'
-import LoaderTemplate from 'shared/loader/assets/scripts/loader'
-import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
-import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
-import PosterTemplate from 'shared/poster/assets/scripts/poster'
-import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
+import {
+	capitalized,
+	checkSupportFullScreen,
+	getCSSTransitionDuration
+} from 'shared/utils/utils.ts'
+import LoaderTemplate from 'shared/loader/assets/scripts/loader.ts'
+import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play.ts'
+import OverlayTemplate from 'shared/overlay/assets/scripts/overlay.ts'
+import PosterTemplate from 'shared/poster/assets/scripts/poster.ts'
+import ControlBar from 'shared/control-bar/assets/scripts/control-bar.ts'
 import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
-import { registerProvider, getProviderInstance } from '../../providers/provider'
-import { getPluginInstance, registerPlugin, initializePlugins } from '../../plugins/plugin'
+import { registerProvider, getProviderInstance } from '../../providers/provider.ts'
+import { getPluginInstance, registerPlugin, initializePlugins } from '../../plugins/plugin.ts'
 
 type TimerHandle = number
 

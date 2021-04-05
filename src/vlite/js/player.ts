@@ -1,5 +1,5 @@
 // Import SVG icons
-import { formatVideoTime } from 'shared/utils/utils'
+import { formatVideoTime } from 'shared/utils/utils.ts'
 import { Options, playerParameters } from 'shared/assets/interfaces/interfaces'
 
 /**

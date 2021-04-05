@@ -3,7 +3,7 @@ module.exports = function (api) {
 
 	api.cache(true)
 
-	const plugins = ['@babel/plugin-transform-modules-commonjs', '@babel/proposal-class-properties']
+	const plugins = ['@babel/proposal-class-properties']
 
 	return {
 		presets,

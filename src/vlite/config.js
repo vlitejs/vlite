@@ -8,10 +8,10 @@ import 'shared/assets/styles/vars.css'
 import './css/player.css'
 
 // import shared components
-import 'shared/loader/config'
-import 'shared/control-bar/config'
-import 'shared/big-play/config'
-import 'shared/overlay/config'
-import 'shared/poster/config'
+import 'shared/loader/config.js'
+import 'shared/control-bar/config.js'
+import 'shared/big-play/config.js'
+import 'shared/overlay/config.js'
+import 'shared/poster/config.js'
 
 export default vlitejs

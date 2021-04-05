@@ -11,9 +11,11 @@ const generator = ({ entry, library = false, isProduction }) => {
 		filename: '[name].js'
 	}
 	if (library) {
-		output.library = library
-		output.libraryTarget = 'umd'
-		output.libraryExport = 'default'
+		output.library = {
+			name: library,
+			type: 'umd',
+			export: 'default'
+		}
 	}
 	return {
 		watch: !isProduction,
@@ -185,7 +187,8 @@ module.exports = (env, argv) => {
 		}),
 		generator({
 			entry: {
-				'demo/demo': './src/demo/config.js'
+				'demo/demo': './src/demo/config.js',
+				'examples/html5': './examples/html5/config.js'
 			},
 			isProduction
 		}),

@@ -19,8 +19,9 @@
 	"author": "Yoriiis aka Joris DANIEL",
 	"files": [
 		"dist",
-        "!dist/**/*.map",
-        "!dist/demo"
+		"!dist/**/*.map",
+		"!dist/demo",
+		"!dist/examples"
 	],
 	"main": "dist/vlite.js",
 	"scripts": {
@@ -40,7 +41,6 @@
 	"devDependencies": {
 		"@babel/core": "^7.7.7",
 		"@babel/plugin-proposal-class-properties": "^7.12.13",
-		"@babel/plugin-transform-modules-commonjs": "^7.7.5",
 		"@babel/preset-env": "^7.7.7",
 		"babel-eslint": "^10.0.3",
 		"babel-loader": "^8.0.6",
