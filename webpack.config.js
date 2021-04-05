@@ -185,7 +185,7 @@ module.exports = (env, argv) => {
 		}),
 		generator({
 			entry: {
-				demo: './src/demo/config.js'
+				'demo/demo': './src/demo/config.js'
 			},
 			isProduction
 		}),
