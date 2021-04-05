@@ -2,4 +2,4 @@
 import './assets/styles/big-play.css'
 
 // import JS
-import './assets/scripts/big-play.ts'
+import './assets/scripts/big-play'
