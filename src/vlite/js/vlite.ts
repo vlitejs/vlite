@@ -3,7 +3,7 @@
  * @name vlitejs
  * @version 4.0.0
  * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
- * @description: vLitejs is a fast and lightweight Javascript library to customize and skin video and audio player with a minimalist theme (HTML5, Youtube, Vimeo)
+ * @description: vLitejs is a fast and lightweight JavaScript library to customize and skin video and audio player with a minimalist theme (HTML5, Youtube, Vimeo)
  * {@link https://yoriiis.github.io/vlitejs}
  * @copyright 2021 Joris DANIEL <https://yoriiis.github.io/vlitejs>
  **/
