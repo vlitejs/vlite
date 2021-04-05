@@ -9,7 +9,7 @@ export interface playerParameters {
 	element: HTMLAudioElement | HTMLVideoElement
 	container: HTMLElement
 	options: Options
-	vliteInstance: any
+	vlitejs: any
 }
 
 export interface pluginParameter {

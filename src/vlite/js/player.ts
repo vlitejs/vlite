@@ -10,7 +10,7 @@ export default class Player {
 	element: HTMLAudioElement | HTMLVideoElement
 	container: HTMLElement
 	options: Options
-	vliteInstance: any
+	vlitejs: any
 	progressBarIsMoving: Boolean
 	isFullScreen: Boolean
 	isPaused: null | Boolean
@@ -32,13 +32,13 @@ export default class Player {
 	 * @param {HTMLElement} options.element Player HTML element
 	 * @param {HTMLElement} options.container Player HTML container
 	 * @param {Object} options.options Player options
-	 * @param {Class} options.vliteInstance vlitejs instance
+	 * @param {Class} options.vlitejs Vlitejs instance
 	 */
-	constructor({ element, container, options, vliteInstance }: playerParameters) {
+	constructor({ element, container, options, vlitejs }: playerParameters) {
 		this.element = element
 		this.container = container as HTMLElement
 		this.options = options
-		this.vliteInstance = vliteInstance
+		this.vlitejs = vlitejs
 
 		this.progressBarIsMoving = false
 		this.isFullScreen = false
@@ -143,8 +143,8 @@ export default class Player {
 		}
 
 		this.loading(false)
-		this.vliteInstance.controlBar.onPlayerReady()
-		this.vliteInstance.onReady instanceof Function && this.vliteInstance.onReady.call(this, this)
+		this.vlitejs.controlBar.onPlayerReady()
+		this.vlitejs.onReady instanceof Function && this.vlitejs.onReady.call(this, this)
 	}
 
 	/**
@@ -171,7 +171,7 @@ export default class Player {
 	 * @param {Boolean} status Loading status
 	 */
 	loading(status: Boolean) {
-		this.vliteInstance.loading(status)
+		this.vlitejs.loading(status)
 	}
 
 	/**
@@ -238,7 +238,7 @@ export default class Player {
 		if (this.container.classList.contains('v-firstStart')) {
 			this.container.classList.remove('v-firstStart')
 
-			if (this.vliteInstance.type === 'video' && this.poster) {
+			if (this.vlitejs.type === 'video' && this.poster) {
 				this.poster.classList.remove('v-active')
 			}
 		}
@@ -246,13 +246,13 @@ export default class Player {
 		this.methodPlay()
 		this.isPaused = false
 		this.container.classList.replace('v-paused', 'v-playing')
-		this.vliteInstance.type === 'video' && this.container.focus()
+		this.vlitejs.type === 'video' && this.container.focus()
 
 		if (this.playPauseButton) {
 			this.playPauseButton.setAttribute('aria-label', 'Pause')
 		}
 
-		if (this.vliteInstance.type === 'video' && this.bigPlayButton) {
+		if (this.vlitejs.type === 'video' && this.bigPlayButton) {
 			this.bigPlayButton.setAttribute('aria-label', 'Pause')
 		}
 		this.afterPlayPause()
@@ -272,7 +272,7 @@ export default class Player {
 			this.playPauseButton.setAttribute('aria-label', 'Play')
 		}
 
-		if (this.vliteInstance.type === 'video' && this.bigPlayButton) {
+		if (this.vlitejs.type === 'video' && this.bigPlayButton) {
 			this.bigPlayButton.setAttribute('aria-label', 'Play')
 		}
 		this.afterPlayPause()
@@ -284,9 +284,9 @@ export default class Player {
 	 * Callback function after the play|pause
 	 */
 	afterPlayPause() {
-		if (this.vliteInstance.autoHideGranted) {
-			this.vliteInstance.stopAutoHideTimer()
-			!this.isPaused && this.vliteInstance.startAutoHideTimer()
+		if (this.vlitejs.autoHideGranted) {
+			this.vlitejs.stopAutoHideTimer()
+			!this.isPaused && this.vlitejs.startAutoHideTimer()
 		}
 	}
 
@@ -362,7 +362,7 @@ export default class Player {
 	 * Request the fullscreen
 	 */
 	requestFullscreen() {
-		const { requestFn } = this.vliteInstance.supportFullScreen
+		const { requestFn } = this.vlitejs.supportFullScreen
 
 		// @ts-ignore: Object is possibly 'null'.
 		if (this.element[requestFn]) {
@@ -386,7 +386,7 @@ export default class Player {
 	 * @param {Boolean} options.escKey The exit is trigger by the esk key
 	 */
 	exitFullscreen({ escKey = false }: { escKey?: Boolean } = {}) {
-		const { cancelFn } = this.vliteInstance.supportFullScreen
+		const { cancelFn } = this.vlitejs.supportFullScreen
 
 		if (document[cancelFn]) {
 			// @ts-ignore: Object is possibly 'null'.

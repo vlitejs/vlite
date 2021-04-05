@@ -150,7 +150,7 @@ class vlitejs {
 			element: this.element,
 			container: this.container,
 			options: this.options,
-			vliteInstance: this
+			vlitejs: this
 		})
 		this.playerInstance.init()
 
