@@ -137,12 +137,12 @@ module.exports = (env, argv) => {
 		{
 			entrykey: 'providers/youtube',
 			library: `${libraryName}Youtube`,
-			path: './src/providers/youtube'
+			path: './src/providers/youtube/youtube'
 		},
 		{
 			entrykey: 'providers/vimeo',
 			library: `${libraryName}Vimeo`,
-			path: './src/providers/vimeo'
+			path: './src/providers/vimeo/vimeo'
 		}
 	]
 	const plugins = [

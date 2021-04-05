@@ -2,15 +2,19 @@
 
 Supports for multiple caption tracks (VTT).
 
-|                          |                                         |
-| ------------------------ | --------------------------------------- |
-| Name                     | `subtitle`                              |
-| Global name              | `window.VlitejsSubtitle`                |
-| Path                     | `vlitejs/plugins/subtitle`              |
+## Overview
+
+| <!-- -->                 |                <!-- -->                 |
+| ------------------------ | :-------------------------------------: |
+| Name                     |               `subtitle`                |
+| Global name&sup1;        |        `window.VlitejsSubtitle`         |
+| Path                     |       `vlitejs/plugins/subtitle`        |
 | Entry point              | `vlitejs/plugins/subtitle/subtitle.js`  |
 | Stylesheet               | `vlitejs/plugins/subtitle/subtitle.css` |
-| Provider compatibility   | `'html5'`                               |
-| Media type compatibility | `'video'`                               |
+| Provider compatibility   |                `'html5'`                |
+| Media type compatibility |                `'video'`                |
+
+- _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
 ## Usage
 
@@ -34,7 +38,7 @@ import VlitejsSubtitle from 'vlitejs/plugins/subtitle';
 
 vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
 
-new vlitejs({
+new Vlitejs({
   selector: '#player',
   plugins: ['subtitle']
 });

@@ -1,4 +1,4 @@
-import PlayerHtml5 from './html5'
+import PlayerHtml5 from './html5/html5'
 
 interface interfaceVliteProviders {
 	[key: string]: any

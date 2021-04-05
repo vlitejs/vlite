@@ -31,7 +31,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 ## Features
 
-- **Video & audio** - HTML5 video, HTML5 audio, Youtube, Vimeo.
+- **Video & audio** - [HTML5 video](./src/providers/html5/README.md), [HTML5 audio](./src/providers/html5/README.md), [Youtube](./src/providers/youtube/README.md), [Vimeo](./src/providers/vimeo/README.md).
 - **Customization** - Choose the control elements you want to display.
 - **No dependency** - Written in native Javascript without any framework.
 - **Fullscreen** - Supports native fullscreen API.

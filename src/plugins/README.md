@@ -46,7 +46,7 @@ vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
 Finally, add the plugin to the constructor.
 
 ```js
-new vlitejs({
+new Vlitejs({
   selector: '#player',
   plugins: ['subtitle']
 });

@@ -1,4 +1,4 @@
-import Player from '../vlite/js/player'
+import Player from '../../vlite/js/player'
 import { playerParameters } from 'shared/assets/interfaces/interfaces'
 
 interface configEvent {

@@ -2,15 +2,19 @@
 
 Supports for multiple caption tracks (VTT).
 
-|                          |                              |
-| ------------------------ | ---------------------------- |
-| Name                     | `pip`                        |
-| Global name              | `window.VlitejsSubtitle`     |
-| Path                     | `vlitejs/plugins/pip`        |
+## Overview
+
+| <!-- -->                 |           <!-- -->           |
+| ------------------------ | :--------------------------: |
+| Name                     |            `pip`             |
+| Global name&sup1;        |   `window.VlitejsSubtitle`   |
+| Path                     |    `vlitejs/plugins/pip`     |
 | Entry point              | `vlitejs/plugins/pip/pip.js` |
-| Stylesheet               | -                            |
-| Provider compatibility   | `'html5'`                    |
-| Media type compatibility | `'video'`                    |
+| Stylesheet               |              -               |
+| Provider compatibility   |          `'html5'`           |
+| Media type compatibility |          `'video'`           |
+
+- _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
 ## Usage
 
@@ -29,7 +33,7 @@ import VlitejsPip from 'vlitejs/plugins/pip';
 
 vlitejs.registerPlugin('pip', VlitejsPip);
 
-new vlitejs({
+new Vlitejs({
   selector: '#player',
   plugins: ['pip']
 });
