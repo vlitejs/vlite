@@ -28,7 +28,7 @@ import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
 import VlitejsYoutube from 'vlitejs/providers/youtube';
 
-vlitejs.registerVimeo('youtube', VlitejsYoutube);
+vlitejs.registerProvider('youtube', VlitejsYoutube);
 
 new Vlitejs({
   selector: '#player',

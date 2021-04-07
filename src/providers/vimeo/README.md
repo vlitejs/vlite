@@ -28,7 +28,7 @@ import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
 import VlitejsVimeo from 'vlitejs/providers/vimeo';
 
-vlitejs.registerVimeo('vimeo', VlitejsVimeo);
+vlitejs.registerProvider('vimeo', VlitejsVimeo);
 
 new Vlitejs({
   selector: '#player',
