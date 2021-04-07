@@ -31,7 +31,7 @@ import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
 import VlitejsPip from 'vlitejs/plugins/pip';
 
-vlitejs.registerPlugin('pip', VlitejsPip);
+Vlitejs.registerPlugin('pip', VlitejsPip);
 
 new Vlitejs({
   selector: '#player',

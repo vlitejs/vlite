@@ -36,7 +36,7 @@ import 'vlitejs/plugins/subtitle.css';
 import Vlitejs from 'vlitejs';
 import VlitejsSubtitle from 'vlitejs/plugins/subtitle';
 
-vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
 
 new Vlitejs({
   selector: '#player',

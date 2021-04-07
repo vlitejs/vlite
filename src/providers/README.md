@@ -58,7 +58,7 @@ To start your new provider development, you can use the [sample-provider.js](htt
 
 Here are some points to help you in your development:
 
-- The provider should be an ES6 JavaScript class that extends the `vlitejs.Player` class or `window.vlitejs.Player` if the library is loaded in HTML.
+- The provider should be an ES6 JavaScript class that extends the `Vlitejs.Player` class or `window.Vlitejs.Player` if the library is loaded in HTML.
 - The library should be available before the provider.
 - The `sample-provider.js` exposes all the necessary functions, do not rename or remove them because `vLitejs` will not recognize them.
 - The `init` function is automatically called by `vLitejs` to initialize the provider.

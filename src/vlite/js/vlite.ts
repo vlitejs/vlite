@@ -1,6 +1,6 @@
 /**
  * @license MIT
- * @name vlitejs
+ * @name Vlitejs
  * @version 4.0.0
  * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
  * @description: vLitejs is a fast and lightweight JavaScript library to customize and skin video and audio player with a minimalist theme (HTML5, Youtube, Vimeo)
@@ -56,10 +56,10 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 }
 
 /**
- * vlitejs entrypoint
+ * Vlitejs entrypoint
  * @module vLite/entrypoint
  */
-class vlitejs {
+class Vlitejs {
 	Player: any
 	element: HTMLVideoElement | HTMLAudioElement
 	plugins: Array<string>
@@ -150,7 +150,7 @@ class vlitejs {
 			element: this.element,
 			container: this.container,
 			options: this.options,
-			vlitejs: this
+			Vlitejs: this
 		})
 		this.player.init()
 
@@ -427,14 +427,14 @@ class vlitejs {
 
 // Expose the Player instance, used by the provider API
 // @ts-ignore
-vlitejs.Player = Player
+Vlitejs.Player = Player
 
 // Expose the provider registration
 // @ts-ignore
-vlitejs.registerProvider = registerProvider
+Vlitejs.registerProvider = registerProvider
 
 // Expose the plugin registration
 // @ts-ignore
-vlitejs.registerPlugin = registerPlugin
+Vlitejs.registerPlugin = registerPlugin
 
-export default vlitejs
+export default Vlitejs

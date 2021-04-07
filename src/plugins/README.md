@@ -40,7 +40,7 @@ You can also download it and include it with a script tag. The library will be r
 Then, register the plugin to `vLitejs`.
 
 ```js
-vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
 ```
 
 Finally, add the plugin to the constructor.
@@ -85,7 +85,7 @@ Here are some points to help you in your development:
 | `player.isFullScreen` |    `Boolean`    | Is the player in fullscreen mode                    |
 | `player.isMuted`      |    `Boolean`    | Is the player muted                                 |
 | `player.isPaused`     | `null\|Boolean` | Is the player paused (`null` before the first play) |
-| `player.vlitejs`      |     `Class`     | `vLitejs` instance                                  |
+| `player.Vlitejs`      |     `Class`     | `vLitejs` instance                                  |
 
 ### Provider and media declaration
 
