@@ -37,7 +37,7 @@ export default class PlayerHtml5 extends Player {
 	waitUntilVideoIsReady(): Promise<Event> {
 		return new window.Promise((resolve, reject) => {
 			// TODO: use `loadedmetadata` on iOS
-			this.element.addEventListener('canplay', resolve, { once: true })
+			this.media.addEventListener('canplay', resolve, { once: true })
 		})
 	}
 
@@ -47,16 +47,16 @@ export default class PlayerHtml5 extends Player {
 	 */
 	addSpecificEvents() {
 		this.events.forEach((event) => {
-			this.element.addEventListener(event.type, event.listener.bind(this))
+			this.media.addEventListener(event.type, event.listener.bind(this))
 		})
 	}
 
 	/**
 	 * Get the player instance
-	 * @returns {Object} Video element
+	 * @returns {Object} Media element
 	 */
 	getInstance(): HTMLElement {
-		return this.element
+		return this.media
 	}
 
 	/**
@@ -64,7 +64,7 @@ export default class PlayerHtml5 extends Player {
 	 * @returns {Promise<Number>} Current time of the video
 	 */
 	getCurrentTime(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.element.currentTime))
+		return new window.Promise((resolve) => resolve(this.media.currentTime))
 	}
 
 	/**
@@ -72,21 +72,21 @@ export default class PlayerHtml5 extends Player {
 	 * @returns {Promise<number>} Duration of the video
 	 */
 	getDuration(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.element.duration))
+		return new window.Promise((resolve) => resolve(this.media.duration))
 	}
 
 	/**
 	 * Play method of the player
 	 */
 	methodPlay() {
-		this.element.play()
+		this.media.play()
 	}
 
 	/**
 	 * Pause method of the player
 	 */
 	methodPause() {
-		this.element.pause()
+		this.media.pause()
 	}
 
 	/**
@@ -94,7 +94,7 @@ export default class PlayerHtml5 extends Player {
 	 * @param {Number} volume New volume
 	 */
 	methodSetVolume(volume: number) {
-		this.element.volume = volume
+		this.media.volume = volume
 	}
 
 	/**
@@ -102,23 +102,23 @@ export default class PlayerHtml5 extends Player {
 	 * @returns {Promise<Number>} Player volume
 	 */
 	methodGetVolume(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.element.volume))
+		return new window.Promise((resolve) => resolve(this.media.volume))
 	}
 
 	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
-		this.element.muted = true
-		this.element.setAttribute('muted', '')
+		this.media.muted = true
+		this.media.setAttribute('muted', '')
 	}
 
 	/**
 	 * Unmute method of the player
 	 */
 	methodUnMute() {
-		this.element.muted = false
-		this.element.removeAttribute('muted')
+		this.media.muted = false
+		this.media.removeAttribute('muted')
 	}
 
 	/**
@@ -126,7 +126,7 @@ export default class PlayerHtml5 extends Player {
 	 * @param {Number} Current time video
 	 */
 	methodSeekTo(newTime: number) {
-		this.element.currentTime = newTime
+		this.media.currentTime = newTime
 	}
 
 	/**
@@ -162,7 +162,7 @@ export default class PlayerHtml5 extends Player {
 	 */
 	removeSpecificEvents() {
 		this.events.forEach((event) => {
-			this.element.removeEventListener(event.type, event.listener)
+			this.media.removeEventListener(event.type, event.listener)
 		})
 	}
 

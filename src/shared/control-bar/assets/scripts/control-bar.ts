@@ -4,45 +4,18 @@ import Template from './templates/control-bar'
 import { Options } from 'shared/assets/interfaces/interfaces'
 
 export default class ControlBar {
-	container: HTMLElement
-	options: Options
-	type: string
 	player: any
-	controlBar: HTMLElement | null
-	progressBar: HTMLElement | null
-	volumeButton: HTMLElement | null
-	fullscreenButton: HTMLElement | null
-	durationElement: HTMLElement | null
+	type: string
 
 	/**
 	 * @constructor
 	 * @param {Object} options
-	 * @param {HTMLElement} options.container CSS selector or HTML element
-	 * @param {Object} options.options Player options
-	 * @param {String} options.type Player type (video|audio)
 	 * @param {Class} options.player Player instance
+	 * @param {String} options.type Player type (video|audio)
 	 */
-	constructor({
-		container,
-		options,
-		type,
-		player
-	}: {
-		container: HTMLElement
-		options: Options
-		type: string
-		player: any
-	}) {
-		this.container = container
-		this.options = options
+	constructor({ player, type }: { player: any; type: string }) {
 		this.type = type
 		this.player = player
-
-		this.controlBar = null
-		this.progressBar = null
-		this.volumeButton = null
-		this.fullscreenButton = null
-		this.durationElement = null
 
 		this.onInputProgressBar = this.onInputProgressBar.bind(this)
 		this.onClickOnControlBar = this.onClickOnControlBar.bind(this)
@@ -52,29 +25,43 @@ export default class ControlBar {
 	}
 
 	/**
-	 * Initialize the player when the API is ready
+	 * Initialize the control bar
 	 */
 	init() {
-		this.controlBar = this.container.querySelector('.v-controlBar')
-		if (this.controlBar) {
-			if (this.options.progressBar) {
-				this.progressBar = this.controlBar.querySelector('.v-progressBar')
-			}
-			if (this.options.volume) {
-				this.volumeButton = this.controlBar.querySelector('.v-volumeButton')
-			}
-			if (this.options.fullscreen) {
-				this.fullscreenButton = this.controlBar.querySelector('.v-fullscreenButton')
-			}
-			if (this.options.time) {
-				this.durationElement = this.controlBar.querySelector('.v-duration')
-			}
-			if (this.volumeButton) {
-				this.volumeButton.setAttribute('aria-label', this.player.isMuted ? 'Unmute' : 'Mute')
+		this.render()
+		this.cacheElements()
+		this.addEvents()
+	}
+
+	/**
+	 * Cache control bar DOM elements
+	 */
+	cacheElements() {
+		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
+		this.player.elements.controlBar = controlBar
+		if (this.player.elements.controlBar) {
+			this.player.elements.playPause = controlBar.querySelector('.v-playPauseButton')
+			this.player.elements.progressBar = controlBar.querySelector('.v-progressBar')
+			this.player.elements.currentTime = controlBar.querySelector('.v-currentTime')
+			this.player.elements.duration = controlBar.querySelector('.v-duration')
+			this.player.elements.volume = controlBar.querySelector('.v-volumeButton')
+
+			this.player.elements.fullscreen = controlBar.querySelector('.v-fullscreenButton')
+
+			if (this.player.elements.volume) {
+				this.player.elements.volume.setAttribute(
+					'aria-label',
+					this.player.isMuted ? 'Unmute' : 'Mute'
+				)
 			}
 		}
+	}
 
-		this.addEvents()
+	/**
+	 * Render the control bar
+	 */
+	render() {
+		this.player.elements.container.insertAdjacentHTML('beforeend', this.getTemplate())
 	}
 
 	/**
@@ -82,11 +69,11 @@ export default class ControlBar {
 	 */
 	onPlayerReady() {
 		this.player.getDuration().then((duration: number) => {
-			if (this.progressBar) {
-				this.progressBar.setAttribute('aria-valuemax', `${Math.round(duration)}`)
+			if (this.player.elements.progressBar) {
+				this.player.elements.progressBar.setAttribute('aria-valuemax', `${Math.round(duration)}`)
 			}
-			if (this.durationElement) {
-				this.durationElement.innerHTML = formatVideoTime(duration)
+			if (this.player.elements.duration) {
+				this.player.elements.duration.innerHTML = formatVideoTime(duration)
 			}
 		})
 	}
@@ -95,8 +82,10 @@ export default class ControlBar {
 	 * Add event listeners
 	 */
 	addEvents() {
-		this.progressBar && this.progressBar.addEventListener('input', this.onInputProgressBar)
-		this.controlBar && this.controlBar.addEventListener('click', this.onClickOnControlBar)
+		this.player.elements.progressBar &&
+			this.player.elements.progressBar.addEventListener('input', this.onInputProgressBar)
+		this.player.elements.controlBar &&
+			this.player.elements.controlBar.addEventListener('click', this.onClickOnControlBar)
 	}
 
 	/**
@@ -150,7 +139,9 @@ export default class ControlBar {
 	togglePlayPause(e: Event) {
 		e && e.preventDefault()
 
-		this.container.classList.contains('v-paused') ? this.player.play() : this.player.pause()
+		this.player.elements.container.classList.contains('v-paused')
+			? this.player.play()
+			: this.player.pause()
 	}
 
 	/**
@@ -159,12 +150,12 @@ export default class ControlBar {
 	toggleVolume(e: Event) {
 		e.preventDefault()
 
-		if (this.volumeButton!.classList.contains('v-pressed')) {
+		if (this.player.elements.volume!.classList.contains('v-pressed')) {
 			this.player.unMute()
-			this.volumeButton!.setAttribute('aria-label', 'Mute')
+			this.player.elements.volume!.setAttribute('aria-label', 'Mute')
 		} else {
 			this.player.mute()
-			this.volumeButton!.setAttribute('aria-label', 'Unmute')
+			this.player.elements.volume!.setAttribute('aria-label', 'Unmute')
 		}
 	}
 
@@ -176,10 +167,10 @@ export default class ControlBar {
 
 		if (this.player.isFullScreen) {
 			this.player.exitFullscreen()
-			this.fullscreenButton!.setAttribute('aria-label', 'Enter fullscreen')
+			this.player.elements.fullscreen!.setAttribute('aria-label', 'Enter fullscreen')
 		} else {
 			this.player.requestFullscreen()
-			this.fullscreenButton!.setAttribute('aria-label', 'Exit fullscreen')
+			this.player.elements.fullscreen!.setAttribute('aria-label', 'Exit fullscreen')
 		}
 	}
 
@@ -190,7 +181,7 @@ export default class ControlBar {
 	 */
 	getTemplate(): string {
 		return `${Template({
-			options: this.options,
+			options: this.player.options,
 			isMuted: this.player.isMuted,
 			type: this.type
 		})}`
@@ -200,11 +191,12 @@ export default class ControlBar {
 	 * Remove event listeners
 	 */
 	removeEvents() {
-		if (this.progressBar) {
-			this.progressBar.removeEventListener('input', this.onInputProgressBar)
+		if (this.player.elements.progressBar) {
+			this.player.elements.progressBar.removeEventListener('input', this.onInputProgressBar)
 		}
 
-		this.controlBar && this.controlBar.removeEventListener('click', this.onClickOnControlBar)
+		this.player.elements.controlBar &&
+			this.player.elements.controlBar.removeEventListener('click', this.onClickOnControlBar)
 	}
 
 	/**
@@ -212,6 +204,6 @@ export default class ControlBar {
 	 */
 	destroy() {
 		this.removeEvents()
-		this.controlBar && this.controlBar.remove()
+		this.player.elements.controlBar && this.player.elements.controlBar.remove()
 	}
 }

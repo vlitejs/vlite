@@ -23,7 +23,7 @@ let vimeoQueue: Array<any> = []
  * @module vlitejs/Player/PlayerVimeo
  */
 class PlayerVimeo extends window.Vlitejs.Player {
-	instancePlayer: any
+	instance: any
 	events: Array<configEvent>
 
 	constructor({ ...args }: playerParameters) {
@@ -68,12 +68,12 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	initVimeoPlayer(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
-			this.instancePlayer = new window.Vimeo.Player(this.element.getAttribute('id'), {
-				id: this.element.getAttribute('data-vimeo-id'),
+			this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), {
+				id: this.media.getAttribute('data-vimeo-id'),
 				controls: true
 			})
-			this.element = this.instancePlayer.element
-			this.instancePlayer.ready().then(resolve)
+			this.media = this.instance.media
+			this.instance.ready().then(resolve)
 		})
 	}
 
@@ -83,7 +83,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	addSpecificEvents() {
 		this.events.forEach((event) => {
-			this.instancePlayer.on(event.type, event.listener.bind(this))
+			this.instance.on(event.type, event.listener.bind(this))
 		})
 	}
 
@@ -92,7 +92,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 * @returns {Object} Vimeo API instance
 	 */
 	getInstance(): any {
-		return this.instancePlayer
+		return this.instance
 	}
 
 	/**
@@ -101,7 +101,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	getCurrentTime(): Promise<number> {
 		return new window.Promise((resolve) => {
-			this.instancePlayer.getCurrentTime().then((seconds: number) => resolve(seconds))
+			this.instance.getCurrentTime().then((seconds: number) => resolve(seconds))
 		})
 	}
 
@@ -111,7 +111,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	getDuration(): Promise<number> {
 		return new window.Promise((resolve) => {
-			this.instancePlayer.getDuration().then((duration: number) => resolve(duration))
+			this.instance.getDuration().then((duration: number) => resolve(duration))
 		})
 	}
 
@@ -119,14 +119,14 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 * Play method of the player
 	 */
 	methodPlay() {
-		this.instancePlayer.play()
+		this.instance.play()
 	}
 
 	/**
 	 * Pause method of the player
 	 */
 	methodPause() {
-		this.instancePlayer.pause()
+		this.instance.pause()
 	}
 
 	/**
@@ -134,7 +134,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 * @param {Number} volume New volume
 	 */
 	methodSetVolume(volume: number) {
-		this.instancePlayer.setVolume(volume)
+		this.instance.setVolume(volume)
 	}
 
 	/**
@@ -143,7 +143,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	methodGetVolume(): Promise<number> {
 		return new window.Promise((resolve) => {
-			this.instancePlayer.getVolume().then((volume: number) => {
+			this.instance.getVolume().then((volume: number) => {
 				resolve(volume)
 			})
 		})
@@ -153,14 +153,14 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 * Mute method of the player
 	 */
 	methodMute() {
-		this.instancePlayer.setVolume(0)
+		this.instance.setVolume(0)
 	}
 
 	/**
 	 * Unmute method of the player
 	 */
 	methodUnMute() {
-		this.instancePlayer.setVolume(1)
+		this.instance.setVolume(1)
 	}
 
 	/**
@@ -168,7 +168,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 * @param {Number} Current time video
 	 */
 	methodSeekTo(newTime: number) {
-		this.instancePlayer.setCurrentTime(newTime)
+		this.instance.setCurrentTime(newTime)
 	}
 
 	/**
@@ -204,7 +204,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	removeSpecificEvents() {
 		this.events.forEach((event) => {
-			this.instancePlayer.off(event.type, event.listener)
+			this.instance.off(event.type, event.listener)
 		})
 	}
 
@@ -213,7 +213,7 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	destroy() {
 		this.removeSpecificEvents()
-		this.instancePlayer.destroy()
+		this.instance.destroy()
 		super.destroy()
 	}
 }

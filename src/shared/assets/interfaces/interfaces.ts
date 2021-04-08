@@ -6,9 +6,10 @@ export interface FullScreenSupport {
 }
 
 export interface playerParameters {
-	element: HTMLAudioElement | HTMLVideoElement
+	media: HTMLAudioElement | HTMLVideoElement
 	container: HTMLElement
 	options: Options
+	type: string
 	Vlitejs: any
 }
 

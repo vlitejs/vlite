@@ -42,7 +42,7 @@ class SampleProvider extends window.Vlitejs.Player {
 		return new window.Promise((resolve, reject) => {
 			// Initialize the Player with the API
 			// Resolve the promise when the player is ready
-			// this.instancePlayer =
+			// this.instance =
 			// resolve()
 		})
 	}
@@ -52,7 +52,7 @@ class SampleProvider extends window.Vlitejs.Player {
 	 * @returns {Object} Player API instance
 	 */
 	getInstance() {
-		return this.instancePlayer
+		return this.instance
 	}
 
 	/**
@@ -60,7 +60,7 @@ class SampleProvider extends window.Vlitejs.Player {
 	 * @returns {Promise<number>} Current time of the video
 	 */
 	getCurrentTime() {
-		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
+		return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
 	}
 
 	/**
@@ -68,35 +68,35 @@ class SampleProvider extends window.Vlitejs.Player {
 	 * @returns {Promise<number>} Duration of the video
 	 */
 	getDuration() {
-		return new window.Promise((resolve) => resolve(this.instancePlayer.getDuration()))
+		return new window.Promise((resolve) => resolve(this.instance.getDuration()))
 	}
 
 	/**
 	 * Play method of the player
 	 */
 	methodPlay() {
-		this.instancePlayer.playVideo()
+		this.instance.playVideo()
 	}
 
 	/**
 	 * Pause method of the player
 	 */
 	methodPause() {
-		this.instancePlayer.pauseVideo()
+		this.instance.pauseVideo()
 	}
 
 	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
-		this.instancePlayer.mute()
+		this.instance.mute()
 	}
 
 	/**
 	 * Unmute method of the player
 	 */
 	methodUnMute() {
-		this.instancePlayer.unMute()
+		this.instance.unMute()
 	}
 
 	/**
@@ -104,14 +104,14 @@ class SampleProvider extends window.Vlitejs.Player {
 	 * @param {Number} Current time video
 	 */
 	methodSeekTo(newTime: number) {
-		this.instancePlayer.seekTo(newTime)
+		this.instance.seekTo(newTime)
 	}
 
 	/**
 	 * Remove the player instance
 	 */
 	removeInstance() {
-		this.instancePlayer.destroy()
+		this.instance.destroy()
 	}
 }
 

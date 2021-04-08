@@ -79,13 +79,15 @@ Here are some points to help you in your development:
 
 | Arguments             |      Type       | Description                                         |
 | --------------------- | :-------------: | --------------------------------------------------- |
-| `player.element`      |  `HTMLElement`  | Media element                                       |
-| `player.container`    |  `HTMLElement`  | Container of the media element                      |
+| `player.media`        |  `HTMLElement`  | Media element                                       |
+| `player.elements`     |    `Objects`    | Player DOM elements                                 |
 | `player.options`      |    `Object`     | [Player options](../../README.md#Player-options)    |
 | `player.isFullScreen` |    `Boolean`    | Is the player in fullscreen mode                    |
 | `player.isMuted`      |    `Boolean`    | Is the player muted                                 |
 | `player.isPaused`     | `null\|Boolean` | Is the player paused (`null` before the first play) |
+| `player.type`         |    `String`     | Player type (`video\|audio`)                        |
 | `player.Vlitejs`      |     `Class`     | `vLitejs` instance                                  |
+| `player.controlBar`   |     `Class`     | `controlBar` instance                               |
 
 ### Provider and media declaration
 

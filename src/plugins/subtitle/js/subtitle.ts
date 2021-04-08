@@ -26,7 +26,7 @@ export default class Subtitle {
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
-		this.tracks = Array.from(this.player.element.textTracks)
+		this.tracks = Array.from(this.player.media.textTracks)
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
 		this.onClickOnSubtitlesList = this.onClickOnSubtitlesList.bind(this)
@@ -41,9 +41,13 @@ export default class Subtitle {
 
 			this.render()
 
-			this.captions = this.player.container.querySelector('.v-captions') as HTMLElement
-			this.subtitleButton = this.player.container.querySelector('.v-subtitleButton') as HTMLElement
-			this.subtitlesList = this.player.container.querySelector('.v-subtitlesList') as HTMLElement
+			this.captions = this.player.elements.container.querySelector('.v-captions') as HTMLElement
+			this.subtitleButton = this.player.elements.container.querySelector(
+				'.v-subtitleButton'
+			) as HTMLElement
+			this.subtitlesList = this.player.elements.container.querySelector(
+				'.v-subtitlesList'
+			) as HTMLElement
 
 			this.addEvents()
 		}
@@ -60,11 +64,11 @@ export default class Subtitle {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.player.elements.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
-		const controlBar = this.player.container.querySelector('.v-controlBar')
+		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const insertPosition = this.getInsertPosition()
-		const targetElement = this.player.container.querySelector(insertPosition.selector)
+		const targetElement = this.player.elements.container.querySelector(insertPosition.selector)
 		if (controlBar && targetElement) {
 			// @ts-ignore
 			targetElement.insertAdjacentHTML(insertPosition.position as string, this.getTemplate())
@@ -106,7 +110,7 @@ export default class Subtitle {
 	 * @returns {Object} Selector and position for the subtitle button
 	 */
 	getInsertPosition(): InsertPosition {
-		const pipButton = this.player.container.querySelector('.v-pipButton')
+		const pipButton = this.player.elements.container.querySelector('.v-pipButton')
 		if (this.player.options.progressBar) {
 			return {
 				selector: '.v-progressBar',

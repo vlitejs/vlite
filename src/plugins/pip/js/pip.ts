@@ -28,7 +28,7 @@ export default class PiP {
 		if (this.isPipApiAvailable() && this.player.options.controls) {
 			this.render()
 
-			this.pipButton = this.player.container.querySelector('.v-pipButton') as HTMLElement
+			this.pipButton = this.player.elements.container.querySelector('.v-pipButton') as HTMLElement
 
 			this.addEvents()
 		}
@@ -41,7 +41,7 @@ export default class PiP {
 	isPipApiAvailable(): Boolean {
 		return (
 			'pictureInPictureEnabled' in document &&
-			!this.player.element.hasAttribute('disablePictureInPicture')
+			!this.player.media.hasAttribute('disablePictureInPicture')
 		)
 	}
 
@@ -49,11 +49,11 @@ export default class PiP {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.player.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.player.elements.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
 		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
-		const controlBar = this.player.container.querySelector('.v-controlBar')
-		const fullscreenButton = this.player.container.querySelector(
+		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
+		const fullscreenButton = this.player.elements.container.querySelector(
 			'.v-fullscreenButton'
 		) as HTMLElement
 
@@ -71,8 +71,8 @@ export default class PiP {
 	 */
 	addEvents() {
 		this.pipButton.addEventListener('click', this.onClickOnPipButton)
-		this.player.element.addEventListener('enterpictureinpicture', this.onEnterPip)
-		this.player.element.addEventListener('leavepictureinpicture', this.onLeavePip)
+		this.player.media.addEventListener('enterpictureinpicture', this.onEnterPip)
+		this.player.media.addEventListener('leavepictureinpicture', this.onLeavePip)
 	}
 
 	/**
@@ -83,9 +83,9 @@ export default class PiP {
 		e.preventDefault()
 
 		try {
-			if (this.player.element !== document.pictureInPictureElement) {
+			if (this.player.media !== document.pictureInPictureElement) {
 				// @ts-ignore
-				await this.player.element.requestPictureInPicture()
+				await this.player.media.requestPictureInPicture()
 			} else {
 				await document.exitPictureInPicture()
 			}

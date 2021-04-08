@@ -58,8 +58,8 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 */
 	initYoutubePlayer(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
-			this.instancePlayer = new window.YT.Player(this.element.getAttribute('id'), {
-				videoId: this.element.getAttribute('data-youtube-id'),
+			this.instance = new window.YT.Player(this.media.getAttribute('id'), {
+				videoId: this.media.getAttribute('data-youtube-id'),
 				height: '100%',
 				width: '100%',
 				playerVars: {
@@ -74,7 +74,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 				},
 				events: {
 					onReady: (data: any) => {
-						this.element = data.target.getIframe()
+						this.media = data.target.getIframe()
 						resolve()
 					},
 					onStateChange: (e: Event) => this.onPlayerStateChange(e)
@@ -125,7 +125,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @returns {Object} Youtube API instance
 	 */
 	getInstance(): any {
-		return this.instancePlayer
+		return this.instance
 	}
 
 	/**
@@ -133,7 +133,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @returns {Promise<number>} Current time of the video
 	 */
 	getCurrentTime(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.instancePlayer.getCurrentTime()))
+		return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
 	}
 
 	/**
@@ -141,21 +141,21 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @returns {Promise<number>} Duration of the video
 	 */
 	getDuration(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.instancePlayer.getDuration()))
+		return new window.Promise((resolve) => resolve(this.instance.getDuration()))
 	}
 
 	/**
 	 * Play method of the player
 	 */
 	methodPlay() {
-		this.instancePlayer.playVideo()
+		this.instance.playVideo()
 	}
 
 	/**
 	 * Pause method of the player
 	 */
 	methodPause() {
-		this.instancePlayer.pauseVideo()
+		this.instance.pauseVideo()
 	}
 
 	/**
@@ -163,7 +163,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @param {Number} volume New volume
 	 */
 	methodSetVolume(volume: number) {
-		this.instancePlayer.setVolume(volume * 100)
+		this.instance.setVolume(volume * 100)
 	}
 
 	/**
@@ -171,21 +171,21 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @returns {Promise<Number>} Player volume
 	 */
 	methodGetVolume(): Promise<number> {
-		return new window.Promise((resolve) => resolve(this.instancePlayer.getVolume() / 100))
+		return new window.Promise((resolve) => resolve(this.instance.getVolume() / 100))
 	}
 
 	/**
 	 * Mute method of the player
 	 */
 	methodMute() {
-		this.instancePlayer.mute()
+		this.instance.mute()
 	}
 
 	/**
 	 * Unmute method of the player
 	 */
 	methodUnMute() {
-		this.instancePlayer.unMute()
+		this.instance.unMute()
 	}
 
 	/**
@@ -193,7 +193,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 * @param {Number} Current time video
 	 */
 	methodSeekTo(newTime: number) {
-		this.instancePlayer.seekTo(newTime)
+		this.instance.seekTo(newTime)
 	}
 
 	/**
@@ -201,7 +201,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 	 */
 	destroy() {
 		clearTimeout(this.rafTimeout)
-		this.instancePlayer.destroy()
+		this.instance.destroy()
 		super.destroy()
 	}
 }

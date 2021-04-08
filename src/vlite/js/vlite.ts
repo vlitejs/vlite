@@ -15,7 +15,6 @@ import LoaderTemplate from 'shared/loader/assets/scripts/loader'
 import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
 import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
 import PosterTemplate from 'shared/poster/assets/scripts/poster'
-import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
 import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
 import { registerProvider, getProviderInstance } from '../../providers/provider'
 import { getPluginInstance, registerPlugin, initializePlugins } from '../../plugins/plugin'
@@ -61,7 +60,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
  */
 class Vlitejs {
 	Player: any
-	element: HTMLVideoElement | HTMLAudioElement
+	media: HTMLVideoElement | HTMLAudioElement
 	plugins: Array<string>
 	onReady: Function
 	delayAutoHide: number
@@ -103,9 +102,9 @@ class Vlitejs {
 		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
 			// @ts-ignore: Object is possibly 'null'.
-			this.element = document.querySelector(selector)
+			this.media = document.querySelector(selector)
 		} else if (selector instanceof HTMLVideoElement || selector instanceof HTMLAudioElement) {
-			this.element = selector
+			this.media = selector
 		} else {
 			throw new TypeError('vlitejs :: The element or selector supplied is not valid.')
 		}
@@ -114,7 +113,7 @@ class Vlitejs {
 		this.onReady = onReady
 		this.isPaused = true
 		this.delayAutoHide = 3000
-		this.type = this.element instanceof HTMLAudioElement ? 'audio' : 'video'
+		this.type = this.media instanceof HTMLAudioElement ? 'audio' : 'video'
 
 		// Check fullscreen support API on different browsers and cached prefixs
 		this.supportFullScreen = checkSupportFullScreen()
@@ -122,12 +121,12 @@ class Vlitejs {
 		// Update config from element attributes
 		const domAttributes: Array<string> = ['autoplay', 'playsinline', 'muted', 'loop']
 		domAttributes.forEach((item: string) => {
-			if (this.element.hasAttribute(item)) {
+			if (this.media.hasAttribute(item)) {
 				// @ts-ignore
 				options[item] = true
 				// @ts-ignore
 			} else if (options[item]) {
-				this.element.setAttribute(item, '')
+				this.media.setAttribute(item, '')
 			}
 		})
 
@@ -137,31 +136,22 @@ class Vlitejs {
 
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
-		this.onKeyup = this.onKeyup.bind(this)
+		this.onKeydown = this.onKeydown.bind(this)
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 
 		const ProviderInstance = getProviderInstance(provider)
 
 		this.wrapElement()
-		this.container = this.element.parentNode as HTMLElement
+		this.container = this.media.parentNode as HTMLElement
 
+		this.type === 'video' && this.renderLayout()
 		this.player = new ProviderInstance({
-			element: this.element,
-			container: this.container,
-			options: this.options,
+			type: this.type,
 			Vlitejs: this
 		})
-		this.player.init()
 
-		this.controlBar = new ControlBar({
-			container: this.container,
-			options: this.options,
-			type: this.type,
-			player: this.player
-		})
-
-		this.render()
+		this.player.build()
 		this.addEvents()
 
 		initializePlugins({
@@ -185,52 +175,35 @@ class Vlitejs {
 			`v-style${capitalized(this.type)}`
 		)
 		wrapper.setAttribute('tabindex', '0')
-		const parentElement = this.element.parentNode as HTMLElement
-		parentElement.insertBefore(wrapper, this.element)
-		wrapper.appendChild(this.element)
+		const parentElement = this.media.parentNode as HTMLElement
+		parentElement.insertBefore(wrapper, this.media)
+		wrapper.appendChild(this.media)
 	}
 
 	/**
 	 * Build the DOM of the player
 	 */
-	render() {
-		const template = this.type === 'audio' ? this.renderAudioElement() : this.renderVideoElement()
+	renderLayout() {
+		const template = `
+			${OverlayTemplate()}
+			${LoaderTemplate()}
+			${this.options.poster ? PosterTemplate({ posterUrl: this.options.poster }) : ''}
+			${this.options.bigPlay ? BigPlayTemplate() : ''}
+		`
 		this.container.insertAdjacentHTML('beforeend', template)
-
-		this.options.controls && this.controlBar.init()
-	}
-
-	/**
-	 * Render the video element
-	 * @returns {String} Generated HTML
-	 */
-	renderVideoElement(): string {
-		return `
-            ${OverlayTemplate()}
-            ${LoaderTemplate()}
-            ${this.options.poster ? PosterTemplate({ posterUrl: this.options.poster }) : ''}
-            ${this.options.bigPlay ? BigPlayTemplate() : ''}
-            ${this.options.controls ? this.controlBar.getTemplate() : ''}
-        `
-	}
-
-	/**
-	 * Render the aido element
-	 * @returns {String} Generated HTML
-	 */
-	renderAudioElement(): string {
-		return this.controlBar.getTemplate()
 	}
 
 	/**
 	 * Add evnets listeners
 	 */
 	addEvents() {
-		this.container.addEventListener('click', this.onClickOnPlayer)
-		this.container.addEventListener('dblclick', this.onDoubleClickOnPlayer)
-		this.container.addEventListener('keydown', this.onKeyup)
-		this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
-		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
+		if (this.type === 'video') {
+			this.container.addEventListener('click', this.onClickOnPlayer)
+			this.container.addEventListener('dblclick', this.onDoubleClickOnPlayer)
+			this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
+			window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
+		}
+		document.addEventListener('keydown', this.onKeydown)
 	}
 
 	/**
@@ -268,10 +241,10 @@ class Vlitejs {
 	}
 
 	/**
-	 * On keyup event on the media element
+	 * On keydown event on the media element
 	 * @param {Object} e Event listener datas
 	 */
-	onKeyup(e: KeyboardEvent) {
+	onKeydown(e: KeyboardEvent) {
 		// Stop and start the auto hide timer on selected key code
 		const validKeyCode = [9, 32, 37, 39]
 		if (this.autoHideGranted && validKeyCode.includes(e.keyCode)) {
@@ -412,11 +385,14 @@ class Vlitejs {
 	 * Remove events listeners
 	 */
 	removeEvents() {
-		this.container.removeEventListener('click', this.onClickOnPlayer)
-		this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
-		this.container.removeEventListener('keyup', this.onKeyup)
-		this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
-		window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
+		document.removeEventListener('keydown', this.onKeydown)
+
+		if (this.type === 'video') {
+			this.container.removeEventListener('click', this.onClickOnPlayer)
+			this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
+			this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
+			window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
+		}
 	}
 
 	/**
