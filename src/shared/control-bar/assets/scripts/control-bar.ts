@@ -84,7 +84,7 @@ export default class ControlBar {
 	onPlayerReady() {
 		this.player.getDuration().then((duration: number) => {
 			if (this.progressBar) {
-				this.progressBar.setAttribute('aria-valuemax', `${duration}`)
+				this.progressBar.setAttribute('aria-valuemax', `${Math.round(duration)}`)
 			}
 			if (this.durationElement) {
 				this.durationElement.innerHTML = formatVideoTime(duration)
@@ -111,14 +111,9 @@ export default class ControlBar {
 	onInputProgressBar(e: Event) {
 		this.player.progressBarIsMoving = true
 		const target = e.target as HTMLInputElement
-
 		target.style.setProperty('--value', `${target.value}%`)
-		this.player
-			.getCurrentTime()
-			.then((seconds: number) => target.setAttribute('aria-valuenow', `${seconds}`))
 
 		this.player.getDuration().then((duration: number) => {
-			const target = e.target as HTMLInputElement
 			this.player.seekTo((parseInt(target.value) * duration) / 100)
 		})
 	}

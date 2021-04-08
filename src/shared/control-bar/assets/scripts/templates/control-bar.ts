@@ -52,7 +52,7 @@ function timeElement(): string {
  * @returns {String} Generated HTML
  */
 function progressBarElement(): string {
-	return `<input type="range" class="v-progressBar" min="0" max="100" step="0.01" value="0" aria-label="Seek" aria-valuemin="0"} />`
+	return `<input type="range" class="v-progressBar" min="0" max="100" step="0.01" value="0" aria-label="Seek" aria-valuemin="0" />`
 }
 
 /**

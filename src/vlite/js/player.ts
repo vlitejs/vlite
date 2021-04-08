@@ -201,6 +201,7 @@ export default class Player {
 							this.progressBar.value = `${width}`
 						}
 						this.progressBar.style.setProperty('--value', `${width}%`)
+						this.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
 					}
 
 					if (this.currentTimeElement) {
