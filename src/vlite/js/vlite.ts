@@ -228,7 +228,7 @@ class Vlitejs {
 	addEvents() {
 		this.container.addEventListener('click', this.onClickOnPlayer)
 		this.container.addEventListener('dblclick', this.onDoubleClickOnPlayer)
-		this.container.addEventListener('keyup', this.onKeyup)
+		this.container.addEventListener('keydown', this.onKeyup)
 		this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
 		window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 	}
@@ -278,6 +278,10 @@ class Vlitejs {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
 		}
+
+		// Prevent default behavior for fast forward navigation to prevent input range calls
+		const preventDefaultKeyCode = [37, 39]
+		preventDefaultKeyCode.includes(e.keyCode) && e.preventDefault()
 
 		if (e.keyCode === 32) {
 			// Toggle the media element on spacebar press

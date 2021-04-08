@@ -14,7 +14,6 @@ export default class Player {
 	container: HTMLElement
 	options: Options
 	Vlitejs: any
-	progressBarIsMoving: Boolean
 	isFullScreen: Boolean
 	isMuted: Boolean
 	isPaused: null | Boolean
@@ -44,7 +43,6 @@ export default class Player {
 		this.options = options
 		this.Vlitejs = Vlitejs
 
-		this.progressBarIsMoving = false
 		this.isFullScreen = false
 		this.isMuted = this.options.muted
 		this.isPaused = null
@@ -197,9 +195,7 @@ export default class Player {
 
 					if (this.progressBar) {
 						const width = (currentTime * 100) / duration
-						if (!this.progressBarIsMoving) {
-							this.progressBar.value = `${width}`
-						}
+						this.progressBar.value = `${width}`
 						this.progressBar.style.setProperty('--value', `${width}%`)
 						this.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
 					}

@@ -45,7 +45,6 @@ export default class ControlBar {
 		this.durationElement = null
 
 		this.onInputProgressBar = this.onInputProgressBar.bind(this)
-		this.onChangeProgressBar = this.onChangeProgressBar.bind(this)
 		this.onClickOnControlBar = this.onClickOnControlBar.bind(this)
 		this.togglePlayPause = this.togglePlayPause.bind(this)
 		this.toggleVolume = this.toggleVolume.bind(this)
@@ -96,11 +95,7 @@ export default class ControlBar {
 	 * Add event listeners
 	 */
 	addEvents() {
-		if (this.progressBar) {
-			this.progressBar.addEventListener('input', this.onInputProgressBar)
-			this.progressBar.addEventListener('change', this.onChangeProgressBar)
-		}
-
+		this.progressBar && this.progressBar.addEventListener('input', this.onInputProgressBar)
 		this.controlBar && this.controlBar.addEventListener('click', this.onClickOnControlBar)
 	}
 
@@ -109,20 +104,12 @@ export default class ControlBar {
 	 * @param {Object} e Event data
 	 */
 	onInputProgressBar(e: Event) {
-		this.player.progressBarIsMoving = true
 		const target = e.target as HTMLInputElement
 		target.style.setProperty('--value', `${target.value}%`)
 
 		this.player.getDuration().then((duration: number) => {
 			this.player.seekTo((parseInt(target.value) * duration) / 100)
 		})
-	}
-
-	/**
-	 * On change event on the progress bar
-	 */
-	onChangeProgressBar() {
-		this.player.progressBarIsMoving = false
 	}
 
 	/**
@@ -215,7 +202,6 @@ export default class ControlBar {
 	removeEvents() {
 		if (this.progressBar) {
 			this.progressBar.removeEventListener('input', this.onInputProgressBar)
-			this.progressBar.removeEventListener('change', this.onChangeProgressBar)
 		}
 
 		this.controlBar && this.controlBar.removeEventListener('click', this.onClickOnControlBar)
