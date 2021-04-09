@@ -21,17 +21,15 @@
 	}
 
 	&-progressBar {
-		-webkit-appearance: none;
-		margin: 0;
 		height: var(--heightProgressBar);
 		transition: height var(--transition250msEase), top var(--transition250msEase);
 		z-index: 1;
-		cursor: pointer;
 		width: calc(100% - 2 * var(--offsetLeftRightControlBar));
 		-webkit-appearance: none;
 		background: none;
 		border: none;
 		cursor: pointer;
+		margin: 0;
 		outline: none;
 		color: inherit;
 		font-size: inherit;
