@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>vLitejs - Youtube</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<link rel="stylesheet" href="../../dist/vlite.css" />
 </head>
 <body>
@@ -11,7 +11,7 @@
 	<script src="../../dist/vlite.js"></script>
 	<script src="../../dist/providers/youtube.js"></script>
 	<script>
-        Vlitejs.registerProvider('youtube', VlitejsYoutube)
+		Vlitejs.registerProvider('youtube', VlitejsYoutube)
 		new Vlitejs('#player-yt', {
 			options: {
 				autoplay: false,
@@ -25,11 +25,12 @@
 				bigPlay: true,
 				autoHide: true,
 				playsinline: true,
-                loop: true
+				loop: true,
+				providerParams: {}
 			},
-            provider: 'youtube',
+			provider: 'youtube',
 			onReady: (player) => {
-                console.log(player)
+				console.log(player)
 
 				player.on('play', () => console.log('play'));
 				player.on('pause', () => console.log('pause'));
@@ -39,7 +40,7 @@
 				player.on('timeupdate', () => console.log('timeupdate'));
 				player.on('enterfullscreen', () => console.log('enterfullscreen'));
 				player.on('exitfullscreen', () => console.log('exitfullscreen'));
-            }
+			}
 		});
 	</script>
 </body>

@@ -8,8 +8,9 @@ import { playerParameters, configEvent } from 'shared/assets/interfaces/interfac
 export default class PlayerHtml5 extends Player {
 	events: Array<configEvent>
 
-	constructor({ ...args }: playerParameters) {
-		super({ ...args })
+	constructor(props: playerParameters) {
+		super(props)
+
 		this.events = [
 			{ type: 'timeupdate', listener: super.onTimeUpdate },
 			{ type: 'ended', listener: super.onVideoEnded },

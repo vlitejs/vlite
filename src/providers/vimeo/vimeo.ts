@@ -23,11 +23,20 @@ let vimeoQueue: Array<any> = []
  * @module vlitejs/Player/PlayerVimeo
  */
 class PlayerVimeo extends window.Vlitejs.Player {
-	instance: any
+	params: Object
 	events: Array<configEvent>
+	instance: any
 
-	constructor({ ...args }: playerParameters) {
-		super({ ...args })
+	constructor(props: playerParameters) {
+		super(props)
+
+		const DEFAULT_PARAMS = {
+			id: this.media.getAttribute('data-vimeo-id'),
+			playsinline: this.options.playsinline ? 1 : 0,
+			loop: this.options.loop ? 1 : 0,
+			controls: false
+		}
+		this.params = { ...DEFAULT_PARAMS, ...this.options.providerParams }
 		this.events = [
 			{ type: 'timeupdate', listener: super.onTimeUpdate },
 			{ type: 'ended', listener: super.onVideoEnded },
@@ -68,11 +77,8 @@ class PlayerVimeo extends window.Vlitejs.Player {
 	 */
 	initVimeoPlayer(): Promise<void> {
 		return new window.Promise((resolve, reject) => {
-			this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), {
-				id: this.media.getAttribute('data-vimeo-id'),
-				controls: true
-			})
-			this.media = this.instance.media
+			this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), this.params)
+			this.media = this.instance.element
 			this.instance.ready().then(resolve)
 		})
 	}

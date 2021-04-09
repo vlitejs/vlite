@@ -1,3 +1,5 @@
+import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+
 declare global {
 	interface Window {
 		Vlitejs: {
@@ -29,6 +31,23 @@ let youtubeQueue: Array<any> = []
  * @module vlitejs/Player/PlayerYoutube
  */
 class PlayerYoutube extends window.Vlitejs.Player {
+	params: Object
+	instance: any
+
+	constructor(props: playerParameters) {
+		super(props)
+		const DEFAULT_PARAMS = {
+			autohide: 1,
+			controls: 0,
+			fs: this.options.fullscreen ? 1 : 0,
+			modestbranding: 0,
+			playsinline: this.options.playsinline ? 1 : 0,
+			rel: 0,
+			showinfo: 0,
+			wmode: 'transparent'
+		}
+		this.params = { ...DEFAULT_PARAMS, ...this.options.providerParams }
+	}
 	/**
 	 * Initialize the player when the API is ready
 	 */
@@ -62,16 +81,7 @@ class PlayerYoutube extends window.Vlitejs.Player {
 				videoId: this.media.getAttribute('data-youtube-id'),
 				height: '100%',
 				width: '100%',
-				playerVars: {
-					showinfo: 0,
-					modestbranding: 0,
-					autohide: 1,
-					rel: 0,
-					fs: this.options.fullscreen ? 1 : 0,
-					wmode: 'transparent',
-					playsinline: this.options.playsinline ? 1 : 0,
-					controls: 0
-				},
+				playerVars: this.params,
 				events: {
 					onReady: (data: any) => {
 						this.media = data.target.getIframe()

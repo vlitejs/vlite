@@ -35,7 +35,8 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		progressBar: true,
 		time: true,
 		volume: true,
-		loop: false
+		loop: false,
+		providerParams: {}
 	},
 	video: {
 		autoplay: false,
@@ -48,9 +49,10 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		poster: null,
 		bigPlay: true,
 		autoHide: false,
-		playsinline: true,
+		playsinline: false,
 		loop: false,
-		muted: false
+		muted: false,
+		providerParams: {}
 	}
 }
 
