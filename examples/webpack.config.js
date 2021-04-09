@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = (env, argv) => {
@@ -8,7 +9,8 @@ module.exports = (env, argv) => {
 	return {
 		watch: !isProduction,
 		entry: {
-			html5: `${path.resolve(__dirname, './html5/config.js')}`
+			html5: `${path.resolve(__dirname, './html5/config.js')}`,
+			youtube: `${path.resolve(__dirname, './youtube/config.js')}`
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -17,7 +19,7 @@ module.exports = (env, argv) => {
 		output: {
 			path: path.resolve(__dirname, './dist'),
 			publicPath: '/dist/',
-			filename: '[name].js'
+			filename: 'js/[name].js'
 		},
 		module: {
 			rules: [
@@ -29,13 +31,37 @@ module.exports = (env, argv) => {
 							loader: 'babel-loader'
 						}
 					]
+				},
+				{
+					test: /\.css$/,
+					include: [path.resolve(__dirname, './'), path.resolve(__dirname, '../dist')],
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: 'css-loader'
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									config: path.resolve(__dirname, '../postcss.config.js')
+								}
+							}
+						}
+					]
 				}
 			]
 		},
 		resolve: {
 			extensions: ['.js']
 		},
-		plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
+		plugins: [
+			new MiniCssExtractPlugin({
+				filename: 'css/[name].css',
+				chunkFilename: 'css/[name].css'
+			}),
+			new webpack.optimize.ModuleConcatenationPlugin()
+		],
 		stats: {
 			assets: true,
 			colors: true,

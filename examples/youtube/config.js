@@ -1,14 +1,11 @@
 import '../../dist/vlite.css'
-import '../../dist/plugins/subtitle.css'
 import Vlitejs from '../../dist/vlite.js'
-import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
-import VlitejsPip from '../../dist/plugins/pip.js'
+import VlitejsYoutube from '../../dist/providers/youtube.js'
 
-Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
-Vlitejs.registerPlugin('pip', VlitejsPip)
+Vlitejs.registerProvider('youtube', VlitejsYoutube)
 
 /* eslint-disable no-unused-vars */
-const player = new Vlitejs('#player-html5', {
+const player = new Vlitejs('#player-yt', {
 	options: {
 		autoplay: false,
 		controls: true,
@@ -24,7 +21,7 @@ const player = new Vlitejs('#player-html5', {
 		loop: false,
 		muted: false
 	},
-	plugins: ['subtitle', 'pip'],
+	provider: 'youtube',
 	onReady: function (player) {
 		console.log(player)
 

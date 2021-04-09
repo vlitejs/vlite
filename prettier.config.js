@@ -15,6 +15,12 @@ module.exports = {
 				singleQuote: true,
 				semi: true
 			}
+		},
+		{
+			files: '*.html',
+			options: {
+				printWidth: 500
+			}
 		}
 	]
 }
