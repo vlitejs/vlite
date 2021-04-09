@@ -3,8 +3,8 @@ import '../../../dist/vlite.css'
 import Vlitejs from '../../../dist/vlite'
 import VlitejsSubtitle from '../../../dist/plugins/subtitle'
 import VlitejsPip from '../../../dist/plugins/pip'
-// import VlitejsYoutube from '../../../dist/providers/youtube'
-// import VlitejsVimeo from '../../../dist/providers/vimeo'
+import VlitejsYoutube from '../../../dist/providers/youtube'
+import VlitejsVimeo from '../../../dist/providers/vimeo'
 
 export default class Demo {
 	constructor() {
@@ -51,8 +51,8 @@ export default class Demo {
 	init() {
 		Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 		Vlitejs.registerPlugin('pip', VlitejsPip)
-		// Vlitejs.registerProvider('youtube', VlitejsYoutube)
-		// Vlitejs.registerProvider('vimeo', VlitejsVimeo)
+		Vlitejs.registerProvider('youtube', VlitejsYoutube)
+		Vlitejs.registerProvider('vimeo', VlitejsVimeo)
 
 		this.addEvents()
 		this.initMedia({ provider: 'html5', type: 'video' })

@@ -453,7 +453,6 @@ export default class Player {
 	 * Remove event listeners, player instance and DOM
 	 */
 	destroy() {
-		this.pause()
 		this.options.controls && this.controlBar && this.controlBar.removeEvents()
 		this.customEvents.forEach((event) => {
 			this.elements.container.removeEventListener(event.type, event.listener)

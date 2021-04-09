@@ -142,7 +142,7 @@ class Vlitejs {
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 
-		const ProviderInstance = getProviderInstance(provider)
+		const ProviderInstance = getProviderInstance(provider, Player)
 
 		this.wrapElement()
 		this.container = this.media.parentNode as HTMLElement
@@ -396,10 +396,6 @@ class Vlitejs {
 		this.player.controlBar.destroy()
 	}
 }
-
-// Expose the Player instance, used by the provider API
-// @ts-ignore
-Vlitejs.Player = Player
 
 // Expose the provider registration
 // @ts-ignore

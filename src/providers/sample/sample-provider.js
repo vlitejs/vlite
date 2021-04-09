@@ -1,134 +1,135 @@
-if (typeof window.Vlitejs === 'undefined') {
-	throw new Error('vlitejs :: The library is not available.')
-}
-
-let providerQueue = []
-const providerObjectName = 'Sample'
-
 /**
- * vlitejs Sample provider
- * @module vlitejs/Player/SampleProvider
+ * The provider function returns the provider Class which is extended from vLitejs Player
+ * @param {Class} Player
+ * @returns {Class} Provider class extended from vLitejs Player
  */
-class SampleProvider extends window.Vlitejs.Player {
-	/**
-	 * Initialize the player when the API is ready
-	 */
-	init() {
-		this.waitUntilVideoIsReady().then(super.onPlayerReady.bind(this))
+export default function (Player: any) {
+	let providerQueue = []
+	const providerObjectName = 'Sample'
+
+	// Load the player API/SDK if it is not available
+	if (typeof window[providerObjectName] === 'undefined') {
+		const script = document.createElement('script')
+		script.async = true
+		script.type = 'text/javascript'
+		script.src = 'PROVIDER_API_URL'
+		script.onload = () => {
+			// Run the queue when the provider API is ready
+			providerQueue.forEach((itemClass) => {
+				itemClass.initPlayer().then(() => itemClass.onPlayerReady())
+			})
+			providerQueue = []
+		}
+		document.getElementsByTagName('body')[0].appendChild(script)
 	}
 
 	/**
-	 * Wait until the API is ready
-	 * @returns {Promise} The player is ready
+	 * vlitejs Sample provider
+	 * @module vlitejs/Player/SampleProvider
 	 */
-	waitUntilVideoIsReady() {
-		return new window.Promise((resolve, reject) => {
-			// Initialize the player if the API is already available or reject
-			if (typeof window[providerObjectName] !== 'undefined') {
-				this.initPlayer().then(resolve)
-			} else {
-				// Push the instance to the queue to initialize it later
-				providerQueue.push(this)
-			}
-		})
-	}
+	return class SampleProvider extends Player {
+		/**
+		 * Initialize the player when the API is ready
+		 */
+		init() {
+			this.waitUntilVideoIsReady().then(super.onPlayerReady.bind(this))
+		}
 
-	/**
-	 * Initialize the player with the provider API/SDK
-	 * The promise is resolved when the player is instanciated and ready
-	 * @returns {Promise} The player is instanciated
-	 */
-	initPlayer() {
-		return new window.Promise((resolve, reject) => {
-			// Initialize the Player with the API
-			// Resolve the promise when the player is ready
-			// this.instance =
-			// resolve()
-		})
-	}
+		/**
+		 * Wait until the API is ready
+		 * @returns {Promise} The player is ready
+		 */
+		waitUntilVideoIsReady() {
+			return new window.Promise((resolve, reject) => {
+				// Initialize the player if the API is already available or reject
+				if (typeof window[providerObjectName] !== 'undefined') {
+					this.initPlayer().then(resolve)
+				} else {
+					// Push the instance to the queue to initialize it later
+					providerQueue.push(this)
+				}
+			})
+		}
 
-	/**
-	 * Get the player instance
-	 * @returns {Object} Player API instance
-	 */
-	getInstance() {
-		return this.instance
-	}
+		/**
+		 * Initialize the player with the provider API/SDK
+		 * The promise is resolved when the player is instanciated and ready
+		 * @returns {Promise} The player is instanciated
+		 */
+		initPlayer() {
+			return new window.Promise((resolve, reject) => {
+				// Initialize the Player with the API
+				// Resolve the promise when the player is ready
+				// this.instance =
+				// resolve()
+			})
+		}
 
-	/**
-	 * Get the player current time
-	 * @returns {Promise<number>} Current time of the video
-	 */
-	getCurrentTime() {
-		return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
-	}
+		/**
+		 * Get the player instance
+		 * @returns {Object} Player API instance
+		 */
+		getInstance() {
+			return this.instance
+		}
 
-	/**
-	 * Get the player duration
-	 * @returns {Promise<number>} Duration of the video
-	 */
-	getDuration() {
-		return new window.Promise((resolve) => resolve(this.instance.getDuration()))
-	}
+		/**
+		 * Get the player current time
+		 * @returns {Promise<number>} Current time of the video
+		 */
+		getCurrentTime() {
+			return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
+		}
 
-	/**
-	 * Play method of the player
-	 */
-	methodPlay() {
-		this.instance.playVideo()
-	}
+		/**
+		 * Get the player duration
+		 * @returns {Promise<number>} Duration of the video
+		 */
+		getDuration() {
+			return new window.Promise((resolve) => resolve(this.instance.getDuration()))
+		}
 
-	/**
-	 * Pause method of the player
-	 */
-	methodPause() {
-		this.instance.pauseVideo()
-	}
+		/**
+		 * Play method of the player
+		 */
+		methodPlay() {
+			this.instance.playVideo()
+		}
 
-	/**
-	 * Mute method of the player
-	 */
-	methodMute() {
-		this.instance.mute()
-	}
+		/**
+		 * Pause method of the player
+		 */
+		methodPause() {
+			this.instance.pauseVideo()
+		}
 
-	/**
-	 * Unmute method of the player
-	 */
-	methodUnMute() {
-		this.instance.unMute()
-	}
+		/**
+		 * Mute method of the player
+		 */
+		methodMute() {
+			this.instance.mute()
+		}
 
-	/**
-	 * Set the new current time for the player
-	 * @param {Number} Current time video
-	 */
-	methodSeekTo(newTime: number) {
-		this.instance.seekTo(newTime)
-	}
+		/**
+		 * Unmute method of the player
+		 */
+		methodUnMute() {
+			this.instance.unMute()
+		}
 
-	/**
-	 * Remove the player instance
-	 */
-	removeInstance() {
-		this.instance.destroy()
+		/**
+		 * Set the new current time for the player
+		 * @param {Number} Current time video
+		 */
+		methodSeekTo(newTime: number) {
+			this.instance.seekTo(newTime)
+		}
+
+		/**
+		 * Remove the player instance
+		 */
+		removeInstance() {
+			this.instance.destroy()
+		}
 	}
 }
-
-// Load the player API/SDK if it is not available
-if (typeof window[providerObjectName] === 'undefined') {
-	const script = document.createElement('script')
-	script.async = true
-	script.type = 'text/javascript'
-	script.src = 'PROVIDER_API_URL'
-	script.onload = () => {
-		// Run the queue when the provider API is ready
-		providerQueue.forEach((itemClass) => {
-			itemClass.initPlayer().then(() => itemClass.onPlayerReady())
-		})
-		providerQueue = []
-	}
-	document.getElementsByTagName('body')[0].appendChild(script)
-}
-
-export default SampleProvider

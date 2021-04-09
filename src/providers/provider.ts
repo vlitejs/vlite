@@ -11,12 +11,13 @@ const vliteProviders: interfaceVliteProviders = {
 /**
  * Get provider instance from the registered list
  * @param {String} provider Provider ID
- * @returns {Class} Provider instance
+ * @param {Class} Player Player parent class
+ * @returns {Class} Provider class
  */
-export function getProviderInstance(provider: string): any {
+export function getProviderInstance(provider: string, Player: any): any {
 	const ProviderInstance: any = vliteProviders[provider]
 	if (ProviderInstance) {
-		return ProviderInstance
+		return ProviderInstance(Player)
 	}
 	throw new Error(`vlitejs :: Unknown provider "${provider}"`)
 }
