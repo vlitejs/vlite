@@ -1,8 +1,7 @@
 // Import JS
-import vlitejs from './js/vlite'
+import Vlitejs from './js/vlite'
 
 // Import CSS
-import 'shared/assets/styles/reset-vlite.css'
 import 'shared/assets/styles/vars.css'
 
 import './css/player.css'
@@ -14,4 +13,4 @@ import 'shared/big-play/config.js'
 import 'shared/overlay/config.js'
 import 'shared/poster/config.js'
 
-export default vlitejs
+export default Vlitejs

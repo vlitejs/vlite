@@ -5,5 +5,5 @@ import svgBigPlay from 'shared/assets/svgs/big-play.svg'
  * @returns {String} Generated HTML
  */
 export default function (): string {
-	return `<button class="v-bigPlay">${svgBigPlay}</button>`
+	return `<button class="v-bigPlay v-controlButton">${svgBigPlay}</button>`
 }

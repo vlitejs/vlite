@@ -1,21 +1,13 @@
-.vlite-js {
-	width: 100%;
-	height: 100%;
-
-	& > iframe {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
-}
-
 .v-vlite {
 	font-family: -apple-system, blinkmacsystemfont, segoe UI, Helvetica, Arial, sans-serif,
 		Apple Color Emoji, Segoe UI Emoji;
-	overflow: hidden;
 	position: relative;
+	overflow: hidden;
+
+	&,
+	* {
+		box-sizing: border-box;
+	}
 
 	&.v-styleAudio {
 		--colorControl: black;
@@ -49,10 +41,6 @@
 		display: none !important;
 	}
 
-	iframe.vlite-js {
-		pointer-events: none;
-	}
-
 	&.v-fullscreenButton-display {
 		.v-controlBar,
 		.v-bigPlay {
@@ -61,22 +49,7 @@
 		}
 	}
 
-	.vlite-js {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
 	&.v-paused {
-		.v-playPauseButton {
-			.v-iconPlay {
-				display: flex;
-			}
-		}
-
 		.v-controlBar.hidden {
 			opacity: 1;
 		}
@@ -95,11 +68,65 @@
 			visibility: hidden;
 			opacity: 0;
 		}
+	}
 
-		.v-playPauseButton {
-			.v-iconPause {
-				display: flex;
-			}
+	iframe.vlite-js {
+		pointer-events: none;
+	}
+
+	.vlite-js,
+	.vlite-js > iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.v {
+	&-controlButton {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 100%;
+		transition: opacity var(--transition250msEase);
+		opacity: var(--defaultControlsOpacity);
+		padding: 0;
+		-webkit-appearance: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		outline: none;
+		color: inherit;
+		font-size: inherit;
+		font-family: inherit;
+
+		* {
+			pointer-events: none;
+		}
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&.v-controlPressed .v-iconUnpressed,
+		&:not(.v-controlPressed) .v-iconPressed {
+			display: none;
+		}
+
+		&:focus-visible {
+			outline: 4px dashed var(--outlineColor);
+			outline-offset: -4px;
+		}
+
+		svg {
+			fill: var(--colorControl);
+			width: var(--controlIconWidth);
+			height: var(--controlIconHeight);
 		}
 	}
 }

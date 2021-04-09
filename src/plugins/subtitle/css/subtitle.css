@@ -23,20 +23,6 @@
 		height: 100%;
 	}
 
-	&-subtitleButton {
-		&:not(.v-pressed) {
-			.v-iconSubtitleOn {
-				display: block;
-			}
-		}
-
-		&.v-pressed {
-			.v-iconSubtitleOff {
-				display: block;
-			}
-		}
-	}
-
 	&-subtitlesList {
 		position: absolute;
 		z-index: 3;

@@ -342,12 +342,12 @@ export default class Player {
 			volume = 0
 			this.isMuted = true
 			if (this.elements.volume) {
-				this.elements.volume.classList.add('v-pressed')
+				this.elements.volume.classList.add('v-controlPressed')
 			}
 		} else {
 			this.isMuted = false
 			if (this.elements.volume) {
-				this.elements.volume.classList.remove('v-pressed')
+				this.elements.volume.classList.remove('v-controlPressed')
 			}
 		}
 
@@ -375,7 +375,7 @@ export default class Player {
 		this.isMuted = true
 
 		if (this.elements.volume) {
-			this.elements.volume.classList.add('v-pressed')
+			this.elements.volume.classList.add('v-controlPressed')
 		}
 
 		this.dispatchEvent('volumechange')
@@ -389,7 +389,7 @@ export default class Player {
 		this.isMuted = false
 
 		if (this.elements.volume) {
-			this.elements.volume.classList.remove('v-pressed')
+			this.elements.volume.classList.remove('v-controlPressed')
 		}
 
 		this.dispatchEvent('volumechange')
@@ -418,7 +418,7 @@ export default class Player {
 			this.elements.container.classList.add('v-fullscreenButton-display')
 
 			if (this.elements.fullscreen) {
-				this.elements.fullscreen.classList.add('v-pressed')
+				this.elements.fullscreen.classList.add('v-controlPressed')
 			}
 
 			this.dispatchEvent('enterfullscreen')
@@ -441,7 +441,7 @@ export default class Player {
 			this.elements.container.classList.remove('v-fullscreenButton-display')
 
 			if (this.elements.fullscreen) {
-				this.elements.fullscreen.classList.remove('v-pressed')
+				this.elements.fullscreen.classList.remove('v-controlPressed')
 			}
 
 			this.dispatchEvent('exitfullscreen')

@@ -1,24 +1,4 @@
 .v {
-	&-controlButton {
-		position: relative;
-		display: inline-block;
-		width: 40px;
-		height: 100%;
-		transition: opacity var(--transition250msEase);
-		opacity: var(--defaultControlsOpacity);
-		padding: 0;
-
-		&:hover {
-			opacity: 1;
-		}
-
-		svg {
-			fill: var(--colorControl);
-			width: var(--controlIconWidth);
-			height: var(--controlIconHeight);
-		}
-	}
-
 	&-controlButtonIcon {
 		display: none;
 		position: absolute;
@@ -28,14 +8,12 @@
 	}
 
 	&-playPauseButton {
-		float: left;
 		flex-shrink: 0;
 	}
 
 	&-time {
 		color: var(--colorControl);
 		font-size: 14px;
-		float: left;
 		height: 100%;
 		display: flex;
 		align-items: center;
@@ -50,6 +28,19 @@
 		z-index: 1;
 		cursor: pointer;
 		width: calc(100% - 2 * var(--offsetLeftRightControlBar));
+		-webkit-appearance: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		outline: none;
+		color: inherit;
+		font-size: inherit;
+		font-family: inherit;
+
+		&:focus-visible {
+			outline: 4px dashed var(--outlineColor);
+			outline-offset: 2px;
+		}
 
 		&:focus {
 			outline: none;
@@ -101,34 +92,8 @@
 		transition: transform var(--transition250msEase), opacity var(--transition250msEase);
 		flex-shrink: 0;
 
-		&:not(.v-pressed) {
-			.v-iconVolumeHigh {
-				display: flex;
-			}
-		}
-
-		&.v-pressed {
-			.v-iconVolumeMute {
-				display: flex;
-			}
-		}
-
 		&.v-animate {
 			transform: translateY(-3px);
-		}
-	}
-
-	&-fullscreenButton {
-		&:not(.v-pressed) {
-			.v-iconFullscreen {
-				display: flex;
-			}
-		}
-
-		&.v-pressed {
-			.v-iconShrink {
-				display: flex;
-			}
 		}
 	}
 

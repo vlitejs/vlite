@@ -82,9 +82,8 @@ export default class Subtitle {
 	getTemplate(): string {
 		return `
 				<div class="v-subtitle">
-					<button class="v-subtitleButton v-controlButton v-pressed">
-						<span class="v-controlButtonIcon v-iconSubtitleOn">${svgSubtitleOn}</span>
-						<span class="v-controlButtonIcon v-iconSubtitleOff">${svgSubtitleOff}</span>
+					<button class="v-subtitleButton v-controlButton v-controlPressed">
+						${svgSubtitleOn}${svgSubtitleOff}
 					</button>
 					<div class="v-subtitlesList">
 						<ul>
@@ -168,8 +167,8 @@ export default class Subtitle {
 		const trackActive = this.subtitlesList.querySelector('.v-active')
 		const language = target.getAttribute('data-language')
 
-		if (!isActive && this.subtitleButton.classList.contains('v-pressed')) {
-			this.subtitleButton.classList.remove('v-pressed')
+		if (!isActive && this.subtitleButton.classList.contains('v-controlPressed')) {
+			this.subtitleButton.classList.remove('v-controlPressed')
 		}
 
 		if (!isActive && language && target.nodeName.toLowerCase() === 'button') {
@@ -181,7 +180,7 @@ export default class Subtitle {
 				this.activeTrack = this.getTrackByLanguage(language)
 				this.activeTrack && this.updateCues()
 			} else {
-				this.subtitleButton.classList.add('v-pressed')
+				this.subtitleButton.classList.add('v-controlPressed')
 				this.captions.classList.remove('v-active')
 				this.captions.innerHTML = ''
 				this.activeTrack && this.updateCues({ isDisabled: true })

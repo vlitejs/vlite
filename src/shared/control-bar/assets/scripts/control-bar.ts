@@ -137,8 +137,8 @@ export default class ControlBar {
 	 * Toggle the video status (play|pause)
 	 */
 	togglePlayPause(e: Event) {
-		e && e.preventDefault()
-
+		e.preventDefault()
+		this.player.elements.playPause.classList.toggle('v-controlPressed')
 		this.player.elements.container.classList.contains('v-paused')
 			? this.player.play()
 			: this.player.pause()
@@ -150,7 +150,7 @@ export default class ControlBar {
 	toggleVolume(e: Event) {
 		e.preventDefault()
 
-		if (this.player.elements.volume!.classList.contains('v-pressed')) {
+		if (this.player.elements.volume!.classList.contains('v-controlPressed')) {
 			this.player.unMute()
 			this.player.elements.volume!.setAttribute('aria-label', 'Mute')
 		} else {

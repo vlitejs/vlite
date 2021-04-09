@@ -36,7 +36,7 @@ export default function ({
  * @returns {String} Generated HTML
  */
 function playPauseElement(): string {
-	return `<button class="v-playPauseButton v-controlButton" aria-label="Play"><span class="v-controlButtonIcon v-iconPlay">${svgPlay}</span><span class="v-controlButtonIcon v-iconPause">${svgPause}</span></button>`
+	return `<button class="v-playPauseButton v-controlButton" aria-label="Play">${svgPlay}${svgPause}</button>`
 }
 
 /**
@@ -60,8 +60,8 @@ function progressBarElement(): string {
  * @returns {String} Generated HTML
  */
 function volumeElement({ isMuted }: { isMuted: Boolean }) {
-	const muteClass = isMuted ? ' v-pressed' : ''
-	return `<button class="v-volumeButton v-controlButton${muteClass}"><span class="v-controlButtonIcon v-iconVolumeHigh">${svgVolumeHigh}</span><span class="v-controlButtonIcon v-iconVolumeMute">${svgVolumeMute}</span></button>`
+	const muteClass = isMuted ? ' v-controlPressed' : ''
+	return `<button class="v-volumeButton v-controlButton${muteClass}">${svgVolumeHigh}${svgVolumeMute}</button>`
 }
 
 /**
@@ -69,5 +69,5 @@ function volumeElement({ isMuted }: { isMuted: Boolean }) {
  * @returns {String} Generated HTML
  */
 function fullscreenElement(): string {
-	return `<button class="v-fullscreenButton v-controlButton" aria-label="Enter fullscreen"><span class="v-controlButtonIcon v-iconFullscreen">${svgFullscreen}</span><span class="v-controlButtonIcon v-iconShrink">${svgFullscreenExit}</span></button>`
+	return `<button class="v-fullscreenButton v-controlButton" aria-label="Enter fullscreen">${svgFullscreen}${svgFullscreenExit}</span></button>`
 }

@@ -219,7 +219,7 @@ class Vlitejs {
 		})
 
 		if (validateTargetPlayPauseButton) {
-			this.togglePlayPause(e)
+			this.player.controlBar.togglePlayPause(e)
 		}
 	}
 
@@ -236,7 +236,7 @@ class Vlitejs {
 		})
 
 		if (validateTargetOverlay) {
-			this.controlBar.toggleFullscreen(e)
+			this.player.controlBar.toggleFullscreen(e)
 		}
 	}
 
@@ -258,7 +258,7 @@ class Vlitejs {
 
 		if (e.keyCode === 32) {
 			// Toggle the media element on spacebar press
-			this.togglePlayPause(e)
+			this.player.controlBar.togglePlayPause(e)
 		} else if (e.keyCode === 37) {
 			// Backward the media element on arrow left press
 			this.fastForward('backward')
@@ -293,16 +293,6 @@ class Vlitejs {
 		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {
 			this.player.exitFullscreen({ escKey: true })
 		}
-	}
-
-	/**
-	 * On toggle play/pause
-	 * @param {(Event|KeyboardEvent)} e Event data
-	 */
-	togglePlayPause(e: Event | KeyboardEvent) {
-		e.preventDefault()
-
-		this.container.classList.contains('v-paused') ? this.player.play() : this.player.pause()
 	}
 
 	/**
@@ -401,7 +391,7 @@ class Vlitejs {
 	destroy() {
 		this.removeEvents()
 		this.player.destroy()
-		this.controlBar.destroy()
+		this.player.controlBar.destroy()
 	}
 }
 
