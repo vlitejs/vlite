@@ -3,9 +3,6 @@ import { formatVideoTime } from 'shared/utils/utils'
 import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
 import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
 
-interface customEvents {
-	[key: string]: Array<Function>
-}
 /**
  * Vlitejs Player
  * @module Vlitejs/Player
@@ -20,7 +17,7 @@ export default class Player {
 	isPaused: null | Boolean
 	delayAutoHide: number
 	controlBar: any
-	customEvents: customEvents
+	customEvents: Array<configEvent>
 	elements: {
 		container: HTMLElement
 		bigPlay: HTMLElement | null
@@ -63,7 +60,7 @@ export default class Player {
 		this.isMuted = this.options.muted
 		this.isPaused = null
 		this.delayAutoHide = 3000
-		this.customEvents = {}
+		this.customEvents = []
 
 		this.controlBar = new ControlBar({
 			player: this,
@@ -193,27 +190,23 @@ export default class Player {
 	}
 
 	/**
-	 * Add media action listeners to the storage
+	 * Add media action listeners on the container
 	 * @param {String} type Event type
 	 * @param {EventListener} listener Event listener
 	 */
 	on(type: string, listener: EventListener) {
 		if (listener instanceof Function) {
-			if (!Object.keys(this.customEvents).includes(type)) {
-				this.customEvents[type] = []
-			}
-			this.customEvents[type].push(listener)
+			this.customEvents.push({ type, listener })
+			this.elements.container.addEventListener(type, listener)
 		}
 	}
 
 	/**
-	 * Call custom event listeners from the event storage
+	 * Dispatch custom event on the container
 	 * @param {String} type Event type
 	 */
 	dispatchEvent(type: string) {
-		if (Object.keys(this.customEvents).includes(type)) {
-			this.customEvents[type].forEach((listener) => listener())
-		}
+		this.elements.container.dispatchEvent(new CustomEvent(type))
 	}
 
 	/**
@@ -462,7 +455,9 @@ export default class Player {
 	destroy() {
 		this.pause()
 		this.options.controls && this.controlBar && this.controlBar.removeEvents()
-		Object.keys(this.customEvents).forEach((type) => delete this.customEvents[type])
+		this.customEvents.forEach((event) => {
+			this.elements.container.removeEventListener(event.type, event.listener)
+		})
 		this.elements.container.remove()
 	}
 }
