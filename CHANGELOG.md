@@ -31,6 +31,7 @@
 - Update Babel config and `.browserslistrc`
 - Move `formatVideoTime`, `checkSupportFullScreen`, `isTouch` to utils
 - Split code into components (`loader`, `overlay`, `big-play`, `poster`, `control-bar`)
+- Remove `MkDocs` and `docs` directory, all docs are available in README files at the root directory
 
 ### Fixes
 
