@@ -39,4 +39,5 @@ const player = new Vlitejs('#player-yt', {
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 	}
 })
+window.player = player
 /* eslint-enable no-unused-vars */

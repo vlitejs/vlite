@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8" />
-	<title>vLitejs - Vimeo</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<link rel="stylesheet" href="../../dist/vlite.css" />
-</head>
-<body>
-	<div id="player-vimeo" class="vlite-js" data-vimeo-id="1084537"></div>
-	<script src="../../dist/vlite.js"></script>
-	<script src="../../dist/providers/vimeo.js"></script>
-	<script>
-		Vlitejs.registerProvider('vimeo', VlitejsVimeo)
-		new Vlitejs('#player-vimeo', {
-			options: {
-				autoplay: false,
-				controls: true,
-				playPause: true,
-				progressBar: true,
-				time: true,
-				volume: true,
-				fullscreen: true,
-				poster: '../assets/poster.jpg',
-				bigPlay: true,
-				autoHide: true,
-				playsinline: true,
-				loop: true,
-				providerParams: {}
-			},
-			provider: 'vimeo',
-			onReady: (player) => {
-				console.log(player)
+	<head>
+		<meta charset="utf-8" />
+		<title>vLitejs - Vimeo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+		<link rel="stylesheet" href="../../dist/vlite.css" />
+	</head>
+	<body>
+		<div id="player-vimeo" class="vlite-js" data-vimeo-id="1084537"></div>
+		<script src="../../dist/vlite.js"></script>
+		<script src="../../dist/providers/vimeo.js"></script>
+		<script>
+			Vlitejs.registerProvider('vimeo', VlitejsVimeo)
+			new Vlitejs('#player-vimeo', {
+				options: {
+					autoplay: false,
+					controls: true,
+					playPause: true,
+					progressBar: true,
+					time: true,
+					volume: true,
+					fullscreen: true,
+					poster: '../assets/poster.jpg',
+					bigPlay: true,
+					autoHide: true,
+					playsinline: true,
+					loop: true,
+					providerParams: {}
+				},
+				provider: 'vimeo',
+				onReady: (player) => {
+					console.log(player)
 
-				player.on('play', () => console.log('play'));
-				player.on('pause', () => console.log('pause'));
-				player.on('ended', () => console.log('ended'));
-				player.on('progress', () => console.log('progress'));
-				player.on('volumechange', () => console.log('volumechange'));
-				player.on('timeupdate', () => console.log('timeupdate'));
-				player.on('enterfullscreen', () => console.log('enterfullscreen'));
-				player.on('exitfullscreen', () => console.log('exitfullscreen'));
-			}
-		});
-	</script>
-</body>
+					player.on('play', () => console.log('play'))
+					player.on('pause', () => console.log('pause'))
+					player.on('ended', () => console.log('ended'))
+					player.on('progress', () => console.log('progress'))
+					player.on('volumechange', () => console.log('volumechange'))
+					player.on('timeupdate', () => console.log('timeupdate'))
+					player.on('enterfullscreen', () => console.log('enterfullscreen'))
+					player.on('exitfullscreen', () => console.log('exitfullscreen'))
+				}
+			})
+			window.player = player
+		</script>
+	</body>
 </html>
