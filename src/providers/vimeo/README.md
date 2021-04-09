@@ -35,3 +35,7 @@ new Vlitejs({
   provider: 'vimeo'
 });
 ```
+
+## SDK documentation
+
+See the [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics) documentation.

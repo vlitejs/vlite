@@ -35,3 +35,7 @@ new Vlitejs({
   provider: 'youtube'
 });
 ```
+
+## SDK documentation
+
+See the [Youtube player API](https://developers.google.com/youtube/iframe_api_reference) documentation.

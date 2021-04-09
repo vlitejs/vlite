@@ -1,58 +1,15 @@
 # Plugin API
 
-The plugin's API allows you to extends the capabilities of `vLitejs` and add custom functionnalities. Subtitle and Picture-in-Picture are available in the project and can be loaded on demand with the API.
+The plugin's API allows you to extends the capabilities of `vLitejs` and add custom functionnalities.
 
 ## Available plugins
 
-| Plugin name | Global name              | Path                       | Provider&sup1; | Media type&sup2; | Description                                |
-| ----------- | ------------------------ | -------------------------- | :------------: | :--------------: | ------------------------------------------ |
-| `subtitle`  | `window.VlitejsSubtitle` | `vlitejs/plugins/subtitle` |    `html5`     |     `video`      | Supports for multiple caption tracks (VTT) |
-| `pip`       | `window.VlitejsPip`      | `vlitejs/plugins/pip`      |    `html5`     |     `video`      | Supports for picture-in-picture mode       |
+Each plugin can be loaded on demand with the API.
 
-- _&sup1;Providers: `html5|youtube|vimeo`_
-- _&sup2;Media type: `video|audio`_
-
-## Register a plugin
-
-Before using any plugin, you need to register it in `vLitejs`.
-
-The documentation below uses the Subtitle plugin as an example but the operation is the same for picture-in-picture and other plugins. Only the plugin name and the library name change.
-
-Import `vlitejs` then the plugin with the following path: `vlitejs/plugins/<PLUGIN_NAME>`. If the plugin has a stylesheet, load it also.
-
-```js
-import 'vlitejs/vlite.css';
-import 'vlitejs/plugins/subtitle.css';
-import Vlitejs from 'vlitejs';
-import VlitejsSubtitle from 'vlitejs/plugins/subtitle';
-```
-
-You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs` and the provider as `window.VlitejsPip`.
-
-<!-- prettier-ignore -->
-```html
-<link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
-<link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlitejs/plugins/subtitle.css" rel="stylesheet" crossorigin />
-<script src="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.js" crossorigin></script>
-<script src="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/plugins/subtitle.js" crossorigin></script>
-```
-
-Then, register the plugin to `vLitejs`.
-
-```js
-Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
-```
-
-Finally, add the plugin to the constructor.
-
-```js
-new Vlitejs({
-  selector: '#player',
-  plugins: ['subtitle']
-});
-```
-
-> The name of the plugin declared as the first parameter of the `registerPlugin` function should correspond to the value of the `plugins` parameter in the constructor.
+| Plugin name                           | Description                                |
+| ------------------------------------- | ------------------------------------------ |
+| [Subtitle](./subtitle/README.md)      | Supports for multiple caption tracks (VTT) |
+| [Picture-in-Picture](./pip/README.md) | Supports for picture-in-picture mode       |
 
 ## Create a plugin
 

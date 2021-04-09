@@ -4,17 +4,19 @@ Supports for multiple caption tracks (VTT).
 
 ## Overview
 
-| <!-- -->                 |           <!-- -->           |
-| ------------------------ | :--------------------------: |
-| Name                     |            `pip`             |
-| Global name&sup1;        |   `window.VlitejsSubtitle`   |
-| Path                     |    `vlitejs/plugins/pip`     |
-| Entry point              | `vlitejs/plugins/pip/pip.js` |
-| Stylesheet               |              -               |
-| Provider compatibility   |          `'html5'`           |
-| Media type compatibility |          `'video'`           |
+| <!-- -->          |           <!-- -->           |
+| ----------------- | :--------------------------: |
+| Name              |            `pip`             |
+| Global name&sup1; |   `window.VlitejsSubtitle`   |
+| Path              |    `vlitejs/plugins/pip`     |
+| Entry point       | `vlitejs/plugins/pip/pip.js` |
+| Stylesheet        |              -               |
+| Provider&sup2;    |          `'html5'`           |
+| Media type&sup3;  |          `'video'`           |
 
-- _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+- _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+- _&sup2;Providers: `html5|youtube|vimeo`_
+- _&sup3;Media type: `video|audio`_
 
 ## Usage
 
