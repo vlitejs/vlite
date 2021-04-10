@@ -1,5 +1,5 @@
 // Import SVG icons
-import { formatVideoTime } from 'shared/utils/utils'
+import { formatVideoTime, isTouch } from 'shared/utils/utils'
 import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
 import ControlBar from '../../components/control-bar/assets/scripts/control-bar'
 
@@ -18,6 +18,7 @@ export default class Player {
 	delayAutoHide: number
 	controlBar: any
 	customEvents: Array<configEvent>
+	isTouch: Boolean
 	elements: {
 		container: HTMLElement
 		bigPlay: HTMLElement | null
@@ -61,6 +62,7 @@ export default class Player {
 		this.isPaused = null
 		this.delayAutoHide = 3000
 		this.customEvents = []
+		this.isTouch = isTouch()
 
 		this.controlBar = new ControlBar({
 			player: this,

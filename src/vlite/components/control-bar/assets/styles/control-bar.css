@@ -21,11 +21,15 @@
 	}
 
 	&-progressBar {
-		height: var(--heightProgressBar);
+		height: 25px;
 		transition: height var(--transition250msEase), top var(--transition250msEase);
 		z-index: 1;
 		width: calc(100% - 2 * var(--offsetLeftRightControlBar));
 		-webkit-appearance: none;
+		-webkit-tap-highlight-color: transparent;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -45,7 +49,7 @@
 		}
 
 		&::-webkit-slider-runnable-track {
-			height: 100%;
+			height: var(--heightProgressBar);
 			border: none;
 			border-radius: var(--heightProgressBar);
 			background: linear-gradient(

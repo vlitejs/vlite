@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin')
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
@@ -82,6 +83,7 @@ module.exports = (env, argv) => {
 				template: path.resolve(__dirname, './src/demo/views/demo.html'),
 				publicPath: ''
 			}),
+			new HtmlWebpackInlineSVGPlugin(),
 			new webpack.optimize.ModuleConcatenationPlugin()
 		],
 		stats: {

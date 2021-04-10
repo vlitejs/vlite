@@ -1,4 +1,4 @@
-import { formatVideoTime } from 'shared/utils/utils'
+import { formatVideoTime, round } from 'shared/utils/utils'
 import validateTarget from 'validate-target'
 import Template from './templates/control-bar'
 import { Options } from 'shared/assets/interfaces/interfaces'
@@ -6,6 +6,7 @@ import { Options } from 'shared/assets/interfaces/interfaces'
 export default class ControlBar {
 	player: any
 	type: string
+	touchEvents: Array<String>
 
 	/**
 	 * @constructor
@@ -14,10 +15,12 @@ export default class ControlBar {
 	 * @param {String} options.type Player type (video|audio)
 	 */
 	constructor({ player, type }: { player: any; type: string }) {
-		this.type = type
 		this.player = player
+		this.type = type
+		this.touchEvents = ['touchstart', 'touchmove', 'touchend']
 
 		this.onInputProgressBar = this.onInputProgressBar.bind(this)
+		this.onTouchEventProgressBar = this.onTouchEventProgressBar.bind(this)
 		this.onClickOnControlBar = this.onClickOnControlBar.bind(this)
 		this.togglePlayPause = this.togglePlayPause.bind(this)
 		this.toggleVolume = this.toggleVolume.bind(this)
@@ -82,10 +85,41 @@ export default class ControlBar {
 	 * Add event listeners
 	 */
 	addEvents() {
-		this.player.elements.progressBar &&
+		if (this.player.elements.progressBar) {
 			this.player.elements.progressBar.addEventListener('input', this.onInputProgressBar)
+
+			if (this.player.isTouch) {
+				this.touchEvents.forEach((type) => {
+					this.player.elements.progressBar.addEventListener(type, this.onTouchEventProgressBar)
+				})
+			}
+		}
 		this.player.elements.controlBar &&
 			this.player.elements.controlBar.addEventListener('click', this.onClickOnControlBar)
+	}
+
+	/**
+	 * On touch event progress bar
+	 * Fix for touch devices
+	 * Inspired from RangeTouch.js
+	 * @param {TouchEvent} e Touch event data
+	 */
+	onTouchEventProgressBar(e: TouchEvent) {
+		e.preventDefault()
+
+		const target = e.target as HTMLInputElement
+		const min = parseFloat(target.getAttribute('min') || '0')
+		const max = parseFloat(target.getAttribute('max') || '100')
+		const step = parseFloat(target.getAttribute('step') || '1')
+		const clientRect = target.getBoundingClientRect()
+		const delta = max - min
+		const thumbCssWith = 12
+		const thumbWidth = ((100 / clientRect.width) * (thumbCssWith / 2)) / 100
+		const percentage = (100 / clientRect.width) * (e.changedTouches[0].clientX - clientRect.left)
+		const touchPosition = min + round(delta * (percentage / 100), step)
+
+		target.value = `${touchPosition}`
+		target.dispatchEvent(new Event('input'))
 	}
 
 	/**
@@ -193,6 +227,12 @@ export default class ControlBar {
 	removeEvents() {
 		if (this.player.elements.progressBar) {
 			this.player.elements.progressBar.removeEventListener('input', this.onInputProgressBar)
+
+			if (this.player.isTouch) {
+				this.touchEvents.forEach((type) => {
+					this.player.elements.progressBar.removeEventListener(type, this.onTouchEventProgressBar)
+				})
+			}
 		}
 
 		this.player.elements.controlBar &&

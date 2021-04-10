@@ -42,6 +42,7 @@ Here are some points to help you in your development:
 | `player.isFullScreen` |    `Boolean`    | Is the player in fullscreen mode                    |
 | `player.isMuted`      |    `Boolean`    | Is the player muted                                 |
 | `player.isPaused`     | `null\|Boolean` | Is the player paused (`null` before the first play) |
+| `player.isTouch`      |    `Boolean`    | Is touch device                                     |
 | `player.type`         |    `String`     | Player type (`video\|audio`)                        |
 | `player.Vlitejs`      |     `Class`     | `vLitejs` instance                                  |
 | `player.controlBar`   |     `Class`     | `controlBar` instance                               |
