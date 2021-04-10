@@ -1,13 +1,3 @@
-/**
- * @license MIT
- * @name Vlitejs
- * @version 4.0.0
- * @author: Yoriiis aka Joris DANIEL <joris.daniel@gmail.com>
- * @description: vLitejs is a fast and lightweight JavaScript library to customize and skin video and audio player with a minimalist theme (HTML5, Youtube, Vimeo)
- * {@link https://yoriiis.github.io/vlitejs}
- * @copyright 2021 Joris DANIEL <https://yoriiis.github.io/vlitejs>
- **/
-
 import Player from './player'
 import validateTarget from 'validate-target'
 import { capitalized, checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'

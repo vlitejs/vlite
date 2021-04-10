@@ -3,6 +3,12 @@ const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const { name, version, license, author } = require('./package.json')
+
+const banner = `@license ${license}
+@name ${name}
+@version ${version}
+@copyright ${new Date().getUTCFullYear()} ${author}`
 
 const generator = ({ entry, library = false, isProduction }) => {
 	const output = {
@@ -87,7 +93,8 @@ const generator = ({ entry, library = false, isProduction }) => {
 				filename: '[name].css',
 				chunkFilename: '[name].css'
 			}),
-			new webpack.optimize.ModuleConcatenationPlugin()
+			new webpack.optimize.ModuleConcatenationPlugin(),
+			new webpack.BannerPlugin(banner)
 		],
 		stats: {
 			assets: true,
