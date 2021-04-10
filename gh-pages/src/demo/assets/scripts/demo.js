@@ -1,10 +1,10 @@
 import validateTarget from 'validate-target'
-import '../../../dist/vlite.css'
-import Vlitejs from '../../../dist/vlite'
-import VlitejsSubtitle from '../../../dist/plugins/subtitle'
-import VlitejsPip from '../../../dist/plugins/pip'
-import VlitejsYoutube from '../../../dist/providers/youtube'
-import VlitejsVimeo from '../../../dist/providers/vimeo'
+import 'dist/vlite.css'
+import Vlitejs from 'dist/vlite'
+import VlitejsSubtitle from 'dist/plugins/subtitle'
+import VlitejsPip from 'dist/plugins/pip'
+import VlitejsYoutube from 'dist/providers/youtube'
+import VlitejsVimeo from 'dist/providers/vimeo'
 
 export default class Demo {
 	constructor() {

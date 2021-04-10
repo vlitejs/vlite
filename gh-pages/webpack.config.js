@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
 	return {
 		watch: !isProduction,
 		entry: {
-			demo: `${path.resolve(__dirname, './src/config.js')}`
+			demo: `${path.resolve(__dirname, './src/demo/config.js')}`
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -20,7 +20,7 @@ module.exports = (env, argv) => {
 		output: {
 			path: path.resolve(__dirname, './dist'),
 			publicPath: '/dist/',
-			filename: 'js/[name].js'
+			filename: 'scripts/[name].js'
 		},
 		module: {
 			rules: [
@@ -68,17 +68,18 @@ module.exports = (env, argv) => {
 		resolve: {
 			extensions: ['.js', '.css'],
 			alias: {
-				shared: path.resolve(__dirname, '../src/shared')
+				shared: path.resolve(__dirname, '../src/shared'),
+				dist: path.resolve(__dirname, '../dist')
 			}
 		},
 		plugins: [
 			new MiniCssExtractPlugin({
-				filename: 'css/[name].css',
-				chunkFilename: 'css/[name].css'
+				filename: 'styles/[name].css',
+				chunkFilename: 'styles/[name].css'
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'index.html',
-				template: path.resolve(__dirname, './src/views/demo.html'),
+				template: path.resolve(__dirname, './src/demo/views/demo.html'),
 				publicPath: ''
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin()

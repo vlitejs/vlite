@@ -19,7 +19,7 @@ module.exports = (env, argv) => {
 		output: {
 			path: path.resolve(__dirname, './dist'),
 			publicPath: '/dist/',
-			filename: 'js/[name].js'
+			filename: 'scripts/[name].js'
 		},
 		module: {
 			rules: [
@@ -57,8 +57,8 @@ module.exports = (env, argv) => {
 		},
 		plugins: [
 			new MiniCssExtractPlugin({
-				filename: 'css/[name].css',
-				chunkFilename: 'css/[name].css'
+				filename: 'styles/[name].css',
+				chunkFilename: 'styles/[name].css'
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin()
 		],
