@@ -11,13 +11,13 @@
 import Player from './player'
 import validateTarget from 'validate-target'
 import { capitalized, checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'
-import LoaderTemplate from 'shared/loader/assets/scripts/loader'
-import BigPlayTemplate from 'shared/big-play/assets/scripts/big-play'
-import OverlayTemplate from 'shared/overlay/assets/scripts/overlay'
-import PosterTemplate from 'shared/poster/assets/scripts/poster'
+import LoaderTemplate from '../../components/loader/assets/scripts/loader'
+import BigPlayTemplate from '../../components/big-play/assets/scripts/big-play'
+import OverlayTemplate from '../../components/overlay/assets/scripts/overlay'
+import PosterTemplate from '../../components/poster/assets/scripts/poster'
 import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
-import { registerProvider, getProviderInstance } from '../../providers/provider'
-import { getPluginInstance, registerPlugin, initializePlugins } from '../../plugins/plugin'
+import { registerProvider, getProviderInstance } from '../../../providers/provider'
+import { getPluginInstance, registerPlugin, initializePlugins } from '../../../plugins/plugin'
 
 type TimerHandle = number
 

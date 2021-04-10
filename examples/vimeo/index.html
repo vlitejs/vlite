@@ -12,7 +12,7 @@
 		<script src="../../dist/providers/vimeo.js"></script>
 		<script>
 			Vlitejs.registerProvider('vimeo', VlitejsVimeo)
-			new Vlitejs('#player-vimeo', {
+			const player = new Vlitejs('#player-vimeo', {
 				options: {
 					autoplay: false,
 					controls: true,

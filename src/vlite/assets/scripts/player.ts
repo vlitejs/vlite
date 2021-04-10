@@ -1,7 +1,7 @@
 // Import SVG icons
 import { formatVideoTime } from 'shared/utils/utils'
 import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
-import ControlBar from 'shared/control-bar/assets/scripts/control-bar'
+import ControlBar from '../../components/control-bar/assets/scripts/control-bar'
 
 /**
  * Vlitejs Player
