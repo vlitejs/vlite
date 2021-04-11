@@ -1,3 +1,8 @@
+:root {
+	--transition250msEase: 0.25s ease;
+	--orange: #ff7f15;
+}
+
 html,
 body {
 	margin: 0;

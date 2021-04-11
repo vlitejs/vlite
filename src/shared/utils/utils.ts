@@ -93,7 +93,7 @@ export function getCSSTransitionDuration({
  * @returns {Boolean} Is touch
  */
 export function isTouch(): Boolean {
-	return !!'ontouchstart' in document.documentElement
+	return !!('ontouchstart' in document.documentElement)
 }
 
 /**
