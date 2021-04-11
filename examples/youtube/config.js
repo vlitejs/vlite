@@ -1,6 +1,7 @@
 import '../../dist/vlite.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsYoutube from '../../dist/providers/youtube.js'
+import '../../assets/images/poster.jpg'
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
 
@@ -14,7 +15,7 @@ const player = new Vlitejs('#player-yt', {
 		time: true,
 		volume: true,
 		fullscreen: true,
-		poster: '../assets/poster.jpg',
+		poster: '../dist/images/poster.jpg',
 		bigPlay: true,
 		autoHide: true,
 		playsinline: true,

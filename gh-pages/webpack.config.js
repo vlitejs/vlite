@@ -74,6 +74,7 @@ module.exports = (env, argv) => {
 			}
 		},
 		plugins: [
+			new webpack.ProgressPlugin(),
 			new MiniCssExtractPlugin({
 				filename: 'styles/[name].css',
 				chunkFilename: 'styles/[name].css'

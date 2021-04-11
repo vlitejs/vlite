@@ -6,4 +6,4 @@ import './assets/styles/demo.css'
 import './assets/scripts/main'
 
 // Import Images
-import '../../../examples/assets/poster.jpg'
+import '../../../assets/images/poster.jpg'

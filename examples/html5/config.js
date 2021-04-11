@@ -3,6 +3,7 @@ import '../../dist/plugins/subtitle.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
+import '../../assets/images/poster.jpg'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
@@ -17,7 +18,7 @@ const player = new Vlitejs('#player-html5', {
 		time: true,
 		volume: true,
 		fullscreen: true,
-		poster: '../assets/poster.jpg',
+		poster: '../dist/images/poster.jpg',
 		bigPlay: true,
 		autoHide: true,
 		playsinline: true,

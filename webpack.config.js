@@ -5,11 +5,50 @@ const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { name, version, license, author } = require('./package.json')
 
+const libraryName = 'Vlitejs'
+
+// Banner for vLitejs assets
 const banner = `@license ${license}
 @name ${name}
 @version ${version}
 @copyright ${new Date().getUTCFullYear()} ${author}`
 
+// Providers list
+const providers = [
+	{
+		entrykey: 'providers/youtube',
+		library: `${libraryName}Youtube`,
+		path: './src/providers/youtube/youtube'
+	},
+	{
+		entrykey: 'providers/vimeo',
+		library: `${libraryName}Vimeo`,
+		path: './src/providers/vimeo/vimeo'
+	}
+]
+
+// Plugins list
+const plugins = [
+	{
+		entrykey: 'plugins/subtitle',
+		library: `${libraryName}Subtitle`,
+		path: './src/plugins/subtitle/config'
+	},
+	{
+		entrykey: 'plugins/pip',
+		library: `${libraryName}Pip`,
+		path: './src/plugins/pip/config'
+	}
+]
+
+/**
+ *
+ * @param {Object} options Generator options
+ * @param {Object} options.entry Webpack entry
+ * @param {Boolean} options.library Webpack library name
+ * @param {Boolean} options.isProduction Webpack production mode
+ * @returns {Object} Webpack configuration object
+ */
 const generator = ({ entry, library = false, isProduction }) => {
 	const output = {
 		path: path.resolve(__dirname, './dist'),
@@ -35,15 +74,6 @@ const generator = ({ entry, library = false, isProduction }) => {
 			rules: [
 				{
 					test: /\.js$/,
-					include: path.resolve(__dirname, './src'),
-					use: [
-						{
-							loader: 'babel-loader'
-						}
-					]
-				},
-				{
-					test: /\.ts$/,
 					include: path.resolve(__dirname, './src'),
 					use: [
 						{
@@ -89,6 +119,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 			}
 		},
 		plugins: [
+			new webpack.ProgressPlugin(),
 			new MiniCssExtractPlugin({
 				filename: '[name].css',
 				chunkFilename: '[name].css'
@@ -137,33 +168,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
-	const libraryName = 'Vlitejs'
 	const configs = []
-
-	const providers = [
-		{
-			entrykey: 'providers/youtube',
-			library: `${libraryName}Youtube`,
-			path: './src/providers/youtube/youtube'
-		},
-		{
-			entrykey: 'providers/vimeo',
-			library: `${libraryName}Vimeo`,
-			path: './src/providers/vimeo/vimeo'
-		}
-	]
-	const plugins = [
-		{
-			entrykey: 'plugins/subtitle',
-			library: `${libraryName}Subtitle`,
-			path: './src/plugins/subtitle/config'
-		},
-		{
-			entrykey: 'plugins/pip',
-			library: `${libraryName}Pip`,
-			path: './src/plugins/pip/config'
-		}
-	]
 
 	const configsProviders = providers.map((provider) =>
 		generator({
