@@ -1,6 +1,6 @@
 :root {
-	--transition250msEase: 0.25s ease;
-	--orange: #ff7f15;
+	--vlite-transition: 0.25s ease;
+	--vlite-colorMain: #ff7f15;
 }
 
 html,
@@ -64,12 +64,12 @@ body {
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		transition: background-color var(--transition250msEase);
+		transition: background-color var(--vlite-transition);
 		padding: 10px 5px 5px 5px;
 		border-radius: 3px 3px 0 0;
 
 		&.active {
-			background-color: var(--orange);
+			background-color: var(--vlite-colorMain);
 
 			.nav-listItemName {
 				color: #fff;
@@ -91,8 +91,8 @@ body {
 		svg {
 			width: 30px;
 			height: 30px;
-			fill: var(--orange);
-			transition: fill var(--transition250msEase);
+			fill: var(--vlite-colorMain);
+			transition: fill var(--vlite-transition);
 		}
 	}
 
@@ -100,8 +100,8 @@ body {
 		font-size: 16px;
 		display: block;
 		margin-top: 8px;
-		color: var(--orange);
-		transition: color var(--transition250msEase);
+		color: var(--vlite-colorMain);
+		transition: color var(--vlite-transition);
 	}
 }
 

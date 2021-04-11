@@ -10,7 +10,7 @@
 	}
 
 	&.v-styleAudio {
-		--colorControl: black;
+		--vlite-controlsColor: black;
 
 		box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
 		border-radius: 8px;
@@ -93,8 +93,8 @@
 		justify-content: center;
 		width: 40px;
 		height: 100%;
-		transition: opacity var(--transition250msEase);
-		opacity: var(--defaultControlsOpacity);
+		transition: opacity var(--vlite-transition);
+		opacity: var(--vlite-controlsOpacity);
 		padding: 0;
 		-webkit-appearance: none;
 		background: none;
@@ -119,14 +119,14 @@
 		}
 
 		&:focus-visible {
-			outline: 4px dashed var(--outlineColor);
+			outline: 4px dashed var(--vlite-outlineColor);
 			outline-offset: -4px;
 		}
 
 		svg {
-			fill: var(--colorControl);
-			width: var(--controlIconWidth);
-			height: var(--controlIconHeight);
+			fill: var(--vlite-controlsColor);
+			width: var(--vlite-controlsIconWidth);
+			height: var(--vlite-controlsIconHeight);
 		}
 	}
 }

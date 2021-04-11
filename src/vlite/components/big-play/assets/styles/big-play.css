@@ -7,13 +7,12 @@
 		height: 70px;
 		transform: translateX(-50%) translateY(-50%);
 		z-index: 2;
-		transition: opacity var(--transition250msEase);
-		transition-delay: 100ms;
+		transition: opacity var(--vlite-transition);
 
 		svg {
-			fill: var(--colorControl);
-			transition: opacity var(--transition250msEase);
-			opacity: var(--defaultControlsOpacity);
+			fill: var(--vlite-controlsColor);
+			transition: opacity var(--vlite-transition);
+			opacity: var(--vlite-controlsOpacity);
 			width: 100%;
 			height: 100%;
 		}
