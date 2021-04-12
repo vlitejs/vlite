@@ -4,7 +4,6 @@ import svgVolumeHigh from 'shared/assets/svgs/volume-high.svg'
 import svgVolumeMute from 'shared/assets/svgs/volume-mute.svg'
 import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
 import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
-import { capitalized } from 'shared/utils/utils'
 import { Options } from 'shared/assets/interfaces/interfaces'
 
 /**
@@ -24,9 +23,9 @@ export default function ({
 	isMuted: Boolean
 	type: string
 }): string {
-	return `<div class="v-controlBar v-style${capitalized(type)}">${
-		options.playPause ? playPauseElement() : ''
-	}${options.time ? timeElement() : ''}${options.progressBar ? progressBarElement() : ''}${
+	return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
+		options.time ? timeElement() : ''
+	}${options.progressBar ? progressBarElement() : ''}${
 		options.volume ? volumeElement({ isMuted }) : ''
 	}${options.fullscreen ? fullscreenElement() : ''}</div>`
 }

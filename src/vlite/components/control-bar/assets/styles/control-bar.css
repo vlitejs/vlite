@@ -21,7 +21,6 @@
 	}
 
 	&-progressBar {
-		height: 25px;
 		transition: height var(--vlite-transition), top var(--vlite-transition);
 		z-index: 1;
 		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
@@ -119,8 +118,14 @@
 		&.hidden {
 			opacity: 0;
 		}
+	}
 
-		&.v-styleAudio {
+	&-audio {
+		.v-progressBar {
+			height: 25px;
+		}
+
+		.v-controlBar {
 			padding-top: 0;
 
 			.v-playPauseButton {
@@ -140,8 +145,14 @@
 				order: 4;
 			}
 		}
+	}
 
-		&.v-styleVideo {
+	&-video {
+		&-progressBar {
+			height: 55px;
+		}
+
+		.v-controlBar {
 			position: absolute;
 			bottom: 0;
 			left: 0;

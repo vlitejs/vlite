@@ -1,6 +1,6 @@
 import Player from './player'
 import validateTarget from 'validate-target'
-import { capitalized, checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'
+import { checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'
 import LoaderTemplate from '../../components/loader/assets/scripts/loader'
 import BigPlayTemplate from '../../components/big-play/assets/scripts/big-play'
 import OverlayTemplate from '../../components/overlay/assets/scripts/overlay'
@@ -159,13 +159,7 @@ class Vlitejs {
 	 */
 	wrapElement() {
 		const wrapper = document.createElement('div')
-		wrapper.classList.add(
-			'v-vlite',
-			'v-firstStart',
-			'v-paused',
-			'v-loading',
-			`v-style${capitalized(this.type)}`
-		)
+		wrapper.classList.add('v-vlite', 'v-firstStart', 'v-paused', 'v-loading', `v-${this.type}`)
 		wrapper.setAttribute('tabindex', '0')
 		const parentElement = this.media.parentNode as HTMLElement
 		parentElement.insertBefore(wrapper, this.media)

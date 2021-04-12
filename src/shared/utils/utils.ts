@@ -10,15 +10,6 @@ declare global {
 }
 
 /**
- * Capitalized the first character of a string
- * @param {String} string
- * @returns {String} Capitalized string
- */
-export function capitalized(string: string): string {
-	return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
-/**
  * Convert video time second to 00:00 display
  * @param {Number} time Current time
  * @returns {String} Formatted time
