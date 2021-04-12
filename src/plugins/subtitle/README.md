@@ -4,15 +4,15 @@ Supports for multiple caption tracks (VTT).
 
 ## Overview
 
-| <!-- -->          |                <!-- -->                 |
-| ----------------- | :-------------------------------------: |
-| Name              |               `subtitle`                |
-| Global name&sup1; |        `window.VlitejsSubtitle`         |
-| Path              |       `vlitejs/plugins/subtitle`        |
+| <!-- -->          | <!-- -->                                |
+| ----------------- | --------------------------------------- |
+| Name              | `subtitle`                              |
+| Global name&sup1; | `window.VlitejsSubtitle`                |
+| Path              | `vlitejs/plugins/subtitle`              |
 | Entry point       | `vlitejs/plugins/subtitle/subtitle.js`  |
 | Stylesheet        | `vlitejs/plugins/subtitle/subtitle.css` |
-| Provider&sup2;    |                `'html5'`                |
-| Media type&sup3;  |                `'video'`                |
+| Provider&sup2;    | `'html5'`                               |
+| Media type&sup3;  | `'video'`                               |
 
 - _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 - _&sup2;Providers: `html5|youtube|vimeo`_

@@ -4,11 +4,11 @@ Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.co
 
 ## Overview
 
-| <!-- -->          |           <!-- -->           |
-| ----------------- | :--------------------------: |
-| Name              |           `vimeo`            |
-| Global name&sup1; |    `window.VlitejsVimeo`     |
-| Path              |  `vlitejs/providers/vimeo`   |
+| <!-- -->          | <!-- -->                     |
+| ----------------- | ---------------------------- |
+| Name              | `vimeo`                      |
+| Global name&sup1; | `window.VlitejsVimeo`        |
+| Path              | `vlitejs/providers/vimeo`    |
 | Entry point       | `vlitejs/providers/vimeo.js` |
 
 - _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._

@@ -294,19 +294,19 @@ document.querySelector('.btn-mute').addEventListener('click', () => {
 
 The player exposes some custom CSS properties, locally scopped under the `.v-vlite` selector. You can use them to customize the design of the player.
 
-| Name                                  |                                    Value                                    | Description                    |
-| ------------------------------------- | :-------------------------------------------------------------------------: | ------------------------------ |
-| `--vlite-colorMain`                   |                                  `#ff7f15`                                  | Primary color                  |
-| `--vlite-transition`                  |                                `0.25s ease`                                 | Transition                     |
-| `--vlite-controlBarHeight`            |                                   `50px`                                    | Control bar height             |
-| `--vlite-controlBarHorizontalPadding` |                                   `10px`                                    | Control bar horizontal padding |
-| `--vlite-controlBarBackground`        | `linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%)` | Control bar background         |
-| `--vlite-controlsColor`               |                                   `#fff`                                    | Controls color                 |
-| `--vlite-controlsOpacity`             |                                    `0.9`                                    | Controls color                 |
-| `--vlite-controlsIconWidth`           |                                   `28px`                                    | Controls icon width            |
-| `--vlite-controlsIconHeight`          |                                   `28px`                                    | Controls icon height           |
-| `--vlite-progressBarHeight`           |                                    `5px`                                    | Progress bar height            |
-| `--vlite-progressBarBackground`       |                             `rgba(0 0 0 / 25%)`                             | Progress bar background        |
+| Name                                  | Description                    | Value                                                                       |
+| ------------------------------------- | ------------------------------ | --------------------------------------------------------------------------- |
+| `--vlite-colorMain`                   | Primary color                  | `#ff7f15`                                                                   |
+| `--vlite-transition`                  | Transition                     | `0.25s ease`                                                                |
+| `--vlite-controlBarHeight`            | Control bar height             | `50px`                                                                      |
+| `--vlite-controlBarHorizontalPadding` | Control bar horizontal padding | `10px`                                                                      |
+| `--vlite-controlBarBackground`        | Control bar background         | `linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%)` |
+| `--vlite-controlsColor`               | Controls color                 | `#fff`                                                                      |
+| `--vlite-controlsOpacity`             | Controls color                 | `0.9`                                                                       |
+| `--vlite-controlsIconWidth`           | Controls icon width            | `28px`                                                                      |
+| `--vlite-controlsIconHeight`          | Controls icon height           | `28px`                                                                      |
+| `--vlite-progressBarHeight`           | Progress bar height            | `5px`                                                                       |
+| `--vlite-progressBarBackground`       | Progress bar background        | `rgba(0 0 0 / 25%)`                                                         |
 
 ## Shortcuts
 
