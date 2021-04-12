@@ -2,6 +2,7 @@
 	--vlite-colorMain: #ff7f15;
 	--vlite-transition: 0.25s ease;
 
+	/* Control bar */
 	--vlite-controlBarHeight: 50px;
 	--vlite-controlBarHorizontalPadding: 10px;
 	--vlite-controlBarBackground: linear-gradient(
@@ -10,11 +11,13 @@
 		rgba(255 255 255 / 0%) 100%
 	);
 
-	--vlite-controlsColor: #ffffff;
+	/* Controls */
+	--vlite-controlsColor: #fff;
 	--vlite-controlsOpacity: 0.9;
 	--vlite-controlsIconWidth: 28px;
 	--vlite-controlsIconHeight: 28px;
 
+	/* Progress bar */
 	--vlite-progressBarHeight: 5px;
 	--vlite-progressBarBackground: rgba(0 0 0 / 25%);
 

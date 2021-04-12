@@ -118,28 +118,25 @@
 
 	&-audio {
 		.v-progressBar {
+			order: 2;
 			height: 25px;
 		}
 
 		.v-controlBar {
 			padding-top: 0;
+		}
 
-			.v-playPauseButton {
-				order: 1;
-			}
+		.v-playPauseButton {
+			order: 1;
+		}
 
-			.v-progressBar {
-				order: 2;
-			}
+		.v-time {
+			order: 3;
+			padding: 0 8px 0 12px;
+		}
 
-			.v-time {
-				order: 3;
-				padding: 0 8px 0 12px;
-			}
-
-			.v-volumeButton {
-				order: 4;
-			}
+		.v-volumeButton {
+			order: 4;
 		}
 	}
 

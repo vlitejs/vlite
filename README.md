@@ -301,7 +301,7 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 | `--vlite-controlBarHeight`            |                                   `50px`                                    | Control bar height             |
 | `--vlite-controlBarHorizontalPadding` |                                   `10px`                                    | Control bar horizontal padding |
 | `--vlite-controlBarBackground`        | `linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%)` | Control bar background         |
-| `--vlite-controlsColor`               |                                  `#ffffff`                                  | Controls color                 |
+| `--vlite-controlsColor`               |                                   `#fff`                                    | Controls color                 |
 | `--vlite-controlsOpacity`             |                                    `0.9`                                    | Controls color                 |
 | `--vlite-controlsIconWidth`           |                                   `28px`                                    | Controls icon width            |
 | `--vlite-controlsIconHeight`          |                                   `28px`                                    | Controls icon height           |
