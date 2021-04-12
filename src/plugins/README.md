@@ -38,7 +38,7 @@ Here are some points to help you in your development:
 | --------------------- | :-------------: | --------------------------------------------------- |
 | `player.media`        |  `HTMLElement`  | Media element                                       |
 | `player.elements`     |    `Objects`    | Player DOM elements                                 |
-| `player.options`      |    `Object`     | [Player options](../../README.md#Player-options)    |
+| `player.options`      |    `Object`     | [Player options](../../README.md#Options)           |
 | `player.isFullScreen` |    `Boolean`    | Is the player in fullscreen mode                    |
 | `player.isMuted`      |    `Boolean`    | Is the player muted                                 |
 | `player.isPaused`     | `null\|Boolean` | Is the player paused (`null` before the first play) |

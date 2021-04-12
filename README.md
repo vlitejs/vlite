@@ -48,6 +48,15 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 [![Image of vLitejs](./assets/images/screenshot.jpg)](https://yoriiis.github.io/vlitejs)
 
+### Examples
+
+The project includes several examples of `vLitejs` implementation in the directory `examples` at the root directory. If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
+
+- [HTML5 video](https://codepen.io/pen/?template=VwPWeyE)
+- [HTML5 audio](https://codepen.io/pen/?template=RwKgrBd)
+- [Youtube](https://codepen.io/pen/?template=zYNzrJp)
+- [Vimeo](https://codepen.io/pen/?template=zYNzrmp)
+
 ---
 
 ## Installation
@@ -71,14 +80,7 @@ You can also download it and include it with a script tag. The library will be r
 <script src="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.js" crossorigin></script>
 ```
 
-## Examples
-
-The project includes several examples of `vLitejs` implementation in the directory `examples` at the root directory. If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
-
-- [HTML5 video](https://codepen.io/pen/?template=VwPWeyE)
-- [HTML5 audio](https://codepen.io/pen/?template=RwKgrBd)
-- [Youtube](https://codepen.io/pen/?template=zYNzrJp)
-- [Vimeo](https://codepen.io/pen/?template=zYNzrmp)
+---
 
 ## How it works
 
@@ -96,21 +98,19 @@ The project includes several examples of `vLitejs` implementation in the directo
 <audio id="player" class="vlite-js" src="/path/to/audio.mp3"></audio>
 ```
 
-#### Youtube video
+#### Youtube
 
 ```html
 <div id="player" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></div>
 ```
 
-#### Vimeo video
+#### Vimeo
 
 ```html
 <div id="player" class="vlite-js" data-vimeo-id="1084537"></div>
 ```
 
----
-
-### Initialize the player
+### Initialization
 
 Import `vLitejs` styleheet and the JavaScript library as an ES6 modules.
 
@@ -124,7 +124,7 @@ The `Vlitejs` constructor accepts the following parameters:
 | Arguments |         Type          | Default | Description                                                      |
 | --------- | :-------------------: | :-----: | ---------------------------------------------------------------- |
 | selector  | `String\|HTMLElement` | `null`  | Unique CSS selector string or `HTMLElement` to target the player |
-| config    |       `Object`        |  `{}`   | Player configuration                                             |
+| config    |       `Object`        |  `{}`   | [Player configuration](#Configuration) (optional)                |
 
 Initialize the player with a CSS selector string.
 
@@ -138,16 +138,18 @@ Or, initialize the player with an `HTMLElement`.
 new Vlitejs(document.querySelector('#player'));
 ```
 
-### Configure the player
+---
+
+## Configuration
 
 The second arguments of the contructor is an object with the following parameters:
 
-| Arguments  |       Type       |  Default  | Description                                         |
-| ---------- | :--------------: | :-------: | --------------------------------------------------- |
-| `options`  |     `Object`     |   `{}`    | Player options                                      |
-| `onReady`  | `Function\|null` |  `null`   | Callback function executed when the player is ready |
-| `provider` |     `String`     | `'html5'` | Player provider                                     |
-| `plugins`  |     `Array`      |   `[]`    | Player plugins                                      |
+| Arguments  |       Type       |  Default  | Description                                                          |
+| ---------- | :--------------: | :-------: | -------------------------------------------------------------------- |
+| `options`  |     `Object`     |   `{}`    | [Player options](#Options)                                           |
+| `onReady`  | `Function\|null` |  `null`   | Callback function executed when the [player is ready](#Player-ready) |
+| `provider` |     `String`     | `'html5'` | [Player provider](./src/providers/README.md)                         |
+| `plugins`  |     `Array`      |   `[]`    | [Player plugins](./src/plugins/README.md)                            |
 
 ```javascript
 new Vlitejs('#player', {
@@ -158,7 +160,7 @@ new Vlitejs('#player', {
 });
 ```
 
-### Player options
+### Options
 
 The player controls can be customized with the following parameters:
 
@@ -200,7 +202,7 @@ new Vlitejs('#player', {
 
 The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube and Vimeo provider listen to the `onready` event returned by their API.
 
-The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Player-methods).
+The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Methods).
 
 Example of a player `muted` when ready:
 
@@ -245,7 +247,7 @@ player.on('play', () => {
 });
 ```
 
-### Player methods
+### Methods
 
 The player instance exposed the following methods:
 
@@ -294,19 +296,23 @@ document.querySelector('.btn-mute').addEventListener('click', () => {
 
 The player exposes some custom CSS properties, locally scopped under the `.v-vlite` selector. You can use them to customize the design of the player.
 
-| Name                                  | Description                    | Value                                                                       |
-| ------------------------------------- | ------------------------------ | --------------------------------------------------------------------------- |
-| `--vlite-colorMain`                   | Primary color                  | `#ff7f15`                                                                   |
-| `--vlite-transition`                  | Transition                     | `0.25s ease`                                                                |
-| `--vlite-controlBarHeight`            | Control bar height             | `50px`                                                                      |
-| `--vlite-controlBarHorizontalPadding` | Control bar horizontal padding | `10px`                                                                      |
-| `--vlite-controlBarBackground`        | Control bar background         | `linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%)` |
-| `--vlite-controlsColor`               | Controls color                 | `#fff`                                                                      |
-| `--vlite-controlsOpacity`             | Controls color                 | `0.9`                                                                       |
-| `--vlite-controlsIconWidth`           | Controls icon width            | `28px`                                                                      |
-| `--vlite-controlsIconHeight`          | Controls icon height           | `28px`                                                                      |
-| `--vlite-progressBarHeight`           | Progress bar height            | `5px`                                                                       |
-| `--vlite-progressBarBackground`       | Progress bar background        | `rgba(0 0 0 / 25%)`                                                         |
+| Name                                  | Description                    | Value                                          |
+| ------------------------------------- | ------------------------------ | ---------------------------------------------- |
+| `--vlite-colorMain`                   | Primary color                  | `#ff7f15`                                      |
+| `--vlite-transition`                  | Transition                     | `0.25s ease`                                   |
+| `--vlite-controlBarHeight`            | Control bar height             | `50px`                                         |
+| `--vlite-controlBarHorizontalPadding` | Control bar horizontal padding | `10px`                                         |
+| `--vlite-controlBarBackground`        | Control bar background         | `linear-gradient(0, #000 0, transparent 100%)` |
+| `--vlite-controlsColor`               | Controls color                 | `#fff`                                         |
+| `--vlite-controlsOpacity`             | Controls color                 | `0.9`                                          |
+| `--vlite-controlsIconWidth`           | Controls icon width            | `28px`                                         |
+| `--vlite-controlsIconHeight`          | Controls icon height           | `28px`                                         |
+| `--vlite-progressBarHeight`           | Progress bar height            | `5px`                                          |
+| `--vlite-progressBarBackground`       | Progress bar background        | `rgba(0 0 0 / 25%)`                            |
+
+linear-gradient(0,rgba(0 0 0 / 100%) 0,rgba(255 255 255 / 0) 100%)
+
+---
 
 ## Shortcuts
 

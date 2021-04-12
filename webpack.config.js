@@ -159,8 +159,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 							// Drop console.log|console.info|console.debug
 							// Keep console.warn|console.error
 							pure_funcs: ['console.log', 'console.info', 'console.debug']
-						},
-						mangle: true
+						}
 					}
 				}),
 				new CssMinimizerPlugin()
