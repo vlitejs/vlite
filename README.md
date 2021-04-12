@@ -57,8 +57,6 @@ The project includes several examples of `vLitejs` implementation in the directo
 - [Youtube](https://codepen.io/pen/?template=zYNzrJp)
 - [Vimeo](https://codepen.io/pen/?template=zYNzrmp)
 
----
-
 ## Installation
 
 ### NPM
@@ -79,8 +77,6 @@ You can also download it and include it with a script tag. The library will be r
 <link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
 <script src="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.js" crossorigin></script>
 ```
-
----
 
 ## How it works
 
@@ -218,7 +214,7 @@ new Vlitejs('#player', {
 
 ### Events
 
-`vLitejs` exposes the following native `CustomEvent` on the player instance. Events are standardized for all providers, even for Youtube and Vimeo.
+`vLitejs` exposes the following native `CustomEvent` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube and Vimeo.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |
@@ -240,16 +236,28 @@ new Vlitejs('#player', {
 Example listener when the media triggers a `play` event.
 
 ```javascript
-const vlitePlayer = new Vlitejs('#player');
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.on('play', () => {
+      // The video starts playing
+    });
+  }
+});
+```
 
-player.on('play', () => {
+Events can also be declared outside of the `onReady` function.
+
+```javascript
+const vlite = new Vlitejs('#player');
+
+vlite.player.on('play', () => {
   // The video starts playing
 });
 ```
 
 ### Methods
 
-The player instance exposed the following methods:
+The player instance exposed the following methods, accessible when the player is ready.
 
 | Method                | Parameters |  Promise  | Description                       |
 | --------------------- | :--------: | :-------: | --------------------------------- |
@@ -272,29 +280,16 @@ Example of the media `duration` recovered when the player is ready.
 ```javascript
 new Vlitejs('#player', {
   onReady: (player) => {
-    player.getDuration().then((duration) => {});
+    player.getDuration().then((duration) => {
+      // The duration is available in the "duration" parameter
+    });
   }
-});
-```
-
-Second example of a video `muted` when the button `.btn-mute` is pressed.
-
-```html
-<video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
-<button class="btn-mute">Mute</button>
-```
-
-```js
-const vlitePlayer = new Vlitejs('#player');
-
-document.querySelector('.btn-mute').addEventListener('click', () => {
-  vlitePlayer.playerInstance.mute();
 });
 ```
 
 ### Custom CSS properties
 
-The player exposes some custom CSS properties, locally scopped under the `.v-vlite` selector. You can use them to customize the design of the player.
+The player exposes some custom CSS properties, locally scopped under the `.v-vlite` selector. You can use them to customize the design.
 
 | Name                                  | Description                    | Value                                          |
 | ------------------------------------- | ------------------------------ | ---------------------------------------------- |
@@ -309,8 +304,6 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 | `--vlite-controlsIconHeight`          | Controls icon height           | `28px`                                         |
 | `--vlite-progressBarHeight`           | Progress bar height            | `5px`                                          |
 | `--vlite-progressBarBackground`       | Progress bar background        | `rgba(0 0 0 / 25%)`                            |
-
-linear-gradient(0,rgba(0 0 0 / 100%) 0,rgba(255 255 255 / 0) 100%)
 
 ---
 

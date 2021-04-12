@@ -10,7 +10,7 @@
 		<audio id="player-html5" class="vlite-js" src="https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3"></audio>
 		<script src="../../dist/vlite.js"></script>
 		<script>
-			const player = new Vlitejs('#player-html5', {
+			const vlite = new Vlitejs('#player-html5', {
 				options: {
 					autoplay: false,
 					controls: true,
@@ -30,7 +30,7 @@
 					player.on('timeupdate', () => console.log('timeupdate'))
 				}
 			})
-			window.player = player
+			window.player = vlite
 		</script>
 	</body>
 </html>

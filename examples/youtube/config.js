@@ -6,7 +6,7 @@ import '../../assets/images/poster.jpg'
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
 
 /* eslint-disable no-unused-vars */
-const player = new Vlitejs('#player-yt', {
+const vlite = new Vlitejs('#player-yt', {
 	options: {
 		autoplay: false,
 		controls: true,
@@ -40,5 +40,5 @@ const player = new Vlitejs('#player-yt', {
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 	}
 })
-window.player = player
+window.player = vlite
 /* eslint-enable no-unused-vars */
