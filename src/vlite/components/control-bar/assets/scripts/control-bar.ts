@@ -1,4 +1,4 @@
-import { formatVideoTime, round } from 'shared/utils/utils'
+import { formatVideoTime } from 'shared/utils/utils'
 import validateTarget from 'validate-target'
 import Template from './templates/control-bar'
 import { Options } from 'shared/assets/interfaces/interfaces'
@@ -101,24 +101,16 @@ export default class ControlBar {
 	/**
 	 * On touch event progress bar
 	 * Fix for touch devices
-	 * Inspired from RangeTouch.js
 	 * @param {TouchEvent} e Touch event data
 	 */
 	onTouchEventProgressBar(e: TouchEvent) {
 		e.preventDefault()
 
 		const target = e.target as HTMLInputElement
-		const min = parseFloat(target.getAttribute('min') || '0')
 		const max = parseFloat(target.getAttribute('max') || '100')
-		const step = parseFloat(target.getAttribute('step') || '1')
 		const clientRect = target.getBoundingClientRect()
-		const delta = max - min
-		const thumbCssWith = 12
-		const thumbWidth = ((100 / clientRect.width) * (thumbCssWith / 2)) / 100
-		const percentage = (100 / clientRect.width) * (e.changedTouches[0].clientX - clientRect.left)
-		const touchPosition = min + round(delta * (percentage / 100), step)
-
-		target.value = `${touchPosition}`
+		const percentage = ((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
+		target.value = `${(percentage * 100) / max}`
 		target.dispatchEvent(new Event('input'))
 	}
 

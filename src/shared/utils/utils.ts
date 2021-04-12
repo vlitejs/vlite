@@ -86,28 +86,3 @@ export function getCSSTransitionDuration({
 export function isTouch(): Boolean {
 	return !!('ontouchstart' in document.documentElement)
 }
-
-/**
- * Get the number of decimal places
- * @param {Number} value Input range step
- * @returns Decimal of the step
- */
-export function getDecimalPlaces(value: number): number {
-	const match = `${value}`.match(/(?:\.(\d+))$/)
-	if (!match) return 0
-	return Math.max(0, match[1] ? match[1].length : 0)
-}
-
-/**
- * Round to the nearest step
- * @param {Number} number Touch position
- * @param {Number} step Input range step
- * @returns {Number} Round touch position
- */
-export function round(number: number, step: number): number {
-	if (step < 1) {
-		const places = getDecimalPlaces(step)
-		return parseFloat(number.toFixed(places))
-	}
-	return Math.round(number / step) * step
-}
