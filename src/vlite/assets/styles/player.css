@@ -119,7 +119,7 @@
 		}
 
 		&:focus-visible {
-			outline: 4px dashed var(--vlite-outlineColor);
+			outline: 2px dashed var(--vlite-colorMain);
 			outline-offset: -4px;
 		}
 

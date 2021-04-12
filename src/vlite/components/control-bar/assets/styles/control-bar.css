@@ -39,12 +39,8 @@
 		font-family: inherit;
 
 		&:focus-visible {
-			outline: 4px dashed var(--vlite-outlineColor);
+			outline: 2px dashed var(--vlite-colorMain);
 			outline-offset: 2px;
-		}
-
-		&:focus {
-			outline: none;
 		}
 
 		&::-webkit-slider-runnable-track {
