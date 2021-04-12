@@ -275,7 +275,7 @@ The player instance exposed the following methods, accessible when the player is
 | `getInstance()`       |     -      |     -     | Get the player instance           |
 | `destroy()`           |     -      |     -     | Destroy the player                |
 
-Example of the media `duration` recovered when the player is ready.
+Example of media `duration` recovery.
 
 ```javascript
 new Vlitejs('#player', {
@@ -291,19 +291,19 @@ new Vlitejs('#player', {
 
 The player exposes some custom CSS properties, locally scopped under the `.v-vlite` selector. You can use them to customize the design.
 
-| Name                                  | Description                    | Value                                          |
-| ------------------------------------- | ------------------------------ | ---------------------------------------------- |
-| `--vlite-colorMain`                   | Primary color                  | `#ff7f15`                                      |
-| `--vlite-transition`                  | Transition                     | `0.25s ease`                                   |
-| `--vlite-controlBarHeight`            | Control bar height             | `50px`                                         |
-| `--vlite-controlBarHorizontalPadding` | Control bar horizontal padding | `10px`                                         |
-| `--vlite-controlBarBackground`        | Control bar background         | `linear-gradient(0, #000 0, transparent 100%)` |
-| `--vlite-controlsColor`               | Controls color                 | `#fff`                                         |
-| `--vlite-controlsOpacity`             | Controls color                 | `0.9`                                          |
-| `--vlite-controlsIconWidth`           | Controls icon width            | `28px`                                         |
-| `--vlite-controlsIconHeight`          | Controls icon height           | `28px`                                         |
-| `--vlite-progressBarHeight`           | Progress bar height            | `5px`                                          |
-| `--vlite-progressBarBackground`       | Progress bar background        | `rgba(0 0 0 / 25%)`                            |
+| Name                                  | Description                    | Value                                             |
+| ------------------------------------- | ------------------------------ | ------------------------------------------------- |
+| `--vlite-colorMain`                   | Primary color                  | `#ff7f15`                                         |
+| `--vlite-transition`                  | Transition                     | `0.25s ease`                                      |
+| `--vlite-controlBarHeight`            | Control bar height             | `50px`                                            |
+| `--vlite-controlBarHorizontalPadding` | Control bar horizontal padding | `10px`                                            |
+| `--vlite-controlBarBackground`        | Control bar background         | `linear-gradient(to top, #000 -50%, transparent)` |
+| `--vlite-controlsColor`               | Controls color                 | `#fff`                                            |
+| `--vlite-controlsOpacity`             | Controls color                 | `0.9`                                             |
+| `--vlite-controlsIconWidth`           | Controls icon width            | `28px`                                            |
+| `--vlite-controlsIconHeight`          | Controls icon height           | `28px`                                            |
+| `--vlite-progressBarHeight`           | Progress bar height            | `5px`                                             |
+| `--vlite-progressBarBackground`       | Progress bar background        | `rgba(0 0 0 / 25%)`                               |
 
 ---
 

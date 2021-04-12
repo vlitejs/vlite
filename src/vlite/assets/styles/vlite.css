@@ -5,7 +5,7 @@
 	/* Control bar */
 	--vlite-controlBarHeight: 50px;
 	--vlite-controlBarHorizontalPadding: 10px;
-	--vlite-controlBarBackground: linear-gradient(0, #000 0, transparent 100%);
+	--vlite-controlBarBackground: linear-gradient(to top, #000 -50%, transparent);
 
 	/* Controls */
 	--vlite-controlsColor: #fff;
