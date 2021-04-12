@@ -42,7 +42,10 @@ export default function (Player: any) {
 		 */
 		waitUntilVideoIsReady(): Promise<Event> {
 			return new window.Promise((resolve, reject) => {
-				// TODO: use `loadedmetadata` on iOS
+				// Listen both events
+				// "loadedmetadata" is not fired on Firefox
+				// "canplay" is not fired in iOS
+				this.media.addEventListener('loadedmetadata', resolve, { once: true })
 				this.media.addEventListener('canplay', resolve, { once: true })
 			})
 		}

@@ -5,7 +5,7 @@ export default class PiP {
 	player: any
 	pipButton!: HTMLElement
 
-	providers = ['html5'] // TODO: describe these parameter
+	providers = ['html5']
 	types = ['video']
 
 	/**

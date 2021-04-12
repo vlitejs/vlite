@@ -144,8 +144,8 @@
 	}
 
 	&-video {
-		&-progressBar {
-			height: 55px;
+		.v-progressBar {
+			height: 5px;
 		}
 
 		.v-controlBar {
