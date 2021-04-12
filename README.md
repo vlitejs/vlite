@@ -290,6 +290,24 @@ document.querySelector('.btn-mute').addEventListener('click', () => {
 });
 ```
 
+### Custom CSS properties
+
+The player exposes some custom CSS properties, locally scopped under the `.v-vlite` selector. You can use them to customize the design of the player.
+
+| Name                                  |                                    Value                                    | Description                    |
+| ------------------------------------- | :-------------------------------------------------------------------------: | ------------------------------ |
+| `--vlite-colorMain`                   |                                  `#ff7f15`                                  | Primary color                  |
+| `--vlite-transition`                  |                                `0.25s ease`                                 | Transition                     |
+| `--vlite-controlBarHeight`            |                                   `50px`                                    | Control bar height             |
+| `--vlite-controlBarHorizontalPadding` |                                   `10px`                                    | Control bar horizontal padding |
+| `--vlite-controlBarBackground`        | `linear-gradient(0deg, rgba(0 0 0 / 100%) 0%, rgba(255 255 255 / 0%) 100%)` | Control bar background         |
+| `--vlite-controlsColor`               |                                  `#ffffff`                                  | Controls color                 |
+| `--vlite-controlsOpacity`             |                                    `0.9`                                    | Controls color                 |
+| `--vlite-controlsIconWidth`           |                                   `28px`                                    | Controls icon width            |
+| `--vlite-controlsIconHeight`          |                                   `28px`                                    | Controls icon height           |
+| `--vlite-progressBarHeight`           |                                    `5px`                                    | Progress bar height            |
+| `--vlite-progressBarBackground`       |                             `rgba(0 0 0 / 25%)`                             | Progress bar background        |
+
 ## Shortcuts
 
 The player accepts the following keyboard shortcuts when in focus.

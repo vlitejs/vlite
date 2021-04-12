@@ -1,10 +1,7 @@
 // Import JS
 import Vlitejs from './assets/scripts/vlite'
 
-// Import CSS
-import 'shared/assets/styles/vars.css'
-
-import './assets/styles/player.css'
+import './assets/styles/vlite.css'
 
 // import shared components
 import './components/loader/config.js'

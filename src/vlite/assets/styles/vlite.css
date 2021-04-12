@@ -1,4 +1,23 @@
 .v-vlite {
+	--vlite-colorMain: #ff7f15;
+	--vlite-transition: 0.25s ease;
+
+	--vlite-controlBarHeight: 50px;
+	--vlite-controlBarHorizontalPadding: 10px;
+	--vlite-controlBarBackground: linear-gradient(
+		0deg,
+		rgba(0 0 0 / 100%) 0%,
+		rgba(255 255 255 / 0%) 100%
+	);
+
+	--vlite-controlsColor: #ffffff;
+	--vlite-controlsOpacity: 0.9;
+	--vlite-controlsIconWidth: 28px;
+	--vlite-controlsIconHeight: 28px;
+
+	--vlite-progressBarHeight: 5px;
+	--vlite-progressBarBackground: rgba(0 0 0 / 25%);
+
 	font-family: -apple-system, blinkmacsystemfont, segoe UI, Helvetica, Arial, sans-serif,
 		Apple Color Emoji, Segoe UI Emoji;
 	position: relative;
