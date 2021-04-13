@@ -28,6 +28,7 @@
 		"build": "rm -rf ./dist/ && webpack --mode=production",
 		"build:example": "rm -rf ./examples/dist/ && webpack --mode=production --config=./examples/webpack.config.js",
 		"build:gh-pages": "rm -rf ./gh-pages/dist/ && webpack --mode=production --config=./gh-pages/webpack.config.js",
+		"clean": "rm -rf ./dist/ ./gh-pages/dist/ ./examples/dist/",
 		"create:demo": "mkdir demo",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
 		"start:example": "rm -rf ./examples/dist/ && webpack --mode=development --config=./examples/webpack.config.js",
