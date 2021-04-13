@@ -32,7 +32,7 @@ export default function (Player: any) {
 		init() {
 			this.waitUntilVideoIsReady().then(() => {
 				this.addSpecificEvents()
-				super.onPlayerReady()
+				super.onReady()
 			})
 		}
 

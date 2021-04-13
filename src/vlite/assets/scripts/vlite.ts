@@ -53,7 +53,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 class Vlitejs {
 	Player: any
 	media: HTMLVideoElement | HTMLAudioElement
-	plugins: Array<string>
+	provider: string
 	onReady: Function
 	delayAutoHide: number
 	type: string
@@ -101,7 +101,7 @@ class Vlitejs {
 			throw new TypeError('vlitejs :: The element or selector supplied is not valid.')
 		}
 
-		this.plugins = plugins
+		this.provider = provider
 		this.onReady = onReady
 		this.isPaused = true
 		this.delayAutoHide = 3000

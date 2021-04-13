@@ -21,12 +21,12 @@ To start your new provider development, you can use the [sample-provider.js](htt
 
 Here are some points to help you in your development:
 
-- The provider file should return a function that tkae as parameter `Player`.
+- The provider file should return a function that take as parameter `Player`.
 - The function should return an ES6 JavaScript class that extends the `Player` parameter returned by the parent function.
 - `vLitejs` should be available before the provider import.
 - The `sample-provider.js` exposes all the necessary functions, do not rename or remove them because `vLitejs` will not recognize them.
 - The `init` function is automatically called by `vLitejs` to initialize the provider.
-- Call the `super.onPlayerReady()` function when the player is ready (the function is exposed by the parent class).
+- Call the `super.onReady()` function when the player is ready (the function is exposed by the parent class).
 - Replace the content of the following functions with the appropriate code for the new provider (except `init` and `waitUntilVideoIsReady`).
 
 ### Methods
@@ -56,4 +56,4 @@ There are two possible scenario:
 - The API is already available: initialize the player (`initPlayer()`)
 - The API is not available: push the instance into the queue (`providerQueue`)
 
-At the end of the sample file, the queue is processed and each player initialized. Then call the `super.onPlayerReady()` function when the player is ready.
+At the end of the sample file, the queue is processed and each player initialized. Then call the `super.onReady()` function when the player is ready.

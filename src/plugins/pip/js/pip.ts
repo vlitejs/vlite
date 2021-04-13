@@ -49,8 +49,6 @@ export default class PiP {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.player.elements.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
-
 		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const fullscreenButton = this.player.elements.container.querySelector(

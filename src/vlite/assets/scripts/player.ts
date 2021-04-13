@@ -17,8 +17,11 @@ export default class Player {
 	isPaused: null | Boolean
 	delayAutoHide: number
 	controlBar: any
-	customEvents: Array<configEvent>
+	playerEvents: Array<configEvent>
 	isTouch: Boolean
+	plugins: {
+		[key: string]: any
+	}
 	elements: {
 		container: HTMLElement
 		bigPlay: HTMLElement | null
@@ -41,6 +44,7 @@ export default class Player {
 	constructor({ Vlitejs, type }: playerParameters) {
 		this.Vlitejs = Vlitejs
 		this.type = type
+		this.plugins = {}
 		this.media = Vlitejs.media
 		this.options = Vlitejs.options
 
@@ -61,7 +65,7 @@ export default class Player {
 		this.isMuted = this.options.muted
 		this.isPaused = null
 		this.delayAutoHide = 3000
-		this.customEvents = []
+		this.playerEvents = []
 		this.isTouch = isTouch()
 
 		this.controlBar = new ControlBar({
@@ -177,7 +181,7 @@ export default class Player {
 	/**
 	 * On the player is ready
 	 */
-	onPlayerReady() {
+	onReady() {
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the media element is muted
@@ -186,8 +190,13 @@ export default class Player {
 			this.play()
 		}
 
+		// Call the onReady functions of components
+		this.options.controls && this.controlBar.onReady()
+		Object.keys(this.plugins).forEach((id) => {
+			this.plugins[id].onReady instanceof Function && this.plugins[id].onReady()
+		})
+
 		this.loading(false)
-		this.options.controls && this.controlBar.onPlayerReady()
 		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 	}
 
@@ -198,7 +207,7 @@ export default class Player {
 	 */
 	on(type: string, listener: EventListener) {
 		if (listener instanceof Function) {
-			this.customEvents.push({ type, listener })
+			this.playerEvents.push({ type, listener })
 			this.elements.container.addEventListener(type, listener)
 		}
 	}
@@ -208,7 +217,7 @@ export default class Player {
 	 * @param {String} type Event type
 	 */
 	dispatchEvent(type: string) {
-		this.elements.container.dispatchEvent(new CustomEvent(type))
+		this.elements.container.dispatchEvent(new Event(type))
 	}
 
 	/**
@@ -291,10 +300,10 @@ export default class Player {
 		this.methodPlay()
 		this.isPaused = false
 		this.elements.container.classList.replace('v-paused', 'v-playing')
-		this.elements.playPause.classList.add('v-controlPressed')
 
 		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Pause')
+			this.elements.playPause.classList.add('v-controlPressed')
 		}
 
 		if (this.type === 'video' && this.elements.bigPlay) {
@@ -312,10 +321,10 @@ export default class Player {
 		this.methodPause()
 		this.isPaused = true
 		this.elements.container.classList.replace('v-playing', 'v-paused')
-		this.elements.playPause.classList.remove('v-controlPressed')
 
 		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Play')
+			this.elements.playPause.classList.remove('v-controlPressed')
 		}
 
 		if (this.type === 'video' && this.elements.bigPlay) {
@@ -462,8 +471,14 @@ export default class Player {
 	 * Remove event listeners, player instance and DOM
 	 */
 	destroy() {
-		this.options.controls && this.controlBar && this.controlBar.removeEvents()
-		this.customEvents.forEach((event) => {
+		this.controlBar && this.controlBar.destroy()
+
+		// Call the destroy function on each plugins
+		Object.keys(this.plugins).forEach((id) => {
+			this.plugins[id].destroy instanceof Function && this.plugins[id].destroy()
+		})
+
+		this.playerEvents.forEach((event) => {
 			this.elements.container.removeEventListener(event.type, event.listener)
 		})
 		this.elements.container.remove()

@@ -31,7 +31,7 @@ export default function (Player: any) {
 			vimeoQueue.forEach((itemClass: any) => {
 				itemClass.initVimeoPlayer().then(() => {
 					itemClass.addSpecificEvents()
-					itemClass.onPlayerReady()
+					itemClass.onReady()
 				})
 			})
 			vimeoQueue = []
@@ -74,7 +74,7 @@ export default function (Player: any) {
 		init() {
 			this.waitUntilVideoIsReady().then(() => {
 				this.addSpecificEvents()
-				super.onPlayerReady()
+				super.onReady()
 			})
 		}
 

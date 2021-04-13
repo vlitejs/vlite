@@ -37,8 +37,9 @@ export default class Subtitle {
 	 */
 	init() {
 		if (this.tracks.length && this.player.options.controls) {
-			this.hideTracks()
+			this.activeTrack = this.getActiveTrack()
 
+			this.hideTracks()
 			this.render()
 
 			this.captions = this.player.elements.container.querySelector('.v-captions') as HTMLElement
@@ -51,6 +52,21 @@ export default class Subtitle {
 
 			this.addEvents()
 		}
+	}
+
+	/**
+	 * On player ready
+	 */
+	onReady() {
+		this.enableTrack()
+	}
+
+	/**
+	 * Get the default track or the first one if no match
+	 * @returns {TextTrack} Active track
+	 */
+	getActiveTrack(): TextTrack {
+		return this.tracks.find((track) => track.mode === 'showing') || this.tracks[0]
 	}
 
 	/**
@@ -72,6 +88,18 @@ export default class Subtitle {
 		if (controlBar && targetElement) {
 			// @ts-ignore
 			targetElement.insertAdjacentHTML(insertPosition.position as string, this.getTemplate())
+		}
+	}
+
+	/**
+	 * Enable the active track
+	 */
+	enableTrack() {
+		if (this.activeTrack) {
+			const button = this.subtitlesList.querySelector(
+				`[data-language="${this.activeTrack.language}"]`
+			)
+			button && button.dispatchEvent(new Event('click', { bubbles: true }))
 		}
 	}
 

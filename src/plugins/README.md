@@ -23,12 +23,14 @@ Here are some points to help you in your development:
 
 - The plugin should be an ES6 JavaScript class.
 - The `init` function is automatically called by `vLitejs` to initialize the plugin.
+- The `onReady` function is automatically called by `vLitejs` when the player is ready.
 
 ### Methods
 
-| Method   | Parameters | Promise | Description           |
-| -------- | :--------: | :-----: | --------------------- |
-| `init()` |     -      |    -    | Initialize the plugin |
+| Method      | Parameters | Promise | Description                       |
+| ----------- | :--------: | :-----: | --------------------------------- |
+| `init()`    |     -      |    -    | Initialize the plugin             |
+| `onReady()` |     -      |    -    | Run code when the player is ready |
 
 ### Constructor parameters
 
@@ -44,6 +46,7 @@ Here are some points to help you in your development:
 | `player.isPaused`     | `null\|Boolean` | Is the player paused (`null` before the first play) |
 | `player.isTouch`      |    `Boolean`    | Is touch device                                     |
 | `player.type`         |    `String`     | Player type (`video\|audio`)                        |
+| `player.plugins`      |    `Object`     | List of plugins instances                           |
 | `player.Vlitejs`      |     `Class`     | `vLitejs` instance                                  |
 | `player.controlBar`   |     `Class`     | `controlBar` instance                               |
 

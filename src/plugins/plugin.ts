@@ -69,9 +69,11 @@ export function initializePlugins({
 	player: any
 }) {
 	getPluginInstance(plugins).forEach(({ id, Plugin }: { id: string; Plugin: any }) => {
-		const plugin = new Plugin({
-			player
-		})
+		const plugin = new Plugin({ player })
+
+		// Store the plugin instance on the player
+		player.plugins[id] = plugin
+
 		if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
 			plugin.init()
 		} else {

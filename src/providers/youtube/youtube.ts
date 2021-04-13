@@ -39,7 +39,7 @@ export default function (Player: any) {
 		window.onYouTubeIframeAPIReady = () => {
 			youtubeQueue.forEach((itemClass: any) => {
 				itemClass.initYoutubePlayer().then(() => {
-					itemClass.onPlayerReady()
+					itemClass.onReady()
 				})
 			})
 			youtubeQueue = []
@@ -74,7 +74,7 @@ export default function (Player: any) {
 		 */
 		init() {
 			this.waitUntilVideoIsReady().then(() => {
-				super.onPlayerReady()
+				super.onReady()
 			})
 		}
 

@@ -70,7 +70,7 @@ export default class ControlBar {
 	/**
 	 * On player ready
 	 */
-	onPlayerReady() {
+	onReady() {
 		this.player.getDuration().then((duration: number) => {
 			if (this.player.elements.progressBar) {
 				this.player.elements.progressBar.setAttribute('aria-valuemax', `${Math.round(duration)}`)

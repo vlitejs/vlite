@@ -16,7 +16,7 @@ export default function (Player: any) {
 		script.onload = () => {
 			// Run the queue when the provider API is ready
 			providerQueue.forEach((itemClass) => {
-				itemClass.initPlayer().then(() => itemClass.onPlayerReady())
+				itemClass.initPlayer().then(() => itemClass.onReady())
 			})
 			providerQueue = []
 		}
@@ -32,7 +32,7 @@ export default function (Player: any) {
 		 * Initialize the player when the API is ready
 		 */
 		init() {
-			this.waitUntilVideoIsReady().then(super.onPlayerReady.bind(this))
+			this.waitUntilVideoIsReady().then(super.onReady.bind(this))
 		}
 
 		/**
