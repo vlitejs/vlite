@@ -186,7 +186,7 @@ export default class Player {
 			this.play()
 		}
 
-		this.loading(false)
+		this.Vlitejs.loading(false)
 		this.options.controls && this.controlBar.onPlayerReady()
 		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 	}
@@ -209,14 +209,6 @@ export default class Player {
 	 */
 	dispatchEvent(type: string) {
 		this.elements.container.dispatchEvent(new CustomEvent(type))
-	}
-
-	/**
-	 * Loading bridge between the player and vlite
-	 * @param {Boolean} status Loading status
-	 */
-	loading(status: Boolean) {
-		this.Vlitejs.loading(status)
 	}
 
 	/**
