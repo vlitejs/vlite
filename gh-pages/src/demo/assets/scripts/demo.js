@@ -5,6 +5,7 @@ import VlitejsSubtitle from 'dist/plugins/subtitle'
 import VlitejsPip from 'dist/plugins/pip'
 import VlitejsYoutube from 'dist/providers/youtube'
 import VlitejsVimeo from 'dist/providers/vimeo'
+import '../../../../../assets/audio/bensound-dreams.mp3'
 
 export default class Demo {
 	constructor() {
@@ -39,8 +40,7 @@ export default class Demo {
 		this.templates = {
 			'html5-video':
 				'<video id="player" class="vlite-js" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>',
-			'html5-audio':
-				'<audio id="player" class="vlite-js" src="https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3"></audio>',
+			'html5-audio': '<audio id="player" class="vlite-js" src="audio/bensound-dreams.mp3"></audio>',
 			'youtube-video': '<div id="player" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></div>',
 			'vimeo-video': '<div id="player" class="vlite-js" data-vimeo-id="1084537"></div>'
 		}

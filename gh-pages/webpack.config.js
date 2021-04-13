@@ -58,10 +58,18 @@ module.exports = (env, argv) => {
 				},
 				{
 					test: /\.(jpe?g|png|gif)$/i,
-					include: [path.resolve(__dirname, '../')],
+					include: [path.resolve(__dirname, '../assets')],
 					type: 'asset/resource',
 					generator: {
 						filename: 'images/[name][ext]'
+					}
+				},
+				{
+					test: /\.mp3$/i,
+					include: [path.resolve(__dirname, '../assets')],
+					type: 'asset/resource',
+					generator: {
+						filename: 'audio/[name][ext]'
 					}
 				}
 			]
