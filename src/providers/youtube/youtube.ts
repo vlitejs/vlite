@@ -123,7 +123,7 @@ export default function (Player: any) {
 
 			switch (e.data) {
 				case window.YT.PlayerState.ENDED:
-					super.onVideoEnded()
+					super.onMediaEnded()
 					break
 
 				case window.YT.PlayerState.PLAYING:

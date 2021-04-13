@@ -18,7 +18,7 @@ export default function (Player: any) {
 
 			this.events = [
 				{ type: 'timeupdate', listener: super.onTimeUpdate },
-				{ type: 'ended', listener: super.onVideoEnded },
+				{ type: 'ended', listener: super.onMediaEnded },
 				{ type: 'playing', listener: this.onPlaying },
 				{ type: 'waiting', listener: this.onWaiting },
 				{ type: 'seeking', listener: this.onSeeking },

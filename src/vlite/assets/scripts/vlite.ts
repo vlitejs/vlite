@@ -349,15 +349,6 @@ class Vlitejs {
 	}
 
 	/**
-	 * Update the loader status
-	 * @param {Boolean} state Status of the loader
-	 */
-	loading(state: Boolean) {
-		this.container.classList[state ? 'add' : 'remove']('v-loading')
-		this.player.dispatchEvent('progress')
-	}
-
-	/**
 	 * Remove events listeners
 	 */
 	removeEvents() {

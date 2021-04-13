@@ -273,6 +273,7 @@ The player instance exposed the following methods, accessible when the player is
 | `requestFullscreen()` |     -      |     -     | Request the fullscreen            |
 | `exitFullscreen()`    |     -      |     -     | Exit the fullscreen               |
 | `getInstance()`       |     -      |     -     | Get the player instance           |
+| `loading()`           | `Boolean`  |     -     | Set the loading status            |
 | `destroy()`           |     -      |     -     | Destroy the player                |
 
 Example of media `duration` recovery.

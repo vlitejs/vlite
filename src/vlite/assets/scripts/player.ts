@@ -186,7 +186,7 @@ export default class Player {
 			this.play()
 		}
 
-		this.Vlitejs.loading(false)
+		this.loading(false)
 		this.options.controls && this.controlBar.onPlayerReady()
 		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 	}
@@ -209,6 +209,15 @@ export default class Player {
 	 */
 	dispatchEvent(type: string) {
 		this.elements.container.dispatchEvent(new CustomEvent(type))
+	}
+
+	/**
+	 * Update the loader status
+	 * @param {Boolean} state Status of the loader
+	 */
+	loading(state: Boolean) {
+		this.elements.container.classList[state ? 'add' : 'remove']('v-loading')
+		this.dispatchEvent('progress')
 	}
 
 	/**
@@ -240,9 +249,9 @@ export default class Player {
 	}
 
 	/**
-	 * On video ended
+	 * On media ended
 	 */
-	onVideoEnded() {
+	onMediaEnded() {
 		if (this.options.loop) {
 			this.play()
 		} else {
@@ -250,7 +259,7 @@ export default class Player {
 			this.elements.container.classList.add('v-firstStart')
 		}
 
-		if (this.options.poster && this.elements.poster) {
+		if (this.elements.poster) {
 			this.elements.poster.classList.add('v-active')
 		}
 
@@ -282,6 +291,7 @@ export default class Player {
 		this.methodPlay()
 		this.isPaused = false
 		this.elements.container.classList.replace('v-paused', 'v-playing')
+		this.elements.playPause.classList.add('v-controlPressed')
 
 		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Pause')
@@ -302,6 +312,7 @@ export default class Player {
 		this.methodPause()
 		this.isPaused = true
 		this.elements.container.classList.replace('v-playing', 'v-paused')
+		this.elements.playPause.classList.remove('v-controlPressed')
 
 		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Play')
@@ -370,6 +381,7 @@ export default class Player {
 
 		if (this.elements.volume) {
 			this.elements.volume.classList.add('v-controlPressed')
+			this.elements.volume.setAttribute('aria-label', 'Unmute')
 		}
 
 		this.dispatchEvent('volumechange')
@@ -384,6 +396,7 @@ export default class Player {
 
 		if (this.elements.volume) {
 			this.elements.volume.classList.remove('v-controlPressed')
+			this.elements.volume.setAttribute('aria-label', 'Mute')
 		}
 
 		this.dispatchEvent('volumechange')
@@ -413,6 +426,7 @@ export default class Player {
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.add('v-controlPressed')
+				this.elements.fullscreen.setAttribute('aria-label', 'Exit fullscreen')
 			}
 
 			this.dispatchEvent('enterfullscreen')
@@ -436,6 +450,7 @@ export default class Player {
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.remove('v-controlPressed')
+				this.elements.fullscreen.setAttribute('aria-label', 'Enter fullscreen')
 			}
 
 			this.dispatchEvent('exitfullscreen')
