@@ -56,6 +56,19 @@
 		transition: background-color var(--vlite-transition);
 		text-align: left;
 		width: 100%;
+		-webkit-appearance: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		outline: none;
+		color: inherit;
+		font-size: inherit;
+		font-family: inherit;
+
+		&:focus-visible {
+			outline: 2px dashed var(--vlite-colorMain);
+			outline-offset: 2px;
+		}
 
 		&:hover {
 			background-color: rgba(0 0 0 / 5%);
