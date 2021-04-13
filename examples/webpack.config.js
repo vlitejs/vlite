@@ -49,14 +49,6 @@ module.exports = (env, argv) => {
 							}
 						}
 					]
-				},
-				{
-					test: /\.(jpe?g|png|gif)$/i,
-					include: [path.resolve(__dirname, '../')],
-					type: 'asset/resource',
-					generator: {
-						filename: 'images/[name][ext]'
-					}
 				}
 			]
 		},

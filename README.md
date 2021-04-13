@@ -46,7 +46,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
 
-[![Image of vLitejs](./assets/images/screenshot.jpg)](https://yoriiis.github.io/vlitejs)
+[![Image of vLitejs](https://res.cloudinary.com/yoriiis/image/upload/v1618347250/vlitejs/screenshot_b6tdpq.jpg)](https://yoriiis.github.io/vlitejs)
 
 ### Examples
 
@@ -97,13 +97,13 @@ You can also download it and include it with a script tag. The library will be r
 #### Youtube
 
 ```html
-<div id="player" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></div>
+<div id="player" class="vlite-js" data-youtube-id="1VIZ89FEjYI"></div>
 ```
 
 #### Vimeo
 
 ```html
-<div id="player" class="vlite-js" data-vimeo-id="1084537"></div>
+<div id="player" class="vlite-js" data-vimeo-id="526081960"></div>
 ```
 
 ### Initialization
@@ -214,7 +214,7 @@ new Vlitejs('#player', {
 
 ### Events
 
-`vLitejs` exposes the following native `CustomEvent` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube and Vimeo.
+`vLitejs` exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube and Vimeo.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |

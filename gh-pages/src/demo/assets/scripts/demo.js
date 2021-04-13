@@ -1,11 +1,13 @@
 import validateTarget from 'validate-target'
-import 'dist/vlite.css'
 import Vlitejs from 'dist/vlite'
 import VlitejsSubtitle from 'dist/plugins/subtitle'
 import VlitejsPip from 'dist/plugins/pip'
 import VlitejsYoutube from 'dist/providers/youtube'
 import VlitejsVimeo from 'dist/providers/vimeo'
-import '../../../../../assets/audio/bensound-dreams.mp3'
+import html5VideoTemplate from './templates/html5-video'
+import html5AudioTemplate from './templates/html5-audio'
+import youtubeTemplate from './templates/youtube-video'
+import vimeoTemplate from './templates/vimeo-video'
 
 export default class Demo {
 	constructor() {
@@ -21,7 +23,8 @@ export default class Demo {
 				time: true,
 				volume: true,
 				fullscreen: true,
-				poster: 'images/poster.jpg',
+				poster:
+					'https://res.cloudinary.com/yoriiis/image/upload/v1618346686/vlitejs/poster_gjeva2.jpg',
 				bigPlay: true,
 				autoHide: true,
 				playsinline: true,
@@ -38,11 +41,10 @@ export default class Demo {
 			}
 		}
 		this.templates = {
-			'html5-video':
-				'<video id="player" class="vlite-js" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>',
-			'html5-audio': '<audio id="player" class="vlite-js" src="audio/bensound-dreams.mp3"></audio>',
-			'youtube-video': '<div id="player" class="vlite-js" data-youtube-id="aqz-KE-bpKQ"></div>',
-			'vimeo-video': '<div id="player" class="vlite-js" data-vimeo-id="1084537"></div>'
+			'html5-video': html5VideoTemplate(),
+			'html5-audio': html5AudioTemplate(),
+			'youtube-video': youtubeTemplate(),
+			'vimeo-video': vimeoTemplate()
 		}
 
 		this.onClickOnNav = this.onClickOnNav.bind(this)
@@ -80,6 +82,8 @@ export default class Demo {
 
 		const target = e.target
 		const currentActive = this.nav.querySelector('.active')
+		const provider = target.getAttribute('data-provider')
+		const type = target.getAttribute('data-type')
 
 		if (!target.classList.contains('active')) {
 			currentActive.classList.remove('active')
@@ -87,8 +91,8 @@ export default class Demo {
 
 			this.destroyPreviousMedia()
 			this.initMedia({
-				provider: target.getAttribute('data-provider'),
-				type: target.getAttribute('data-type')
+				provider,
+				type
 			})
 		}
 	}
@@ -99,11 +103,11 @@ export default class Demo {
 	}
 
 	initMedia({ provider, type }) {
+		const plugins = provider === 'html5' && type === 'video' ? ['subtitle', 'pip'] : []
 		this.content.innerHTML = this.templates[`${provider}-${type}`]
-
 		this.instance = new Vlitejs('#player', {
 			options: this.options[type],
-			// plugins: ['subtitle', 'pip'],
+			plugins,
 			provider,
 			onReady: function (player) {
 				console.log(player)
