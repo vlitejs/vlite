@@ -165,7 +165,7 @@ export default class ControlBar {
 	 */
 	togglePlayPause(e: Event) {
 		e.preventDefault()
-		this.player.elements.playPause.classList.toggle('v-controlPressed')
+
 		this.player.elements.container.classList.contains('v-paused')
 			? this.player.play()
 			: this.player.pause()
@@ -178,13 +178,9 @@ export default class ControlBar {
 	toggleVolume(e: Event) {
 		e.preventDefault()
 
-		if (this.player.elements.volume!.classList.contains('v-controlPressed')) {
-			this.player.unMute()
-			this.player.elements.volume!.setAttribute('aria-label', 'Mute')
-		} else {
-			this.player.mute()
-			this.player.elements.volume!.setAttribute('aria-label', 'Unmute')
-		}
+		this.player.elements.volume!.classList.contains('v-controlPressed')
+			? this.player.unMute()
+			: this.player.mute()
 	}
 
 	/**
@@ -194,13 +190,7 @@ export default class ControlBar {
 	toggleFullscreen(e: Event) {
 		e.preventDefault()
 
-		if (this.player.isFullScreen) {
-			this.player.exitFullscreen()
-			this.player.elements.fullscreen!.setAttribute('aria-label', 'Enter fullscreen')
-		} else {
-			this.player.requestFullscreen()
-			this.player.elements.fullscreen!.setAttribute('aria-label', 'Exit fullscreen')
-		}
+		this.player.isFullScreen ? this.player.exitFullscreen() : this.player.requestFullscreen()
 	}
 
 	/**
