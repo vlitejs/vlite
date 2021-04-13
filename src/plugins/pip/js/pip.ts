@@ -77,7 +77,7 @@ export default class PiP {
 
 	/**
 	 * On click on the PIP button
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	async onClickOnPipButton(e: Event) {
 		e.preventDefault()
@@ -96,7 +96,7 @@ export default class PiP {
 
 	/**
 	 * On enter the PIP
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onEnterPip(e: Event) {
 		this.player.dispatchEvent('enterpip')
@@ -104,7 +104,7 @@ export default class PiP {
 
 	/**
 	 * On leave the PIP
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onLeavePip(e: Event) {
 		this.player.dispatchEvent('leavepip')

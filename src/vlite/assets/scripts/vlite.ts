@@ -194,7 +194,7 @@ class Vlitejs {
 
 	/**
 	 * On click on the player
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onClickOnPlayer(e: Event) {
 		const target = e.target
@@ -211,7 +211,7 @@ class Vlitejs {
 
 	/**
 	 * On double click on the player
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onDoubleClickOnPlayer(e: Event) {
 		const target = e.target
@@ -228,7 +228,7 @@ class Vlitejs {
 
 	/**
 	 * On keydown event on the media element
-	 * @param {Object} e Event listener datas
+	 * @param {KeyboardEvent} e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
 		// Stop and start the auto hide timer on selected key code
@@ -273,7 +273,7 @@ class Vlitejs {
 	/**
 	 * On fullscreen change (espace key pressed)
 	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onChangeFullScreen(e: Event) {
 		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {

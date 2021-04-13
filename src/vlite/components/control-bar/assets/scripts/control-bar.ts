@@ -116,7 +116,7 @@ export default class ControlBar {
 
 	/**
 	 * On input event on the progress bar
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onInputProgressBar(e: Event) {
 		const target = e.target as HTMLInputElement
@@ -129,7 +129,7 @@ export default class ControlBar {
 
 	/**
 	 * On click on the control bar
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onClickOnControlBar(e: Event) {
 		const target = e.target
@@ -161,6 +161,7 @@ export default class ControlBar {
 
 	/**
 	 * Toggle the video status (play|pause)
+	 * @param {Event} e Event data
 	 */
 	togglePlayPause(e: Event) {
 		e.preventDefault()
@@ -172,6 +173,7 @@ export default class ControlBar {
 
 	/**
 	 * Toggle the volume
+	 * @param {Event} e Event data
 	 */
 	toggleVolume(e: Event) {
 		e.preventDefault()
@@ -187,6 +189,7 @@ export default class ControlBar {
 
 	/**
 	 * Toggle the fullscreen
+	 * @param {Event} e Event data
 	 */
 	toggleFullscreen(e: Event) {
 		e.preventDefault()

@@ -148,7 +148,7 @@ export default class Subtitle {
 
 	/**
 	 * On click on the subtitle button
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onClickOnSubtitleButton(e: Event) {
 		e.preventDefault()
@@ -157,7 +157,7 @@ export default class Subtitle {
 
 	/**
 	 * On click on the subtitle list
-	 * @param {Object} e Event data
+	 * @param {Event} e Event data
 	 */
 	onClickOnSubtitlesList(e: Event) {
 		e.preventDefault()
