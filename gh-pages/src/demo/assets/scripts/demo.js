@@ -24,7 +24,7 @@ export default class Demo {
 				volume: true,
 				fullscreen: true,
 				poster:
-					'https://res.cloudinary.com/yoriiis/image/upload/v1618346686/vlitejs/poster_gjeva2.jpg',
+					'https://media.githubusercontent.com/media/yoriiis/cdn/main/static/vlitejs/poster.jpg',
 				bigPlay: true,
 				autoHide: true,
 				playsinline: true,
