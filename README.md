@@ -46,7 +46,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
 
-[![Image of vLitejs](https://res.cloudinary.com/yoriiis/image/upload/v1618347250/vlitejs/screenshot_b6tdpq.jpg)](https://yoriiis.github.io/vlitejs)
+[![Image of vLitejs](https://media.githubusercontent.com/media/yoriiis/cdn/main/static/vlitejs/screenshot.jpg)](https://yoriiis.github.io/vlitejs)
 
 ### Examples
 
