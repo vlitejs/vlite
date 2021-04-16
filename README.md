@@ -3,7 +3,7 @@
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![Gitter Chat](https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge)](https://gitter.im/vlitejs/vlitejs)
 
 <p align="center">
-    <img src="https://media.githubusercontent.com/media/yoriiis/cdn/main/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
+    <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
 </p>
 
 `vLitejs` is a fast and lightweight JavaScript library to customize and skin a video and audio player. Written in native JavaScript without dependency, it is built around an API of providers and plugins to extend these capabilities and keep the core with the minimal functionnalities.
@@ -46,7 +46,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
 
-[![Image of vLitejs](https://media.githubusercontent.com/media/yoriiis/cdn/main/static/vlitejs/screenshot.jpg)](https://yoriiis.github.io/vlitejs)
+[![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://yoriiis.github.io/vlitejs)
 
 ### Examples
 

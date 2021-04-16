@@ -17,7 +17,7 @@ const vlite = new Vlitejs('#player-html5', {
 		time: true,
 		volume: true,
 		fullscreen: true,
-		poster: 'https://media.githubusercontent.com/media/yoriiis/cdn/main/static/vlitejs/poster.jpg',
+		poster: 'https://yoriiis.github.io/cdn/static/vlitejs/demo-poster.jpg',
 		bigPlay: true,
 		autoHide: true,
 		playsinline: true,
