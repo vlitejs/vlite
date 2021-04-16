@@ -39,7 +39,7 @@
 		font-family: inherit;
 
 		&:focus-visible {
-			outline: 2px dashed var(--vlite-colorMain);
+			outline: 2px dashed var(--vlite-colorPrimary);
 			outline-offset: 2px;
 		}
 
@@ -49,7 +49,7 @@
 			border-radius: var(--vlite-progressBarHeight);
 			background: linear-gradient(
 				to right,
-				var(--vlite-colorMain) var(--value, 0),
+				var(--vlite-colorPrimary) var(--value, 0),
 				var(--vlite-progressBarBackground) var(--value, 0)
 			);
 		}
@@ -60,7 +60,7 @@
 			border-radius: var(--vlite-progressBarHeight);
 			background: linear-gradient(
 				to right,
-				var(--vlite-colorMain) var(--value, 0),
+				var(--vlite-colorPrimary) var(--value, 0),
 				var(--vlite-progressBarBackground) var(--value, 0)
 			);
 		}
@@ -71,7 +71,7 @@
 			height: 12px;
 			border-radius: 50%;
 			border: none;
-			background: var(--vlite-colorMain);
+			background: var(--vlite-colorPrimary);
 			margin-top: -3px;
 		}
 
@@ -80,7 +80,7 @@
 			height: 12px;
 			border-radius: 50%;
 			border: none;
-			background: var(--vlite-colorMain);
+			background: var(--vlite-colorPrimary);
 			margin-top: -3px;
 		}
 	}

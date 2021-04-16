@@ -294,7 +294,7 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 
 | Name                                  | Value                                             | Description                    |
 | ------------------------------------- | ------------------------------------------------- | ------------------------------ |
-| `--vlite-colorMain`                   | `#ff7f15`                                         | Primary color                  |
+| `--vlite-colorPrimary`                | `#ff7f15`                                         | Primary color                  |
 | `--vlite-transition`                  | `0.25s ease`                                      | Transition                     |
 | `--vlite-controlBarHeight`            | `50px`                                            | Control bar height             |
 | `--vlite-controlBarHorizontalPadding` | `10px`                                            | Control bar horizontal padding |

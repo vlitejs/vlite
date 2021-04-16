@@ -66,7 +66,7 @@
 		font-family: inherit;
 
 		&:focus-visible {
-			outline: 2px dashed var(--vlite-colorMain);
+			outline: 2px dashed var(--vlite-colorPrimary);
 			outline-offset: 2px;
 		}
 
@@ -81,7 +81,7 @@
 			transform: translateY(-50%);
 			width: 20px;
 			display: none;
-			fill: var(--vlite-colorMain);
+			fill: var(--vlite-colorPrimary);
 		}
 
 		&.v-active svg {

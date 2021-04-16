@@ -1,5 +1,5 @@
 .v-vlite {
-	--vlite-colorMain: #ff7f15;
+	--vlite-colorPrimary: #ff7f15;
 	--vlite-transition: 0.25s ease;
 
 	/* Control bar */
@@ -137,7 +137,7 @@
 		}
 
 		&:focus-visible {
-			outline: 2px dashed var(--vlite-colorMain);
+			outline: 2px dashed var(--vlite-colorPrimary);
 			outline-offset: -4px;
 		}
 
