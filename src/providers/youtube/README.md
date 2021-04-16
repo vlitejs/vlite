@@ -4,12 +4,12 @@ Supports for Youtube player with the [Youtube player API](https://developers.goo
 
 ## Overview
 
-| <!-- -->          | <!-- -->                       |
-| ----------------- | ------------------------------ |
-| Name              | `youtube`                      |
-| Global name&sup1; | `window.VlitejsYoutube`        |
-| Path              | `vlitejs/providers/youtube`    |
-| Entry point       | `vlitejs/providers/youtube.js` |
+| <!-- -->          | <!-- -->                            |
+| ----------------- | ----------------------------------- |
+| Name              | `youtube`                           |
+| Global name&sup1; | `window.VlitejsYoutube`             |
+| Path              | `vlitejs/dist/providers/youtube`    |
+| Entry point       | `vlitejs/dist/providers/youtube.js` |
 
 - _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
@@ -24,9 +24,9 @@ Supports for Youtube player with the [Youtube player API](https://developers.goo
 ### JavaScript
 
 ```js
-import 'vlitejs/vlite.css';
+import 'vlitejs/dist/vlite.css';
 import Vlitejs from 'vlitejs';
-import VlitejsYoutube from 'vlitejs/providers/youtube';
+import VlitejsYoutube from 'vlitejs/dist/providers/youtube';
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube);
 

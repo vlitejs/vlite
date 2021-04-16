@@ -4,15 +4,15 @@ Supports for multiple caption tracks (VTT).
 
 ## Overview
 
-| <!-- -->          | <!-- -->                                |
-| ----------------- | --------------------------------------- |
-| Name              | `subtitle`                              |
-| Global name&sup1; | `window.VlitejsSubtitle`                |
-| Path              | `vlitejs/plugins/subtitle`              |
-| Entry point       | `vlitejs/plugins/subtitle/subtitle.js`  |
-| Stylesheet        | `vlitejs/plugins/subtitle/subtitle.css` |
-| Provider&sup2;    | `'html5'`                               |
-| Media type&sup3;  | `'video'`                               |
+| <!-- -->          | <!-- -->                                     |
+| ----------------- | -------------------------------------------- |
+| Name              | `subtitle`                                   |
+| Global name&sup1; | `window.VlitejsSubtitle`                     |
+| Path              | `vlitejs/dist/plugins/subtitle`              |
+| Entry point       | `vlitejs/dist/plugins/subtitle/subtitle.js`  |
+| Stylesheet        | `vlitejs/dist/plugins/subtitle/subtitle.css` |
+| Provider&sup2;    | `'html5'`                                    |
+| Media type&sup3;  | `'video'`                                    |
 
 - _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 - _&sup2;Providers: `html5|youtube|vimeo`_
@@ -33,10 +33,10 @@ Supports for multiple caption tracks (VTT).
 ### JavaScript
 
 ```js
-import 'vlitejs/vlite.css';
-import 'vlitejs/plugins/subtitle.css';
+import 'vlitejs/dist/vlite.css';
+import 'vlitejs/dist/plugins/subtitle.css';
 import Vlitejs from 'vlitejs';
-import VlitejsSubtitle from 'vlitejs/plugins/subtitle';
+import VlitejsSubtitle from 'vlitejs/dist/plugins/subtitle';
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
 

@@ -111,7 +111,7 @@ You can also download it and include it with a script tag. The library will be r
 Import `vLitejs` styleheet and the JavaScript library as an ES6 modules.
 
 ```javascript
-import 'vlitejs/vlite.css';
+import 'vlitejs/dist/vlite.css';
 import Vlitejs from 'vlitejs';
 ```
 
