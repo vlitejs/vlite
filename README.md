@@ -97,13 +97,13 @@ You can also download it and include it with a script tag. The library will be r
 #### Youtube
 
 ```html
-<div id="player" class="vlite-js" data-youtube-id="1VIZ89FEjYI"></div>
+<div id="player" class="vlite-js" data-youtube-id="C4qgAaxB_pc"></div>
 ```
 
 #### Vimeo
 
 ```html
-<div id="player" class="vlite-js" data-vimeo-id="526081960"></div>
+<div id="player" class="vlite-js" data-vimeo-id="164865632"></div>
 ```
 
 ### Initialization
