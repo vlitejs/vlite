@@ -123,7 +123,7 @@ export default class ControlBar {
 		target.style.setProperty('--value', `${target.value}%`)
 
 		this.player.getDuration().then((duration: number) => {
-			this.player.seekTo((parseInt(target.value) * duration) / 100)
+			this.player.seekTo((parseFloat(target.value) * duration) / 100)
 		})
 	}
 
