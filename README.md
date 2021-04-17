@@ -164,8 +164,8 @@ The player controls can be customized with the following parameters:
 
 | Options                 |      Type      | Default | Description                                               |
 | ----------------------- | :------------: | :-----: | --------------------------------------------------------- |
-| `autoplay`              |   `Boolean`    | `false` | Enable the autoplay of the media                          |
 | `controls`&sup1; &sup2; |   `Boolean`    | `true`  | Display the control bar of the video                      |
+| `autoplay`              |   `Boolean`    | `false` | Enable the autoplay of the media                          |
 | `playPause`             |   `Boolean`    | `true`  | Display the play/pause button on the control bar          |
 | `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar               |
 | `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar           |
@@ -222,16 +222,16 @@ new Vlitejs('#player', {
 | ----------------------- | --------------------------------------------------------------------------------------- |
 | `play`                  | Sent when the playback state is no longer paused, after the play method or the autoplay |
 | `pause`                 | Sent when the playback state is changed to paused                                       |
-| `ended`                 | Sent when playback completes                                                            |
 | `progress`              | Sent periodically to inform interested parties of progress downloading the media.       |
-| `volumechange`          | Sent when audio volume changes                                                          |
 | `timeupdate`            | Sent when the `currentTime` of the media has changed                                    |
+| `volumechange`          | Sent when audio volume changes                                                          |
 | `enterfullscreen`&sup1; | Sent when the video switches to fullscreen mode                                         |
 | `exitfullscreen`&sup1;  | Sent when the video exits fullscreen mode                                               |
 | `enterpip`&sup1;        | Sent when the video switches to picture-in-picture mode                                 |
 | `leavepip`&sup1;        | Sent when the video exits of picture-in-picture mode                                    |
 | `trackenabled`&sup1;    | Sent when a track is enabled and displayed                                              |
 | `trackdisabled`&sup1;   | Sent when a track is disabled and hidden                                                |
+| `ended`                 | Sent when playback completes                                                            |
 
 - _&sup1; Options available only on a video player, not on an audio player._
 

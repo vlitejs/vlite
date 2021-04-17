@@ -4,8 +4,7 @@ module.exports = {
 		ecmaVersion: 6,
 		ecmaFeatures: {
 			impliedStrict: true,
-			experimentalObjectRestSpread: true,
-			jsx: true
+			experimentalObjectRestSpread: true
 		},
 		sourceType: 'module'
 	},
@@ -13,7 +12,7 @@ module.exports = {
 	env: {
 		browser: true,
 		node: true,
-		jest: true
+		es6: true
 	},
 
 	extends: ['standard'],

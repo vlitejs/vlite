@@ -8,6 +8,7 @@
 - Remove `nativeControlsForTouch` option
 - Remove `data-options` HTML attributes in favor of options from the JS constructor
 - Supports the latest 2 browsers versions with `.browserslistrc`
+- Remove the `dist` directory from GitHub, only available for NPM and CDN
 
 ### New features
 

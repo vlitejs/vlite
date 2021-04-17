@@ -14,8 +14,8 @@
 			Vlitejs.registerProvider('vimeo', VlitejsVimeo)
 			const vlite = new Vlitejs('#player', {
 				options: {
-					autoplay: false,
 					controls: true,
+					autoplay: false,
 					playPause: true,
 					progressBar: true,
 					time: true,
@@ -23,9 +23,10 @@
 					fullscreen: true,
 					poster: 'https://yoriiis.github.io/cdn/static/vlitejs/demo-poster.jpg',
 					bigPlay: true,
-					autoHide: true,
 					playsinline: true,
 					loop: true,
+					muted: false,
+					autoHide: true,
 					providerParams: {}
 				},
 				provider: 'vimeo',
@@ -34,12 +35,12 @@
 
 					player.on('play', () => console.log('play'))
 					player.on('pause', () => console.log('pause'))
-					player.on('ended', () => console.log('ended'))
 					player.on('progress', () => console.log('progress'))
-					player.on('volumechange', () => console.log('volumechange'))
 					player.on('timeupdate', () => console.log('timeupdate'))
+					player.on('volumechange', () => console.log('volumechange'))
 					player.on('enterfullscreen', () => console.log('enterfullscreen'))
 					player.on('exitfullscreen', () => console.log('exitfullscreen'))
+					player.on('ended', () => console.log('ended'))
 				}
 			})
 		</script>

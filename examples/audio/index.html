@@ -12,8 +12,8 @@
 		<script>
 			const vlite = new Vlitejs('#player', {
 				options: {
-					autoplay: false,
 					controls: true,
+					autoplay: false,
 					playPause: true,
 					progressBar: true,
 					time: true,
@@ -24,10 +24,10 @@
 
 					player.on('play', () => console.log('play'))
 					player.on('pause', () => console.log('pause'))
-					player.on('ended', () => console.log('ended'))
 					player.on('progress', () => console.log('progress'))
-					player.on('volumechange', () => console.log('volumechange'))
 					player.on('timeupdate', () => console.log('timeupdate'))
+					player.on('volumechange', () => console.log('volumechange'))
+					player.on('ended', () => console.log('ended'))
 				}
 			})
 		</script>
