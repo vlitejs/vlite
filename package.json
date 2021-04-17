@@ -26,7 +26,6 @@
 		"build": "rm -rf ./dist/ && webpack --mode=production",
 		"build:example": "rm -rf ./examples/dist/ && webpack --mode=production --config=./examples/webpack.config.js",
 		"clean": "rm -rf ./dist/ ./examples/dist/",
-		"create:demo": "mkdir demo",
 		"start": "rm -rf ./dist/ && webpack --mode=development",
 		"start:example": "rm -rf ./examples/dist/ && webpack --mode=development --config=./examples/webpack.config.js",
 		"test:eslint": "eslint ./src --ignore-pattern dist",
