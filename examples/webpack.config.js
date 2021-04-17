@@ -18,7 +18,6 @@ module.exports = (env, argv) => {
 		devtool: isProduction ? false : 'source-map',
 		output: {
 			path: path.resolve(__dirname, './dist'),
-			publicPath: '/dist/',
 			filename: 'scripts/[name].js'
 		},
 		module: {
@@ -53,7 +52,7 @@ module.exports = (env, argv) => {
 			]
 		},
 		resolve: {
-			extensions: ['.js']
+			extensions: ['.js', '.css']
 		},
 		plugins: [
 			new webpack.ProgressPlugin(),

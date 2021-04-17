@@ -1,5 +1,5 @@
 /**
- * Loader template
+ * Poster template
  * @param {Object} options
  * @param {Object} options.posterUrl Poster url
  * @returns {String} Generated HTML

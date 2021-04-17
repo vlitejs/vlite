@@ -19,18 +19,17 @@ export interface interfaceDefaultOptions {
 
 const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
-		autoplay: false,
 		controls: true,
+		autoplay: false,
 		playPause: true,
 		progressBar: true,
 		time: true,
 		volume: true,
-		loop: false,
-		providerParams: {}
+		loop: false
 	},
 	video: {
-		autoplay: false,
 		controls: true,
+		autoplay: false,
 		playPause: true,
 		progressBar: true,
 		time: true,
@@ -38,10 +37,10 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		fullscreen: true,
 		poster: null,
 		bigPlay: true,
-		autoHide: false,
 		playsinline: false,
 		loop: false,
 		muted: false,
+		autoHide: false,
 		providerParams: {}
 	}
 }
@@ -357,7 +356,8 @@ class Vlitejs {
 		if (this.type === 'video') {
 			this.container.removeEventListener('click', this.onClickOnPlayer)
 			this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
-			this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
+			this.autoHideGranted &&
+				this.container.removeEventListener('mousemove', this.onMousemove)
 			window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
 	}

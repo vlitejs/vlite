@@ -202,7 +202,7 @@ module.exports = (env, argv) => {
 			entry: {
 				vlite: './src/vlite/config.js'
 			},
-			library: 'Vlitejs',
+			library: libraryName,
 			isProduction
 		}),
 		...configsProviders,

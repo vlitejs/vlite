@@ -12,9 +12,6 @@
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
 		"module": "amd",
-		"jsx": "react",
-		"jsxFactory": "createElement",
-		"jsxFragmentFactory": "Fragment",
 		"baseUrl": "./src",
 		"paths": {
 			"shared": ["./shared"]

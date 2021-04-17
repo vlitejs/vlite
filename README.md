@@ -50,7 +50,13 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 ### Examples
 
-The project includes several examples of `vLitejs` implementation in the directory `examples` at the root directory. If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
+The project includes several examples of `vLitejs` implementation in the directory `examples` at the root directory. Run the following commands to build the assets for the examples:
+
+```bash
+npm run build && npm run build:example
+```
+
+If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
 
 - [HTML5 video](https://codepen.io/pen/?template=VwPWeyE)
 - [HTML5 audio](https://codepen.io/pen/?template=RwKgrBd)
@@ -301,7 +307,7 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 | `--vlite-controlBarHeight`            | `50px`                                            | Control bar height             |
 | `--vlite-controlBarHorizontalPadding` | `10px`                                            | Control bar horizontal padding |
 | `--vlite-controlBarBackground`        | `linear-gradient(to top, #000 -50%, transparent)` | Control bar background         |
-| `--vlite-controlsColor`               | `#fff`                                            | Controls color                 |
+| `--vlite-controlsColor`               | `#fff\|#000`                                      | Controls color (video\|audio)  |
 | `--vlite-controlsOpacity`             | `0.9`                                             | Controls color                 |
 | `--vlite-controlsIconWidth`           | `28px`                                            | Controls icon width            |
 | `--vlite-controlsIconHeight`          | `28px`                                            | Controls icon height           |

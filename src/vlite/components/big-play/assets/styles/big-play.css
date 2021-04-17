@@ -21,10 +21,10 @@
 			opacity: 1;
 		}
 	}
-}
 
-.v-loading {
-	.v-bigPlay {
-		opacity: 0;
+	&-loading {
+		.v-bigPlay {
+			opacity: 0;
+		}
 	}
 }
