@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vLitejs - Audio</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+		<link rel="stylesheet" href="../../dist/vlite.css" />
+	</head>
+	<body>
+		<audio id="player" class="vlite-js" src="https://yoriiis.github.io/cdn/static/vlitejs/demo-audio-html5.mp3"></audio>
+		<script src="../../dist/vlite.js"></script>
+		<script>
+			const vlite = new Vlitejs('#player', {
+				options: {
+					controls: true,
+					autoplay: false,
+					playPause: true,
+					progressBar: true,
+					time: true,
+					volume: true,
+					loop: false
+				},
+				onReady: (player) => {
+					console.log(player)
+
+					player.on('play', () => console.log('play'))
+					player.on('pause', () => console.log('pause'))
+					player.on('progress', () => console.log('progress'))
+					player.on('timeupdate', () => console.log('timeupdate'))
+					player.on('volumechange', () => console.log('volumechange'))
+					player.on('ended', () => console.log('ended'))
+				}
+			})
+		</script>
+	</body>
+</html>

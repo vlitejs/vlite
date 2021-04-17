@@ -1,0 +1,30 @@
+.v {
+	&-bigPlay {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 70px;
+		height: 70px;
+		transform: translateX(-50%) translateY(-50%);
+		z-index: 2;
+		transition: opacity var(--vlite-transition);
+
+		svg {
+			fill: var(--vlite-controlsColor);
+			transition: opacity var(--vlite-transition);
+			opacity: var(--vlite-controlsOpacity);
+			width: 100%;
+			height: 100%;
+		}
+
+		&:hover svg {
+			opacity: 1;
+		}
+	}
+
+	&-loading {
+		.v-bigPlay {
+			opacity: 0;
+		}
+	}
+}

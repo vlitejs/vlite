@@ -1,11 +1,13 @@
 // Import JS
-import vlitejs from './js/vlite.js'
+import Vlitejs from './assets/scripts/vlite'
 
-// Import CSS
-import './css/reset.css'
-import './css/vars.css'
-import './css/loader.css'
-import './css/controls.css'
-import './css/player.css'
+import './assets/styles/vlite.css'
 
-export default vlitejs
+// import shared components
+import './components/loader/config.js'
+import './components/control-bar/config.js'
+import './components/big-play/config.js'
+import './components/overlay/config.js'
+import './components/poster/config.js'
+
+export default Vlitejs

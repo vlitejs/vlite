@@ -1,0 +1,150 @@
+.v-vlite {
+	--vlite-colorPrimary: #ff7f15;
+	--vlite-transition: 0.25s ease;
+
+	/* Control bar */
+	--vlite-controlBarHeight: 50px;
+	--vlite-controlBarHorizontalPadding: 10px;
+	--vlite-controlBarBackground: linear-gradient(to top, #000 -50%, transparent);
+
+	/* Controls */
+	--vlite-controlsColor: #fff;
+	--vlite-controlsOpacity: 0.9;
+	--vlite-controlsIconWidth: 28px;
+	--vlite-controlsIconHeight: 28px;
+
+	/* Progress bar */
+	--vlite-progressBarHeight: 5px;
+	--vlite-progressBarBackground: rgba(0 0 0 / 25%);
+
+	font-family: -apple-system, blinkmacsystemfont, segoe UI, Helvetica, Arial, sans-serif,
+		Apple Color Emoji, Segoe UI Emoji;
+	position: relative;
+	overflow: hidden;
+
+	&,
+	* {
+		box-sizing: border-box;
+	}
+
+	&.v-audio {
+		--vlite-controlsColor: #000;
+
+		box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+		border-radius: 8px;
+	}
+
+	&.v-video {
+		background-color: #000;
+		height: 0;
+		padding-top: 56.25%;
+	}
+
+	&::-webkit-full-screen {
+		width: 100%;
+		height: 100%;
+	}
+
+	::-moz-full-screen & {
+		width: 100%;
+		height: 100%;
+	}
+
+	&::-moz-full-screen {
+		width: 100%;
+		height: 100%;
+	}
+
+	video::-webkit-media-controls {
+		display: none !important;
+	}
+
+	&.v-fullscreenButton-display {
+		.v-controlBar,
+		.v-bigPlay {
+			position: fixed;
+			z-index: 2147483647;
+		}
+	}
+
+	&.v-paused {
+		.v-controlBar.hidden {
+			opacity: 1;
+		}
+	}
+
+	&.v-playing,
+	&.v-paused:not(.v-firstStart) {
+		.v-poster {
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
+
+	&.v-playing {
+		.v-bigPlay {
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
+
+	iframe.vlite-js {
+		pointer-events: none;
+	}
+
+	.vlite-js,
+	.vlite-js > iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.v {
+	&-controlButton {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 100%;
+		transition: opacity var(--vlite-transition);
+		opacity: var(--vlite-controlsOpacity);
+		padding: 0;
+		-webkit-appearance: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		outline: none;
+		color: inherit;
+		font-size: inherit;
+		font-family: inherit;
+
+		* {
+			pointer-events: none;
+		}
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&.v-controlPressed .v-iconUnpressed,
+		&:not(.v-controlPressed) .v-iconPressed {
+			display: none;
+		}
+
+		&:focus-visible {
+			outline: 2px dashed var(--vlite-colorPrimary);
+			outline-offset: -4px;
+		}
+
+		svg {
+			fill: var(--vlite-controlsColor);
+			width: var(--vlite-controlsIconWidth);
+			height: var(--vlite-controlsIconHeight);
+		}
+	}
+}

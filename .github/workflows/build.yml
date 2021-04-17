@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches:
+    pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.14.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test ESLint
+        run: npm run test:eslint
+
+      - name: Test Stylelint
+        run: npm run test:stylelint
+
+      - name: Test Typescript
+        run: npm run test:type-check
+
+      - name: Test markdown
+        run: npm run test:markdown
+
+      - name: Build
+        run: npm run build
+
+      - name: Build example
+        run: npm run build:example

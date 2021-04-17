@@ -1,68 +1,140 @@
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const { name, version, license, author } = require('./package.json')
 
-module.exports = (env, argv) => {
-	const isProduction = argv.mode === 'production'
+const libraryName = 'Vlitejs'
 
+// Banner for vLitejs assets
+const banner = `@license ${license}
+@name ${name}
+@version ${version}
+@copyright ${new Date().getUTCFullYear()} ${author}`
+
+// Providers list
+const providers = [
+	{
+		entrykey: 'providers/youtube',
+		library: `${libraryName}Youtube`,
+		path: './src/providers/youtube/youtube'
+	},
+	{
+		entrykey: 'providers/vimeo',
+		library: `${libraryName}Vimeo`,
+		path: './src/providers/vimeo/vimeo'
+	}
+]
+
+// Plugins list
+const plugins = [
+	{
+		entrykey: 'plugins/subtitle',
+		library: `${libraryName}Subtitle`,
+		path: './src/plugins/subtitle/config'
+	},
+	{
+		entrykey: 'plugins/pip',
+		library: `${libraryName}Pip`,
+		path: './src/plugins/pip/config'
+	}
+]
+
+/**
+ *
+ * @param {Object} options Generator options
+ * @param {Object} options.entry Webpack entry
+ * @param {Boolean} options.library Webpack library name
+ * @param {Boolean} options.isProduction Webpack production mode
+ * @returns {Object} Webpack configuration object
+ */
+const generator = ({ entry, library = false, isProduction }) => {
+	const output = {
+		path: path.resolve(__dirname, './dist'),
+		publicPath: '/dist/',
+		filename: '[name].js'
+	}
+	if (library) {
+		output.library = {
+			name: library,
+			type: 'umd',
+			export: 'default'
+		}
+	}
 	return {
 		watch: !isProduction,
-		entry: {
-			vlite: './src/vlite/config.js',
-			demo: './src/demo/config.js'
-		},
+		entry,
 		watchOptions: {
 			ignored: /node_modules/
 		},
-		devtool: !isProduction ? 'source-map' : 'none',
-		output: {
-			path: path.resolve(__dirname, './dist'),
-			publicPath: '/dist/',
-			filename: '[name]/js/[name].js',
-			library: 'vlitejs',
-			libraryTarget: 'umd',
-			sourceMapFilename: '[file].map',
-			libraryExport: 'default'
-		},
+		devtool: isProduction ? false : 'source-map',
+		output,
 		module: {
-			rules: [{
-				test: /\.js$/,
-				include: path.resolve(__dirname, './src'),
-				use: [
-					{
-						loader: 'babel-loader'
-					}
-				]
-			}, {
-				test: /\.css$/,
-				include: path.resolve(__dirname, './src'),
-				use: [
-					MiniCssExtractPlugin.loader, {
-						loader: 'css-loader'
-					}, {
-						loader: 'postcss-loader',
-						options: {
-							config: {
-								path: path.resolve(__dirname, './')
+			rules: [
+				{
+					test: /\.js$/,
+					include: path.resolve(__dirname, './src'),
+					use: [
+						{
+							loader: 'babel-loader'
+						}
+					]
+				},
+				{
+					test: /\.ts$/,
+					include: path.resolve(__dirname, './src'),
+					use: [
+						{
+							loader: 'babel-loader'
+						},
+						{
+							loader: 'ts-loader'
+						}
+					]
+				},
+				{
+					test: /\.css$/,
+					include: path.resolve(__dirname, './src'),
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: 'css-loader'
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									config: path.resolve(__dirname, 'postcss.config.js')
+								}
 							}
 						}
+					]
+				},
+				{
+					test: /\.(svg)$/i,
+					include: path.resolve(__dirname, './src/'),
+					type: 'asset/source',
+					generator: {
+						filename: '[name][ext]'
 					}
-				]
-			}, {
-				test: /\.svg$/,
-				loader: 'svg-inline-loader'
-			}]
+				}
+			]
+		},
+		resolve: {
+			extensions: ['.js', '.ts', '.css'],
+			alias: {
+				shared: path.resolve(__dirname, './src/shared')
+			}
 		},
 		plugins: [
-			new ProgressBarPlugin(),
+			new webpack.ProgressPlugin(),
 			new MiniCssExtractPlugin({
-				filename: `[name]/css/[name].css`,
-				chunkFilename: `[name]/css/[name].css`
+				filename: '[name].css',
+				chunkFilename: '[name].css'
 			}),
-			new webpack.optimize.ModuleConcatenationPlugin()
+			new webpack.optimize.ModuleConcatenationPlugin(),
+			new webpack.BannerPlugin(banner)
 		],
 		stats: {
 			assets: true,
@@ -81,26 +153,60 @@ module.exports = (env, argv) => {
 			minimizer: [
 				new TerserPlugin({
 					extractComments: false,
-					cache: true,
 					parallel: true,
-					sourceMap: false,
 					terserOptions: {
-						extractComments: 'all',
 						compress: {
-							drop_console: true
-						},
-						mangle: true
+							// Drop console.log|console.info|console.debug
+							// Keep console.warn|console.error
+							pure_funcs: ['console.log', 'console.info', 'console.debug']
+						}
 					}
 				}),
-				new OptimizeCSSAssetsPlugin({})
+				new CssMinimizerPlugin()
 			],
-			namedModules: true,
+			chunkIds: 'deterministic', // or 'named'
 			removeAvailableModules: true,
 			removeEmptyChunks: true,
 			mergeDuplicateChunks: true,
-			occurrenceOrder: true,
 			providedExports: false,
 			splitChunks: false
 		}
 	}
+}
+
+module.exports = (env, argv) => {
+	const isProduction = argv.mode === 'production'
+	const configs = []
+
+	const configsProviders = providers.map((provider) =>
+		generator({
+			entry: {
+				[provider.entrykey]: provider.path
+			},
+			library: provider.library,
+			isProduction
+		})
+	)
+	const configsPlugins = plugins.map((plugin) =>
+		generator({
+			entry: {
+				[plugin.entrykey]: plugin.path
+			},
+			library: plugin.library,
+			isProduction
+		})
+	)
+
+	configs.push(
+		generator({
+			entry: {
+				vlite: './src/vlite/config.js'
+			},
+			library: libraryName,
+			isProduction
+		}),
+		...configsProviders,
+		...configsPlugins
+	)
+	return configs
 }

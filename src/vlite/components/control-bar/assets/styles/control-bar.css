@@ -1,0 +1,162 @@
+.v {
+	&-controlButtonIcon {
+		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+
+	&-playPauseButton {
+		flex-shrink: 0;
+	}
+
+	&-time {
+		color: var(--vlite-controlsColor);
+		font-size: 14px;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		margin-right: auto;
+	}
+
+	&-progressBar {
+		transition: height var(--vlite-transition), top var(--vlite-transition);
+		z-index: 1;
+		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
+		-webkit-appearance: none;
+		-webkit-tap-highlight-color: transparent;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+		background: none;
+		border: none;
+		cursor: pointer;
+		margin: 0;
+		outline: none;
+		color: inherit;
+		font-size: inherit;
+		font-family: inherit;
+
+		&:focus-visible {
+			outline: 2px dashed var(--vlite-colorPrimary);
+			outline-offset: 2px;
+		}
+
+		&::-webkit-slider-runnable-track {
+			height: var(--vlite-progressBarHeight);
+			border: none;
+			border-radius: var(--vlite-progressBarHeight);
+			background: linear-gradient(
+				to right,
+				var(--vlite-colorPrimary) var(--value, 0),
+				var(--vlite-progressBarBackground) var(--value, 0)
+			);
+		}
+
+		&::-moz-range-track {
+			height: 100%;
+			border: none;
+			border-radius: var(--vlite-progressBarHeight);
+			background: linear-gradient(
+				to right,
+				var(--vlite-colorPrimary) var(--value, 0),
+				var(--vlite-progressBarBackground) var(--value, 0)
+			);
+		}
+
+		&::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			border: none;
+			background: var(--vlite-colorPrimary);
+			margin-top: -3px;
+		}
+
+		&::-moz-range-thumb {
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			border: none;
+			background: var(--vlite-colorPrimary);
+			margin-top: -3px;
+		}
+	}
+
+	&-volumeButton {
+		transition: transform var(--vlite-transition), opacity var(--vlite-transition);
+		flex-shrink: 0;
+
+		&.v-animate {
+			transform: translateY(-3px);
+		}
+	}
+
+	&-controlBar {
+		position: relative;
+		width: 100%;
+		height: var(--vlite-controlBarHeight);
+		padding-top: var(--vlite-progressBarHeight);
+		text-align: right;
+		padding-left: var(--vlite-controlBarHorizontalPadding);
+		padding-right: var(--vlite-controlBarHorizontalPadding);
+		transition: opacity var(--vlite-transition);
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+
+		&:hover {
+			opacity: 1 !important;
+		}
+
+		&.hidden {
+			opacity: 0;
+		}
+	}
+
+	&-audio {
+		.v-progressBar {
+			order: 2;
+			height: 25px;
+		}
+
+		.v-controlBar {
+			padding-top: 0;
+		}
+
+		.v-playPauseButton {
+			order: 1;
+		}
+
+		.v-time {
+			order: 3;
+			padding: 0 8px 0 12px;
+		}
+
+		.v-volumeButton {
+			order: 4;
+		}
+	}
+
+	&-video {
+		.v-progressBar {
+			height: 5px;
+		}
+
+		.v-controlBar {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			background: var(--vlite-controlBarBackground);
+
+			.v-progressBar {
+				position: absolute;
+				top: 0;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+		}
+	}
+}
