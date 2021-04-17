@@ -2,6 +2,8 @@
 
 Supports for Youtube player with the [Youtube player API](https://developers.google.com/youtube/iframe_api_reference).
 
+> The Youtube API is automatically loaded by the provider.
+
 ## Overview
 
 | <!-- -->          | <!-- -->                            |

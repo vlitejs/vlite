@@ -110,8 +110,8 @@ class Vlitejs {
 		this.supportFullScreen = checkSupportFullScreen()
 
 		// Update config from element attributes
-		const domAttributes: Array<string> = ['autoplay', 'playsinline', 'muted', 'loop']
-		domAttributes.forEach((item: string) => {
+		const htmlAttributes: Array<string> = ['autoplay', 'playsinline', 'muted', 'loop']
+		htmlAttributes.forEach((item: string) => {
 			if (this.media.hasAttribute(item)) {
 				// @ts-ignore
 				options[item] = true
@@ -166,7 +166,7 @@ class Vlitejs {
 	}
 
 	/**
-	 * Build the DOM of the player
+	 * Build the HTML of the player
 	 */
 	renderLayout() {
 		const template = `

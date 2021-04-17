@@ -1,13 +1,13 @@
 {
 	"name": "vlitejs",
 	"version": "4.0.0",
-	"description": "vLitejs is a fast and lightweight Javascript library to customize and skin video and audio player with a minimalist theme (HTML5, Youtube, Vimeo)",
+	"description": "vLitejs is a fast and lightweight Javascript library for customizing video and audio player in Javascript with a minimalist theme (HTML5, Youtube, Vimeo)",
 	"keywords": [
+		"video",
+		"audio",
 		"html5",
 		"youtube",
 		"vimeo",
-		"video",
-		"audio",
 		"player",
 		"youtube api",
 		"vimeo api"
@@ -19,9 +19,7 @@
 	"author": "Yoriiis aka Joris DANIEL",
 	"files": [
 		"dist",
-		"!dist/**/*.map",
-		"!dist/demo",
-		"!dist/examples"
+		"!dist/**/*.map"
 	],
 	"main": "dist/vlite.js",
 	"scripts": {

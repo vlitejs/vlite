@@ -11,7 +11,7 @@ Each plugin can be loaded on demand with the API.
 | [Subtitle](./subtitle/README.md)      | Supports for multiple caption tracks (VTT) |
 | [Picture-in-Picture](./pip/README.md) | Supports for picture-in-picture mode       |
 
-## Create a plugin
+## Create a custom plugin
 
 The Plugin API allows you to create other plugins than those referenced by `vLitejs`.
 
@@ -39,7 +39,7 @@ Here are some points to help you in your development:
 | Arguments             |      Type       | Description                                         |
 | --------------------- | :-------------: | --------------------------------------------------- |
 | `player.media`        |  `HTMLElement`  | Media element                                       |
-| `player.elements`     |    `Objects`    | Player DOM elements                                 |
+| `player.elements`     |    `Objects`    | Player HTML elements                                |
 | `player.options`      |    `Object`     | [Player options](../../README.md#Options)           |
 | `player.isFullScreen` |    `Boolean`    | Is the player in fullscreen mode                    |
 | `player.isMuted`      |    `Boolean`    | Is the player muted                                 |
@@ -54,7 +54,7 @@ Here are some points to help you in your development:
 
 Each plugin must declare with which provider it is compatible and for which type of media (`video|audio`) with the public instance field.
 
-Example of the subtitle plugin only compatible with the HTML5 video:
+Example of the subtitle plugin compatible with the HTML5 video:
 
 ```js
 class Subtitle {

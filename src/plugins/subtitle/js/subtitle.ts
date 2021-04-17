@@ -83,7 +83,7 @@ export default class Subtitle {
 	}
 
 	/**
-	 * Render the plugin DOM
+	 * Render the plugin HTML
 	 */
 	render() {
 		this.player.elements.container.insertAdjacentHTML(

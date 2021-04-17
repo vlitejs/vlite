@@ -11,7 +11,7 @@ Each provider can be loaded on demand with the API.
 | [Youtube](./youtube/README.md) | Support for Youtube player API |
 | [Vimeo](./vimeo/REDME.md)      | Support for Vimeo player SDK   |
 
-## Create a provider
+## Create a custom provider
 
 The Provider API allows you to create other providers than those referenced by `vLitejs`.
 

@@ -52,7 +52,7 @@ export default class PiP {
 	}
 
 	/**
-	 * Render the plugin DOM
+	 * Render the plugin HTML
 	 */
 	render() {
 		const template = `<button class="v-pipButton v-controlButton">${svgPip}</button>`

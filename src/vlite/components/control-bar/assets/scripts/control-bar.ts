@@ -37,7 +37,7 @@ export default class ControlBar {
 	}
 
 	/**
-	 * Cache control bar DOM elements
+	 * Cache control bar HTML elements
 	 */
 	cacheElements() {
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
@@ -73,7 +73,10 @@ export default class ControlBar {
 	onReady() {
 		this.player.getDuration().then((duration: number) => {
 			if (this.player.elements.progressBar) {
-				this.player.elements.progressBar.setAttribute('aria-valuemax', `${Math.round(duration)}`)
+				this.player.elements.progressBar.setAttribute(
+					'aria-valuemax',
+					`${Math.round(duration)}`
+				)
 			}
 			if (this.player.elements.duration) {
 				this.player.elements.duration.innerHTML = formatVideoTime(duration)
@@ -90,7 +93,10 @@ export default class ControlBar {
 
 			if (this.player.isTouch) {
 				this.touchEvents.forEach((type) => {
-					this.player.elements.progressBar.addEventListener(type, this.onTouchEventProgressBar)
+					this.player.elements.progressBar.addEventListener(
+						type,
+						this.onTouchEventProgressBar
+					)
 				})
 			}
 		}
@@ -109,7 +115,8 @@ export default class ControlBar {
 		const target = e.target as HTMLInputElement
 		const max = parseFloat(target.getAttribute('max') || '100')
 		const clientRect = target.getBoundingClientRect()
-		const percentage = ((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
+		const percentage =
+			((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
 		target.value = `${(percentage * 100) / max}`
 		target.dispatchEvent(new Event('input'))
 	}
@@ -215,7 +222,10 @@ export default class ControlBar {
 
 			if (this.player.isTouch) {
 				this.touchEvents.forEach((type) => {
-					this.player.elements.progressBar.removeEventListener(type, this.onTouchEventProgressBar)
+					this.player.elements.progressBar.removeEventListener(
+						type,
+						this.onTouchEventProgressBar
+					)
 				})
 			}
 		}

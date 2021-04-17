@@ -244,7 +244,10 @@ export default class Player {
 						const width = (currentTime * 100) / duration
 						this.elements.progressBar.value = `${width}`
 						this.elements.progressBar.style.setProperty('--value', `${width}%`)
-						this.elements.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
+						this.elements.progressBar.setAttribute(
+							'aria-valuenow',
+							`${Math.round(seconds)}`
+						)
 					}
 
 					if (this.elements.currentTime) {
@@ -468,7 +471,7 @@ export default class Player {
 
 	/**
 	 * Destroy the player
-	 * Remove event listeners, player instance and DOM
+	 * Remove event listeners, player instance and HTML
 	 */
 	destroy() {
 		this.controlBar && this.controlBar.destroy()
