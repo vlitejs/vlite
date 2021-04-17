@@ -86,7 +86,6 @@ export default class Subtitle {
 		const insertPosition = this.getInsertPosition()
 		const targetElement = this.player.elements.container.querySelector(insertPosition.selector)
 		if (controlBar && targetElement) {
-			// @ts-ignore
 			targetElement.insertAdjacentHTML(insertPosition.position as string, this.getTemplate())
 		}
 	}
@@ -195,25 +194,28 @@ export default class Subtitle {
 		const trackActive = this.subtitlesList.querySelector('.v-active')
 		const language = target.getAttribute('data-language')
 
-		if (!isActive && this.subtitleButton.classList.contains('v-controlPressed')) {
-			this.subtitleButton.classList.remove('v-controlPressed')
-		}
+		if (!isActive) {
+			if (this.subtitleButton.classList.contains('v-controlPressed')) {
+				this.subtitleButton.classList.remove('v-controlPressed')
+			}
 
-		if (!isActive && language && target.nodeName.toLowerCase() === 'button') {
-			this.subtitlesList.classList.remove('v-active')
-			trackActive && trackActive.classList.remove('v-active')
-			target.classList.add('v-active')
+			if (language && target.nodeName.toLowerCase() === 'button') {
+				trackActive && trackActive.classList.remove('v-active')
+				target.classList.add('v-active')
 
-			if (language !== 'off') {
-				this.activeTrack = this.getTrackByLanguage(language)
-				this.activeTrack && this.updateCues()
-			} else {
-				this.subtitleButton.classList.add('v-controlPressed')
-				this.captions.classList.remove('v-active')
-				this.captions.innerHTML = ''
-				this.activeTrack && this.updateCues({ isDisabled: true })
+				if (language !== 'off') {
+					this.activeTrack = this.getTrackByLanguage(language)
+					this.activeTrack && this.updateCues()
+				} else {
+					this.subtitleButton.classList.add('v-controlPressed')
+					this.captions.classList.remove('v-active')
+					this.captions.innerHTML = ''
+					this.activeTrack && this.updateCues({ isDisabled: true })
+				}
 			}
 		}
+
+		this.subtitlesList.classList.remove('v-active')
 	}
 
 	/**
