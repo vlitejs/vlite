@@ -4,34 +4,35 @@
 
 ### ⚠ Breaking changes
 
-- Rename `vlitejs` to `Vlitejs` to make sure the constructor name starts with a capital
-- Remove `nativeControlsForTouch`
-- Remove `data-options` DOM attributes in favor of options from the JS constructor
+- Rename `window.vlitejs` to `window.Vlitejs` to make sure the constructor name starts with a capital
+- Remove `nativeControlsForTouch` option
+- Remove `data-options` HTML attributes in favor of options from the JS constructor
+- Supports the latest 2 browsers versions with `.browserslistrc`
 
 ### New features
 
 - New design and new icons
 - Add Vimeo provider
-- Add Audio provider
+- Add Audio HTML5 provider
 - Add subtitle plugin
 - Add Picture-in-Picture plugin
-- Add a provider API
-- Add a plugin API
-- Add `sample-provider.js` and `sample-plugin.js`
-- Adds custom events fired on media actions (`play`, `pause`, etc.)
+- Add a provider API to allow extension of current providers
+- Add a plugin API to allow extension of current plugins
+- Add `sample-provider.js` and `sample-plugin.js` for guidelines
+- Add multiple native `Event` fired on media actions (`play`, `pause`, etc.)
 - Add A11Y compatibility (`<button>`, `<input type="range">`, `aria-*`, `:focus-visible`)
 - Add the volume up/down shortcuts
 - Update DOM attributes from options and vice versa (`autoplay`, `playsinline`, `muted`, `loop`)
-- Add Typescript
 
 ### Updates
 
+- Convert to Typescript
 - Replace Travis by GitHub Action
 - Update to webpack v5
 - Update Babel config and `.browserslistrc`
 - Move `formatVideoTime`, `checkSupportFullScreen`, `isTouch` to utils
 - Split code into components (`loader`, `overlay`, `big-play`, `poster`, `control-bar`)
-- Remove `MkDocs` and `docs` directory, all docs are available in README files at the root directory
+- Remove `MkDocs` and `docs` directory, all docs are available in README files in the repository
 
 ### Fixes
 
