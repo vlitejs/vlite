@@ -1,6 +1,10 @@
 import svgPip from 'shared/assets/svgs/pip.svg'
 import { Options, pluginParameter } from 'shared/assets/interfaces/interfaces'
 
+/**
+ * Vlitejs Picture-in-Picture plugin
+ * @module Vlitejs/plugins/pip
+ */
 export default class PiP {
 	player: any
 	pipButton!: HTMLElement
@@ -28,7 +32,9 @@ export default class PiP {
 		if (this.isPipApiAvailable() && this.player.options.controls) {
 			this.render()
 
-			this.pipButton = this.player.elements.container.querySelector('.v-pipButton') as HTMLElement
+			this.pipButton = this.player.elements.container.querySelector(
+				'.v-pipButton'
+			) as HTMLElement
 
 			this.addEvents()
 		}

@@ -8,6 +8,10 @@ export interface InsertPosition {
 	position: string
 }
 
+/**
+ * Vlitejs Subtitle plugin
+ * @module Vlitejs/plugins/subtitle
+ */
 export default class Subtitle {
 	player: any
 	tracks: Array<TextTrack>
@@ -42,7 +46,9 @@ export default class Subtitle {
 			this.hideTracks()
 			this.render()
 
-			this.captions = this.player.elements.container.querySelector('.v-captions') as HTMLElement
+			this.captions = this.player.elements.container.querySelector(
+				'.v-captions'
+			) as HTMLElement
 			this.subtitleButton = this.player.elements.container.querySelector(
 				'.v-subtitleButton'
 			) as HTMLElement
@@ -80,7 +86,10 @@ export default class Subtitle {
 	 * Render the plugin DOM
 	 */
 	render() {
-		this.player.elements.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
+		this.player.elements.container.insertAdjacentHTML(
+			'beforeend',
+			'<div class="v-captions"></div>'
+		)
 
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const insertPosition = this.getInsertPosition()

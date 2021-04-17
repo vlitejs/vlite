@@ -1,3 +1,7 @@
+/**
+ * Vlitejs Sample plugin
+ * @module Vlitejs/plugins/sample
+ */
 export default class SamplePlugin {
 	/**
 	 * @constructor
