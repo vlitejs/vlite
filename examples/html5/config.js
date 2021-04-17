@@ -8,7 +8,7 @@ Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
 
 /* eslint-disable no-unused-vars */
-const vlite = new Vlitejs('#player-html5', {
+const vlite = new Vlitejs('#player', {
 	options: {
 		autoplay: false,
 		controls: true,
@@ -42,5 +42,4 @@ const vlite = new Vlitejs('#player-html5', {
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 	}
 })
-window.player = vlite
 /* eslint-enable no-unused-vars */

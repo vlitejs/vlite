@@ -1,6 +1,6 @@
 # vLitejs
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![Gitter Chat](https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge)](https://gitter.im/vlitejs/vlitejs)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs) [![Gitter Chat](https://img.shields.io/gitter/room/yoriiis/vlitejs?color=%2345cba1&style=for-the-badge)](https://gitter.im/vlitejs/vlitejs)
 
 <p align="center">
     <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
@@ -71,12 +71,14 @@ yarn add vlitejs  --dev
 
 ### CDN
 
-You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`
+You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`.
 
 ```html
 <link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
-<script src="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.js" crossorigin></script>
+<script src="https://cdn.jsdelivr.net/npm/vlitejs@4" crossorigin></script>
 ```
+
+> You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
 
 ## How it works
 

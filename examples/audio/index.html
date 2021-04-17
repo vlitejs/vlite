@@ -7,10 +7,10 @@
 		<link rel="stylesheet" href="../../dist/vlite.css" />
 	</head>
 	<body>
-		<audio id="player-html5" class="vlite-js" src="https://yoriiis.github.io/cdn/static/vlitejs/demo-audio-html5.mp3"></audio>
+		<audio id="player" class="vlite-js" src="https://yoriiis.github.io/cdn/static/vlitejs/demo-audio-html5.mp3"></audio>
 		<script src="../../dist/vlite.js"></script>
 		<script>
-			const vlite = new Vlitejs('#player-html5', {
+			const vlite = new Vlitejs('#player', {
 				options: {
 					autoplay: false,
 					controls: true,
@@ -30,7 +30,6 @@
 					player.on('timeupdate', () => console.log('timeupdate'))
 				}
 			})
-			window.player = vlite
 		</script>
 	</body>
 </html>

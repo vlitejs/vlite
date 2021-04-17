@@ -5,7 +5,7 @@ import VlitejsYoutube from '../../dist/providers/youtube.js'
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
 
 /* eslint-disable no-unused-vars */
-const vlite = new Vlitejs('#player-yt', {
+const vlite = new Vlitejs('#player', {
 	options: {
 		autoplay: false,
 		controls: true,
@@ -19,7 +19,8 @@ const vlite = new Vlitejs('#player-yt', {
 		autoHide: true,
 		playsinline: true,
 		loop: false,
-		muted: false
+		muted: false,
+		providerParams: {}
 	},
 	provider: 'youtube',
 	onReady: function (player) {
@@ -39,5 +40,4 @@ const vlite = new Vlitejs('#player-yt', {
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 	}
 })
-window.player = vlite
 /* eslint-enable no-unused-vars */
