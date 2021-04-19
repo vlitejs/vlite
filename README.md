@@ -56,12 +56,12 @@ The project includes several examples of `vLitejs` implementation in the directo
 npm run build && npm run build:example
 ```
 
-If you're interested in playing around with `vLitejs`, you can use the online code playground on CodePen:
+If you're interested in playing around with `vLitejs`, you can use the online code playground on JSFiddle:
 
-- [HTML5 video](https://codepen.io/pen/?template=VwPWeyE)
-- [HTML5 audio](https://codepen.io/pen/?template=RwKgrBd)
-- [Youtube](https://codepen.io/pen/?template=zYNzrJp)
-- [Vimeo](https://codepen.io/pen/?template=zYNzrmp)
+- [HTML5 video](https://jsfiddle.net/yoriiis/42v8m3cp)
+- [HTML5 audio](https://jsfiddle.net/yoriiis/19pnqkge)
+- [Youtube](https://jsfiddle.net/yoriiis/sykde7q8)
+- [Vimeo](https://jsfiddle.net/yoriiis/dazey3w5)
 
 ## Installation
 
