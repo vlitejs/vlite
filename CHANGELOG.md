@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.0.1
+
+### Fixes
+
+- Fixed the default parameters and fix the selector `HTMLDivElement` [#42](https://github.com/yoriiis/vlitejs/issues/42)
+
 ## 4.0.0
 
 ### ⚠ Breaking changes
