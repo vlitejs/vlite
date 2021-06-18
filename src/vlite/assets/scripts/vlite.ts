@@ -51,7 +51,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
  */
 class Vlitejs {
 	Player: any
-	media: HTMLVideoElement | HTMLAudioElement
+	media: HTMLVideoElement | HTMLAudioElement | HTMLDivElement
 	provider: string
 	onReady: Function | Boolean
 	delayAutoHide: number
@@ -94,7 +94,11 @@ class Vlitejs {
 		if (typeof selector === 'string') {
 			// @ts-ignore: Object is possibly 'null'.
 			this.media = document.querySelector(selector)
-		} else if (selector instanceof HTMLVideoElement || selector instanceof HTMLAudioElement) {
+		} else if (
+			selector instanceof HTMLVideoElement ||
+			selector instanceof HTMLAudioElement ||
+			selector instanceof HTMLDivElement
+		) {
 			this.media = selector
 		} else {
 			throw new TypeError('vlitejs :: The element or selector supplied is not valid.')
