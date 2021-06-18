@@ -53,7 +53,7 @@ class Vlitejs {
 	Player: any
 	media: HTMLVideoElement | HTMLAudioElement
 	provider: string
-	onReady: Function
+	onReady: Function | Boolean
 	delayAutoHide: number
 	type: string
 	supportFullScreen: FullScreenSupport
@@ -79,16 +79,16 @@ class Vlitejs {
 	constructor(
 		selector: string | HTMLElement,
 		{
-			options,
+			options = {},
 			provider = 'html5',
 			plugins = [],
-			onReady
+			onReady = false
 		}: {
-			options: Options
-			provider: string
-			plugins: Array<string>
-			onReady: Function
-		}
+			options?: Options | Object
+			provider?: string
+			plugins?: Array<string>
+			onReady?: Function | Boolean
+		} = {}
 	) {
 		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
@@ -121,7 +121,7 @@ class Vlitejs {
 			}
 		})
 
-		this.options = { ...DEFAULT_OPTIONS[this.type], ...options }
+		this.options = { ...DEFAULT_OPTIONS[this.type], ...options } as Options
 		this.autoHideGranted =
 			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
 
