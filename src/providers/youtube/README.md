@@ -32,8 +32,7 @@ import VlitejsYoutube from 'vlitejs/dist/providers/youtube';
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube);
 
-new Vlitejs({
-  selector: '#player',
+new Vlitejs('#player', {
   provider: 'youtube'
 });
 ```

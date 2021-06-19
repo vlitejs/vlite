@@ -32,8 +32,7 @@ import VlitejsVimeo from 'vlitejs/dist/providers/vimeo';
 
 Vlitejs.registerProvider('vimeo', VlitejsVimeo);
 
-new Vlitejs({
-  selector: '#player',
+new Vlitejs('#player', {
   provider: 'vimeo'
 });
 ```
