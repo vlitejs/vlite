@@ -182,6 +182,8 @@ export default class Player {
 	 * On the player is ready
 	 */
 	onReady() {
+		this.options.muted && this.mute()
+
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the media element is muted
