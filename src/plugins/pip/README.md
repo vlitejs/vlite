@@ -35,8 +35,7 @@ import VlitejsPip from 'vlitejs/dist/plugins/pip';
 
 Vlitejs.registerPlugin('pip', VlitejsPip);
 
-new Vlitejs({
-  selector: '#player',
+new Vlitejs('#player', {
   plugins: ['pip']
 });
 ```

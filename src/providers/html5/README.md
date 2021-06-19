@@ -28,9 +28,7 @@ The provider is already inludes in `vLitejs`.
 import 'vlitejs/dist/vlite.css';
 import Vlitejs from 'vlitejs';
 
-new Vlitejs({
-  selector: '#player'
-});
+new Vlitejs('#player');
 ```
 
 > The `provider` parameter on the `Vlitejs` constructor is `html5` by default.

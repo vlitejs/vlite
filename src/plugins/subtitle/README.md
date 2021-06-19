@@ -40,8 +40,7 @@ import VlitejsSubtitle from 'vlitejs/dist/plugins/subtitle';
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
 
-new Vlitejs({
-  selector: '#player',
+new Vlitejs('#player', {
   plugins: ['subtitle']
 });
 ```
