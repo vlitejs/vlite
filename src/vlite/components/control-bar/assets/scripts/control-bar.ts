@@ -129,6 +129,9 @@ export default class ControlBar {
 		const target = e.target as HTMLInputElement
 		target.style.setProperty('--value', `${target.value}%`)
 
+		// Without the poster, the play is not triggered
+		this.player.elements.container.classList.contains('v-firstStart') && this.player.play()
+
 		this.player.getDuration().then((duration: number) => {
 			this.player.seekTo((parseFloat(target.value) * duration) / 100)
 		})
