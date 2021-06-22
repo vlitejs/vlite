@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 4.0.2
+
+### Fixes
+
+- Fix README issues [#42](https://github.com/yoriiis/vlitejs/issues/42)
+- Fix mute option not transferred to the player [#44](https://github.com/yoriiis/vlitejs/issues/44)
+
 ## 4.0.1
 
 ### Fixes
