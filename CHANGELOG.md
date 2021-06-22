@@ -6,6 +6,7 @@
 
 - Fix README issues [#42](https://github.com/yoriiis/vlitejs/issues/42)
 - Fix mute option not transferred to the player [#44](https://github.com/yoriiis/vlitejs/issues/44)
+- Fix play not triggered without the poster [#46](https://github.com/yoriiis/vlitejs/issues/46)
 
 ## 4.0.1
 
