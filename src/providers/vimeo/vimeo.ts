@@ -5,6 +5,7 @@ declare global {
 		Vlitejs: {
 			Player: any
 		}
+		VlitejsVimeoQueue: Array<any>
 		Vimeo: {
 			Player: any
 		}
@@ -18,7 +19,7 @@ declare global {
  */
 export default function (Player: any) {
 	const providerObjectName = 'Vimeo'
-	let vimeoQueue: Array<any> = []
+	window.VlitejsVimeoQueue = window.VlitejsVimeoQueue || []
 
 	// Load the player API if it is not available
 	if (typeof window[providerObjectName] === 'undefined') {
@@ -28,13 +29,13 @@ export default function (Player: any) {
 		script.src = 'https://player.vimeo.com/api/player.js'
 		script.onload = () => {
 			// Run the queue when the provider API is ready
-			vimeoQueue.forEach((itemClass: any) => {
+			window.VlitejsVimeoQueue.forEach((itemClass: any) => {
 				itemClass.initVimeoPlayer().then(() => {
 					itemClass.addSpecificEvents()
 					itemClass.onReady()
 				})
 			})
-			vimeoQueue = []
+			window.VlitejsVimeoQueue = []
 		}
 		document.getElementsByTagName('body')[0].appendChild(script)
 	}
@@ -88,7 +89,7 @@ export default function (Player: any) {
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initVimeoPlayer().then(resolve)
 				} else {
-					vimeoQueue.push(this)
+					window.VlitejsVimeoQueue.push(this)
 				}
 			})
 		}
