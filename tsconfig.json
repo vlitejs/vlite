@@ -1,14 +1,14 @@
 {
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"outDir": "./lib",
+		"outDir": "./dist",
 		"allowJs": true,
 		"checkJs": false,
 		"target": "es2017",
 		"lib": ["es2017", "dom"],
 		"strict": true,
 		"esModuleInterop": true,
-		"declaration": false,
+		"declaration": true,
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
 		"module": "amd",

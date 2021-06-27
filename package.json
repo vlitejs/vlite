@@ -22,6 +22,7 @@
 		"!dist/**/*.map"
 	],
 	"main": "dist/vlite.js",
+	"types": "dist/vlite/assets/scripts/vlite.d.ts",
 	"scripts": {
 		"build": "rm -rf ./dist/ && webpack --mode=production",
 		"build:example": "rm -rf ./examples/dist/ && webpack --mode=production --config=./examples/webpack.config.js",
