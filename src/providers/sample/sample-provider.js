@@ -4,7 +4,7 @@
  * @returns {Class} Provider class extended from vLitejs Player
  */
 export default function (Player: any) {
-	let providerQueue = []
+	window.VlitejsProviderQueue = window.VlitejsProviderQueue || []
 	const providerObjectName = 'Sample'
 
 	// Load the player API/SDK if it is not available
@@ -15,10 +15,10 @@ export default function (Player: any) {
 		script.src = 'PROVIDER_API_URL'
 		script.onload = () => {
 			// Run the queue when the provider API is ready
-			providerQueue.forEach((itemClass) => {
+			window.VlitejsProviderQueue.forEach((itemClass) => {
 				itemClass.initPlayer().then(() => itemClass.onReady())
 			})
-			providerQueue = []
+			window.VlitejsProviderQueue = []
 		}
 		document.getElementsByTagName('body')[0].appendChild(script)
 	}
@@ -46,7 +46,7 @@ export default function (Player: any) {
 					this.initPlayer().then(resolve)
 				} else {
 					// Push the instance to the queue to initialize it later
-					providerQueue.push(this)
+					window.VlitejsProviderQueue.push(this)
 				}
 			})
 		}

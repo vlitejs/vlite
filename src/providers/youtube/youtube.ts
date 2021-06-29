@@ -5,6 +5,7 @@ declare global {
 		Vlitejs: {
 			Player: any
 		}
+		VlitejsYoutubeQueue: Array<any>
 		YT: {
 			Player: any
 			PlayerState: {
@@ -26,7 +27,7 @@ declare global {
  */
 export default function (Player: any) {
 	const providerObjectName = 'YT'
-	let youtubeQueue: Array<any> = []
+	window.VlitejsYoutubeQueue = window.VlitejsYoutubeQueue || []
 
 	// Load the player API if it is not available
 	if (typeof window[providerObjectName] === 'undefined') {
@@ -37,12 +38,12 @@ export default function (Player: any) {
 
 		// Run the queue when the provider API is ready
 		window.onYouTubeIframeAPIReady = () => {
-			youtubeQueue.forEach((itemClass: any) => {
+			window.VlitejsYoutubeQueue.forEach((itemClass: any) => {
 				itemClass.initYoutubePlayer().then(() => {
 					itemClass.onReady()
 				})
 			})
-			youtubeQueue = []
+			window.VlitejsYoutubeQueue = []
 		}
 		document.getElementsByTagName('body')[0].appendChild(script)
 	}
@@ -88,7 +89,7 @@ export default function (Player: any) {
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initYoutubePlayer().then(resolve)
 				} else {
-					youtubeQueue.push(this)
+					window.VlitejsYoutubeQueue.push(this)
 				}
 			})
 		}
@@ -128,7 +129,8 @@ export default function (Player: any) {
 
 				case window.YT.PlayerState.PLAYING:
 					super.loading(false)
-					this.options.controls && window.requestAnimationFrame(this.onRafPlaying.bind(this))
+					this.options.controls &&
+						window.requestAnimationFrame(this.onRafPlaying.bind(this))
 					break
 
 				case window.YT.PlayerState.BUFFERING:
