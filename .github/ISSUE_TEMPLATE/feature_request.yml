@@ -5,8 +5,8 @@ body:
   - type: input
     attributes:
       label: If the feature request is for a plugin or provider, specify it here.
-      description: The name of the plugin or theme that you would like us to improve.
-      placeholder: e.g. Git plugin, Agnoster theme
+      description: The name of the plugin or provider that you would like us to improve.
+      placeholder: e.g. Subtitle plugin, Youtube provider
   - type: textarea
     attributes:
       label: If the feature solves a problem you have, specify it here.
