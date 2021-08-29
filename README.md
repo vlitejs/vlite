@@ -37,6 +37,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - **Fullscreen** - Supports native fullscreen API.
 - [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
+- [**Streaming**](https://jsfiddle.net/yoriiis/63hkza8n) - Support HLS.js streaming playback.
 - [**Events**](#Events) - Standardized events for all web browsers, providers and plugins.
 - **Autoload API** - Youtube and Vimeo API are automatically loaded by their provider.
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
@@ -59,6 +60,7 @@ npm run build && npm run build:example
 If you're interested in playing around with `vLitejs`, you can use the online code playground on JSFiddle:
 
 - [HTML5 video](https://jsfiddle.net/yoriiis/42v8m3cp)
+- [HTML5 video HLS.js](https://jsfiddle.net/yoriiis/63hkza8n)
 - [HTML5 audio](https://jsfiddle.net/yoriiis/19pnqkge)
 - [Youtube](https://jsfiddle.net/yoriiis/sykde7q8)
 - [Vimeo](https://jsfiddle.net/yoriiis/dazey3w5)
