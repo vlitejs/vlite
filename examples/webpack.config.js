@@ -10,6 +10,7 @@ module.exports = (env, argv) => {
 		watch: !isProduction,
 		entry: {
 			html5: `${path.resolve(__dirname, './html5/config.js')}`,
+			'html5-hls': `${path.resolve(__dirname, './html5-hls/config.js')}`,
 			youtube: `${path.resolve(__dirname, './youtube/config.js')}`
 		},
 		watchOptions: {
