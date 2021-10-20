@@ -234,6 +234,12 @@ class Vlitejs {
 	 * @param {KeyboardEvent} e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
+		// Prevent Keyboard Events for specific HTML tags
+		const disallowedTargetTags = ['input', 'textarea'];
+		if (disallowedTargetTags.indexOf((e.target as Element).tagName.toLowerCase()) > -1) {
+			return;
+		}
+
 		// Stop and start the auto hide timer on selected key code
 		const validKeyCode = [9, 32, 37, 39]
 		if (this.autoHideGranted && validKeyCode.includes(e.keyCode)) {
