@@ -234,10 +234,16 @@ class Vlitejs {
 	 * @param {KeyboardEvent} e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
-		// Prevent Keyboard Events for specific HTML tags
-		const disallowedTargetTags = ['input', 'textarea'];
-		if (disallowedTargetTags.indexOf((e.target as Element).tagName.toLowerCase()) > -1) {
-			return;
+		const target = e.target as HTMLElement
+
+		// Prevent KeyboardEvents for specific HTML tags
+		const formTags = ['input', 'textarea', 'select']
+		if (
+			formTags.includes(target.nodeName.toLowerCase()) ||
+			target.matches('[contenteditable]') ||
+			(target as any).msMatchesSelector('[contenteditable]')
+		) {
+			return
 		}
 
 		// Stop and start the auto hide timer on selected key code
