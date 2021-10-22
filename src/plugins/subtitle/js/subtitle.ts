@@ -19,6 +19,7 @@ export default class Subtitle {
 	captions!: HTMLElement
 	subtitleButton!: HTMLElement
 	subtitlesList!: HTMLElement
+	subtitlesListCssTransitionDuration: number
 
 	providers = ['html5']
 	types = ['video']
@@ -31,6 +32,7 @@ export default class Subtitle {
 	constructor({ player }: pluginParameter) {
 		this.player = player
 		this.tracks = Array.from(this.player.media.textTracks)
+		this.subtitlesListCssTransitionDuration = 0
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
 		this.onClickOnSubtitlesList = this.onClickOnSubtitlesList.bind(this)
@@ -55,6 +57,8 @@ export default class Subtitle {
 			this.subtitlesList = this.player.elements.container.querySelector(
 				'.v-subtitlesList'
 			) as HTMLElement
+			this.subtitlesListCssTransitionDuration =
+				parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
 
 			this.addEvents()
 		}
@@ -107,7 +111,16 @@ export default class Subtitle {
 			const button = this.subtitlesList.querySelector(
 				`[data-language="${this.activeTrack.language}"]`
 			)
-			button && button.dispatchEvent(new Event('click', { bubbles: true }))
+			if (button) {
+				button.dispatchEvent(
+					new window.CustomEvent('click', {
+						bubbles: true,
+						detail: {
+							triggerPlayerFocus: false
+						}
+					})
+				)
+			}
 		}
 	}
 
@@ -188,20 +201,27 @@ export default class Subtitle {
 	 */
 	onClickOnSubtitleButton(e: Event) {
 		e.preventDefault()
+
 		this.subtitlesList.classList.toggle('v-active')
+
+		const firstItem = this.subtitlesList.querySelector('.v-trackButton') as HTMLElement
+		if (this.subtitlesList.classList.contains('v-active')) {
+			setTimeout(() => firstItem.focus(), this.subtitlesListCssTransitionDuration)
+		}
 	}
 
 	/**
 	 * On click on the subtitle list
 	 * @param {Event} e Event data
 	 */
-	onClickOnSubtitlesList(e: Event) {
+	onClickOnSubtitlesList(e: Event | CustomEvent) {
 		e.preventDefault()
 
 		const target = e.target as HTMLElement
 		const isActive = target.classList.contains('v-active')
 		const trackActive = this.subtitlesList.querySelector('.v-active')
 		const language = target.getAttribute('data-language')
+		const triggerPlayerFocus = (<CustomEvent>e).detail.triggerPlayerFocus ?? true
 
 		if (!isActive) {
 			if (this.subtitleButton.classList.contains('v-controlPressed')) {
@@ -221,6 +241,8 @@ export default class Subtitle {
 					this.captions.innerHTML = ''
 					this.activeTrack && this.updateCues({ isDisabled: true })
 				}
+
+				triggerPlayerFocus && this.player.elements.container.focus()
 			}
 		}
 
