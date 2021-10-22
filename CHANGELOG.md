@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.0.3
+
+### Fixes
+
+- Fix conflicts between native keyboard shortcuts and HTML form elements [#57](https://github.com/yoriiis/vlitejs/issues/57)
+
 ## 4.0.2
 
 ### Fixes
