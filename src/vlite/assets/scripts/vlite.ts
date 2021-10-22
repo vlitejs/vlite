@@ -240,8 +240,7 @@ class Vlitejs {
 		const formTags = ['input', 'textarea', 'select']
 		if (
 			formTags.includes(target.nodeName.toLowerCase()) ||
-			target.matches('[contenteditable]') ||
-			(target as any).msMatchesSelector('[contenteditable]')
+			target.matches('[contenteditable]')
 		) {
 			return
 		}
