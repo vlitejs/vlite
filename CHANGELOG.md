@@ -11,7 +11,7 @@ Optimize accessibility ([#58](https://github.com/yoriiis/vlitejs/pull/58))
 - Add focus on first subtitle button when the subtitle menu is opened
 - Remove keydown restriction on specific tags ([#57](https://github.com/yoriiis/vlitejs/pull/57))
 - Limit keydown actions when the player or children's player has the focus
-- Refacto `onKeyDown`function by categories
+- Refacto `onKeyDown` function by categories
 - Replace `querySelector` by cached elements
 - Refacto subtitle click event and use `validateTarget` for event delegation
 
