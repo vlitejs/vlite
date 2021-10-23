@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 4.0.4
+
+Optimize accessibility ([#58](https://github.com/yoriiis/vlitejs/pull/58))
+
+### Updates
+
+- Move keydown event to the player element instead of document
+- Player has the focus after the big play button click and after the subtitle button (inside the list) click
+- Add focus on first subtitle button when the subtitle menu is opened
+- Remove keydown restriction on specific tags ([#57](https://github.com/yoriiis/vlitejs/pull/57))
+- Limit keydown actions when the player or children's player has the focus
+- Refacto `onKeyDown`function by categories
+- Replace `querySelector` by cached elements
+- Refacto subtitle click event and use `validateTarget` for event delegation
+
+### Fixes
+
+- Fix auto hide broken with `isPaused`
+- Prevent focus to be captured by the iframe
+- Fix Youtube progress bar updates on tabulation navigation
+
 ## 4.0.3
 
 ### Fixes
