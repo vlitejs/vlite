@@ -145,17 +145,17 @@ export default class ControlBar {
 		const target = e.target
 
 		const validateTargetPlayPauseButton = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-playPauseButton',
 			nodeName: ['button']
 		})
 		const validateTargetVolume = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-volumeButton',
 			nodeName: ['button']
 		})
 		const validateTargetFullscreen = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-fullscreenButton',
 			nodeName: ['button']
 		})

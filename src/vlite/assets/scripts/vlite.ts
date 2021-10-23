@@ -200,7 +200,7 @@ class Vlitejs {
 	onClickOnPlayer(e: Event) {
 		const target = e.target as HTMLElement
 		const validateTargetPlayPauseButton = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-poster, .v-overlay, .v-bigPlay',
 			nodeName: ['div', 'button']
 		})
@@ -218,7 +218,7 @@ class Vlitejs {
 	onDoubleClickOnPlayer(e: Event) {
 		const target = e.target
 		const validateTargetOverlay = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-overlay',
 			nodeName: ['div']
 		})
@@ -234,46 +234,49 @@ class Vlitejs {
 	 */
 	onKeydown(e: KeyboardEvent) {
 		const activeElement = document.activeElement
+		const { keyCode } = e
 
 		// Stop and start the auto hide timer on selected key code
-		if (activeElement === this.container || activeElement?.closest('.v-vlite')) {
-			if ([9, 32, 37, 39].includes(e.keyCode) && this.autoHideGranted) {
-				this.stopAutoHideTimer()
-				this.startAutoHideTimer()
-			}
+		if (
+			[9, 32, 37, 39].includes(keyCode) &&
+			this.autoHideGranted &&
+			(activeElement === this.container || activeElement?.closest('.v-vlite'))
+		) {
+			this.stopAutoHideTimer()
+			this.startAutoHideTimer()
 		}
 
 		// Backward or forward video with arrow keys
 		if (
-			[37, 39].includes(e.keyCode) &&
+			[37, 39].includes(keyCode) &&
 			(activeElement === this.container || activeElement === this.player.elements.progressBar)
 		) {
-			// Prevent default behavior for fast forward navigation to prevent input range calls
+			// Prevent default behavior on input range
 			e.preventDefault()
 
-			if (e.keyCode === 37) {
+			if (keyCode === 37) {
 				this.fastForward('backward')
-			} else if (e.keyCode === 39) {
+			} else if (keyCode === 39) {
 				this.fastForward('forward')
 			}
 		}
 
 		// Increase or decrease volume with arrow keys
 		if (
-			[38, 40].includes(e.keyCode) &&
+			[38, 40].includes(keyCode) &&
 			(activeElement === this.container || activeElement === this.player.elements.volume)
 		) {
-			if (e.keyCode === 38) {
+			if (keyCode === 38) {
 				this.animateVolumeButton()
 				this.increaseVolume()
-			} else if (e.keyCode === 40) {
+			} else if (keyCode === 40) {
 				this.animateVolumeButton()
 				this.decreaseVolume()
 			}
 		}
 
 		// Toggle the media playback with spacebar key
-		if (e.keyCode === 32 && activeElement === this.container) {
+		if (keyCode === 32 && activeElement === this.container) {
 			this.player.controlBar.togglePlayPause(e)
 		}
 	}
@@ -331,15 +334,13 @@ class Vlitejs {
 	 * Animate the volume button in CSS
 	 */
 	animateVolumeButton() {
-		const volumeButton = this.player.elements.volume
-
-		if (volumeButton) {
+		if (this.player.elements.volume) {
 			const duration = getCSSTransitionDuration({
-				target: volumeButton,
+				target: this.player.elements.volume,
 				isMilliseconds: true
 			})
-			volumeButton.classList.add('v-animate')
-			setTimeout(() => volumeButton.classList.remove('v-animate'), duration)
+			this.player.elements.volume.classList.add('v-animate')
+			setTimeout(() => this.player.elements.volume.classList.remove('v-animate'), duration)
 		}
 	}
 
@@ -347,10 +348,8 @@ class Vlitejs {
 	 * Stop the auto hide timer and show the video control bar
 	 */
 	stopAutoHideTimer() {
-		const controlBar = this.player.elements.controlBar
-
-		if (this.type === 'video' && controlBar) {
-			controlBar.classList.remove('hidden')
+		if (this.type === 'video' && this.player.elements.controlBar) {
+			this.player.elements.controlBar.classList.remove('hidden')
 			clearTimeout(this.timerAutoHide)
 		}
 	}
@@ -359,11 +358,9 @@ class Vlitejs {
 	 * Start the auto hide timer and hide the video control bar after a delay
 	 */
 	startAutoHideTimer() {
-		const controlBar = this.player.elements.controlBar
-
-		if (this.type === 'video' && !this.player.isPaused && controlBar) {
+		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				controlBar.classList.add('hidden')
+				this.player.elements.controlBar.classList.add('hidden')
 			}, this.delayAutoHide)
 		}
 	}
