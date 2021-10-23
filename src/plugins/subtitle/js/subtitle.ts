@@ -1,3 +1,4 @@
+import validateTarget from 'validate-target'
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
@@ -19,6 +20,7 @@ export default class Subtitle {
 	captions!: HTMLElement
 	subtitleButton!: HTMLElement
 	subtitlesList!: HTMLElement
+	subtitlesListCssTransitionDuration: number
 
 	providers = ['html5']
 	types = ['video']
@@ -31,6 +33,7 @@ export default class Subtitle {
 	constructor({ player }: pluginParameter) {
 		this.player = player
 		this.tracks = Array.from(this.player.media.textTracks)
+		this.subtitlesListCssTransitionDuration = 0
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
 		this.onClickOnSubtitlesList = this.onClickOnSubtitlesList.bind(this)
@@ -55,6 +58,8 @@ export default class Subtitle {
 			this.subtitlesList = this.player.elements.container.querySelector(
 				'.v-subtitlesList'
 			) as HTMLElement
+			this.subtitlesListCssTransitionDuration =
+				parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
 
 			this.addEvents()
 		}
@@ -107,7 +112,16 @@ export default class Subtitle {
 			const button = this.subtitlesList.querySelector(
 				`[data-language="${this.activeTrack.language}"]`
 			)
-			button && button.dispatchEvent(new Event('click', { bubbles: true }))
+			if (button) {
+				button.dispatchEvent(
+					new window.CustomEvent('click', {
+						bubbles: true,
+						detail: {
+							triggerPlayerFocus: false
+						}
+					})
+				)
+			}
 		}
 	}
 
@@ -145,7 +159,6 @@ export default class Subtitle {
 	 * @returns {Object} Selector and position for the subtitle button
 	 */
 	getInsertPosition(): InsertPosition {
-		const pipButton = this.player.elements.container.querySelector('.v-pipButton')
 		if (this.player.options.progressBar) {
 			return {
 				selector: '.v-progressBar',
@@ -156,7 +169,7 @@ export default class Subtitle {
 				selector: '.v-volumeButton',
 				position: 'beforebegin'
 			}
-		} else if (pipButton) {
+		} else if (this.player.elements.container.querySelector('.v-pipButton')) {
 			return {
 				selector: '.v-pipButton',
 				position: 'beforebegin'
@@ -188,40 +201,48 @@ export default class Subtitle {
 	 */
 	onClickOnSubtitleButton(e: Event) {
 		e.preventDefault()
+
 		this.subtitlesList.classList.toggle('v-active')
+
+		if (this.subtitlesList.classList.contains('v-active')) {
+			const firstItem = this.subtitlesList.querySelector('.v-trackButton') as HTMLElement
+			setTimeout(() => firstItem.focus(), this.subtitlesListCssTransitionDuration)
+		}
 	}
 
 	/**
 	 * On click on the subtitle list
 	 * @param {Event} e Event data
 	 */
-	onClickOnSubtitlesList(e: Event) {
+	onClickOnSubtitlesList(e: Event | CustomEvent) {
 		e.preventDefault()
 
 		const target = e.target as HTMLElement
-		const isActive = target.classList.contains('v-active')
-		const trackActive = this.subtitlesList.querySelector('.v-active')
 		const language = target.getAttribute('data-language')
+		const validateTargetSubtitleListButton = validateTarget({
+			target,
+			selectorString: '.v-trackButton:not(.v-active)',
+			nodeName: ['button']
+		})
+		const trackActive = this.subtitlesList.querySelector('.v-active')
+		const triggerPlayerFocus = (<CustomEvent>e).detail.triggerPlayerFocus ?? true
 
-		if (!isActive) {
-			if (this.subtitleButton.classList.contains('v-controlPressed')) {
+		if (language && validateTargetSubtitleListButton) {
+			trackActive && trackActive.classList.remove('v-active')
+			target.classList.add('v-active')
+
+			if (language === 'off') {
+				this.subtitleButton.classList.add('v-controlPressed')
+				this.captions.classList.remove('v-active')
+				this.captions.innerHTML = ''
+				this.activeTrack && this.updateCues({ isDisabled: true })
+			} else {
 				this.subtitleButton.classList.remove('v-controlPressed')
+				this.activeTrack = this.getTrackByLanguage(language)
+				this.activeTrack && this.updateCues()
 			}
 
-			if (language && target.nodeName.toLowerCase() === 'button') {
-				trackActive && trackActive.classList.remove('v-active')
-				target.classList.add('v-active')
-
-				if (language !== 'off') {
-					this.activeTrack = this.getTrackByLanguage(language)
-					this.activeTrack && this.updateCues()
-				} else {
-					this.subtitleButton.classList.add('v-controlPressed')
-					this.captions.classList.remove('v-active')
-					this.captions.innerHTML = ''
-					this.activeTrack && this.updateCues({ isDisabled: true })
-				}
-			}
+			triggerPlayerFocus && this.player.elements.container.focus()
 		}
 
 		this.subtitlesList.classList.remove('v-active')

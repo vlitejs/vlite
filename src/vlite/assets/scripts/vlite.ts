@@ -58,7 +58,6 @@ class Vlitejs {
 	type: string
 	supportFullScreen: FullScreenSupport
 	options: Options
-	isPaused: Boolean
 	autoHideGranted: Boolean
 	container: HTMLElement
 	player: any
@@ -106,7 +105,6 @@ class Vlitejs {
 
 		this.provider = provider
 		this.onReady = onReady
-		this.isPaused = true
 		this.delayAutoHide = 3000
 		this.type = this.media instanceof HTMLAudioElement ? 'audio' : 'video'
 
@@ -192,7 +190,7 @@ class Vlitejs {
 			this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
 			window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
-		document.addEventListener('keydown', this.onKeydown)
+		this.container.addEventListener('keydown', this.onKeydown)
 	}
 
 	/**
@@ -200,15 +198,16 @@ class Vlitejs {
 	 * @param {Event} e Event data
 	 */
 	onClickOnPlayer(e: Event) {
-		const target = e.target
+		const target = e.target as HTMLElement
 		const validateTargetPlayPauseButton = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-poster, .v-overlay, .v-bigPlay',
 			nodeName: ['div', 'button']
 		})
 
 		if (validateTargetPlayPauseButton) {
 			this.player.controlBar.togglePlayPause(e)
+			target.matches('.v-bigPlay') && this.container.focus()
 		}
 	}
 
@@ -219,7 +218,7 @@ class Vlitejs {
 	onDoubleClickOnPlayer(e: Event) {
 		const target = e.target
 		const validateTargetOverlay = validateTarget({
-			target: target,
+			target,
 			selectorString: '.v-overlay',
 			nodeName: ['div']
 		})
@@ -234,43 +233,51 @@ class Vlitejs {
 	 * @param {KeyboardEvent} e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
-		const target = e.target as HTMLElement
-
-		// Prevent KeyboardEvents for specific HTML tags
-		const formTags = ['input', 'textarea', 'select']
-		if (
-			formTags.includes(target.nodeName.toLowerCase()) ||
-			target.matches('[contenteditable]')
-		) {
-			return
-		}
+		const activeElement = document.activeElement
+		const { keyCode } = e
 
 		// Stop and start the auto hide timer on selected key code
-		const validKeyCode = [9, 32, 37, 39]
-		if (this.autoHideGranted && validKeyCode.includes(e.keyCode)) {
+		if (
+			[9, 32, 37, 39].includes(keyCode) &&
+			this.autoHideGranted &&
+			(activeElement === this.container || activeElement?.closest('.v-vlite'))
+		) {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
 		}
 
-		// Prevent default behavior for fast forward navigation to prevent input range calls
-		const preventDefaultKeyCode = [37, 39]
-		preventDefaultKeyCode.includes(e.keyCode) && e.preventDefault()
+		// Backward or forward video with arrow keys
+		if (
+			[37, 39].includes(keyCode) &&
+			(activeElement === this.container || activeElement === this.player.elements.progressBar)
+		) {
+			// Prevent default behavior on input range
+			e.preventDefault()
 
-		if (e.keyCode === 32) {
-			// Toggle the media element on spacebar press
+			if (keyCode === 37) {
+				this.fastForward('backward')
+			} else if (keyCode === 39) {
+				this.fastForward('forward')
+			}
+		}
+
+		// Increase or decrease volume with arrow keys
+		if (
+			[38, 40].includes(keyCode) &&
+			(activeElement === this.container || activeElement === this.player.elements.volume)
+		) {
+			if (keyCode === 38) {
+				this.animateVolumeButton()
+				this.increaseVolume()
+			} else if (keyCode === 40) {
+				this.animateVolumeButton()
+				this.decreaseVolume()
+			}
+		}
+
+		// Toggle the media playback with spacebar key
+		if (keyCode === 32 && activeElement === this.container) {
 			this.player.controlBar.togglePlayPause(e)
-		} else if (e.keyCode === 37) {
-			// Backward the media element on arrow left press
-			this.fastForward('backward')
-		} else if (e.keyCode === 39) {
-			// Forward the media element on arrow right press
-			this.fastForward('forward')
-		} else if (e.keyCode === 38) {
-			this.animateVolumeButton()
-			this.increaseVolume()
-		} else if (e.keyCode === 40) {
-			this.animateVolumeButton()
-			this.decreaseVolume()
 		}
 	}
 
@@ -278,7 +285,7 @@ class Vlitejs {
 	 * On mousemove on the player
 	 */
 	onMousemove() {
-		if (!this.isPaused) {
+		if (!this.player.isPaused) {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
 		}
@@ -327,15 +334,13 @@ class Vlitejs {
 	 * Animate the volume button in CSS
 	 */
 	animateVolumeButton() {
-		const volumeButton = this.container.querySelector('.v-volumeButton') as HTMLElement
-
-		if (volumeButton) {
+		if (this.player.elements.volume) {
 			const duration = getCSSTransitionDuration({
-				target: volumeButton,
+				target: this.player.elements.volume,
 				isMilliseconds: true
 			})
-			volumeButton.classList.add('v-animate')
-			setTimeout(() => volumeButton.classList.remove('v-animate'), duration)
+			this.player.elements.volume.classList.add('v-animate')
+			setTimeout(() => this.player.elements.volume.classList.remove('v-animate'), duration)
 		}
 	}
 
@@ -343,9 +348,8 @@ class Vlitejs {
 	 * Stop the auto hide timer and show the video control bar
 	 */
 	stopAutoHideTimer() {
-		const controlBar = this.container.querySelector('.v-controlBar')
-		if (this.type === 'video' && controlBar) {
-			controlBar.classList.remove('hidden')
+		if (this.type === 'video' && this.player.elements.controlBar) {
+			this.player.elements.controlBar.classList.remove('hidden')
 			clearTimeout(this.timerAutoHide)
 		}
 	}
@@ -354,10 +358,9 @@ class Vlitejs {
 	 * Start the auto hide timer and hide the video control bar after a delay
 	 */
 	startAutoHideTimer() {
-		const controlBar = this.container.querySelector('.v-controlBar')
-		if (this.type === 'video' && !this.isPaused && controlBar) {
+		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				controlBar.classList.add('hidden')
+				this.player.elements.controlBar.classList.add('hidden')
 			}, this.delayAutoHide)
 		}
 	}
@@ -366,7 +369,7 @@ class Vlitejs {
 	 * Remove events listeners
 	 */
 	removeEvents() {
-		document.removeEventListener('keydown', this.onKeydown)
+		this.container.removeEventListener('keydown', this.onKeydown)
 
 		if (this.type === 'video') {
 			this.container.removeEventListener('click', this.onClickOnPlayer)

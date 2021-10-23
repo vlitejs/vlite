@@ -101,7 +101,11 @@ export default function (Player: any) {
 			return new window.Promise((resolve, reject) => {
 				this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), this.params)
 				this.media = this.instance.element
-				this.instance.ready().then(resolve)
+				this.instance.ready().then(() => {
+					// Fix focus on iframe element (Vimeo creates the iframe inside the element)
+					this.media.firstElementChild.setAttribute('tabindex', '-1')
+					resolve()
+				})
 			})
 		}
 

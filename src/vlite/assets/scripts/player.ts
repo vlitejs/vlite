@@ -15,7 +15,6 @@ export default class Player {
 	isFullScreen: Boolean
 	isMuted: Boolean
 	isPaused: null | Boolean
-	delayAutoHide: number
 	controlBar: any
 	playerEvents: Array<configEvent>
 	isTouch: Boolean
@@ -64,7 +63,6 @@ export default class Player {
 		this.isFullScreen = false
 		this.isMuted = this.options.muted
 		this.isPaused = null
-		this.delayAutoHide = 3000
 		this.playerEvents = []
 		this.isTouch = isTouch()
 
@@ -183,6 +181,9 @@ export default class Player {
 	 */
 	onReady() {
 		this.options.muted && this.mute()
+
+		// The iframe needs to be ignored by the focus
+		this.media.setAttribute('tabindex', '-1')
 
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
