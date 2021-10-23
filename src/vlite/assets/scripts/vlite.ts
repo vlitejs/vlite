@@ -233,42 +233,48 @@ class Vlitejs {
 	 * @param {KeyboardEvent} e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
-		const playerHasFocus = document.activeElement === this.container
-		const playerChildrenHasFocus = document.activeElement?.closest('.v-vlite')
+		const activeElement = document.activeElement
 
-		if (playerHasFocus || playerChildrenHasFocus) {
-			// Stop and start the auto hide timer on selected key code
-			const validKeyCode = [9, 32, 37, 39]
-			if (this.autoHideGranted && validKeyCode.includes(e.keyCode)) {
+		// Stop and start the auto hide timer on selected key code
+		if (activeElement === this.container || activeElement?.closest('.v-vlite')) {
+			if ([9, 32, 37, 39].includes(e.keyCode) && this.autoHideGranted) {
 				this.stopAutoHideTimer()
 				this.startAutoHideTimer()
 			}
 		}
 
-		// Keyboard shortcuts are only granted if the player has focus
-		if (!playerHasFocus) {
-			return
+		// Backward or forward video with arrow keys
+		if (
+			[37, 39].includes(e.keyCode) &&
+			(activeElement === this.container || activeElement === this.player.elements.progressBar)
+		) {
+			// Prevent default behavior for fast forward navigation to prevent input range calls
+			e.preventDefault()
+
+			if (e.keyCode === 37) {
+				this.fastForward('backward')
+			} else if (e.keyCode === 39) {
+				this.fastForward('forward')
+			}
 		}
 
-		// Prevent default behavior for fast forward navigation to prevent input range calls
-		const preventDefaultKeyCode = [37, 39]
-		preventDefaultKeyCode.includes(e.keyCode) && e.preventDefault()
+		// Increase or decrease volume with arrow keys
+		if (
+			[38, 40].includes(e.keyCode) &&
+			(activeElement === this.container || activeElement === this.player.elements.volume)
+		) {
+			if (e.keyCode === 38) {
+				this.animateVolumeButton()
+				this.increaseVolume()
+			} else if (e.keyCode === 40) {
+				this.animateVolumeButton()
+				this.decreaseVolume()
+			}
+		}
 
-		if (e.keyCode === 32) {
-			// Toggle the media element on spacebar press
+		// Toggle the media playback with spacebar key
+		if (e.keyCode === 32 && activeElement === this.container) {
 			this.player.controlBar.togglePlayPause(e)
-		} else if (e.keyCode === 37) {
-			// Backward the media element on arrow left press
-			this.fastForward('backward')
-		} else if (e.keyCode === 39) {
-			// Forward the media element on arrow right press
-			this.fastForward('forward')
-		} else if (e.keyCode === 38) {
-			this.animateVolumeButton()
-			this.increaseVolume()
-		} else if (e.keyCode === 40) {
-			this.animateVolumeButton()
-			this.decreaseVolume()
 		}
 	}
 

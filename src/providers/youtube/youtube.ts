@@ -227,6 +227,10 @@ export default function (Player: any) {
 		 */
 		methodSeekTo(newTime: number) {
 			this.instance.seekTo(newTime)
+
+			// The function can be trigger by the tabulation and Youtube does not have the "timeupdate" event
+			// Trigger the "timeupdate" to update the progress bar
+			super.onTimeUpdate()
 		}
 
 		/**

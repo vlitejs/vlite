@@ -182,6 +182,9 @@ export default class Player {
 	onReady() {
 		this.options.muted && this.mute()
 
+		// The iframe needs to be ignored by the focus
+		this.media.setAttribute('tabindex', '-1')
+
 		// If player has autoplay option, play now
 		if (this.options.autoplay) {
 			// Autoplay on video is authorize only when the media element is muted
