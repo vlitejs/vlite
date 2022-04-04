@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 4.0.5
+
+### Fixes
+
+- Fix HTML5 event ready when the video is already loaded ([#62](https://github.com/yoriiis/vlitejs/pull/62))
+
+### New features
+
+- Add the `autoHideDelay` option ([#63](https://github.com/yoriiis/vlitejs/pull/63))
+
 ## 4.0.4
 
 Optimize accessibility ([#58](https://github.com/yoriiis/vlitejs/pull/58))
