@@ -41,6 +41,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		loop: false,
 		muted: false,
 		autoHide: false,
+		autoHideDelay: 3000,
 		providerParams: {}
 	}
 }
@@ -54,7 +55,6 @@ class Vlitejs {
 	media: HTMLVideoElement | HTMLAudioElement | HTMLDivElement
 	provider: string
 	onReady: Function | Boolean
-	delayAutoHide: number
 	type: string
 	supportFullScreen: FullScreenSupport
 	options: Options
@@ -105,7 +105,6 @@ class Vlitejs {
 
 		this.provider = provider
 		this.onReady = onReady
-		this.delayAutoHide = 3000
 		this.type = this.media instanceof HTMLAudioElement ? 'audio' : 'video'
 
 		// Check fullscreen support API on different browsers and cached prefixs
@@ -361,7 +360,7 @@ class Vlitejs {
 		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
 				this.player.elements.controlBar.classList.add('hidden')
-			}, this.delayAutoHide)
+			}, this.options.autoHideDelay)
 		}
 	}
 

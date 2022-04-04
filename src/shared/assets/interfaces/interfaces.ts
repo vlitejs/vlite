@@ -28,10 +28,11 @@ export interface Options {
 	poster: null | string
 	bigPlay: Boolean
 	autoHide: Boolean
+	autoHideDelay: number
 	playsinline: Boolean
 	loop: Boolean
 	muted: Boolean
-	[key: string]: Boolean | null | string
+	[key: string]: Boolean | null | string | number
 }
 
 export interface configEvent {
