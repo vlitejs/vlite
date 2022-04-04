@@ -40,13 +40,17 @@ export default function (Player: any) {
 		 * Wait until the video is ready
 		 * @returns {Promise<Event>} The video is ready
 		 */
-		waitUntilVideoIsReady(): Promise<Event> {
-			return new window.Promise((resolve, reject) => {
-				// Listen both events
-				// "loadedmetadata" is not fired on Firefox
-				// "canplay" is not fired in iOS
-				this.media.addEventListener('loadedmetadata', resolve, { once: true })
-				this.media.addEventListener('canplay', resolve, { once: true })
+		waitUntilVideoIsReady(): Promise<any> {
+			return new window.Promise<void>((resolve) => {
+				if (this.media.readyState >= 2 && this.media.duration) {
+					resolve()
+				} else {
+					// Listen both events
+					// "loadedmetadata" is not fired on Firefox
+					// "canplay" is not fired in iOS
+					this.media.addEventListener('loadedmetadata', resolve, { once: true })
+					this.media.addEventListener('canplay', resolve, { once: true })
+				}
 			})
 		}
 
