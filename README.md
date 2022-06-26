@@ -216,7 +216,7 @@ Example of a player `muted` when ready:
 ```javascript
 new Vlitejs('#player', {
   onReady: function (player) {
-    this.player.mute();
+    player.mute();
   }
 });
 ```
