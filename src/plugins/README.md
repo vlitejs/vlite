@@ -15,7 +15,7 @@ Each plugin can be loaded on demand with the API.
 
 The Plugin API allows you to create other plugins than those referenced by `vLitejs`.
 
-To start your new plugin development, you can use the [sample-plugin.js](https://github.com/yoriiis/vlitejs/blob/main/src/providers/sample/sample-plugin.js) file which is made for you. You can also get inspiration from the [subtitle.ts](https://github.com/yoriiis/vlitejs/blob/main/src/plugins/subtitle.ts) and [pip.ts](https://github.com/yoriiis/vlitejs/blob/main/src/plugins/pip.ts) plugin files.
+To start your new plugin development, you can use the [sample-plugin.js](https://github.com/vlitejs/vlite/blob/main/src/providers/sample/sample-plugin.js) file which is made for you. You can also get inspiration from the [subtitle.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/subtitle.ts) and [pip.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/pip.ts) plugin files.
 
 ### Rules
 

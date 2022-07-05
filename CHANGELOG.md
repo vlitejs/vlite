@@ -4,22 +4,22 @@
 
 ### Fixes
 
-- Fix HTML5 event ready when the video is already loaded ([#62](https://github.com/yoriiis/vlitejs/pull/62))
+- Fix HTML5 event ready when the video is already loaded ([#62](https://github.com/vlitejs/vlite/pull/62))
 
 ### New features
 
-- Add the `autoHideDelay` option ([#63](https://github.com/yoriiis/vlitejs/pull/63))
+- Add the `autoHideDelay` option ([#63](https://github.com/vlitejs/vlite/pull/63))
 
 ## 4.0.4
 
-Optimize accessibility ([#58](https://github.com/yoriiis/vlitejs/pull/58))
+Optimize accessibility ([#58](https://github.com/vlitejs/vlite/pull/58))
 
 ### Updates
 
 - Move keydown event to the player element instead of document
 - Player has the focus after the big play button click and after the subtitle button (inside the list) click
 - Add focus on first subtitle button when the subtitle menu is opened
-- Remove keydown restriction on specific tags ([#57](https://github.com/yoriiis/vlitejs/pull/57))
+- Remove keydown restriction on specific tags ([#57](https://github.com/vlitejs/vlite/pull/57))
 - Limit keydown actions when the player or children's player has the focus
 - Refacto `onKeyDown` function by categories
 - Replace `querySelector` by cached elements
@@ -35,23 +35,23 @@ Optimize accessibility ([#58](https://github.com/yoriiis/vlitejs/pull/58))
 
 ### Fixes
 
-- Fix provider queue by ([#52](https://github.com/yoriiis/vlitejs/pull/52))
-- Add new issue templates ([#56](https://github.com/yoriiis/vlitejs/pull/56))
-- Fix conflicts between native keyboard shortcuts and HTML form elements ([#57](https://github.com/yoriiis/vlitejs/pull/57) by @bfiessinger)
+- Fix provider queue by ([#52](https://github.com/vlitejs/vlite/pull/52))
+- Add new issue templates ([#56](https://github.com/vlitejs/vlite/pull/56))
+- Fix conflicts between native keyboard shortcuts and HTML form elements ([#57](https://github.com/vlitejs/vlite/pull/57) by @bfiessinger)
 
 ## 4.0.2
 
 ### Fixes
 
-- Fix README issues ([#43](https://github.com/yoriiis/vlitejs/pull/43))
-- Fix mute option not transferred to the player ([#48](https://github.com/yoriiis/vlitejs/pull/48))
-- Fix play not triggered without the poster ([#49](https://github.com/yoriiis/vlitejs/pull/49))
+- Fix README issues ([#43](https://github.com/vlitejs/vlite/pull/43))
+- Fix mute option not transferred to the player ([#48](https://github.com/vlitejs/vlite/pull/48))
+- Fix play not triggered without the poster ([#49](https://github.com/vlitejs/vlite/pull/49))
 
 ## 4.0.1
 
 ### Fixes
 
-- Fixed the default parameters and fix the selector `HTMLDivElement` ([#43](https://github.com/yoriiis/vlitejs/pull/43), [#47](https://github.com/yoriiis/vlitejs/pull/47))
+- Fixed the default parameters and fix the selector `HTMLDivElement` ([#43](https://github.com/vlitejs/vlite/pull/43), [#47](https://github.com/vlitejs/vlite/pull/47))
 
 ## 4.0.0
 
@@ -102,7 +102,7 @@ Optimize accessibility ([#58](https://github.com/yoriiis/vlitejs/pull/58))
 
 ### Fixes
 
-- Fixed strict node engine version break with different node version ([#7](https://github.com/yoriiis/vlitejs/pull/7))
+- Fixed strict node engine version break with different node version ([#7](https://github.com/vlitejs/vlite/pull/7))
 
 ## 3.0.2
 
