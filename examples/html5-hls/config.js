@@ -1,15 +1,11 @@
-import '../../dist/vlite.css'
-import Vlitejs from '../../dist/vlite.js'
-import VlitejsPip from '../../dist/plugins/pip.js'
-
-Vlitejs.registerPlugin('pip', VlitejsPip)
+window.Vlitejs.registerPlugin('pip', window.VlitejsPip)
 
 document.addEventListener('DOMContentLoaded', () => {
 	const source = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
 	const video = document.querySelector('video')
 
 	/* eslint-disable no-unused-vars */
-	const vlite = new Vlitejs('#player', {
+	const vlite = new window.Vlitejs('#player', {
 		options: {
 			controls: true,
 			autoplay: false,
