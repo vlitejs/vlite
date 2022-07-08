@@ -55,7 +55,6 @@ const plugins = [
 const generator = ({ entry, library = false, isProduction }) => {
 	const output = {
 		path: resolveApp('dist'),
-		// publicPath: '/dist/',
 		filename: '[name].js'
 	}
 	if (library) {
@@ -77,7 +76,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 			rules: [
 				{
 					test: /\.js$/,
-					include: resolveApp('src/'),
+					include: resolveApp('src'),
 					use: [
 						{
 							loader: 'babel-loader'
@@ -86,7 +85,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.ts$/,
-					include: resolveApp('src/'),
+					include: resolveApp('src'),
 					use: [
 						{
 							loader: 'babel-loader'
@@ -98,7 +97,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.css$/,
-					include: resolveApp('src/'),
+					include: resolveApp('src'),
 					use: [
 						MiniCssExtractPlugin.loader,
 						{
@@ -116,7 +115,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.(svg)$/i,
-					include: resolveApp('src/'),
+					include: resolveApp('src'),
 					type: 'asset/source',
 					generator: {
 						filename: '[name][ext]'

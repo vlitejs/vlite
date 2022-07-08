@@ -31,7 +31,7 @@ module.exports = (env, argv) => {
 			rules: [
 				{
 					test: /\.js$/,
-					include: [resolveApp('examples/'), resolveApp('dist/')],
+					include: [resolveApp('examples'), resolveApp('dist')],
 					use: [
 						{
 							loader: 'babel-loader'
@@ -40,7 +40,7 @@ module.exports = (env, argv) => {
 				},
 				{
 					test: /\.css$/,
-					include: [resolveApp('examples/'), resolveApp('dist/')],
+					include: [resolveApp('examples'), resolveApp('dist')],
 					use: [
 						MiniCssExtractPlugin.loader,
 						{
@@ -63,7 +63,7 @@ module.exports = (env, argv) => {
 		},
 		devServer: {
 			static: {
-				directory: resolveApp('examples/')
+				directory: resolveApp('examples')
 			},
 			historyApiFallback: true,
 			port: 3000,
