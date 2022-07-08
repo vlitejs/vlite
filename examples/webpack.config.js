@@ -82,35 +82,30 @@ module.exports = (env, argv) => {
 				filename: 'html5/index.html',
 				template: resolveApp('examples/html5/index.html'),
 				chunks: ['html5'],
-				minify: false,
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'html5-hls/index.html',
 				template: resolveApp('examples/html5-hls/index.html'),
 				chunks: ['html5-hls'],
-				minify: false,
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'youtube/index.html',
 				template: resolveApp('examples/youtube/index.html'),
 				chunks: ['youtube'],
-				minify: false,
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'vimeo/index.html',
 				template: resolveApp('examples/vimeo/index.html'),
 				chunks: ['vimeo'],
-				minify: false,
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'audio/index.html',
 				template: resolveApp('examples/audio/index.html'),
 				chunks: ['audio'],
-				minify: false,
 				publicPath: '../'
 			})
 		],
