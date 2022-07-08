@@ -1,5 +1,9 @@
-window.Vlitejs.registerProvider('vimeo', window.VlitejsVimeo)
-const vlite = new window.Vlitejs('#player', {
+import '../../dist/vlite.css'
+import Vlitejs from '../../dist/vlite.js'
+import VlitejsVimeo from '../../dist/providers/vimeo.js'
+
+Vlitejs.registerProvider('vimeo', VlitejsVimeo)
+const vlite = new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,

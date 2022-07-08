@@ -1,4 +1,7 @@
-const vlite = new window.Vlitejs('#player', {
+import '../../dist/vlite.css'
+import Vlitejs from '../../dist/vlite.js'
+
+const vlite = new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,
