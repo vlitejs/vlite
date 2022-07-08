@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.0.6
+
+### Updates
+
+- Update environment ([#67](https://github.com/yoriiis/vlitejs/pull/67))
+
 ## 4.0.5
 
 ### Fixes
