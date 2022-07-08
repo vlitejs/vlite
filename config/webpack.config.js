@@ -1,10 +1,13 @@
+const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const { name, version, license, author } = require('./package.json')
+const { name, version, license, author } = require('../package.json')
 
+const appDirectory = fs.realpathSync(process.cwd())
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 const libraryName = 'Vlitejs'
 
 // Banner for vLitejs assets
@@ -51,8 +54,7 @@ const plugins = [
  */
 const generator = ({ entry, library = false, isProduction }) => {
 	const output = {
-		path: path.resolve(__dirname, './dist'),
-		publicPath: '/dist/',
+		path: resolveApp('dist'),
 		filename: '[name].js'
 	}
 	if (library) {
@@ -74,7 +76,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 			rules: [
 				{
 					test: /\.js$/,
-					include: path.resolve(__dirname, './src'),
+					include: resolveApp('src'),
 					use: [
 						{
 							loader: 'babel-loader'
@@ -83,7 +85,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.ts$/,
-					include: path.resolve(__dirname, './src'),
+					include: resolveApp('src'),
 					use: [
 						{
 							loader: 'babel-loader'
@@ -95,7 +97,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.css$/,
-					include: path.resolve(__dirname, './src'),
+					include: resolveApp('src'),
 					use: [
 						MiniCssExtractPlugin.loader,
 						{
@@ -105,7 +107,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 							loader: 'postcss-loader',
 							options: {
 								postcssOptions: {
-									config: path.resolve(__dirname, 'postcss.config.js')
+									config: resolveApp('config/postcss.config.js')
 								}
 							}
 						}
@@ -113,7 +115,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 				},
 				{
 					test: /\.(svg)$/i,
-					include: path.resolve(__dirname, './src/'),
+					include: resolveApp('src'),
 					type: 'asset/source',
 					generator: {
 						filename: '[name][ext]'
@@ -124,9 +126,10 @@ const generator = ({ entry, library = false, isProduction }) => {
 		resolve: {
 			extensions: ['.js', '.ts', '.css'],
 			alias: {
-				shared: path.resolve(__dirname, './src/shared')
+				shared: resolveApp('src/shared')
 			}
 		},
+		context: appDirectory,
 		plugins: [
 			new webpack.ProgressPlugin(),
 			new MiniCssExtractPlugin({

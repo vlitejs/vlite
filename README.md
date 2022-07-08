@@ -1,6 +1,6 @@
 # vLitejs
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/yoriiis/vlitejs/Build/main?style=for-the-badge) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/vlitejs/vlite/Build/main?style=for-the-badge) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs)
 
 <p align="center">
     <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
@@ -47,7 +47,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
 
-[![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://yoriiis.github.io/vlitejs)
+[![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://vlite.js.org)
 
 ### Examples
 
@@ -334,7 +334,7 @@ The player accepts the following keyboard shortcuts.
 
 ## Browser support
 
-`vLitejs` supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/yoriiis/vlitejs/blob/main/.browserslistrc) config.
+`vLitejs` supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
 
 | Browser    | Supported |
 | ---------- | :-------: |
