@@ -67,21 +67,21 @@
 
 		&::-webkit-slider-thumb {
 			-webkit-appearance: none;
-			width: 12px;
-			height: 12px;
+			width: calc(var(--vlite-progressBarHeight) * 2);
+			height: calc(var(--vlite-progressBarHeight) * 2);
 			border-radius: 50%;
 			border: none;
 			background: var(--vlite-colorPrimary);
-			margin-top: -3px;
+			margin-top: calc((var(--vlite-progressBarHeight) / 2) * -1);
 		}
 
 		&::-moz-range-thumb {
-			width: 12px;
-			height: 12px;
+			width: calc(var(--vlite-progressBarHeight) * 2);
+			height: calc(var(--vlite-progressBarHeight) * 2);
 			border-radius: 50%;
 			border: none;
 			background: var(--vlite-colorPrimary);
-			margin-top: -3px;
+			margin-top: calc((var(--vlite-progressBarHeight) / 2) * -1);
 		}
 	}
 
@@ -142,7 +142,7 @@
 
 	&-video {
 		.v-progressBar {
-			height: 5px;
+			height: var(--vlite-progressBarHeight);
 		}
 
 		.v-controlBar {
