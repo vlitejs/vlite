@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.0.7
+
+### Fixes
+
+- Fix progress bar height ([#71](https://github.com/vlitejs/vlite/pull/71))
+
 ## 4.0.6
 
 ### Updates
