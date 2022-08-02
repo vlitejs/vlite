@@ -46,6 +46,11 @@ const plugins = [
 		entrykey: 'plugins/pip',
 		library: `${libraryName}Pip`,
 		path: './src/plugins/pip/config'
+	},
+	{
+		entrykey: 'plugins/chromecast',
+		library: `${libraryName}Chromecast`,
+		path: './src/plugins/chromecast/config'
 	}
 ]
 
