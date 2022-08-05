@@ -1,3 +1,5 @@
+import svgCast from 'shared/assets/svgs/cast.svg'
+
 /**
  * Vlitejs Chromecast plugin
  * @module Vlitejs/plugins/chromecast
@@ -14,25 +16,17 @@ export default class ChromecastPlugin {
 	constructor({ player }) {
 		this.player = player
 
-		this.sessionListener = this.sessionListener.bind(this)
-		this.receiverListener = this.receiverListener.bind(this)
-		this.onInitializeSuccess = this.onInitializeSuccess.bind(this)
-		this.onInitializeError = this.onInitializeError.bind(this)
-		this.onStopCastSuccess = this.onStopCastSuccess.bind(this)
-		this.onStopCastError = this.onStopCastError.bind(this)
-		this.onRequestSessionInitializeSuccess = this.onRequestSessionInitializeSuccess.bind(this)
-		this.onRequestSessionError = this.onRequestSessionError.bind(this)
 		this.onLoadMediaSuccess = this.onLoadMediaSuccess.bind(this)
 		this.onLoadMediaError = this.onLoadMediaError.bind(this)
+		this.onCastStateChange = this.onCastStateChange.bind(this)
+		this.onClickOnCastButton = this.onClickOnCastButton.bind(this)
 	}
 
 	/**
 	 * Initialize the plugin
 	 */
 	init() {
-		document.createElement('google-cast-launcher')
 		window.__onGCastApiAvailable = (isAvailable) => isAvailable && this.initCastApi()
-
 		this.loadWebSenderApi()
 	}
 
@@ -45,137 +39,115 @@ export default class ChromecastPlugin {
 	}
 
 	initCastApi() {
-		const applicationId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
-		// const sessionRequest = new chrome.cast.SessionRequest(applicationId)
-		// const apiConfig = new chrome.cast.ApiConfig(
-		// 	sessionRequest,
-		// 	this.sessionListener,
-		// 	this.receiverListener
-		// )
-		// chrome.cast.initialize(apiConfig, this.onInitializeSuccess, this.onInitializeError)
-
 		this.render()
+		this.castButton = this.player.elements.container.querySelector('.v-castButton')
 
-		const context = cast.framework.CastContext.getInstance()
-		// console.log(context)
-		context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, (e) => {
-			console.log(e)
-
-			switch (e.sessionState) {
-				case cast.framework.SessionState.SESSION_STARTED:
-				case cast.framework.SessionState.SESSION_RESUMED:
-					this.loadMedia()
-					break
-			}
-		})
-
-		context.setOptions({
-			receiverApplicationId: applicationId,
+		this.getCastInstance().setOptions({
+			receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
 			autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
 		})
-
-		// console.log(context.getCurrentSession())
-
-		// const mediaSrc = this.player.media.src
-		// const contentType = this.player.type === 'video' ? 'video/mp4' : ''
-		// const mediaInfo = new chrome.cast.media.MediaInfo(mediaSrc, contentType)
-		// const request = new chrome.cast.media.LoadRequest(mediaInfo)
-		// this.getSession()
-		// 	.loadMedia(request)
-		// 	.then(
-		// 		function () {
-		// 			console.log('Load succeed')
-		// 		},
-		// 		function (errorCode) {
-		// 			console.log('Error code: ' + errorCode)
-		// 		}
-		// 	)
+		this.addEvents()
 	}
 
 	render() {
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const fullscreenButton = this.player.elements.container.querySelector('.v-fullscreenButton')
-		const castButton = document.createElement('google-cast-launcher')
-		castButton.classList.add('v-controlButton')
+		const template = `<button class="v-castButton v-controlButton">${svgCast}</button>`
 		if (controlBar) {
 			if (fullscreenButton) {
-				fullscreenButton.insertAdjacentElement('beforebegin', castButton)
+				fullscreenButton.insertAdjacentHTML('beforebegin', template)
 			} else {
-				controlBar.insertAdjacentElement('beforeend', castButton)
+				controlBar.insertAdjacentHTML('beforeend', template)
 			}
 		}
 	}
 
 	getSession() {
-		return cast.framework.CastContext.getInstance().getCurrentSession()
+		return this.getCastInstance().getCurrentSession()
 	}
 
-	// sessionListener(e) {
-	// 	this.session = e
-	// }
+	addEvents() {
+		this.castButton.addEventListener('click', this.onClickOnCastButton)
+		this.getCastInstance().addEventListener(
+			cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+			this.onCastStateChange
+		)
+	}
 
-	// receiverListener(e) {}
+	onCastStateChange(e) {
+		// console.log('onCastStateChange', e)
 
-	// onInitializeSuccess(e) {
-	// 	console.log('onInitializeSuccess', e)
-	// 	this.addEvents()
-	// }
+		switch (e.sessionState) {
+			case cast.framework.SessionState.SESSION_STARTED:
+				this.remotePlayerStart()
+				break
+			case cast.framework.SessionState.SESSION_RESUMED:
+				this.remotePlayerResume()
+				break
+			case cast.framework.SessionState.SESSION_ENDED:
+				this.remotePlayerStop()
+				break
+		}
+	}
 
-	// onInitializeError() {}
+	remotePlayerStart() {
+		this.backupAutoHide = this.player.Vlitejs.autoHideGranted
+		this.player.Vlitejs.autoHideGranted = false
+		this.player.Vlitejs.stopAutoHideTimer()
+		this.player.elements.container.classList.add('v-remote')
+		this.loadMedia()
+	}
 
-	// addEvents() {
-	// 	document.querySelector('.cast-start').addEventListener('click', () => {
-	// 		this.startCast()
-	// 	})
+	remotePlayerResume() {
+		this.player.play()
+		this.remotePlayerStart()
+	}
 
-	// 	document.querySelector('.cast-stop').addEventListener('click', () => {
-	// 		this.stopCast()
-	// 	})
-	// }
+	remotePlayerStop() {
+		this.player.Vlitejs.autoHideGranted = this.backupAutoHide
+		if (this.backupAutoHide) {
+			this.player.Vlitejs.startAutoHideTimer()
+		}
+		this.castButton.classList.remove('active')
+		this.player.elements.container.classList.remove('v-remote')
+		this.player.isChromecast = false
 
-	// startCast() {
-	// 	chrome.cast.requestSession(
-	// 		this.onRequestSessionInitializeSuccess,
-	// 		this.onRequestSessionError
-	// 	)
-	// }
+		if (!this.player.isPaused) {
+			this.player.methodPlay()
+			this.player.Vlitejs.startAutoHideTimer()
+		}
+	}
 
-	// onRequestSessionInitializeSuccess(e) {
-	// 	console.log('onRequestSessionInitializeSuccess', e)
-	// 	this.session = e
-	// 	this.session && this.loadMedia()
-	// }
+	onClickOnCastButton(e) {
+		e.preventDefault()
 
-	// onRequestSessionError(e) {
-	// 	console.log('onRequestSessionError', e)
-	// }
+		const session = this.getSession()
+		if (session) {
+			this.getCastInstance().endCurrentSession()
+		} else {
+			this.getCastInstance()
+				.requestSession()
+				.then(this.onRequestSessionInitializeSuccess, this.onRequestSessionError)
+		}
+	}
 
-	// stopCast() {
-	// 	this.session.stop(this.onStopCastSuccess, this.onStopCastError)
-	// }
-
-	// onStopCastSuccess(e) {
-	// 	console.log('onStopCastSuccess', e)
-	// }
-
-	// onStopCastError(e) {
-	// 	console.log('onStopCastError', e)
-	// }
+	getCastInstance() {
+		return cast.framework.CastContext.getInstance()
+	}
 
 	loadMedia() {
-		const session = this.getSession()
-		if (!session) {
-			return
-		}
+		const session = this.session || this.getSession()
+		if (!session) return
 
 		const mediaSrc = this.player.media.src
 		const contentType = this.player.type === 'video' ? 'video/mp4' : ''
 		const mediaInfo = new chrome.cast.media.MediaInfo(mediaSrc, contentType)
-		mediaInfo.contentType = this.player.type === 'video' ? 'video/mp4' : ''
 		const request = new chrome.cast.media.LoadRequest(mediaInfo)
+		request.autoplay = !this.player.isPaused
+		request.currentTime = this.player.media.currentTime
 		session.loadMedia(request).then(this.onLoadMediaSuccess, this.onLoadMediaError)
 
-		this.player.plugins.subtitle && this.addTracks()
+		// this.player.plugins.subtitle && this.addTracks()
 	}
 
 	addTracks() {
@@ -192,10 +164,46 @@ export default class ChromecastPlugin {
 	}
 
 	onLoadMediaSuccess(e) {
-		console.log('onLoadMediaSuccess', e)
+		// console.log('onLoadMediaSuccess', e)
+
+		if (!this.player.isPaused) {
+			this.player.methodPause()
+		}
+
+		this.remotePlayer = new cast.framework.RemotePlayer()
+		this.remotePlayerController = new cast.framework.RemotePlayerController(this.remotePlayer)
+
+		this.player.on('play', () => {
+			this.remotePlayerController.playOrPause()
+		})
+		this.player.on('pause', () => {
+			this.remotePlayerController.playOrPause()
+		})
+		this.player.on('volumechange', () => {
+			this.player.getVolume().then((volume) => {
+				this.remotePlayer.volumeLevel = this.player.isMuted ? 0 : volume
+				this.remotePlayerController.setVolumeLevel()
+			})
+		})
+
+		this.player.on('timeupdate', () => {
+			this.player.getCurrentTime().then((currentTime) => {
+				// this.remotePlayer.currentTime = currentTime
+				// this.remotePlayerController.seek()
+			})
+		})
+
+		this.castButton.classList.add('active')
+		this.player.isChromecast = true
+
+		this.player.getRemoteCurrentTime = () => this.remotePlayer.currentTime
+		setInterval(() => {
+			!this.player.isPaused && this.player.onTimeUpdate(true)
+			// this.player.methodSeekTo(this.player.getRemoteCurrentTime())
+		}, 1000)
 	}
 
 	onLoadMediaError(e) {
-		console.log('onLoadMediaError', e)
+		// console.log('onLoadMediaError', e)
 	}
 }

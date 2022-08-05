@@ -1,5 +1,6 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/subtitle.css'
+import '../../dist/plugins/chromecast.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
@@ -44,4 +45,5 @@ const vlite = new Vlitejs('#player', {
 		// player.on('ended', () => console.log('ended'))
 	}
 })
+window.player = vlite
 /* eslint-enable no-unused-vars */

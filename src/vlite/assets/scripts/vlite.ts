@@ -284,7 +284,7 @@ class Vlitejs {
 	 * On mousemove on the player
 	 */
 	onMousemove() {
-		if (!this.player.isPaused) {
+		if (!this.player.isPaused && this.autoHideGranted) {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
 		}

@@ -12,6 +12,7 @@ export default class Player {
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
+	isChromecast: Boolean
 	isFullScreen: Boolean
 	isMuted: Boolean
 	isPaused: null | Boolean
@@ -21,6 +22,7 @@ export default class Player {
 	plugins: {
 		[key: string]: any
 	}
+	getRemoteCurrentTime!: Function
 	elements: {
 		container: HTMLElement
 		bigPlay: HTMLElement | null
@@ -46,6 +48,7 @@ export default class Player {
 		this.plugins = {}
 		this.media = Vlitejs.media
 		this.options = Vlitejs.options
+		this.isChromecast = false
 
 		this.elements = {
 			container: Vlitejs.container,
@@ -108,7 +111,7 @@ export default class Player {
 	 * getCurrentTime
 	 * Extends by the provider
 	 */
-	getCurrentTime(): Promise<number> {
+	getCurrentTime(isRemote: Boolean): Promise<number> {
 		throw new Error('You have to implement the function "getCurrentTime".')
 	}
 
@@ -237,12 +240,12 @@ export default class Player {
 	 * Update current time displaying in the control bar
 	 * Udpdate the progress bar
 	 */
-	onTimeUpdate() {
+	onTimeUpdate(isRemote: Boolean = false) {
 		if (this.options.time) {
-			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
+			Promise.all([this.getCurrentTime(isRemote), this.getDuration()]).then(
 				([seconds, duration]: [number, number]) => {
 					const currentTime = Math.round(seconds)
-
+					console.log(currentTime)
 					if (this.elements.progressBar) {
 						const width = (currentTime * 100) / duration
 						this.elements.progressBar.value = `${width}`
@@ -257,7 +260,7 @@ export default class Player {
 						this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
 					}
 
-					this.dispatchEvent('timeupdate')
+					!isRemote && this.dispatchEvent('timeupdate')
 				}
 			)
 		}
@@ -303,7 +306,7 @@ export default class Player {
 			}
 		}
 
-		this.methodPlay()
+		!this.isChromecast && this.methodPlay()
 		this.isPaused = false
 		this.elements.container.classList.replace('v-paused', 'v-playing')
 
@@ -324,7 +327,7 @@ export default class Player {
 	 * Pause the media element
 	 */
 	pause() {
-		this.methodPause()
+		!this.isChromecast && this.methodPause()
 		this.isPaused = true
 		this.elements.container.classList.replace('v-playing', 'v-paused')
 

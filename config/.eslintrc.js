@@ -20,7 +20,7 @@ module.exports = {
 	plugins: ['prettier'],
 
 	rules: {
-		indent: ['error', 'tab', { ignoredNodes: ['TemplateLiteral *'] }],
+		indent: ['error', 'tab', { ignoredNodes: ['TemplateLiteral *'], SwitchCase: 1 }],
 		'no-tabs': 0,
 		'space-before-function-paren': [
 			'error',
@@ -31,6 +31,8 @@ module.exports = {
 	globals: {
 		document: false,
 		navigator: false,
-		window: false
+		window: false,
+		chrome: false,
+		cast: false
 	}
 }

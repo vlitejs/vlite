@@ -1,0 +1,14 @@
+.v {
+	&-castButton {
+		&.active svg {
+			fill: #3ea6ff;
+		}
+	}
+
+	&-remote {
+		.v-pipButton,
+		.v-fullscreenButton {
+			display: none;
+		}
+	}
+}

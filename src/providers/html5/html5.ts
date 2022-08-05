@@ -76,8 +76,14 @@ export default function (Player: any) {
 		 * Get the player current time
 		 * @returns {Promise<Number>} Current time of the video
 		 */
-		getCurrentTime(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.media.currentTime))
+		getCurrentTime(isRemote: Boolean = false): Promise<number> {
+			return new window.Promise((resolve) => {
+				if (isRemote) {
+					resolve(this.getRemoteCurrentTime())
+				} else {
+					resolve(this.media.currentTime)
+				}
+			})
 		}
 
 		/**
