@@ -10,8 +10,6 @@
 	/* Controls */
 	--vlite-controlsColor: #fff;
 	--vlite-controlsOpacity: 0.9;
-	--vlite-controlsIconWidth: 28px;
-	--vlite-controlsIconHeight: 28px;
 
 	/* Progress bar */
 	--vlite-progressBarHeight: 5px;
@@ -143,8 +141,38 @@
 
 		svg {
 			fill: var(--vlite-controlsColor);
-			width: var(--vlite-controlsIconWidth);
-			height: var(--vlite-controlsIconHeight);
+			width: 28px;
+			height: 28px;
+		}
+
+		&.v-playPauseButton svg {
+			width: 15px;
+			height: 17px;
+		}
+
+		&.v-subtitleButton svg {
+			width: 26px;
+			height: 22px;
+		}
+
+		&.v-volumeButton svg {
+			width: 24px;
+			height: 20px;
+		}
+
+		&.v-pipButton svg {
+			width: 26px;
+			height: 22px;
+		}
+
+		&.v-castButton svg {
+			width: 26px;
+			height: 22px;
+		}
+
+		&.v-fullscreenButton svg {
+			width: 20px;
+			height: 20px;
 		}
 	}
 }
