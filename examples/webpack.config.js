@@ -69,7 +69,9 @@ module.exports = (env, argv) => {
 			historyApiFallback: true,
 			port: 3000,
 			compress: true,
-			hot: true
+			hot: true,
+			host: '0.0.0.0',
+			https: true
 		},
 		context: appDirectory,
 		plugins: [
