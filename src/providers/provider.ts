@@ -3,10 +3,14 @@ import PlayerHtml5 from './html5/html5'
 interface interfaceVliteProviders {
 	[key: string]: any
 }
+interface interfaceProvidersOptions {
+	[key: string]: any
+}
 
 const vliteProviders: interfaceVliteProviders = {
 	html5: PlayerHtml5
 }
+const providersOptions: interfaceProvidersOptions = {}
 
 /**
  * Get provider instance from the registered list
@@ -17,7 +21,7 @@ const vliteProviders: interfaceVliteProviders = {
 export function getProviderInstance(provider: string, Player: any): any {
 	const ProviderInstance: any = vliteProviders[provider]
 	if (ProviderInstance) {
-		return ProviderInstance(Player)
+		return ProviderInstance(Player, providersOptions[provider])
 	}
 	throw new Error(`vlitejs :: Unknown provider "${provider}"`)
 }
@@ -28,10 +32,14 @@ export function getProviderInstance(provider: string, Player: any): any {
  * @param instance Provider instance
  * @returns {undefined} No value to return
  */
-export function registerProvider(id: string, instance: any) {
+export function registerProvider(id: string, instance: any, options: interfaceProvidersOptions) {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vliteProviders).includes(id)) {
 			vliteProviders[id] = instance
+
+			if (options) {
+				providersOptions[id] = options
+			}
 			return
 		}
 		throw new Error(`vlitejs :: The provider id "${id}" is already registered.`)

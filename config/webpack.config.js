@@ -27,6 +27,11 @@ const providers = [
 		entrykey: 'providers/vimeo',
 		library: `${libraryName}Vimeo`,
 		path: './src/providers/vimeo/vimeo'
+	},
+	{
+		entrykey: 'providers/dailymotion',
+		library: `${libraryName}Dailymotion`,
+		path: './src/providers/dailymotion/dailymotion'
 	}
 ]
 
