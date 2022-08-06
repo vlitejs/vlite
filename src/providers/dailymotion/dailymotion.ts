@@ -103,17 +103,21 @@ export default function (Player: any, options: interfaceProvidersOptions) {
 			return new window.Promise((resolve, reject) => {
 				window.dailymotion
 					.createPlayer(this.media.getAttribute('id'), {
-						video: this.media.getAttribute('data-video-id')
+						video: this.media.getAttribute('data-dailymotion-id')
 					})
 					.then((player: any) => {
 						this.instance = player
 						this.media = player.getRootNode()
 
-						//Dailymotion does not maintain the main css class and has inline styles that conflict with ours
+						// Player autoplay sync from Dailymotion player settings
+						const { autostart } = this.instance.getSettings()
+						if (['on', 'firstTimeViewable'].includes(autostart)) {
+							this.options.autoplay = true
+						}
+
+						//Dailymotion does not maintain the main CSS class and has inline styles that conflict with ours
 						this.media.classList.add('vlite-js')
-						this.media.style.removeProperty('position')
-						this.media.style.removeProperty('padding')
-						this.media.style.removeProperty('background')
+						this.media.removeAttribute('style')
 
 						resolve()
 					})

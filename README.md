@@ -64,7 +64,7 @@ If you're interested in playing around with `vLitejs`, you can use the online co
 - [HTML5 audio](https://jsfiddle.net/yoriiis/19pnqkge)
 - [Youtube](https://jsfiddle.net/yoriiis/sykde7q8)
 - [Vimeo](https://jsfiddle.net/yoriiis/dazey3w5)
-- [Dailymotion](TODO)
+- [Dailymotion](https://jsfiddle.net/yoriiis/rf3mtjhx)
 
 ## Installation
 
@@ -96,31 +96,31 @@ You can also download it and include it with a script tag. The library will be r
 #### HTML5 video
 
 ```html
-<video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
+<video id="player" class="vlite-js" src="<path_to_video_mp4>"></video>
 ```
 
 #### HTML5 audio
 
 ```html
-<audio id="player" class="vlite-js" src="/path/to/audio.mp3"></audio>
+<audio id="player" class="vlite-js" src="<path_to_audio_mp3>"></audio>
 ```
 
 #### Youtube
 
 ```html
-<div id="player" class="vlite-js" data-youtube-id="C4qgAaxB_pc"></div>
+<div id="player" class="vlite-js" data-youtube-id="<video_id>"></div>
 ```
 
 #### Vimeo
 
 ```html
-<div id="player" class="vlite-js" data-vimeo-id="162391385"></div>
+<div id="player" class="vlite-js" data-vimeo-id="<video_id>"></div>
 ```
 
 #### Dailymotion
 
 ```html
-<div id="player" class="vlite-js" data-video-id="x403kr8"></div>
+<div id="player" class="vlite-js" data-dailymotion-id="<video_id>"></div>
 ```
 
 ### Initialization

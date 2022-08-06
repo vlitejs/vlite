@@ -22,7 +22,7 @@ First, Dailymotion requires a Player Id to create player with the JavaScript API
 ### HTML
 
 ```html
-<div id="player" class="vlite-js" data-video-id="x403kr8"></div>
+<div id="player" class="vlite-js" data-dailymotion-id="<video_id>"></div>
 ```
 
 ### JavaScript
@@ -33,7 +33,7 @@ import Vlitejs from 'vlitejs';
 import VlitejsDailymotion from 'vlitejs/dist/providers/dailymotion';
 
 Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
-  playerId: '<dailymotion_player_id>' // Required by Dailymotion
+  playerId: '<player_id>' // Required by Dailymotion
 });
 
 new Vlitejs('#player', {

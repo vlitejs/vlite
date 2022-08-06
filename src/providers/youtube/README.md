@@ -20,7 +20,7 @@ Supports for Youtube player with the [Youtube player API](https://developers.goo
 ### HTML
 
 ```html
-<div id="player" class="vlite-js" data-youtube-id="C4qgAaxB_pc"></div>
+<div id="player" class="vlite-js" data-youtube-id="<video_id>"></div>
 ```
 
 ### JavaScript
