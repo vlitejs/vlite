@@ -7,7 +7,7 @@ import OverlayTemplate from '../../components/overlay/assets/scripts/overlay'
 import PosterTemplate from '../../components/poster/assets/scripts/poster'
 import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
 import { registerProvider, getProviderInstance } from '../../../providers/provider'
-import { getPluginInstance, registerPlugin, initializePlugins } from '../../../plugins/plugin'
+import { registerPlugin, initializePlugins } from '../../../plugins/plugin'
 
 type TimerHandle = number
 

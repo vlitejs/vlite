@@ -245,7 +245,7 @@ export default class Player {
 			Promise.all([this.getCurrentTime(isRemote), this.getDuration()]).then(
 				([seconds, duration]: [number, number]) => {
 					const currentTime = Math.round(seconds)
-					console.log(currentTime)
+					// console.log(currentTime)
 					if (this.elements.progressBar) {
 						const width = (currentTime * 100) / duration
 						this.elements.progressBar.value = `${width}`

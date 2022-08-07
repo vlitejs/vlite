@@ -78,11 +78,11 @@ export default function (Player: any) {
 		 */
 		getCurrentTime(isRemote: Boolean = false): Promise<number> {
 			return new window.Promise((resolve) => {
-				if (isRemote) {
-					resolve(this.getRemoteCurrentTime())
-				} else {
-					resolve(this.media.currentTime)
-				}
+				// if (isRemote) {
+				// 	resolve(this.getRemoteCurrentTime())
+				// } else {
+				resolve(this.media.currentTime)
+				// }
 			})
 		}
 

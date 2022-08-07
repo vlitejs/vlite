@@ -8,6 +8,7 @@ export interface interfacePluginsInstance {
 }
 
 const vlitePlugins: interfaceVlitePlugins = {}
+const pluginsOptions = {}
 
 /**
  * Get plugins instances from the registered list
@@ -22,7 +23,8 @@ export function getPluginInstance(plugins: Array<string>): Array<interfacePlugin
 		if (pluginsIds.includes(id)) {
 			pluginsInstance.push({
 				id,
-				Plugin: vlitePlugins[id]
+				Plugin: vlitePlugins[id],
+				options: pluginsOptions[id]
 			})
 		} else {
 			throw new Error(`vlitejs :: Unknown plugin "${id}".`)
@@ -38,10 +40,14 @@ export function getPluginInstance(plugins: Array<string>): Array<interfacePlugin
  * @param instance Plugin instance
  * @returns {undefined} No value to return
  */
-export function registerPlugin(id: string, instance: any): undefined {
+export function registerPlugin(id: string, instance: any, options): undefined {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vlitePlugins).includes(id)) {
 			vlitePlugins[id] = instance
+
+			if (options) {
+				pluginsOptions[id] = options
+			}
 			return
 		}
 		throw new Error(`vlitejs :: The plugin id "${id}" is already registered.`)
@@ -68,8 +74,8 @@ export function initializePlugins({
 	type: string
 	player: any
 }) {
-	getPluginInstance(plugins).forEach(({ id, Plugin }: { id: string; Plugin: any }) => {
-		const plugin = new Plugin({ player })
+	getPluginInstance(plugins).forEach(({ id, Plugin, options }: { id: string; Plugin: any }) => {
+		const plugin = new Plugin({ player, options })
 
 		// Store the plugin instance on the player
 		player.plugins[id] = plugin

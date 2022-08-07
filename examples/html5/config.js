@@ -8,7 +8,15 @@ import VlitejsChromecast from '../../dist/plugins/chromecast.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
-Vlitejs.registerPlugin('chromecast', VlitejsChromecast)
+Vlitejs.registerPlugin('chromecast', VlitejsChromecast, {
+	textTrackStyle: {
+		backgroundColor: '#21212190'
+	},
+	metadata: {
+		title: 'The Jungle Book',
+		subtitle: 'Walt Disney Animation Studios'
+	}
+})
 
 /* eslint-disable no-unused-vars */
 const vlite = new Vlitejs('#player', {

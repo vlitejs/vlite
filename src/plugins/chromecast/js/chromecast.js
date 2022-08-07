@@ -13,8 +13,9 @@ export default class ChromecastPlugin {
 	 * @param {Object} options
 	 * @param {Class} options.player Player instance
 	 */
-	constructor({ player }) {
+	constructor({ player, options }) {
 		this.player = player
+		this.options = options
 
 		this.onLoadMediaSuccess = this.onLoadMediaSuccess.bind(this)
 		this.onLoadMediaError = this.onLoadMediaError.bind(this)
@@ -39,13 +40,14 @@ export default class ChromecastPlugin {
 	}
 
 	initCastApi() {
-		this.render()
-		this.castButton = this.player.elements.container.querySelector('.v-castButton')
-
-		this.getCastInstance().setOptions({
+		this.castContext = cast.framework.CastContext.getInstance()
+		this.castContext.setOptions({
 			receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
 			autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
 		})
+
+		this.render()
+		this.castButton = this.player.elements.container.querySelector('.v-castButton')
 		this.addEvents()
 	}
 
@@ -62,21 +64,15 @@ export default class ChromecastPlugin {
 		}
 	}
 
-	getSession() {
-		return this.getCastInstance().getCurrentSession()
-	}
-
 	addEvents() {
-		this.castButton.addEventListener('click', this.onClickOnCastButton)
-		this.getCastInstance().addEventListener(
+		this.castContext.addEventListener(
 			cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
 			this.onCastStateChange
 		)
+		this.castButton.addEventListener('click', this.onClickOnCastButton)
 	}
 
 	onCastStateChange(e) {
-		// console.log('onCastStateChange', e)
-
 		switch (e.sessionState) {
 			case cast.framework.SessionState.SESSION_STARTED:
 				this.remotePlayerStart()
@@ -99,7 +95,6 @@ export default class ChromecastPlugin {
 	}
 
 	remotePlayerResume() {
-		this.player.play()
 		this.remotePlayerStart()
 	}
 
@@ -120,58 +115,65 @@ export default class ChromecastPlugin {
 
 	onClickOnCastButton(e) {
 		e.preventDefault()
-
-		const session = this.getSession()
-		if (session) {
-			this.getCastInstance().endCurrentSession()
-		} else {
-			this.getCastInstance()
-				.requestSession()
-				.then(this.onRequestSessionInitializeSuccess, this.onRequestSessionError)
-		}
+		this.castContext.requestSession()
 	}
 
-	getCastInstance() {
-		return cast.framework.CastContext.getInstance()
+	getSession() {
+		return this.castContext.getCurrentSession()
 	}
 
 	loadMedia() {
 		const session = this.session || this.getSession()
 		if (!session) return
 
-		const mediaSrc = this.player.media.src
-		const contentType = this.player.type === 'video' ? 'video/mp4' : ''
-		const mediaInfo = new chrome.cast.media.MediaInfo(mediaSrc, contentType)
-		const request = new chrome.cast.media.LoadRequest(mediaInfo)
-		request.autoplay = !this.player.isPaused
-		request.currentTime = this.player.media.currentTime
-		session.loadMedia(request).then(this.onLoadMediaSuccess, this.onLoadMediaError)
+		const mediaInfo = new window.chrome.cast.media.MediaInfo(this.player.media.src)
+		mediaInfo.contentType = this.player.type === 'video' ? 'video/mp4' : ''
 
-		// this.player.plugins.subtitle && this.addTracks()
+		const textTrackStyle = new window.chrome.cast.media.TextTrackStyle()
+		mediaInfo.textTrackStyle = { backgroundColor: '#21212100', ...this.options.textTrackStyle }
+
+		var metadata = new window.chrome.cast.media.MovieMediaMetadata()
+		mediaInfo.metadata = {
+			images: [new window.chrome.cast.Image(this.player.options.poster)],
+			...this.options.metadata
+		}
+
+		if (this.player.plugins.subtitle) {
+			mediaInfo.tracks = this.addTracks()
+		}
+
+		const loadRequest = new window.chrome.cast.media.LoadRequest(mediaInfo)
+		loadRequest.autoplay = this.player.isPaused === false
+		loadRequest.currentTime = this.player.media.currentTime
+		loadRequest.activeTrackIds = [1]
+		session.loadMedia(loadRequest).then(this.onLoadMediaSuccess, this.onLoadMediaError)
 	}
 
 	addTracks() {
-		this.player.plugins.subtitle.tracks.forEach((track) => {
-			const castTrack = new chrome.cast.media.Track(1, chrome.cast.media.TrackType.TEXT)
+		return this.player.plugins.subtitle.tracks.map((track) => {
+			const castTrack = new window.chrome.cast.media.Track(
+				1,
+				chrome.cast.media.TrackType.TEXT
+			)
 			castTrack.trackContentId =
 				'https://yoriiis.github.io/cdn/static/vlitejs/demo-video-html5-subtitle-en.vtt'
 			castTrack.trackContentType = 'text/vtt'
 			castTrack.subtype = chrome.cast.media.TextTrackType.SUBTITLES
 			castTrack.name = track.label
 			castTrack.language = track.language
-			console.log(castTrack)
+			return castTrack
 		})
 	}
 
 	onLoadMediaSuccess(e) {
-		// console.log('onLoadMediaSuccess', e)
-
 		if (!this.player.isPaused) {
 			this.player.methodPause()
 		}
 
-		this.remotePlayer = new cast.framework.RemotePlayer()
-		this.remotePlayerController = new cast.framework.RemotePlayerController(this.remotePlayer)
+		this.remotePlayer = new window.cast.framework.RemotePlayer()
+		this.remotePlayerController = new window.cast.framework.RemotePlayerController(
+			this.remotePlayer
+		)
 
 		this.player.on('play', () => {
 			this.remotePlayerController.playOrPause()
@@ -203,7 +205,5 @@ export default class ChromecastPlugin {
 		}, 1000)
 	}
 
-	onLoadMediaError(e) {
-		// console.log('onLoadMediaError', e)
-	}
+	onLoadMediaError(e) {}
 }
