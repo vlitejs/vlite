@@ -5,10 +5,32 @@
 		}
 	}
 
+	&-chromecastName {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: #fff;
+		width: auto;
+		padding: 10px;
+		font-size: 12px;
+		line-height: 12px;
+		pointer-events: none;
+	}
+
 	&-remote {
 		.v-pipButton,
 		.v-fullscreenButton {
 			display: none;
+		}
+
+		.vlite-js,
+		.v-captions {
+			display: none;
+		}
+
+		.v-chromecastName {
+			display: block;
 		}
 	}
 }

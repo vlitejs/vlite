@@ -15,6 +15,7 @@ export interface playerParameters {
 
 export interface pluginParameter {
 	player: playerParameters
+	options: any
 }
 
 export interface Options {

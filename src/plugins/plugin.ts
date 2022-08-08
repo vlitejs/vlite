@@ -5,10 +5,11 @@ export interface interfaceVlitePlugins {
 export interface interfacePluginsInstance {
 	id: string
 	Plugin: any
+	options: any
 }
 
 const vlitePlugins: interfaceVlitePlugins = {}
-const pluginsOptions = {}
+const pluginsOptions: any = {}
 
 /**
  * Get plugins instances from the registered list
@@ -40,7 +41,7 @@ export function getPluginInstance(plugins: Array<string>): Array<interfacePlugin
  * @param instance Plugin instance
  * @returns {undefined} No value to return
  */
-export function registerPlugin(id: string, instance: any, options): undefined {
+export function registerPlugin(id: string, instance: any, options: any): undefined {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vlitePlugins).includes(id)) {
 			vlitePlugins[id] = instance
@@ -74,18 +75,20 @@ export function initializePlugins({
 	type: string
 	player: any
 }) {
-	getPluginInstance(plugins).forEach(({ id, Plugin, options }: { id: string; Plugin: any }) => {
-		const plugin = new Plugin({ player, options })
+	getPluginInstance(plugins).forEach(
+		({ id, Plugin, options }: { id: string; Plugin: any; options: any }) => {
+			const plugin = new Plugin({ player, options })
 
-		// Store the plugin instance on the player
-		player.plugins[id] = plugin
+			// Store the plugin instance on the player
+			player.plugins[id] = plugin
 
-		if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
-			plugin.init()
-		} else {
-			throw new Error(
-				`vlitejs :: The "${id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
-			)
+			if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
+				plugin.init()
+			} else {
+				throw new Error(
+					`vlitejs :: The "${id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
+				)
+			}
 		}
-	})
+	)
 }

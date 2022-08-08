@@ -71,7 +71,8 @@ module.exports = (env, argv) => {
 			compress: true,
 			hot: true,
 			host: '0.0.0.0',
-			https: true
+			https: true,
+			open: ['/html5']
 		},
 		context: appDirectory,
 		plugins: [

@@ -2,7 +2,7 @@ import validateTarget from 'validate-target'
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
-import { Options, pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 export interface InsertPosition {
 	selector: string
@@ -15,6 +15,7 @@ export interface InsertPosition {
  */
 export default class Subtitle {
 	player: any
+	trackIsEnabled: Boolean
 	tracks: Array<TextTrack>
 	activeTrack!: TextTrack | null
 	captions!: HTMLElement
@@ -32,6 +33,7 @@ export default class Subtitle {
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
+		this.trackIsEnabled = false
 		this.tracks = Array.from(this.player.media.textTracks)
 		this.subtitlesListCssTransitionDuration = 0
 
@@ -264,6 +266,7 @@ export default class Subtitle {
 	 */
 	updateCues({ isDisabled = false }: { isDisabled?: Boolean } = {}) {
 		if (this.activeTrack && this.activeTrack.cues && this.activeTrack.cues.length) {
+			this.trackIsEnabled = !isDisabled
 			const cues = Array.from(this.activeTrack.cues)
 			const activeCues = this.activeTrack.activeCues
 
