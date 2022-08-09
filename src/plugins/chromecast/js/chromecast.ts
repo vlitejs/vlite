@@ -36,6 +36,10 @@ declare global {
 				CastContextEventType: {
 					SESSION_STATE_CHANGED: string
 				}
+				RemotePlayerEventType: {
+					CURRENT_TIME_CHANGED: string
+					IS_MEDIA_LOADED_CHANGED: string
+				}
 				SessionState: {
 					SESSION_STARTED: string
 					SESSION_RESUMED: string
@@ -168,11 +172,11 @@ export default class ChromecastPlugin {
 			this.onCastStateChange
 		)
 		this.remotePlayerController.addEventListener(
-			'currentTimeChanged',
+			window.cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED,
 			this.onCurrentTimeChanged
 		)
 		this.remotePlayerController.addEventListener(
-			'isMediaLoadedChanged',
+			window.cast.framework.RemotePlayerEventType.IS_MEDIA_LOADED_CHANGED,
 			this.isMediaLoadedChanged
 		)
 
@@ -250,6 +254,7 @@ export default class ChromecastPlugin {
 	 * On cast session start
 	 */
 	onSessionStart() {
+		this.player.elements.container.focus()
 		this.subtitles = this.getSubtitles()
 
 		this.isPaused = this.player.isPaused
