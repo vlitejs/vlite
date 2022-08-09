@@ -255,7 +255,15 @@ export default class Player {
 	 * @param {Object} options.seconds Current time in seconds
 	 * @param {Object} options.duration Duration in seconds
 	 */
-	updateProgressBar({ seconds, duration }: { seconds: number; duration: number }) {
+	updateProgressBar({
+		seconds,
+		duration,
+		isRemote = false
+	}: {
+		seconds: number
+		duration: number
+		isRemote: boolean
+	}) {
 		const currentTime = Math.round(seconds)
 		if (this.elements.progressBar) {
 			const width = (currentTime * 100) / duration
@@ -268,7 +276,7 @@ export default class Player {
 			this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
 		}
 
-		this.dispatchEvent('timeupdate')
+		!isRemote && this.dispatchEvent('timeupdate')
 	}
 
 	/**

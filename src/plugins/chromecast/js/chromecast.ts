@@ -177,7 +177,8 @@ export default class ChromecastPlugin {
 	onCurrentTimeChanged() {
 		this.player.updateProgressBar({
 			seconds: this.remotePlayer.currentTime,
-			duration: this.remotePlayer.duration
+			duration: this.remotePlayer.duration,
+			isRemote: true
 		})
 	}
 
@@ -330,6 +331,12 @@ export default class ChromecastPlugin {
 			this.player.getVolume().then((volume: number) => {
 				this.remotePlayer.volumeLevel = this.player.isMuted ? 0 : volume
 				this.remotePlayerController.setVolumeLevel()
+			})
+		})
+		this.player.on('timeupdate', () => {
+			this.player.getCurrentTime().then((currentTime: number) => {
+				this.remotePlayer.currentTime = currentTime
+				this.remotePlayerController.seek()
 			})
 		})
 	}
