@@ -18,6 +18,7 @@ declare global {
 					GenericMediaMetadata: Constructable<any>
 					LoadRequest: Constructable<any>
 					Track: Constructable<any>
+					EditTracksInfoRequest: Constructable<any>
 				}
 				AutoJoinPolicy: {
 					ORIGIN_SCOPED: string
@@ -54,10 +55,13 @@ interface Subtitle {
 	url: string
 	label: string
 	language: string
+	index: number
+	isDefault: boolean
 }
 
 interface CastEvent {
 	sessionState: string
+	value: number
 }
 
 /**
@@ -72,7 +76,8 @@ export default class ChromecastPlugin {
 	remotePlayerController: any
 	subtitles: Array<Subtitle>
 	castButton!: HTMLElement
-	backupAutoHide: Boolean | null
+	backupAutoHide: boolean | null
+	isPaused: boolean | null
 
 	providers = ['html5']
 	types = ['video']
@@ -87,9 +92,11 @@ export default class ChromecastPlugin {
 		this.options = options
 		this.subtitles = []
 		this.backupAutoHide = null
+		this.isPaused = null
 
 		this.onLoadMediaSuccess = this.onLoadMediaSuccess.bind(this)
 		this.onCastStateChange = this.onCastStateChange.bind(this)
+		this.onCurrentTimeChanged = this.onCurrentTimeChanged.bind(this)
 		this.onClickOnCastButton = this.onClickOnCastButton.bind(this)
 		this.updateSubtitle = this.updateSubtitle.bind(this)
 	}
@@ -98,7 +105,7 @@ export default class ChromecastPlugin {
 	 * Initialize the plugin
 	 */
 	init() {
-		window.__onGCastApiAvailable = (isAvailable: Boolean) => isAvailable && this.initCastApi()
+		window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && this.initCastApi()
 		this.loadWebSenderApi()
 	}
 
@@ -157,10 +164,21 @@ export default class ChromecastPlugin {
 			window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
 			this.onCastStateChange
 		)
+		this.remotePlayerController.addEventListener(
+			'currentTimeChanged',
+			this.onCurrentTimeChanged.bind(this)
+		)
 
 		this.castButton.addEventListener('click', this.onClickOnCastButton)
 		this.player.on('trackdisabled', this.updateSubtitle)
 		this.player.on('trackenabled', this.updateSubtitle)
+	}
+
+	onCurrentTimeChanged() {
+		this.player.updateProgressBar({
+			seconds: this.remotePlayer.currentTime,
+			duration: this.remotePlayer.duration
+		})
 	}
 
 	onCastStateChange(e: CastEvent) {
@@ -228,11 +246,11 @@ export default class ChromecastPlugin {
 		} else {
 			const newTrackIndex = this.subtitles.find(({ language }) => language === newLanguage)
 			if (newTrackIndex && !isNaN(newTrackIndex.index)) {
-				activeTrackIds = [parseInt(newTrackIndex.index)]
+				activeTrackIds = [newTrackIndex.index]
 			}
 		}
 
-		const tracksInfoRequest = new chrome.cast.media.EditTracksInfoRequest(activeTrackIds)
+		const tracksInfoRequest = new window.chrome.cast.media.EditTracksInfoRequest(activeTrackIds)
 		this.getSession().getMediaSession().editTracksInfo(tracksInfoRequest)
 	}
 
@@ -282,7 +300,7 @@ export default class ChromecastPlugin {
 		session.loadMedia(loadRequest).then(this.onLoadMediaSuccess)
 	}
 
-	getActiveTrack() {
+	getActiveTrack(): Subtitle {
 		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]
 	}
 
@@ -314,18 +332,5 @@ export default class ChromecastPlugin {
 				this.remotePlayerController.setVolumeLevel()
 			})
 		})
-
-		this.player.on('timeupdate', () => {
-			this.player.getCurrentTime().then((currentTime: number) => {
-				// this.remotePlayer.currentTime = currentTime
-				// this.remotePlayerController.seek()
-			})
-		})
-
-		this.player.getRemoteCurrentTime = () => this.remotePlayer.currentTime
-		setInterval(() => {
-			// !this.player.isPaused && this.player.onTimeUpdate(true)
-			// this.player.methodSeekTo(this.player.getRemoteCurrentTime())
-		}, 1000)
 	}
 }

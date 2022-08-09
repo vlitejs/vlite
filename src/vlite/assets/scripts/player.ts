@@ -111,7 +111,7 @@ export default class Player {
 	 * getCurrentTime
 	 * Extends by the provider
 	 */
-	getCurrentTime(isRemote: Boolean): Promise<number> {
+	getCurrentTime(): Promise<number> {
 		throw new Error('You have to implement the function "getCurrentTime".')
 	}
 
@@ -240,30 +240,35 @@ export default class Player {
 	 * Update current time displaying in the control bar
 	 * Udpdate the progress bar
 	 */
-	onTimeUpdate(isRemote: Boolean = false) {
+	onTimeUpdate() {
 		if (this.options.time) {
-			Promise.all([this.getCurrentTime(isRemote), this.getDuration()]).then(
-				([seconds, duration]: [number, number]) => {
-					const currentTime = Math.round(seconds)
-					// console.log(currentTime)
-					if (this.elements.progressBar) {
-						const width = (currentTime * 100) / duration
-						this.elements.progressBar.value = `${width}`
-						this.elements.progressBar.style.setProperty('--value', `${width}%`)
-						this.elements.progressBar.setAttribute(
-							'aria-valuenow',
-							`${Math.round(seconds)}`
-						)
-					}
-
-					if (this.elements.currentTime) {
-						this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
-					}
-
-					!isRemote && this.dispatchEvent('timeupdate')
-				}
+			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
+				([seconds, duration]: [number, number]) =>
+					this.updateProgressBar({ seconds, duration })
 			)
 		}
+	}
+
+	/**
+	 * Update the progress bar
+	 * @param {Object} options
+	 * @param {Object} options.seconds Current time in seconds
+	 * @param {Object} options.duration Duration in seconds
+	 */
+	updateProgressBar({ seconds, duration }: { seconds: number; duration: number }) {
+		const currentTime = Math.round(seconds)
+		if (this.elements.progressBar) {
+			const width = (currentTime * 100) / duration
+			this.elements.progressBar.value = `${width}`
+			this.elements.progressBar.style.setProperty('--value', `${width}%`)
+			this.elements.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
+		}
+
+		if (this.elements.currentTime) {
+			this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
+		}
+
+		this.dispatchEvent('timeupdate')
 	}
 
 	/**
