@@ -91,6 +91,7 @@ export default class ChromecastPlugin {
 		this.onLoadMediaSuccess = this.onLoadMediaSuccess.bind(this)
 		this.onCastStateChange = this.onCastStateChange.bind(this)
 		this.onClickOnCastButton = this.onClickOnCastButton.bind(this)
+		this.updateSubtitle = this.updateSubtitle.bind(this)
 	}
 
 	/**
@@ -129,10 +130,12 @@ export default class ChromecastPlugin {
 	onReady() {}
 
 	getSubtitles(): Array<Subtitle> {
-		return [...this.player.media.querySelectorAll('track')].map((track) => ({
+		return [...this.player.media.querySelectorAll('track')].map((track, index) => ({
+			index,
 			url: track.getAttribute('src'),
 			label: track.getAttribute('label'),
-			language: track.getAttribute('srclang')
+			language: track.getAttribute('srclang'),
+			isDefault: track.hasAttribute('default')
 		}))
 	}
 
@@ -156,12 +159,8 @@ export default class ChromecastPlugin {
 		)
 
 		this.castButton.addEventListener('click', this.onClickOnCastButton)
-		this.player.on('trackdisabled', (e: Event) => {
-			console.log('trackdisabled')
-		})
-		this.player.on('trackenabled', (e: Event) => {
-			console.log('trackenabled')
-		})
+		this.player.on('trackdisabled', this.updateSubtitle)
+		this.player.on('trackenabled', this.updateSubtitle)
 	}
 
 	onCastStateChange(e: CastEvent) {
@@ -180,6 +179,8 @@ export default class ChromecastPlugin {
 	}
 
 	onSessionStart() {
+		this.isPaused = this.player.isPaused
+		this.player.methodPause()
 		this.backupAutoHide = this.player.Vlitejs.autoHideGranted
 		this.player.Vlitejs.autoHideGranted = false
 		this.player.Vlitejs.stopAutoHideTimer()
@@ -188,8 +189,7 @@ export default class ChromecastPlugin {
 		this.castButton.classList.add('active')
 		this.player.isChromecast = true
 
-		const friendlyName =
-			this.castContext.getCurrentSession().getCastDevice().friendlyName || 'Chromecast'
+		const friendlyName = this.getSession().getCastDevice().friendlyName || 'Chromecast'
 		this.player.media.insertAdjacentHTML(
 			'afterend',
 			`<span class="v-chromecastName">Cast on ${friendlyName}</span>`
@@ -217,6 +217,25 @@ export default class ChromecastPlugin {
 		this.castContext.requestSession()
 	}
 
+	updateSubtitle() {
+		const newLanguage = this.player.plugins.subtitle.subtitlesList
+			.querySelector('.v-trackButton.v-active')
+			.getAttribute('data-language')
+
+		let activeTrackIds
+		if (newLanguage === 'off') {
+			activeTrackIds = []
+		} else {
+			const newTrackIndex = this.subtitles.find(({ language }) => language === newLanguage)
+			if (newTrackIndex && !isNaN(newTrackIndex.index)) {
+				activeTrackIds = [parseInt(newTrackIndex.index)]
+			}
+		}
+
+		const tracksInfoRequest = new chrome.cast.media.EditTracksInfoRequest(activeTrackIds)
+		this.getSession().getMediaSession().editTracksInfo(tracksInfoRequest)
+	}
+
 	getSession() {
 		return this.castContext.getCurrentSession()
 	}
@@ -229,36 +248,42 @@ export default class ChromecastPlugin {
 		mediaInfo.contentType = this.player.type === 'video' ? 'video/mp4' : ''
 
 		const textTrackStyle = new window.chrome.cast.media.TextTrackStyle()
+		textTrackStyle.backgroundColor = '#ffffff00'
+		textTrackStyle.edgeColor = '#00000016'
+		textTrackStyle.edgeType = 'DROP_SHADOW'
+		textTrackStyle.fontFamily = 'CASUAL'
+		textTrackStyle.fontScale = 1.0
+		textTrackStyle.foregroundColor = '#ffffffff'
 		mediaInfo.textTrackStyle = {
-			backgroundColor: '#ffffff00',
-			edgeColor: '#00000016',
-			edgeType: 'DROP_SHADOW',
-			fontFamily: 'CASUAL',
-			fontScale: 1.0,
-			foregroundColor: '#ffffffff',
+			...textTrackStyle,
 			...this.options.textTrackStyle
-		}
-
-		var metadata = new window.chrome.cast.media.GenericMediaMetadata()
-		mediaInfo.metadata = {
-			images: [new window.chrome.cast.Image(this.player.options.poster)],
-			...this.options.metadata
 		}
 
 		if (this.subtitles.length) {
 			mediaInfo.tracks = this.getCastTracks()
 		}
 
-		const loadRequest = new window.chrome.cast.media.LoadRequest(mediaInfo)
-		loadRequest.autoplay = this.player.isPaused === false
-		loadRequest.currentTime = this.player.media.currentTime
-		loadRequest.playbackRate = 3
+		const metadata = new window.chrome.cast.media.GenericMediaMetadata()
+		if (this.player.options.poster) {
+			metadata.images = [new window.chrome.cast.Image(this.player.options.poster)]
+		}
+		mediaInfo.metadata = {
+			...metadata,
+			...this.options.metadata
+		}
 
-		// console.log(this.player.plugins.subtitle.trackIsEnabled)
-		// if (this.player.plugins.subtitle.trackIsEnabled) {
-		loadRequest.activeTrackIds = [1]
-		// }
+		const loadRequest = new window.chrome.cast.media.LoadRequest(mediaInfo)
+		loadRequest.autoplay = this.isPaused === false
+		loadRequest.currentTime = this.player.media.currentTime
+
+		if (this.subtitles.length) {
+			loadRequest.activeTrackIds = [this.getActiveTrack().index]
+		}
 		session.loadMedia(loadRequest).then(this.onLoadMediaSuccess)
+	}
+
+	getActiveTrack() {
+		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]
 	}
 
 	getCastTracks() {
@@ -277,10 +302,6 @@ export default class ChromecastPlugin {
 	}
 
 	onLoadMediaSuccess() {
-		if (!this.player.isPaused) {
-			this.player.methodPause()
-		}
-
 		this.player.on('play', () => {
 			this.remotePlayerController.playOrPause()
 		})
@@ -303,7 +324,7 @@ export default class ChromecastPlugin {
 
 		this.player.getRemoteCurrentTime = () => this.remotePlayer.currentTime
 		setInterval(() => {
-			!this.player.isPaused && this.player.onTimeUpdate(true)
+			// !this.player.isPaused && this.player.onTimeUpdate(true)
 			// this.player.methodSeekTo(this.player.getRemoteCurrentTime())
 		}, 1000)
 	}
