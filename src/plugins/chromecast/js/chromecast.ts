@@ -1,5 +1,5 @@
 import svgCast from 'shared/assets/svgs/cast.svg'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces'
 
 declare global {
 	interface Window {
@@ -47,10 +47,6 @@ declare global {
 	}
 }
 
-export interface Constructable<T> {
-	new (...args: any): T
-}
-
 interface Subtitle {
 	url: string
 	label: string
@@ -71,11 +67,11 @@ interface CastEvent {
 export default class ChromecastPlugin {
 	player: any
 	options: any
+	castButton!: HTMLElement
 	castContext: any
 	remotePlayer: any
 	remotePlayerController: any
 	subtitles: Array<Subtitle>
-	castButton!: HTMLElement
 	backupAutoHide: boolean | null
 	isPaused: boolean | null
 
@@ -86,6 +82,7 @@ export default class ChromecastPlugin {
 	 * @constructor
 	 * @param {Object} options
 	 * @param {Class} options.player Player instance
+	 * @param {Object} options.options Plugins options
 	 */
 	constructor({ player, options }: pluginParameter) {
 		this.player = player
@@ -94,9 +91,9 @@ export default class ChromecastPlugin {
 		this.backupAutoHide = null
 		this.isPaused = null
 
-		this.onLoadMediaSuccess = this.onLoadMediaSuccess.bind(this)
 		this.onCastStateChange = this.onCastStateChange.bind(this)
 		this.onCurrentTimeChanged = this.onCurrentTimeChanged.bind(this)
+		this.isMediaLoadedChanged = this.isMediaLoadedChanged.bind(this)
 		this.onClickOnCastButton = this.onClickOnCastButton.bind(this)
 		this.updateSubtitle = this.updateSubtitle.bind(this)
 	}
@@ -109,6 +106,9 @@ export default class ChromecastPlugin {
 		this.loadWebSenderApi()
 	}
 
+	/**
+	 * Load web sender API
+	 */
 	loadWebSenderApi() {
 		const script = document.createElement('script')
 		script.defer = true
@@ -117,6 +117,10 @@ export default class ChromecastPlugin {
 		document.getElementsByTagName('body')[0].appendChild(script)
 	}
 
+	/**
+	 * Chromecast API is available
+	 * Initialize the Chromecast API
+	 */
 	initCastApi() {
 		this.castContext = window.cast.framework.CastContext.getInstance()
 		this.castContext.setOptions({
@@ -128,28 +132,24 @@ export default class ChromecastPlugin {
 			this.remotePlayer
 		)
 
-		this.subtitles = this.getSubtitles()
 		this.render()
 		this.castButton = this.player.elements.container.querySelector('.v-castButton')
 		this.addEvents()
 	}
 
+	/**
+	 * On player ready
+	 */
 	onReady() {}
 
-	getSubtitles(): Array<Subtitle> {
-		return [...this.player.media.querySelectorAll('track')].map((track, index) => ({
-			index,
-			url: track.getAttribute('src'),
-			label: track.getAttribute('label'),
-			language: track.getAttribute('srclang'),
-			isDefault: track.hasAttribute('default')
-		}))
-	}
-
+	/**
+	 * Render the plugin HTML
+	 */
 	render() {
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const fullscreenButton = this.player.elements.container.querySelector('.v-fullscreenButton')
 		const template = `<button class="v-castButton v-controlButton">${svgCast}</button>`
+
 		if (controlBar) {
 			if (fullscreenButton) {
 				fullscreenButton.insertAdjacentHTML('beforebegin', template)
@@ -159,6 +159,9 @@ export default class ChromecastPlugin {
 		}
 	}
 
+	/**
+	 * Add event listeners
+	 */
 	addEvents() {
 		this.castContext.addEventListener(
 			window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
@@ -166,7 +169,11 @@ export default class ChromecastPlugin {
 		)
 		this.remotePlayerController.addEventListener(
 			'currentTimeChanged',
-			this.onCurrentTimeChanged.bind(this)
+			this.onCurrentTimeChanged
+		)
+		this.remotePlayerController.addEventListener(
+			'isMediaLoadedChanged',
+			this.isMediaLoadedChanged
 		)
 
 		this.castButton.addEventListener('click', this.onClickOnCastButton)
@@ -174,17 +181,14 @@ export default class ChromecastPlugin {
 		this.player.on('trackenabled', this.updateSubtitle)
 	}
 
-	onCurrentTimeChanged() {
-		this.player.updateProgressBar({
-			seconds: this.remotePlayer.currentTime,
-			duration: this.remotePlayer.duration,
-			isRemote: true
-		})
-	}
-
+	/**
+	 * On cast state change
+	 * Chromecast event
+	 */
 	onCastStateChange(e: CastEvent) {
-		console.log('onCastStateChange', e)
-		switch (e.sessionState) {
+		const sessionState = e.sessionState
+
+		switch (sessionState) {
 			case window.cast.framework.SessionState.SESSION_STARTED:
 				this.onSessionStart()
 				break
@@ -197,46 +201,33 @@ export default class ChromecastPlugin {
 		}
 	}
 
-	onSessionStart() {
-		this.isPaused = this.player.isPaused
-		this.player.methodPause()
-		this.backupAutoHide = this.player.Vlitejs.autoHideGranted
-		this.player.Vlitejs.autoHideGranted = false
-		this.player.Vlitejs.stopAutoHideTimer()
-		this.player.elements.container.classList.add('v-remote')
-
-		this.castButton.classList.add('active')
-		this.player.isChromecast = true
-
-		const friendlyName = this.getSession().getCastDevice().friendlyName || 'Chromecast'
-		this.player.media.insertAdjacentHTML(
-			'afterend',
-			`<span class="v-chromecastName">Cast on ${friendlyName}</span>`
-		)
-
-		this.loadMedia()
+	/**
+	 * On current time changed
+	 * Chromecast event
+	 */
+	onCurrentTimeChanged() {
+		this.player.updateProgressBar({
+			seconds: this.remotePlayer.currentTime,
+			duration: this.remotePlayer.duration,
+			isRemote: true
+		})
 	}
 
-	onSessionStop() {
-		this.player.Vlitejs.autoHideGranted = this.backupAutoHide
-		this.backupAutoHide && this.player.Vlitejs.startAutoHideTimer()
-
-		this.castButton.classList.remove('active')
-		this.player.elements.container.classList.remove('v-remote')
-		this.player.isChromecast = false
-
-		if (!this.player.isPaused) {
-			this.player.methodPlay()
-			this.player.Vlitejs.startAutoHideTimer()
-		}
-	}
-
+	/**
+	 * On click on cast button, open the cast selection UI
+	 * @param {Event} e Event data
+	 */
 	onClickOnCastButton(e: Event) {
 		e.preventDefault()
 		this.castContext.requestSession()
 	}
 
+	/**
+	 * Update the cast subtitle
+	 */
 	updateSubtitle() {
+		if (!this.remotePlayer.isMediaLoaded) return
+
 		const newLanguage = this.player.plugins.subtitle.subtitlesList
 			.querySelector('.v-trackButton.v-active')
 			.getAttribute('data-language')
@@ -255,10 +246,74 @@ export default class ChromecastPlugin {
 		this.getSession().getMediaSession().editTracksInfo(tracksInfoRequest)
 	}
 
-	getSession() {
+	/**
+	 * On cast session start
+	 */
+	onSessionStart() {
+		this.subtitles = this.getSubtitles()
+
+		this.isPaused = this.player.isPaused
+		this.player.methodPause()
+
+		this.backupAutoHide = this.player.Vlitejs.autoHideGranted
+		this.player.Vlitejs.autoHideGranted = false
+		this.player.Vlitejs.stopAutoHideTimer()
+
+		this.player.elements.container.classList.add('v-remote')
+		this.castButton.classList.add('active')
+		this.player.isChromecast = true
+
+		const friendlyName = this.getSession().getCastDevice().friendlyName || 'Chromecast'
+		this.player.media.insertAdjacentHTML(
+			'afterend',
+			`<span class="v-chromecastName">Cast on ${friendlyName}</span>`
+		)
+
+		this.loadMedia()
+	}
+
+	/**
+	 * On cast session stop
+	 */
+	onSessionStop() {
+		this.player.Vlitejs.autoHideGranted = this.backupAutoHide
+		this.backupAutoHide && this.player.Vlitejs.startAutoHideTimer()
+
+		this.castButton.classList.remove('active')
+		this.player.elements.container.classList.remove('v-remote')
+		this.player.isChromecast = false
+
+		if (!this.player.isPaused) {
+			this.player.methodPlay()
+			this.player.Vlitejs.startAutoHideTimer()
+		}
+	}
+
+	/**
+	 * Get subtitles data from the media
+	 * @returns {Array<Subtitle>} List of subtitles with somes fields
+	 */
+	getSubtitles(): Array<Subtitle> {
+		return [...this.player.media.querySelectorAll('track')].map((track, index) => ({
+			index,
+			url: track.getAttribute('src'),
+			label: track.getAttribute('label'),
+			language: track.getAttribute('srclang'),
+			isDefault: track.hasAttribute('default')
+		}))
+	}
+
+	/**
+	 * Get the cast session
+	 * @returns {Object} Current cast session
+	 */
+	getSession(): any {
 		return this.castContext.getCurrentSession()
 	}
 
+	/**
+	 * Load the media to the Chromecast
+	 */
 	loadMedia() {
 		const session = this.getSession()
 		if (!session) return
@@ -298,13 +353,21 @@ export default class ChromecastPlugin {
 		if (this.subtitles.length) {
 			loadRequest.activeTrackIds = [this.getActiveTrack().index]
 		}
-		session.loadMedia(loadRequest).then(this.onLoadMediaSuccess)
+		session.loadMedia(loadRequest)
 	}
 
+	/**
+	 * Get the default track or the first one if no match
+	 * @returns {Object} Active track
+	 */
 	getActiveTrack(): Subtitle {
 		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]
 	}
 
+	/**
+	 *  Get the cast Track
+	 * @returns {Array} List of cast Track
+	 */
 	getCastTracks() {
 		return this.subtitles.map(({ url, label, language }, index) => {
 			const castTrack = new window.chrome.cast.media.Track(
@@ -320,20 +383,28 @@ export default class ChromecastPlugin {
 		})
 	}
 
-	onLoadMediaSuccess() {
+	/**
+	 * On cast media loaded changed
+	 * Chromecast event
+	 */
+	isMediaLoadedChanged() {
 		this.player.on('play', () => {
+			if (!this.remotePlayer.isMediaLoaded) return
 			this.remotePlayerController.playOrPause()
 		})
 		this.player.on('pause', () => {
+			if (!this.remotePlayer.isMediaLoaded) return
 			this.remotePlayerController.playOrPause()
 		})
 		this.player.on('volumechange', () => {
+			if (!this.remotePlayer.isMediaLoaded) return
 			this.player.getVolume().then((volume: number) => {
 				this.remotePlayer.volumeLevel = this.player.isMuted ? 0 : volume
 				this.remotePlayerController.setVolumeLevel()
 			})
 		})
 		this.player.on('timeupdate', () => {
+			if (!this.remotePlayer.isMediaLoaded) return
 			this.player.getCurrentTime().then((currentTime: number) => {
 				this.remotePlayer.currentTime = currentTime
 				this.remotePlayerController.seek()

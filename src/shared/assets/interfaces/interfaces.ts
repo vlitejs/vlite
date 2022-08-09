@@ -1,3 +1,7 @@
+export interface Constructable<T> {
+	new (...args: any): T
+}
+
 export interface FullScreenSupport {
 	requestFn: string
 	cancelFn: string

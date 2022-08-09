@@ -262,7 +262,7 @@ export default class Player {
 	}: {
 		seconds: number
 		duration: number
-		isRemote: boolean
+		isRemote?: boolean
 	}) {
 		const currentTime = Math.round(seconds)
 		if (this.elements.progressBar) {
