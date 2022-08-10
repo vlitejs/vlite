@@ -295,7 +295,7 @@ export default class Player {
 	 * Play the media element
 	 */
 	play() {
-		if (this.elements.container.classList.contains('v-firstStart')) {
+		if (this.isPaused === null) {
 			this.elements.container.classList.remove('v-firstStart')
 
 			if (this.type === 'video' && this.elements.poster) {

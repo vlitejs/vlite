@@ -226,6 +226,13 @@ export default function (Player: any) {
 		 * @param {Number} Current time video
 		 */
 		methodSeekTo(newTime: number) {
+			// Youtube triggers the play when the video is not yet started
+			// Video should be muted according to autoplay policy
+			if (this.isPaused === null && !this.options.muted) {
+				this.mute()
+				this.play()
+			}
+
 			this.instance.seekTo(newTime)
 
 			// The function can be trigger by the tabulation and Youtube does not have the "timeupdate" event
