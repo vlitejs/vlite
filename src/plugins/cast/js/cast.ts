@@ -52,10 +52,10 @@ declare global {
 }
 
 interface Subtitle {
+	index: number
 	url: string
 	label: string
 	language: string
-	index: number
 	isDefault: boolean
 }
 
@@ -77,7 +77,6 @@ export default class CastPlugin {
 	remotePlayerController: any
 	subtitles: Array<Subtitle>
 	backupAutoHide: boolean | null
-	isPaused: boolean | null
 
 	providers = ['html5']
 	types = ['video']
@@ -93,7 +92,6 @@ export default class CastPlugin {
 		this.options = options
 		this.subtitles = []
 		this.backupAutoHide = null
-		this.isPaused = null
 
 		this.onCastStateChange = this.onCastStateChange.bind(this)
 		this.onCurrentTimeChanged = this.onCurrentTimeChanged.bind(this)
@@ -138,6 +136,7 @@ export default class CastPlugin {
 
 		this.render()
 		this.castButton = this.player.elements.container.querySelector('.v-castButton')
+		this.subtitles = this.getSubtitles()
 		this.addEvents()
 	}
 
@@ -241,7 +240,7 @@ export default class CastPlugin {
 			activeTrackIds = []
 		} else {
 			const newTrackIndex = this.subtitles.find(({ language }) => language === newLanguage)
-			if (newTrackIndex && !isNaN(newTrackIndex.index)) {
+			if (newTrackIndex) {
 				activeTrackIds = [newTrackIndex.index]
 			}
 		}
@@ -255,9 +254,7 @@ export default class CastPlugin {
 	 */
 	onSessionStart() {
 		this.player.elements.container.focus()
-		this.subtitles = this.getSubtitles()
 
-		this.isPaused = this.player.isPaused
 		this.player.methodPause()
 
 		this.backupAutoHide = this.player.Vlitejs.autoHideGranted
@@ -284,14 +281,14 @@ export default class CastPlugin {
 		this.player.Vlitejs.autoHideGranted = this.backupAutoHide
 		this.backupAutoHide && this.player.Vlitejs.startAutoHideTimer()
 
-		this.castButton.classList.remove('v-active')
 		this.player.elements.container.classList.remove('v-remote')
-		this.player.elements.container.querySelector('.v-deviceName').remove()
+		this.castButton.classList.remove('v-active')
 		this.player.isCast = false
+		this.player.elements.container.querySelector('.v-deviceName').remove()
 
 		if (!this.player.isPaused) {
 			this.player.methodPlay()
-			this.player.Vlitejs.startAutoHideTimer()
+			this.player.afterPlayPause()
 		}
 	}
 
@@ -325,7 +322,11 @@ export default class CastPlugin {
 		if (!session) return
 
 		const mediaInfo = new window.chrome.cast.media.MediaInfo(this.player.media.src)
-		mediaInfo.contentType = this.player.type === 'video' ? 'video/mp4' : ''
+		mediaInfo.contentType = 'video/mp4'
+
+		if (this.subtitles.length) {
+			mediaInfo.tracks = this.getCastTracks()
+		}
 
 		const textTrackStyle = new window.chrome.cast.media.TextTrackStyle()
 		textTrackStyle.backgroundColor = '#ffffff00'
@@ -339,10 +340,6 @@ export default class CastPlugin {
 			...this.options.textTrackStyle
 		}
 
-		if (this.subtitles.length) {
-			mediaInfo.tracks = this.getCastTracks()
-		}
-
 		const metadata = new window.chrome.cast.media.GenericMediaMetadata()
 		if (this.player.options.poster) {
 			metadata.images = [new window.chrome.cast.Image(this.player.options.poster)]
@@ -353,21 +350,13 @@ export default class CastPlugin {
 		}
 
 		const loadRequest = new window.chrome.cast.media.LoadRequest(mediaInfo)
-		loadRequest.autoplay = this.isPaused === false
+		loadRequest.autoplay = this.player.isPaused === false
 		loadRequest.currentTime = this.player.media.currentTime
 
 		if (this.subtitles.length) {
 			loadRequest.activeTrackIds = [this.getActiveTrack().index]
 		}
 		session.loadMedia(loadRequest)
-	}
-
-	/**
-	 * Get the default track or the first one if no match
-	 * @returns {Object} Active track
-	 */
-	getActiveTrack(): Subtitle {
-		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]
 	}
 
 	/**
@@ -387,6 +376,14 @@ export default class CastPlugin {
 			castTrack.language = language
 			return castTrack
 		})
+	}
+
+	/**
+	 * Get the default track or the first one if no match
+	 * @returns {Object} Active track
+	 */
+	getActiveTrack(): Subtitle {
+		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]
 	}
 
 	/**

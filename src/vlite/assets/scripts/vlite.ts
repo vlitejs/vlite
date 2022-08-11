@@ -315,6 +315,7 @@ class Vlitejs {
 	 * Increase the player volume
 	 */
 	increaseVolume() {
+		this.player.isMuted && this.player.unMute()
 		const volume = this.player.getVolume().then((volume: number) => {
 			this.player.setVolume(volume + 0.05)
 		})
