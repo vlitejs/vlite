@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.1.1
+
+### Fixes
+
+- Fix default values for Cast plugin options ([e0e492e](https://github.com/vlitejs/vlite/commit/e0e492eca03424808f837a9909eaa6937a3da2e1))
+
 ## 4.1.0
 
 ### New features
