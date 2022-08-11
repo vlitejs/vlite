@@ -24,6 +24,7 @@
 			display: none;
 		}
 
+		/* stylelint-disable-next-line selector-class-pattern */
 		.vlite-js,
 		.v-captions {
 			display: none;

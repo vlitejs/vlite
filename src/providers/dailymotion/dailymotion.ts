@@ -7,7 +7,7 @@ declare global {
 		}
 		VlitejsDailymotionQueue: Array<any>
 		dailymotion: {
-			createPlayer: Function
+			createPlayer: (selectorId: string, options: { video: string }) => Promise<void>
 		}
 	}
 }
@@ -25,7 +25,7 @@ interface interfacePlayerState {
  * @param {Class} Player
  * @returns {Class} Provider class extended from vLitejs Player
  */
-export default function (Player: any, options: interfaceProvidersOptions) {
+export default function DailymotionProvider(Player: any, options: interfaceProvidersOptions) {
 	const providerObjectName = 'dailymotion'
 	window.VlitejsDailymotionQueue = window.VlitejsDailymotionQueue || []
 
@@ -54,7 +54,7 @@ export default function (Player: any, options: interfaceProvidersOptions) {
 	 * @module vlitejs/Player/PlayerDailymotion
 	 */
 	return class PlayerDailymotion extends Player {
-		params: Object
+		params: object
 		events: Array<configEvent>
 		instance: any
 
@@ -71,6 +71,7 @@ export default function (Player: any, options: interfaceProvidersOptions) {
 				{ type: 'waiting', listener: this.onWaiting }
 			]
 		}
+
 		/**
 		 * Initialize the player when the API is ready
 		 */
@@ -86,7 +87,7 @@ export default function (Player: any, options: interfaceProvidersOptions) {
 		 * @returns {Promise} The player is ready
 		 */
 		waitUntilVideoIsReady(): Promise<void> {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				// Initialize the player if the API is already available
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initDailymotionPlayer().then(resolve)
@@ -100,7 +101,7 @@ export default function (Player: any, options: interfaceProvidersOptions) {
 		 * Initialize the player
 		 */
 		initDailymotionPlayer(): Promise<void> {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				window.dailymotion
 					.createPlayer(this.media.getAttribute('id'), {
 						video: this.media.getAttribute('data-dailymotion-id')

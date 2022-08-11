@@ -72,7 +72,7 @@ export function getCSSTransitionDuration({
 	isMilliseconds = false
 }: {
 	target: HTMLElement
-	isMilliseconds: Boolean
+	isMilliseconds: boolean
 }) {
 	return (
 		parseFloat(window.getComputedStyle(target).transitionDuration) * (isMilliseconds ? 1000 : 1)
@@ -83,6 +83,6 @@ export function getCSSTransitionDuration({
  * Check if the device is touch
  * @returns {Boolean} Is touch
  */
-export function isTouch(): Boolean {
+export function isTouch(): boolean {
 	return !!('ontouchstart' in document.documentElement)
 }

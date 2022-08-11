@@ -15,8 +15,8 @@
 	--vlite-progressBarHeight: 5px;
 	--vlite-progressBarBackground: rgba(0 0 0 / 25%);
 
-	font-family: -apple-system, blinkmacsystemfont, segoe UI, Helvetica, Arial, sans-serif,
-		Apple Color Emoji, Segoe UI Emoji;
+	font-family: -apple-system, blinkmacsystemfont, 'segoe UI', Helvetica, Arial, sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji';
 	position: relative;
 	overflow: hidden;
 
@@ -57,7 +57,7 @@
 		display: none !important;
 	}
 
-	&.v-fullscreenButton-display {
+	&.v-fullscreenButtonDisplay {
 		.v-controlBar,
 		.v-bigPlay {
 			position: fixed;
@@ -66,7 +66,7 @@
 	}
 
 	&.v-paused {
-		.v-controlBar.hidden {
+		.v-controlBar.v-hidden {
 			opacity: 1;
 		}
 	}
@@ -86,6 +86,7 @@
 		}
 	}
 
+	/* stylelint-disable selector-class-pattern */
 	iframe.vlite-js {
 		pointer-events: none;
 	}
@@ -99,6 +100,7 @@
 		height: 100%;
 		object-fit: cover;
 	}
+	/* stylelint-enable selector-class-pattern */
 }
 
 .v {
@@ -112,7 +114,7 @@
 		transition: opacity var(--vlite-transition);
 		opacity: var(--vlite-controlsOpacity);
 		padding: 0;
-		-webkit-appearance: none;
+		appearance: none;
 		background: none;
 		border: none;
 		cursor: pointer;

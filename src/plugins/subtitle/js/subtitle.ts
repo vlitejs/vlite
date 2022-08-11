@@ -262,11 +262,12 @@ export default class Subtitle {
 	 * @param {Object} options
 	 * @param {Boolean} options.isDisabled Disable cues
 	 */
-	updateCues({ isDisabled = false }: { isDisabled?: Boolean } = {}) {
+	updateCues({ isDisabled = false }: { isDisabled?: boolean } = {}) {
 		if (this.activeTrack && this.activeTrack.cues && this.activeTrack.cues.length) {
 			const cues = Array.from(this.activeTrack.cues)
 			const activeCues = this.activeTrack.activeCues
 
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			const _this = this
 
 			const onEnter = function () {

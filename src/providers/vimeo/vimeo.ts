@@ -17,7 +17,7 @@ declare global {
  * @param {Class} Player
  * @returns {Class} Provider class extended from vLitejs Player
  */
-export default function (Player: any) {
+export default function VimeoProvider(Player: any) {
 	const providerObjectName = 'Vimeo'
 	window.VlitejsVimeoQueue = window.VlitejsVimeoQueue || []
 
@@ -45,7 +45,7 @@ export default function (Player: any) {
 	 * @module vlitejs/Player/PlayerVimeo
 	 */
 	return class PlayerVimeo extends Player {
-		params: Object
+		params: object
 		events: Array<configEvent>
 		instance: any
 
@@ -84,7 +84,7 @@ export default function (Player: any) {
 		 * @returns {Promise} The player is ready
 		 */
 		waitUntilVideoIsReady(): Promise<void> {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				// Initialize the player if the API is already available or reject
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initVimeoPlayer().then(resolve)
@@ -98,7 +98,7 @@ export default function (Player: any) {
 		 * Initialize the player
 		 */
 		initVimeoPlayer(): Promise<void> {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), this.params)
 				this.media = this.instance.element
 				this.instance.ready().then(() => {

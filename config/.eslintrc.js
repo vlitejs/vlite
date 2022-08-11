@@ -1,6 +1,7 @@
 module.exports = {
-	parser: 'babel-eslint',
+	parser: '@typescript-eslint/parser',
 	parserOptions: {
+		requireConfigFile: false,
 		ecmaVersion: 6,
 		ecmaFeatures: {
 			impliedStrict: true,
@@ -15,11 +16,11 @@ module.exports = {
 		es6: true
 	},
 
-	extends: ['standard'],
-
-	plugins: ['prettier'],
+	extends: ['standard', 'plugin:prettier/recommended', 'plugin:@typescript-eslint/recommended'],
 
 	rules: {
+		'@typescript-eslint/ban-ts-comment': 'off',
+		'@typescript-eslint/no-explicit-any': 'off',
 		indent: ['error', 'tab', { ignoredNodes: ['TemplateLiteral *'], SwitchCase: 1 }],
 		'no-tabs': 0,
 		'space-before-function-paren': [

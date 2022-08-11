@@ -56,7 +56,7 @@
 		transition: background-color var(--vlite-transition);
 		text-align: left;
 		width: 100%;
-		-webkit-appearance: none;
+		appearance: none;
 		background: none;
 		border: none;
 		cursor: pointer;

@@ -3,7 +3,7 @@
  * @param {Class} Player
  * @returns {Class} Provider class extended from vLitejs Player
  */
-export default function (Player: any) {
+export default function SampleProvider(Player) {
 	window.VlitejsProviderQueue = window.VlitejsProviderQueue || []
 	const providerObjectName = 'Sample'
 
@@ -40,7 +40,7 @@ export default function (Player: any) {
 		 * @returns {Promise} The player is ready
 		 */
 		waitUntilVideoIsReady() {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				// Initialize the player if the API is already available or reject
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initPlayer().then(resolve)
@@ -57,11 +57,11 @@ export default function (Player: any) {
 		 * @returns {Promise} The player is instanciated
 		 */
 		initPlayer() {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				// Initialize the Player with the API
 				// Resolve the promise when the player is ready
 				// this.instance =
-				// resolve()
+				resolve()
 			})
 		}
 
@@ -121,7 +121,7 @@ export default function (Player: any) {
 		 * Set the new current time for the player
 		 * @param {Number} Current time video
 		 */
-		methodSeekTo(newTime: number) {
+		methodSeekTo(newTime) {
 			this.instance.seekTo(newTime)
 		}
 

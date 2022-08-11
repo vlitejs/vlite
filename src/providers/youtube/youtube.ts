@@ -1,4 +1,4 @@
-import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+import { playerParameters } from 'shared/assets/interfaces/interfaces'
 
 declare global {
 	interface Window {
@@ -9,14 +9,14 @@ declare global {
 		YT: {
 			Player: any
 			PlayerState: {
-				BUFFERING: Number
-				ENDED: Number
-				PLAYING: Number
-				PAUSED: Number
-				UNSTARTED: Number
+				BUFFERING: number
+				ENDED: number
+				PLAYING: number
+				PAUSED: number
+				UNSTARTED: number
 			}
 		}
-		onYouTubeIframeAPIReady: Function
+		onYouTubeIframeAPIReady: () => void
 	}
 }
 
@@ -25,7 +25,7 @@ declare global {
  * @param {Class} Player
  * @returns {Class} Provider class extended from vLitejs Player
  */
-export default function (Player: any) {
+export default function YoutubeProvider(Player: any) {
 	const providerObjectName = 'YT'
 	window.VlitejsYoutubeQueue = window.VlitejsYoutubeQueue || []
 
@@ -53,7 +53,7 @@ export default function (Player: any) {
 	 * @module vlitejs/Player/PlayerYoutube
 	 */
 	return class PlayerYoutube extends Player {
-		params: Object
+		params: object
 		instance: any
 
 		constructor(props: playerParameters) {
@@ -70,6 +70,7 @@ export default function (Player: any) {
 			}
 			this.params = { ...DEFAULT_PARAMS, ...this.options.providerParams }
 		}
+
 		/**
 		 * Initialize the player when the API is ready
 		 */
@@ -84,7 +85,7 @@ export default function (Player: any) {
 		 * @returns {Promise} The player is ready
 		 */
 		waitUntilVideoIsReady(): Promise<void> {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				// Initialize the player if the API is already available
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initYoutubePlayer().then(resolve)
@@ -98,7 +99,7 @@ export default function (Player: any) {
 		 * Initialize the player
 		 */
 		initYoutubePlayer(): Promise<void> {
-			return new window.Promise((resolve, reject) => {
+			return new window.Promise((resolve) => {
 				this.instance = new window.YT.Player(this.media.getAttribute('id'), {
 					videoId: this.media.getAttribute('data-youtube-id'),
 					height: '100%',

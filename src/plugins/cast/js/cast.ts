@@ -29,7 +29,7 @@ declare global {
 		cast: {
 			framework: {
 				CastContext: {
-					getInstance: Function
+					getInstance: () => void
 				}
 				RemotePlayer: Constructable<any>
 				RemotePlayerController: Constructable<any>
@@ -47,7 +47,7 @@ declare global {
 				}
 			}
 		}
-		__onGCastApiAvailable: Function
+		__onGCastApiAvailable: (isAvailable: boolean) => void
 	}
 }
 
@@ -104,7 +104,9 @@ export default class CastPlugin {
 	 * Initialize the plugin
 	 */
 	init() {
-		window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && this.initCastApi()
+		window.__onGCastApiAvailable = (isAvailable: boolean) => {
+			isAvailable && this.initCastApi()
+		}
 		this.loadWebSenderApi()
 	}
 
@@ -139,11 +141,6 @@ export default class CastPlugin {
 		this.subtitles = this.getSubtitles()
 		this.addEvents()
 	}
-
-	/**
-	 * On player ready
-	 */
-	onReady() {}
 
 	/**
 	 * Render the plugin HTML

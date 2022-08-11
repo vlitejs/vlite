@@ -12,16 +12,17 @@ export default class Player {
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
-	isCast: Boolean
-	isFullScreen: Boolean
-	isMuted: Boolean
-	isPaused: null | Boolean
+	isCast: boolean
+	isFullScreen: boolean
+	isMuted: boolean
+	isPaused: null | boolean
 	controlBar: any
 	playerEvents: Array<configEvent>
-	isTouch: Boolean
+	isTouch: boolean
 	plugins: {
 		[key: string]: any
 	}
+
 	elements: {
 		container: HTMLElement
 		bigPlay: HTMLElement | null
@@ -118,6 +119,7 @@ export default class Player {
 	 * methodSeekTo
 	 * Extends by the provider
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	methodSeekTo(newTime: number) {
 		throw new Error('You have to implement the function "methodSeekTo".')
 	}
@@ -150,6 +152,7 @@ export default class Player {
 	 * methodSetVolume
 	 * Extends by the provider
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	methodSetVolume(newVolume: number) {
 		throw new Error('You have to implement the function "methodSetVolume".')
 	}
@@ -229,7 +232,7 @@ export default class Player {
 	 * Update the loader status
 	 * @param {Boolean} state Status of the loader
 	 */
-	loading(state: Boolean) {
+	loading(state: boolean) {
 		this.elements.container.classList[state ? 'add' : 'remove']('v-loading')
 		this.dispatchEvent('progress')
 	}
@@ -268,7 +271,7 @@ export default class Player {
 		if (this.elements.progressBar) {
 			const width = (currentTime * 100) / duration
 			this.elements.progressBar.value = `${width}`
-			this.elements.progressBar.style.setProperty('--value', `${width}%`)
+			this.elements.progressBar.style.setProperty('--vlite-progressValue', `${width}%`)
 			this.elements.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
 		}
 
@@ -296,7 +299,7 @@ export default class Player {
 
 		if (this.elements.progressBar) {
 			this.elements.progressBar.value = '0'
-			this.elements.progressBar.style.setProperty('--value', '0%')
+			this.elements.progressBar.style.setProperty('--vlite-progressValue', '0%')
 			this.elements.progressBar.removeAttribute('aria-valuenow')
 		}
 
@@ -453,7 +456,7 @@ export default class Player {
 			// @ts-ignore: Object is possibly 'null'.
 			this.elements.container[requestFn]()
 			this.isFullScreen = true
-			this.elements.container.classList.add('v-fullscreenButton-display')
+			this.elements.container.classList.add('v-fullscreenButtonDisplay')
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.add('v-controlPressed')
@@ -469,7 +472,7 @@ export default class Player {
 	 * @param {Object} options
 	 * @param {Boolean} options.escKey The exit is trigger by the esk key
 	 */
-	exitFullscreen({ escKey = false }: { escKey?: Boolean } = {}) {
+	exitFullscreen({ escKey = false }: { escKey?: boolean } = {}) {
 		const { cancelFn } = this.Vlitejs.supportFullScreen
 
 		if (document[cancelFn]) {
@@ -477,7 +480,7 @@ export default class Player {
 			!escKey && document[cancelFn]()
 			this.isFullScreen = false
 
-			this.elements.container.classList.remove('v-fullscreenButton-display')
+			this.elements.container.classList.remove('v-fullscreenButtonDisplay')
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.remove('v-controlPressed')

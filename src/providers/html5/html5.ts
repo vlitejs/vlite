@@ -5,7 +5,7 @@ import { playerParameters, configEvent } from 'shared/assets/interfaces/interfac
  * @param {Class} Player
  * @returns {Class} Provider class extended from vLitejs Player
  */
-export default function (Player: any) {
+export default function Html5Provider(Player: any) {
 	/**
 	 * vlitejs Player HTML5
 	 * @module vlitejs/Player/PlayerHtml5

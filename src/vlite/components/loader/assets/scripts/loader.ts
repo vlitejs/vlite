@@ -2,7 +2,7 @@
  * Loader template
  * @returns {String} Generated HTML
  */
-export default function (): string {
+export default function loader(): string {
 	return `
 		<div class="v-loader">
 			<div class="v-loaderContent">

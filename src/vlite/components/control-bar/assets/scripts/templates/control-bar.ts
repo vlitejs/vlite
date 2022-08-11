@@ -11,17 +11,14 @@ import { Options } from 'shared/assets/interfaces/interfaces'
  * @param {Object} options
  * @param {Object} options.options Player options
  * @param {Boolean} options.isMuted Player is muted
- * @param {String} options.type Player type (video|audio)
  * @returns {String} Generated HTML
  */
-export default function ({
+export default function controlBar({
 	options,
-	isMuted,
-	type
+	isMuted
 }: {
 	options: Options
-	isMuted: Boolean
-	type: string
+	isMuted: boolean
 }): string {
 	return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
 		options.time ? timeElement() : ''
@@ -58,7 +55,7 @@ function progressBarElement(): string {
  * Volume button template
  * @returns {String} Generated HTML
  */
-function volumeElement({ isMuted }: { isMuted: Boolean }) {
+function volumeElement({ isMuted }: { isMuted: boolean }) {
 	const muteClass = isMuted ? ' v-controlPressed' : ''
 	return `<button class="v-volumeButton v-controlButton${muteClass}">${svgVolumeHigh}${svgVolumeMute}</button>`
 }

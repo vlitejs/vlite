@@ -1,12 +1,11 @@
 import { formatVideoTime } from 'shared/utils/utils'
 import validateTarget from 'validate-target'
-import Template from './templates/control-bar'
-import { Options } from 'shared/assets/interfaces/interfaces'
+import TemplateControlBar from './templates/control-bar'
 
 export default class ControlBar {
 	player: any
 	type: string
-	touchEvents: Array<String>
+	touchEvents: Array<string>
 
 	/**
 	 * @constructor
@@ -127,7 +126,7 @@ export default class ControlBar {
 	 */
 	onInputProgressBar(e: Event) {
 		const target = e.target as HTMLInputElement
-		target.style.setProperty('--value', `${target.value}%`)
+		target.style.setProperty('--vlite-progressValue', `${target.value}%`)
 
 		// Without the poster, the play is not triggered
 		this.player.elements.container.classList.contains('v-firstStart') && this.player.play()
@@ -188,7 +187,7 @@ export default class ControlBar {
 	toggleVolume(e: Event) {
 		e.preventDefault()
 
-		this.player.elements.volume!.classList.contains('v-controlPressed')
+		this.player.elements.volume.classList.contains('v-controlPressed')
 			? this.player.unMute()
 			: this.player.mute()
 
@@ -211,10 +210,9 @@ export default class ControlBar {
 	 * @returns {String} Generated HTML
 	 */
 	getTemplate(): string {
-		return `${Template({
+		return `${TemplateControlBar({
 			options: this.player.options,
-			isMuted: this.player.isMuted,
-			type: this.type
+			isMuted: this.player.isMuted
 		})}`
 	}
 

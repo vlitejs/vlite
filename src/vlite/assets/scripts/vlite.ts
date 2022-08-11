@@ -54,16 +54,16 @@ class Vlitejs {
 	Player: any
 	media: HTMLVideoElement | HTMLAudioElement | HTMLDivElement
 	provider: string
-	onReady: Function | Boolean
+	onReady: () => void
 	type: string
 	supportFullScreen: FullScreenSupport
 	options: Options
-	autoHideGranted: Boolean
+	autoHideGranted: boolean
 	container: HTMLElement
 	player: any
 	controlBar: any
-	registerPlugin!: Function
-	registerProvider!: Function
+	registerPlugin!: () => void
+	registerProvider!: () => void
 	timerAutoHide!: TimerHandle
 
 	/**
@@ -81,12 +81,13 @@ class Vlitejs {
 			options = {},
 			provider = 'html5',
 			plugins = [],
-			onReady = false
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			onReady = () => {}
 		}: {
-			options?: Options | Object
+			options?: Options | object
 			provider?: string
 			plugins?: Array<string>
-			onReady?: Function | Boolean
+			onReady?: () => void
 		} = {}
 	) {
 		// Detect the type of the selector (string or HTMLElement)
@@ -293,9 +294,8 @@ class Vlitejs {
 	/**
 	 * On fullscreen change (espace key pressed)
 	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-	 * @param {Event} e Event data
 	 */
-	onChangeFullScreen(e: Event) {
+	onChangeFullScreen() {
 		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {
 			this.player.exitFullscreen({ escKey: true })
 		}
@@ -316,7 +316,7 @@ class Vlitejs {
 	 */
 	increaseVolume() {
 		this.player.isMuted && this.player.unMute()
-		const volume = this.player.getVolume().then((volume: number) => {
+		this.player.getVolume().then((volume: number) => {
 			this.player.setVolume(volume + 0.05)
 		})
 	}
@@ -325,7 +325,7 @@ class Vlitejs {
 	 * Decrease the player volume
 	 */
 	decreaseVolume() {
-		const volume = this.player.getVolume().then((volume: number) => {
+		this.player.getVolume().then((volume: number) => {
 			this.player.setVolume(volume - 0.05)
 		})
 	}
@@ -349,7 +349,7 @@ class Vlitejs {
 	 */
 	stopAutoHideTimer() {
 		if (this.type === 'video' && this.player.elements.controlBar) {
-			this.player.elements.controlBar.classList.remove('hidden')
+			this.player.elements.controlBar.classList.remove('v-hidden')
 			clearTimeout(this.timerAutoHide)
 		}
 	}
@@ -360,7 +360,7 @@ class Vlitejs {
 	startAutoHideTimer() {
 		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				this.player.elements.controlBar.classList.add('hidden')
+				this.player.elements.controlBar.classList.add('v-hidden')
 			}, this.options.autoHideDelay)
 		}
 	}

@@ -9,6 +9,24 @@ export interface FullScreenSupport {
 	isFullScreen: string
 }
 
+export interface Options {
+	autoplay: boolean
+	controls: boolean
+	playPause: boolean
+	progressBar: boolean
+	time: boolean
+	volume: boolean
+	fullscreen: boolean
+	poster: null | string
+	bigPlay: boolean
+	autoHide: boolean
+	autoHideDelay: number
+	playsinline: boolean
+	loop: boolean
+	muted: boolean
+	[key: string]: boolean | null | string | number
+}
+
 export interface playerParameters {
 	media: HTMLAudioElement | HTMLVideoElement
 	container: HTMLElement
@@ -20,24 +38,6 @@ export interface playerParameters {
 export interface pluginParameter {
 	player: playerParameters
 	options: any
-}
-
-export interface Options {
-	autoplay: Boolean
-	controls: Boolean
-	playPause: Boolean
-	progressBar: Boolean
-	time: Boolean
-	volume: Boolean
-	fullscreen: Boolean
-	poster: null | string
-	bigPlay: Boolean
-	autoHide: Boolean
-	autoHideDelay: number
-	playsinline: Boolean
-	loop: Boolean
-	muted: Boolean
-	[key: string]: Boolean | null | string | number
 }
 
 export interface configEvent {

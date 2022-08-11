@@ -24,10 +24,9 @@
 		transition: height var(--vlite-transition), top var(--vlite-transition);
 		z-index: 1;
 		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
-		-webkit-appearance: none;
+		appearance: none;
 		-webkit-tap-highlight-color: transparent;
 		user-select: none;
-		-webkit-user-select: none;
 		touch-action: manipulation;
 		background: none;
 		border: none;
@@ -49,8 +48,8 @@
 			border-radius: var(--vlite-progressBarHeight);
 			background: linear-gradient(
 				to right,
-				var(--vlite-colorPrimary) var(--value, 0),
-				var(--vlite-progressBarBackground) var(--value, 0)
+				var(--vlite-colorPrimary) var(--vlite-progressValue, 0),
+				var(--vlite-progressBarBackground) var(--vlite-progressValue, 0)
 			);
 		}
 
@@ -60,13 +59,13 @@
 			border-radius: var(--vlite-progressBarHeight);
 			background: linear-gradient(
 				to right,
-				var(--vlite-colorPrimary) var(--value, 0),
-				var(--vlite-progressBarBackground) var(--value, 0)
+				var(--vlite-colorPrimary) var(--vlite-progressValue, 0),
+				var(--vlite-progressBarBackground) var(--vlite-progressValue, 0)
 			);
 		}
 
 		&::-webkit-slider-thumb {
-			-webkit-appearance: none;
+			appearance: none;
 			width: calc(var(--vlite-progressBarHeight) * 2);
 			height: calc(var(--vlite-progressBarHeight) * 2);
 			border-radius: 50%;
@@ -111,7 +110,7 @@
 			opacity: 1 !important;
 		}
 
-		&.hidden {
+		&.v-hidden {
 			opacity: 0;
 		}
 	}

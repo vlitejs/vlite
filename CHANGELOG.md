@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 4.1.0
+
+### New features
+
+- Add the Dailymotion provider ([#73](https://github.com/vlitejs/vlite/pull/73))
+- Add the Cast plugin ([#72](https://github.com/vlitejs/vlite/pull/72))
+
+### Fixes
+
+- Fix Youtube seekTo method conflicting with unstarted and unmuted video ([#75](https://github.com/vlitejs/vlite/pull/75))
+
 ## 4.0.7
 
 ### Fixes

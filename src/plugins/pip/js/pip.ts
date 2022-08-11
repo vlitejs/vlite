@@ -1,5 +1,5 @@
 import svgPip from 'shared/assets/svgs/pip.svg'
-import { Options, pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 /**
  * Vlitejs Picture-in-Picture plugin
@@ -44,7 +44,7 @@ export default class PiP {
 	 * Check if the PIP API is available and not disabled
 	 * @returns {Boolean} PIP API status
 	 */
-	isPipApiAvailable(): Boolean {
+	isPipApiAvailable(): boolean {
 		return (
 			'pictureInPictureEnabled' in document &&
 			!this.player.media.hasAttribute('disablePictureInPicture')
@@ -100,17 +100,15 @@ export default class PiP {
 
 	/**
 	 * On enter the PIP
-	 * @param {Event} e Event data
 	 */
-	onEnterPip(e: Event) {
+	onEnterPip() {
 		this.player.dispatchEvent('enterpip')
 	}
 
 	/**
 	 * On leave the PIP
-	 * @param {Event} e Event data
 	 */
-	onLeavePip(e: Event) {
+	onLeavePip() {
 		this.player.dispatchEvent('leavepip')
 	}
 }
