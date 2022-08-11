@@ -265,7 +265,7 @@ export default class CastPlugin {
 		this.player.Vlitejs.stopAutoHideTimer()
 
 		this.player.elements.container.classList.add('v-remote')
-		this.castButton.classList.add('active')
+		this.castButton.classList.add('v-active')
 		this.player.isCast = true
 
 		const deviceName = this.getSession().getCastDevice().deviceName || 'Chromecast'
@@ -284,8 +284,9 @@ export default class CastPlugin {
 		this.player.Vlitejs.autoHideGranted = this.backupAutoHide
 		this.backupAutoHide && this.player.Vlitejs.startAutoHideTimer()
 
-		this.castButton.classList.remove('active')
+		this.castButton.classList.remove('v-active')
 		this.player.elements.container.classList.remove('v-remote')
+		this.player.elements.container.querySelector('.v-deviceName').remove()
 		this.player.isCast = false
 
 		if (!this.player.isPaused) {

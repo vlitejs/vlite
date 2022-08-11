@@ -22,7 +22,6 @@ export default class Player {
 	plugins: {
 		[key: string]: any
 	}
-	getRemoteCurrentTime!: Function
 	elements: {
 		container: HTMLElement
 		bigPlay: HTMLElement | null
@@ -252,8 +251,9 @@ export default class Player {
 	/**
 	 * Update the progress bar
 	 * @param {Object} options
-	 * @param {Object} options.seconds Current time in seconds
-	 * @param {Object} options.duration Duration in seconds
+	 * @param {String} options.seconds Current time in seconds
+	 * @param {String} options.duration Duration in seconds
+	 * @param {Boolean} options.isRemote Cast mode is enabled
 	 */
 	updateProgressBar({
 		seconds,

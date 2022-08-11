@@ -1,7 +1,7 @@
 .v {
 	&-castButton {
-		&.active svg {
-			fill: #3ea6ff;
+		&.v-active svg {
+			fill: var(--vlite-colorPrimary);
 		}
 	}
 

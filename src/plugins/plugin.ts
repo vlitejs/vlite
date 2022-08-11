@@ -37,8 +37,9 @@ export function getPluginInstance(plugins: Array<string>): Array<interfacePlugin
 
 /**
  * Register the plugin
- * @param id Plugin ID
- * @param instance Plugin instance
+ * @param {String} id Plugin ID
+ * @param {any} instance Plugin instance
+ * @param {Object} options Plugin options
  * @returns {undefined} No value to return
  */
 export function registerPlugin(id: string, instance: any, options: any): undefined {
