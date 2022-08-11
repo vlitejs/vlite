@@ -8,9 +8,15 @@
 		"html5",
 		"youtube",
 		"vimeo",
+		"dailymotion",
 		"player",
 		"youtube api",
-		"vimeo api"
+		"vimeo api",
+		"pip",
+		"picture-in-picture",
+		"subtitle",
+		"cast",
+		"chromecast"
 	],
 	"homepage": "https://vlite.js.org",
 	"bugs": "https://github.com/vlitejs/vlite/issues",
