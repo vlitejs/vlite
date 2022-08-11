@@ -22,11 +22,10 @@ Supports for multiple caption tracks (VTT).
 
 ### HTML
 
-<!-- prettier-ignore -->
 ```html
-<video id="player" class="vlite-js" src="/path/to/video.mp4">
-    <track label="English" kind="subtitles" srclang="en" src="/path/to/subtitle-en.vtt" default>
-    <track label="French" kind="subtitles" srclang="fr" src="/path/to/subtitle-fr.vtt">
+<video id="player" class="vlite-js" src="<path_to_video_mp4>">
+  <track label="English" kind="subtitles" srclang="en" src="<path_to_subtitle_en.vtt>" default />
+  <track label="French" kind="subtitles" srclang="fr" src="<path_to_subtitle_fr.vtt>" />
 </video>
 ```
 

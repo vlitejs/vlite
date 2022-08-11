@@ -319,8 +319,6 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 | `--vlite-controlBarBackground`        | `linear-gradient(to top, #000 -50%, transparent)` | Control bar background         |
 | `--vlite-controlsColor`               | `#fff\|#000`                                      | Controls color (video\|audio)  |
 | `--vlite-controlsOpacity`             | `0.9`                                             | Controls opacity               |
-| `--vlite-controlsIconWidth`           | `28px`                                            | Controls icon width            |
-| `--vlite-controlsIconHeight`          | `28px`                                            | Controls icon height           |
 | `--vlite-progressBarHeight`           | `5px`                                             | Progress bar height            |
 | `--vlite-progressBarBackground`       | `rgba(0 0 0 / 25%)`                               | Progress bar background        |
 

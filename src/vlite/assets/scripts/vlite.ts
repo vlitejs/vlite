@@ -7,7 +7,7 @@ import OverlayTemplate from '../../components/overlay/assets/scripts/overlay'
 import PosterTemplate from '../../components/poster/assets/scripts/poster'
 import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
 import { registerProvider, getProviderInstance } from '../../../providers/provider'
-import { getPluginInstance, registerPlugin, initializePlugins } from '../../../plugins/plugin'
+import { registerPlugin, initializePlugins } from '../../../plugins/plugin'
 
 type TimerHandle = number
 
@@ -284,7 +284,7 @@ class Vlitejs {
 	 * On mousemove on the player
 	 */
 	onMousemove() {
-		if (!this.player.isPaused) {
+		if (!this.player.isPaused && this.autoHideGranted) {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
 		}
@@ -315,6 +315,7 @@ class Vlitejs {
 	 * Increase the player volume
 	 */
 	increaseVolume() {
+		this.player.isMuted && this.player.unMute()
 		const volume = this.player.getVolume().then((volume: number) => {
 			this.player.setVolume(volume + 0.05)
 		})

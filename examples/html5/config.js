@@ -1,11 +1,22 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/subtitle.css'
+import '../../dist/plugins/cast.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
+import VlitejsCast from '../../dist/plugins/cast.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
+Vlitejs.registerPlugin('cast', VlitejsCast, {
+	textTrackStyle: {
+		backgroundColor: '#21212190'
+	},
+	metadata: {
+		title: 'The Jungle Book',
+		subtitle: 'Walt Disney Animation Studios'
+	}
+})
 
 /* eslint-disable no-unused-vars */
 const vlite = new Vlitejs('#player', {
@@ -24,7 +35,7 @@ const vlite = new Vlitejs('#player', {
 		muted: false,
 		autoHide: true
 	},
-	plugins: ['subtitle', 'pip'],
+	plugins: ['subtitle', 'pip', 'cast'],
 	onReady: function (player) {
 		console.log(player)
 

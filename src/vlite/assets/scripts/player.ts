@@ -12,6 +12,7 @@ export default class Player {
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
+	isCast: Boolean
 	isFullScreen: Boolean
 	isMuted: Boolean
 	isPaused: null | Boolean
@@ -46,6 +47,7 @@ export default class Player {
 		this.plugins = {}
 		this.media = Vlitejs.media
 		this.options = Vlitejs.options
+		this.isCast = false
 
 		this.elements = {
 			container: Vlitejs.container,
@@ -240,27 +242,41 @@ export default class Player {
 	onTimeUpdate() {
 		if (this.options.time) {
 			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
-				([seconds, duration]: [number, number]) => {
-					const currentTime = Math.round(seconds)
-
-					if (this.elements.progressBar) {
-						const width = (currentTime * 100) / duration
-						this.elements.progressBar.value = `${width}`
-						this.elements.progressBar.style.setProperty('--value', `${width}%`)
-						this.elements.progressBar.setAttribute(
-							'aria-valuenow',
-							`${Math.round(seconds)}`
-						)
-					}
-
-					if (this.elements.currentTime) {
-						this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
-					}
-
-					this.dispatchEvent('timeupdate')
-				}
+				([seconds, duration]: [number, number]) =>
+					this.updateProgressBar({ seconds, duration })
 			)
 		}
+	}
+
+	/**
+	 * Update the progress bar
+	 * @param {Object} options
+	 * @param {String} options.seconds Current time in seconds
+	 * @param {String} options.duration Duration in seconds
+	 * @param {Boolean} options.isRemote Cast mode is enabled
+	 */
+	updateProgressBar({
+		seconds,
+		duration,
+		isRemote = false
+	}: {
+		seconds: number
+		duration: number
+		isRemote?: boolean
+	}) {
+		const currentTime = Math.round(seconds)
+		if (this.elements.progressBar) {
+			const width = (currentTime * 100) / duration
+			this.elements.progressBar.value = `${width}`
+			this.elements.progressBar.style.setProperty('--value', `${width}%`)
+			this.elements.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
+		}
+
+		if (this.elements.currentTime) {
+			this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
+		}
+
+		!isRemote && this.dispatchEvent('timeupdate')
 	}
 
 	/**
@@ -303,7 +319,7 @@ export default class Player {
 			}
 		}
 
-		this.methodPlay()
+		!this.isCast && this.methodPlay()
 		this.isPaused = false
 		this.elements.container.classList.replace('v-paused', 'v-playing')
 
@@ -324,7 +340,7 @@ export default class Player {
 	 * Pause the media element
 	 */
 	pause() {
-		this.methodPause()
+		!this.isCast && this.methodPause()
 		this.isPaused = true
 		this.elements.container.classList.replace('v-playing', 'v-paused')
 
