@@ -74,7 +74,8 @@ const generator = ({ entry, library = false, isProduction }) => {
 			export: 'default'
 		}
 	}
-	return {
+
+	const config = {
 		watch: !isProduction,
 		entry,
 		watchOptions: {
@@ -141,7 +142,6 @@ const generator = ({ entry, library = false, isProduction }) => {
 		},
 		context: appDirectory,
 		plugins: [
-			new webpack.ProgressPlugin(),
 			new MiniCssExtractPlugin({
 				filename: '[name].css',
 				chunkFilename: '[name].css'
@@ -185,6 +185,12 @@ const generator = ({ entry, library = false, isProduction }) => {
 			splitChunks: false
 		}
 	}
+
+	if (!isProduction) {
+		config.plugins.push(new webpack.ProgressPlugin())
+	}
+
+	return config
 }
 
 module.exports = (env, argv) => {
