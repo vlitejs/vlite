@@ -11,7 +11,7 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
 
-	return {
+	const config = {
 		entry: {
 			html5: `${resolveApp('examples/html5/config.js')}`,
 			audio: `${resolveApp('examples/audio/config.js')}`,
@@ -76,7 +76,6 @@ module.exports = (env, argv) => {
 		},
 		context: appDirectory,
 		plugins: [
-			new webpack.ProgressPlugin(),
 			new MiniCssExtractPlugin({
 				filename: 'styles/[name].css',
 				chunkFilename: 'styles/[name].css'
@@ -155,4 +154,10 @@ module.exports = (env, argv) => {
 			splitChunks: false
 		}
 	}
+
+	if (!isProduction) {
+		config.plugins.push(new webpack.ProgressPlugin())
+	}
+
+	return config
 }
