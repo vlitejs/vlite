@@ -1,6 +1,6 @@
 # Plugin: Picture-in-Picture
 
-Supports for multiple caption tracks (VTT).
+Supports for Picture-in-Picture mode.
 
 ## Overview
 
@@ -23,7 +23,7 @@ Supports for multiple caption tracks (VTT).
 ### HTML
 
 ```html
-<video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
+<video id="player" class="vlite-js" src="<path_to_video_mp4>"></video>
 ```
 
 ### JavaScript

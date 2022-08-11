@@ -1,14 +1,14 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/subtitle.css'
-import '../../dist/plugins/chromecast.css'
+import '../../dist/plugins/cast.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
-import VlitejsChromecast from '../../dist/plugins/chromecast.js'
+import VlitejsCast from '../../dist/plugins/cast.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
-Vlitejs.registerPlugin('chromecast', VlitejsChromecast, {
+Vlitejs.registerPlugin('cast', VlitejsCast, {
 	textTrackStyle: {
 		backgroundColor: '#21212190'
 	},
@@ -35,7 +35,7 @@ const vlite = new Vlitejs('#player', {
 		muted: false,
 		autoHide: true
 	},
-	plugins: ['subtitle', 'pip', 'chromecast'],
+	plugins: ['subtitle', 'pip', 'cast'],
 	onReady: function (player) {
 		console.log(player)
 

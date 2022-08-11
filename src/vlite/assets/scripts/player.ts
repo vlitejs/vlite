@@ -12,7 +12,7 @@ export default class Player {
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
-	isChromecast: Boolean
+	isCast: Boolean
 	isFullScreen: Boolean
 	isMuted: Boolean
 	isPaused: null | Boolean
@@ -48,7 +48,7 @@ export default class Player {
 		this.plugins = {}
 		this.media = Vlitejs.media
 		this.options = Vlitejs.options
-		this.isChromecast = false
+		this.isCast = false
 
 		this.elements = {
 			container: Vlitejs.container,
@@ -319,7 +319,7 @@ export default class Player {
 			}
 		}
 
-		!this.isChromecast && this.methodPlay()
+		!this.isCast && this.methodPlay()
 		this.isPaused = false
 		this.elements.container.classList.replace('v-paused', 'v-playing')
 
@@ -340,7 +340,7 @@ export default class Player {
 	 * Pause the media element
 	 */
 	pause() {
-		!this.isChromecast && this.methodPause()
+		!this.isCast && this.methodPause()
 		this.isPaused = true
 		this.elements.container.classList.replace('v-playing', 'v-paused')
 

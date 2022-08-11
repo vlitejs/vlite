@@ -5,7 +5,7 @@
 		}
 	}
 
-	&-chromecastName {
+	&-deviceName {
 		display: none;
 		position: absolute;
 		top: 0;
@@ -29,7 +29,7 @@
 			display: none;
 		}
 
-		.v-chromecastName {
+		.v-deviceName {
 			display: block;
 		}
 	}

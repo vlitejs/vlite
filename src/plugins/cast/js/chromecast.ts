@@ -65,10 +65,10 @@ interface CastEvent {
 }
 
 /**
- * Vlitejs Chromecast plugin
- * @module Vlitejs/plugins/chromecast
+ * Vlitejs Cast plugin
+ * @module Vlitejs/plugins/cast
  */
-export default class ChromecastPlugin {
+export default class CastPlugin {
 	player: any
 	options: any
 	castButton!: HTMLElement
@@ -122,8 +122,8 @@ export default class ChromecastPlugin {
 	}
 
 	/**
-	 * Chromecast API is available
-	 * Initialize the Chromecast API
+	 * Cast Web Sender API is available
+	 * Initialize the Cast API
 	 */
 	initCastApi() {
 		this.castContext = window.cast.framework.CastContext.getInstance()
@@ -187,7 +187,7 @@ export default class ChromecastPlugin {
 
 	/**
 	 * On cast state change
-	 * Chromecast event
+	 * Cast event
 	 */
 	onCastStateChange(e: CastEvent) {
 		const sessionState = e.sessionState
@@ -207,7 +207,7 @@ export default class ChromecastPlugin {
 
 	/**
 	 * On current time changed
-	 * Chromecast event
+	 * Cast event
 	 */
 	onCurrentTimeChanged() {
 		this.player.updateProgressBar({
@@ -266,12 +266,12 @@ export default class ChromecastPlugin {
 
 		this.player.elements.container.classList.add('v-remote')
 		this.castButton.classList.add('active')
-		this.player.isChromecast = true
+		this.player.isCast = true
 
-		const friendlyName = this.getSession().getCastDevice().friendlyName || 'Chromecast'
+		const deviceName = this.getSession().getCastDevice().deviceName || 'Chromecast'
 		this.player.media.insertAdjacentHTML(
 			'afterend',
-			`<span class="v-chromecastName">Cast on ${friendlyName}</span>`
+			`<span class="v-deviceName">Cast on ${deviceName}</span>`
 		)
 
 		this.loadMedia()
@@ -286,7 +286,7 @@ export default class ChromecastPlugin {
 
 		this.castButton.classList.remove('active')
 		this.player.elements.container.classList.remove('v-remote')
-		this.player.isChromecast = false
+		this.player.isCast = false
 
 		if (!this.player.isPaused) {
 			this.player.methodPlay()
@@ -317,7 +317,7 @@ export default class ChromecastPlugin {
 	}
 
 	/**
-	 * Load the media to the Chromecast
+	 * Load the media into the receiver
 	 */
 	loadMedia() {
 		const session = this.getSession()
@@ -390,7 +390,7 @@ export default class ChromecastPlugin {
 
 	/**
 	 * On cast media loaded changed
-	 * Chromecast event
+	 * Cast event
 	 */
 	isMediaLoadedChanged() {
 		this.player.on('play', () => {
