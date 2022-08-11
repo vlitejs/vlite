@@ -87,7 +87,7 @@ export default class CastPlugin {
 	 * @param {Class} options.player Player instance
 	 * @param {Object} options.options Plugins options
 	 */
-	constructor({ player, options }: pluginParameter) {
+	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
 		this.options = options
 		this.subtitles = []
@@ -334,7 +334,7 @@ export default class CastPlugin {
 		textTrackStyle.foregroundColor = '#ffffffff'
 		mediaInfo.textTrackStyle = {
 			...textTrackStyle,
-			...this.options.textTrackStyle
+			...(this.options.textTrackStyle || {})
 		}
 
 		const metadata = new window.chrome.cast.media.GenericMediaMetadata()
@@ -343,7 +343,7 @@ export default class CastPlugin {
 		}
 		mediaInfo.metadata = {
 			...metadata,
-			...this.options.metadata
+			...(this.options.metadata || {})
 		}
 
 		const loadRequest = new window.chrome.cast.media.LoadRequest(mediaInfo)
