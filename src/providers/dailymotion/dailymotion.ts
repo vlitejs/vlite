@@ -115,7 +115,7 @@ export default function (Player: any, options: interfaceProvidersOptions) {
 							this.options.autoplay = true
 						}
 
-						//Dailymotion does not maintain the main CSS class and has inline styles that conflict with ours
+						// Dailymotion does not maintain the main CSS class and has inline styles that conflict with ours
 						this.media.classList.add('vlite-js')
 						this.media.removeAttribute('style')
 
