@@ -28,8 +28,9 @@ export function getProviderInstance(provider: string, Player: any): any {
 
 /**
  * Register the provider
- * @param id Provider ID
- * @param instance Provider instance
+ * @param {String} id Provider ID
+ * @param {any} instance Provider instance
+ * @param {Object} options Provider options
  * @returns {undefined} No value to return
  */
 export function registerProvider(id: string, instance: any, options: interfaceProvidersOptions) {
