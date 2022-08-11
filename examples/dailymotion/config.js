@@ -1,8 +1,10 @@
 import '../../dist/vlite.css'
 import Vlitejs from '../../dist/vlite.js'
-import VlitejsVimeo from '../../dist/providers/vimeo.js'
+import VlitejsDailymotion from '../../dist/providers/dailymotion.js'
 
-Vlitejs.registerProvider('vimeo', VlitejsVimeo)
+Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
+	playerId: 'x9scg'
+})
 const vlite = new Vlitejs('#player', {
 	options: {
 		controls: true,
@@ -17,10 +19,9 @@ const vlite = new Vlitejs('#player', {
 		playsinline: true,
 		loop: false,
 		muted: false,
-		autoHide: true,
-		providerParams: {}
+		autoHide: true
 	},
-	provider: 'vimeo',
+	provider: 'dailymotion',
 	onReady: (player) => {
 		console.log(player)
 

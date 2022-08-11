@@ -6,10 +6,11 @@ The provider's API allows you to extends the capabilities of `vLitejs` to provid
 
 Each provider can be loaded on demand with the API.
 
-| Name                           | Description                    |
-| ------------------------------ | ------------------------------ |
-| [Youtube](./youtube/README.md) | Support for Youtube player API |
-| [Vimeo](./vimeo/REDME.md)      | Support for Vimeo player SDK   |
+| Name                                   | Description                        |
+| -------------------------------------- | ---------------------------------- |
+| [Youtube](./youtube/README.md)         | Support for Youtube player API     |
+| [Vimeo](./vimeo/README.md)             | Support for Vimeo player SDK       |
+| [Dailymotion](./dailymotion/README.md) | Support for Dailymotion player API |
 
 ## Create a custom provider
 

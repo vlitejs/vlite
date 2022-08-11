@@ -13,13 +13,13 @@ The provider is already inludes in `vLitejs`.
 #### Video
 
 ```html
-<video id="player" class="vlite-js" src="/path/to/video.mp4"></video>
+<video id="player" class="vlite-js" src="<path_to_video_mp4>"></video>
 ```
 
 #### Audio
 
 ```html
-<audio id="player" class="vlite-js" src="/path/to/audio.mp4"></audio>
+<audio id="player" class="vlite-js" src="<path_to_audio_mp3>"></audio>
 ```
 
 ### JavaScript

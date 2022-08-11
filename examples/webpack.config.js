@@ -17,7 +17,8 @@ module.exports = (env, argv) => {
 			audio: `${resolveApp('examples/audio/config.js')}`,
 			'html5-hls': `${resolveApp('examples/html5-hls/config.js')}`,
 			youtube: `${resolveApp('examples/youtube/config.js')}`,
-			vimeo: `${resolveApp('examples/vimeo/config.js')}`
+			vimeo: `${resolveApp('examples/vimeo/config.js')}`,
+			dailymotion: `${resolveApp('examples/dailymotion/config.js')}`
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -100,6 +101,12 @@ module.exports = (env, argv) => {
 				filename: 'vimeo/index.html',
 				template: resolveApp('examples/vimeo/index.html'),
 				chunks: ['vimeo'],
+				publicPath: '../'
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'dailymotion/index.html',
+				template: resolveApp('examples/dailymotion/index.html'),
+				chunks: ['dailymotion'],
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({
