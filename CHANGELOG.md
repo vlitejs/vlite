@@ -21,7 +21,7 @@
 
 ### Updates
 
-- Update environment ([#67](https://github.com/yoriiis/vlitejs/pull/67))
+- Update environment ([#67](https://github.com/vlitejs/vlite/pull/67))
 
 ## 4.0.5
 
