@@ -16,6 +16,13 @@ export default class SamplePlugin {
 	 * Initialize the plugin
 	 */
 	init() {
-		// Plugin code here
+		// Initialize the plugin here
+	}
+
+	/**
+	 * Destroy the plugin
+	 */
+	destroy() {
+		// Destroy the plugin here
 	}
 }
