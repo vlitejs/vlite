@@ -104,10 +104,27 @@ export default class CastPlugin {
 	 * Initialize the plugin
 	 */
 	init() {
-		window.__onGCastApiAvailable = (isAvailable: boolean) => {
-			isAvailable && this.initCastApi()
+		if (this.isCastFrameworkAlreadyAvailable()) {
+			this.initCastApi()
+		} else {
+			window.__onGCastApiAvailable = (isAvailable: boolean) => {
+				isAvailable && this.initCastApi()
+			}
+			this.loadWebSenderApi()
 		}
-		this.loadWebSenderApi()
+	}
+
+	/**
+	 * Check if the Cast framework is already available
+	 * @returns {Boolean} Cast framework is available
+	 */
+	isCastFrameworkAlreadyAvailable() {
+		return !!(
+			window.cast &&
+			window.cast.framework &&
+			customElements.get &&
+			customElements.get('google-cast-button')
+		)
 	}
 
 	/**
@@ -416,7 +433,6 @@ export default class CastPlugin {
 	 * Destroy the plugin
 	 */
 	destroy() {
-		console.log('cast destroy')
 		this.castContext.removeEventListener(
 			window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
 			this.onCastStateChange
