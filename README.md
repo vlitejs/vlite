@@ -278,22 +278,24 @@ vlite.player.on('play', () => {
 
 The player instance exposes the following methods, accessible when the player is ready.
 
-| Method                | Parameters |  Promise  | Description                       |
-| --------------------- | :--------: | :-------: | --------------------------------- |
-| `play()`              |     -      |     -     | Start the playback                |
-| `pause()`             |     -      |     -     | Pause the playback                |
-| `setVolume(volume)`   |  `Number`  |     -     | Set the volume between 0 and 1    |
-| `getVolume()`         |     -      | `Promise` | Get the volume                    |
-| `getCurrentTime()`    |     -      | `Promise` | Get the current time              |
-| `getDuration()`       |     -      | `Promise` | Get the duration                  |
-| `mute()`              |     -      |     -     | Mute the volume                   |
-| `unMmute()`           |     -      |     -     | Unmute the volume                 |
-| `seekTo(time)`        |  `Number`  |     -     | Seek to a current time in seconds |
-| `requestFullscreen()` |     -      |     -     | Request the fullscreen            |
-| `exitFullscreen()`    |     -      |     -     | Exit the fullscreen               |
-| `getInstance()`       |     -      |     -     | Get the player instance           |
-| `loading()`           | `Boolean`  |     -     | Set the loading status            |
-| `destroy()`           |     -      |     -     | Destroy the player                |
+| Method                 |     Parameters     |  Promise  | Description                       |
+| ---------------------- | :----------------: | :-------: | --------------------------------- |
+| `play()`               |         -          |     -     | Start the playback                |
+| `pause()`              |         -          |     -     | Pause the playback                |
+| `setVolume(volume)`    |      `Number`      |     -     | Set the volume between 0 and 1    |
+| `getVolume()`          |         -          | `Promise` | Get the volume                    |
+| `getCurrentTime()`     |         -          | `Promise` | Get the current time              |
+| `getDuration()`        |         -          | `Promise` | Get the duration                  |
+| `mute()`               |         -          |     -     | Mute the volume                   |
+| `unMmute()`            |         -          |     -     | Unmute the volume                 |
+| `seekTo(time)`         |      `Number`      |     -     | Seek to a current time in seconds |
+| `requestFullscreen()`  |         -          |     -     | Request the fullscreen            |
+| `exitFullscreen()`     |         -          |     -     | Exit the fullscreen               |
+| `getInstance()`        |         -          |     -     | Get the player instance           |
+| `loading()`            |     `Boolean`      |     -     | Set the loading status            |
+| `on(event, function)`  | `String, Function` |     -     | Add an event listener             |
+| `off(event, function)` | `String, Function` |     -     | Remove an event listener          |
+| `destroy()`            |         -          |     -     | Destroy the player                |
 
 Example of media `duration` recovery.
 
