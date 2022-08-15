@@ -104,11 +104,12 @@ export default class ImaPlugin {
 	}
 
 	onResize() {
-		if (this.adsManager) {
-			var width = this.player.media.clientWidth
-			var height = this.player.media.clientHeight
-			this.adsManager.resize(width, height, window.google.ima.ViewMode.NORMAL)
-		}
+		this.adsManager &&
+			this.adsManager.resize(
+				this.player.media.clientWidth,
+				this.player.media.clientHeight,
+				window.google.ima.ViewMode.NORMAL
+			)
 	}
 
 	onPlayerAndImaSdkReady() {
