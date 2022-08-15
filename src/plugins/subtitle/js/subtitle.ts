@@ -307,4 +307,12 @@ export default class Subtitle {
 	hideCue() {
 		this.captions.classList.remove('v-active')
 	}
+
+	/**
+	 * Destroy the plugin
+	 */
+	destroy() {
+		this.subtitleButton.removeEventListener('click', this.onClickOnSubtitleButton)
+		this.subtitlesList.removeEventListener('click', this.onClickOnSubtitlesList)
+	}
 }

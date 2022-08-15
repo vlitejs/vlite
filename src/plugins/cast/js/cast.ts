@@ -104,10 +104,27 @@ export default class CastPlugin {
 	 * Initialize the plugin
 	 */
 	init() {
-		window.__onGCastApiAvailable = (isAvailable: boolean) => {
-			isAvailable && this.initCastApi()
+		if (this.isCastFrameworkAlreadyAvailable()) {
+			this.initCastApi()
+		} else {
+			window.__onGCastApiAvailable = (isAvailable: boolean) => {
+				isAvailable && this.initCastApi()
+			}
+			this.loadWebSenderApi()
 		}
-		this.loadWebSenderApi()
+	}
+
+	/**
+	 * Check if the Cast framework is already available
+	 * @returns {Boolean} Cast framework is available
+	 */
+	isCastFrameworkAlreadyAvailable() {
+		return !!(
+			window.cast &&
+			window.cast.framework &&
+			customElements.get &&
+			customElements.get('google-cast-button')
+		)
 	}
 
 	/**
@@ -410,5 +427,27 @@ export default class CastPlugin {
 				this.remotePlayerController.seek()
 			})
 		})
+	}
+
+	/**
+	 * Destroy the plugin
+	 */
+	destroy() {
+		this.castContext.removeEventListener(
+			window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+			this.onCastStateChange
+		)
+		this.remotePlayerController.removeEventListener(
+			window.cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED,
+			this.onCurrentTimeChanged
+		)
+		this.remotePlayerController.removeEventListener(
+			window.cast.framework.RemotePlayerEventType.IS_MEDIA_LOADED_CHANGED,
+			this.isMediaLoadedChanged
+		)
+
+		this.castButton.removeEventListener('click', this.onClickOnCastButton)
+		this.player.off('trackdisabled', this.updateSubtitle)
+		this.player.off('trackenabled', this.updateSubtitle)
 	}
 }

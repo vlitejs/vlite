@@ -111,4 +111,13 @@ export default class PiP {
 	onLeavePip() {
 		this.player.dispatchEvent('leavepip')
 	}
+
+	/**
+	 * Destroy the plugin
+	 */
+	destroy() {
+		this.pipButton.removeEventListener('click', this.onClickOnPipButton)
+		this.player.media.removeEventListener('enterpictureinpicture', this.onEnterPip)
+		this.player.media.removeEventListener('leavepictureinpicture', this.onLeavePip)
+	}
 }

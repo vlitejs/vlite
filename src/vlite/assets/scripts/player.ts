@@ -221,6 +221,17 @@ export default class Player {
 	}
 
 	/**
+	 * Remove media action listeners on the container
+	 * @param {String} type Event type
+	 * @param {EventListener} listener Event listener
+	 */
+	off(type: string, listener: EventListener) {
+		if (listener instanceof Function) {
+			this.elements.container.removeEventListener(type, listener)
+		}
+	}
+
+	/**
 	 * Dispatch custom event on the container
 	 * @param {String} type Event type
 	 */

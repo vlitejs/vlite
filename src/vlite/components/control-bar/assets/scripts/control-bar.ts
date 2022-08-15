@@ -190,8 +190,6 @@ export default class ControlBar {
 		this.player.elements.volume.classList.contains('v-controlPressed')
 			? this.player.unMute()
 			: this.player.mute()
-
-		this.player.dispatchEvent('volumechange')
 	}
 
 	/**
