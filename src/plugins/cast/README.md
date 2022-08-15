@@ -4,15 +4,15 @@ Supports for Google Cast API.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                            |
-| ----------------- | ----------------------------------- |
-| Name              | `cast`                              |
-| Global name&sup1; | `window.VlitejsCast`                |
-| Path              | `vlitejs/dist/plugins/cast`         |
-| Entry point       | `vlitejs/dist/plugins/cast/cast.js` |
-| Stylesheet        | -                                   |
-| Provider&sup2;    | `'html5'`                           |
-| Media type&sup3;  | `'video'`                           |
+| <!-- -->          | <!-- -->                             |
+| ----------------- | ------------------------------------ |
+| Name              | `cast`                               |
+| Global name&sup1; | `window.VlitejsCast`                 |
+| Path              | `vlitejs/dist/plugins/cast`          |
+| Entry point       | `vlitejs/dist/plugins/cast/cast.js`  |
+| Stylesheet        | `vlitejs/dist/plugins/cast/cast.css` |
+| Provider&sup2;    | `'html5'`                            |
+| Media type&sup3;  | `'video'`                            |
 
 - _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 - _&sup2;Providers: `html5|youtube|vimeo`_
