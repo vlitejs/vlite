@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 4.1.2
+
+### Fixes
+
+- Fix multiple cast instance ([#76](https://github.com/vlitejs/vlite/pull/76))
+
 ## 4.1.1
 
 ### Fixes
