@@ -13,12 +13,12 @@ module.exports = (env, argv) => {
 
 	const config = {
 		entry: {
-			html5: `${resolveApp('examples/html5/config.js')}`,
-			audio: `${resolveApp('examples/audio/config.js')}`,
-			'html5-hls': `${resolveApp('examples/html5-hls/config.js')}`,
-			youtube: `${resolveApp('examples/youtube/config.js')}`,
-			vimeo: `${resolveApp('examples/vimeo/config.js')}`,
-			dailymotion: `${resolveApp('examples/dailymotion/config.js')}`
+			html5: resolveApp('examples/html5/config.js'),
+			audio: resolveApp('examples/audio/config.js'),
+			'html5-hls': resolveApp('examples/html5-hls/config.js'),
+			youtube: resolveApp('examples/youtube/config.js'),
+			vimeo: resolveApp('examples/vimeo/config.js'),
+			dailymotion: resolveApp('examples/dailymotion/config.js')
 		},
 		watchOptions: {
 			ignored: /node_modules/
