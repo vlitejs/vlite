@@ -19,7 +19,8 @@ module.exports = (env, argv) => {
 			audio: resolveApp('examples/audio/config.js'),
 			youtube: resolveApp('examples/youtube/config.js'),
 			vimeo: resolveApp('examples/vimeo/config.js'),
-			dailymotion: resolveApp('examples/dailymotion/config.js')
+			dailymotion: resolveApp('examples/dailymotion/config.js'),
+			youku: resolveApp('examples/youku/config.js')
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -116,6 +117,12 @@ module.exports = (env, argv) => {
 				filename: 'dailymotion/index.html',
 				template: resolveApp('examples/dailymotion/index.html'),
 				chunks: ['dailymotion'],
+				publicPath: '../'
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'youku/index.html',
+				template: resolveApp('examples/youku/index.html'),
+				chunks: ['youku'],
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({

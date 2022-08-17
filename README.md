@@ -13,7 +13,7 @@ HTML5 video and audio players are automatically included. Other providers like Y
 ## Why vLitejs?
 
 - If you are concerned about your app's loading performance, this library makes sense as it is extremely lightweight compared to the competition (only 6 KB).
-- It is quite rare to need to be compatible with HTML5, Youtube, Vimeo and Dailymotion at the same time. The library contains by default only HTML5 capabilities and exposed the Provider API to extend capabilities with other providers.
+- It is quite rare to need to be compatible with HTML5, Youtube, Vimeo, Dailymotion and Youku at the same time. The library contains by default only HTML5 capabilities and exposed the Provider API to extend capabilities with other providers.
 - If you need specific behaviors, the plugin API allows to extends the library capabilities.
 - If you need to create a video or audio player with a custom skin harmonized for all web browsers.
 
@@ -31,7 +31,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 ## Features
 
-- **Video & audio** - [HTML5 video](./src/providers/html5/README.md), [HTML5 audio](./src/providers/html5/README.md), [Youtube](./src/providers/youtube/README.md), [Vimeo](./src/providers/vimeo/README.md), [Dailymotion](./src/providers/dailymotion/README.md).
+- **Video & audio** - [HTML5 video](./src/providers/html5/README.md), [HTML5 audio](./src/providers/html5/README.md), [Youtube](./src/providers/youtube/README.md), [Vimeo](./src/providers/vimeo/README.md), [Dailymotion](./src/providers/dailymotion/README.md), [Youku](./src/providers/youku/README.md).
 - **Customization** - Choose the control elements you want to display.
 - **No dependency** - Written in native Javascript without any framework.
 - **Fullscreen** - Supports native fullscreen API.
@@ -39,7 +39,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
 - [**Streaming**](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) - Support HLS.js streaming playback.
 - [**Events**](#Events) - Standardized events for all web browsers, providers and plugins.
-- **Autoload API** - Youtube, Vimeo and Dailymotion API are automatically loaded by their provider.
+- **Autoload API** - Youtube, Vimeo, Dailymotion and Youku API are automatically loaded by their provider.
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
 - [**Picture-in-Picture**](./src/plugins/pip/README.md) - Supports Picture-in-Picture API.
 - [**Cast**](./src/plugins/cast/README.md) - Supports for Google Cast API.
@@ -64,6 +64,7 @@ If you're interested in playing around with vLitejs, you can use the online code
 - [Youtube](https://glitch.com/edit/#!/vlitejs-youtube-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
 - [Vimeo](https://glitch.com/edit/#!/vlitejs-vimeo-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
 - [Dailymotion](https://glitch.com/edit/#!/vlitejs-dailymotion-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [Youku](TODO)
 
 ### Examples
 
@@ -128,6 +129,12 @@ You can also download it and include it with a script tag. The library will be r
 
 ```html
 <div id="player" class="vlite-js" data-dailymotion-id="<video_id>"></div>
+```
+
+#### Youku
+
+```html
+<div id="player" class="vlite-js" data-youku-id="<video_id>"></div>
 ```
 
 ### Initialization
@@ -221,7 +228,7 @@ new Vlitejs('#player', {
 
 ### Player ready
 
-The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube, Vimeo and Dailymotion provider listen to the `onready` event returned by their API.
+The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube, Vimeo, Dailymotion and Youku provider listen to the `onready` event returned by their API.
 
 The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Methods).
 
@@ -239,7 +246,7 @@ new Vlitejs('#player', {
 
 ### Events
 
-vLitejs exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo and Dailymotion. Each plugin has its own events which are detailed in their dedicated documentation.
+vLitejs exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo, Dailymotion and Youku. Each plugin has its own events which are detailed in their dedicated documentation.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |
