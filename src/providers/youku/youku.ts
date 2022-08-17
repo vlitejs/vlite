@@ -1,4 +1,4 @@
-import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+import { playerParameters } from 'shared/assets/interfaces/interfaces'
 
 declare global {
 	interface Window {
@@ -156,7 +156,6 @@ export default function YoukuProvider(Player: any, options: interfaceProvidersOp
 		 */
 		getDuration(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.instance.totalTime()))
-			// return new window.Promise((resolve) => resolve(2000))
 		}
 
 		/**
@@ -186,24 +185,30 @@ export default function YoukuProvider(Player: any, options: interfaceProvidersOp
 		 * @returns {Promise<Number>} Player volume
 		 */
 		methodGetVolume(): Promise<number> {
+			// TODO: no method available
 			return this.instance
 		}
 
 		/**
 		 * Mute method of the player
 		 */
-		methodMute() {}
+		methodMute() {
+			// TODO: no method available
+		}
 
 		/**
 		 * Unmute method of the player
 		 */
-		methodUnMute() {}
+		methodUnMute() {
+			// TODO: no method available
+		}
 
 		/**
 		 * Set the new current time for the player
 		 * @param {Number} Current time video
 		 */
 		methodSeekTo(newTime: number) {
+			// TODO: broken method
 			this.instance.seekTo(newTime)
 		}
 
