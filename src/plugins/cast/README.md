@@ -41,11 +41,20 @@ new Vlitejs('#player', {
 });
 ```
 
-### Configuration
+## Events
+
+The plugin exposes the following native `Event` on the `.v-vlite` element.
+
+| Event Type           | Description                                 |
+| -------------------- | ------------------------------------------- |
+| `castsessionstarted` | Sent when the cast session is established.  |
+| `castsessionended`   | Sent when the cast session is disconnected. |
+
+## Configuration
 
 The plugin allows customization with an optional object as the third parameter of the `registerPlugin` function.
 
-#### Subtitle
+### Subtitle
 
 Describes style information for a text subtitle.
 
@@ -59,7 +68,7 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 
 See the [TextTrackStyle](https://developers.google.com/cast/docs/reference/web_sender/chrome.cast.media.TextTrackStyle) reference for available fields.
 
-#### Metadata
+### Metadata
 
 Describes media metadata description.
 

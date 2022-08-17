@@ -233,7 +233,7 @@ new Vlitejs('#player', {
 
 ### Events
 
-`vLitejs` exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo and Dailymotion.
+`vLitejs` exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo and Dailymotion. Each plugin has its own events which are detailed in their dedicated documentation.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |
@@ -244,13 +244,9 @@ new Vlitejs('#player', {
 | `volumechange`          | Sent when audio volume changes                                                          |
 | `enterfullscreen`&sup1; | Sent when the video switches to fullscreen mode                                         |
 | `exitfullscreen`&sup1;  | Sent when the video exits fullscreen mode                                               |
-| `enterpip`&sup1;        | Sent when the video switches to picture-in-picture mode                                 |
-| `leavepip`&sup1;        | Sent when the video exits picture-in-picture mode                                       |
-| `trackenabled`&sup1;    | Sent when a track is enabled and displayed                                              |
-| `trackdisabled`&sup1;   | Sent when a track is disabled and hidden                                                |
 | `ended`                 | Sent when playback completes                                                            |
 
-- _&sup1; Video only._
+_&sup1; Video only._
 
 Example of a listener when the media triggers a `play` event.
 

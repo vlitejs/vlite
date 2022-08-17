@@ -43,3 +43,12 @@ new Vlitejs('#player', {
   plugins: ['subtitle']
 });
 ```
+
+## Events
+
+The plugin exposes the following native `Event` on the `.v-vlite` element.
+
+| Event Type      | Description                                |
+| --------------- | ------------------------------------------ |
+| `trackenabled`  | Sent when a track is enabled and displayed |
+| `trackdisabled` | Sent when a track is disabled and hidden   |

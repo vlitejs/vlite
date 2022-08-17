@@ -286,6 +286,8 @@ export default class CastPlugin {
 		)
 
 		this.loadMedia()
+
+		this.player.dispatchEvent('castsessionstarted')
 	}
 
 	/**
@@ -304,6 +306,8 @@ export default class CastPlugin {
 			this.player.methodPlay()
 			this.player.afterPlayPause()
 		}
+
+		this.player.dispatchEvent('castsessionended')
 	}
 
 	/**

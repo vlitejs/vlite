@@ -51,6 +51,8 @@ const vlite = new Vlitejs('#player', {
 		player.on('trackenabled', () => console.log('trackenabled'))
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 		player.on('ended', () => console.log('ended'))
+		player.on('castsessionstarted', () => console.log('castsessionstarted'))
+		player.on('castsessionended', () => console.log('castsessionended'))
 	}
 })
 /* eslint-enable no-unused-vars */

@@ -39,3 +39,12 @@ new Vlitejs('#player', {
   plugins: ['pip']
 });
 ```
+
+## Events
+
+The plugin exposes the following native `Event` on the `.v-vlite` element.
+
+| Event Type | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| `enterpip` | Sent when the video switches to picture-in-picture mode |
+| `leavepip` | Sent when the video exits picture-in-picture mode       |
