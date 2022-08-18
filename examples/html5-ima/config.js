@@ -31,18 +31,9 @@ const vlite = new Vlitejs('#player', {
 	onReady: function (player) {
 		console.log(player)
 
-		player.on('play', () => console.log('play'))
-		player.on('pause', () => console.log('pause'))
-		player.on('progress', () => console.log('progress'))
-		player.on('timeupdate', () => console.log('timeupdate'))
-		player.on('volumechange', () => console.log('volumechange'))
-		player.on('enterfullscreen', () => console.log('enterfullscreen'))
-		player.on('exitfullscreen', () => console.log('exitfullscreen'))
-		player.on('enterpip', () => console.log('enterpip'))
-		player.on('leavepip', () => console.log('leavepip'))
-		player.on('trackenabled', () => console.log('trackenabled'))
-		player.on('trackdisabled', () => console.log('trackdisabled'))
-		player.on('ended', () => console.log('ended'))
+		player.on('adsmanager', (e) => console.log('adsmanager', e.detail))
+		player.on('adsloader', (e) => console.log('adsloader', e.detail))
+		player.on('adsrequest', (e) => console.log('adsrequest', e.detail))
 	}
 })
 /* eslint-enable no-unused-vars */

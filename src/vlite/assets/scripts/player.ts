@@ -236,9 +236,14 @@ export default class Player {
 	/**
 	 * Dispatch custom event on the container
 	 * @param {String} type Event type
+	 * @param {Object} detail Event detail
 	 */
-	dispatchEvent(type: string) {
-		this.elements.container.dispatchEvent(new Event(type))
+	dispatchEvent(type: string, detail?: any) {
+		this.elements.container.dispatchEvent(
+			new window.CustomEvent(type, {
+				detail
+			})
+		)
 	}
 
 	/**

@@ -43,6 +43,16 @@ new Vlitejs('#player', {
 });
 ```
 
+## Events
+
+The plugin exposes the following native `CustomEvent` on the `.v-vlite` element. Access to event data can be obtained through the `event.detail` property.
+
+| Event Type   | Description                                                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `adsloader`  | Sent when the [AdsLoader](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/reference/js/google.ima.AdsLoader) is initialized   |
+| `adsrequest` | Sent when the [AdsRequest](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/reference/js/google.ima.AdsRequest) is initialized |
+| `adsmanager` | Sent when the [AdsManager](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/reference/js/google.ima.AdsManager) is initialized |
+
 ## Configuration
 
 [Locale codes](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/localization#locale-codes)

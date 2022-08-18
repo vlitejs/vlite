@@ -183,6 +183,10 @@ export default class ImaPlugin {
 			this.onAdError,
 			false
 		)
+
+		this.player.dispatchEvent('adsloader', {
+			adsLoader: this.adsLoader
+		})
 	}
 
 	requestAds() {
@@ -193,6 +197,10 @@ export default class ImaPlugin {
 		adsRequest.nonLinearAdSlotWidth = this.player.media.clientWidth
 		adsRequest.nonLinearAdSlotHeight = this.player.media.clientHeight / 3
 		this.adsLoader.requestAds(adsRequest)
+
+		this.player.dispatchEvent('adsrequest', {
+			adsRequest
+		})
 	}
 
 	onAdsManagerLoaded(adsManagerLoadedEvent: ImaEvent) {
@@ -216,6 +224,10 @@ export default class ImaPlugin {
 			this.onAllAdsCompleted
 		)
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.SKIPPED, this.onAdComplete)
+
+		this.player.dispatchEvent('adsmanager', {
+			adsManager: this.adsManager
+		})
 	}
 
 	onContentPauseRequested() {
