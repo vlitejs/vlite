@@ -45,8 +45,8 @@ new Vlitejs('#player', {
 
 ## Configuration
 
-https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/localization
-https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags
+[Locale codes](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/localization#locale-codes)
+[IMA sample tags](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags)
 
 ## SDK documentation
 
