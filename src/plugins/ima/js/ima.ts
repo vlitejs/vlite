@@ -33,9 +33,8 @@ declare global {
 				}
 				AdDisplayContainer: Constructable<any>
 				AdsLoader: Constructable<any>
-				settings: {
-					setLocale: (locale: string) => void
-				}
+				settings: object
+				AdsRenderingSettings: Constructable<any>
 			}
 		}
 	}
@@ -44,7 +43,7 @@ declare global {
 interface ImaEvent {
 	getAd: any
 	getError: () => void
-	getAdsManager: (adsManagerLoadedEvent: any) => void
+	getAdsManager: (adsManagerLoadedEvent: any, adsRenderingSettings: object) => void
 }
 
 /**
@@ -79,8 +78,12 @@ export default class ImaPlugin {
 		this.player = player
 
 		const defaultOptions = {
-			locale: 'en',
-			countdownText: 'Advertisement'
+			adTagUrl: '',
+			adsRenderingSettings: {
+				restoreCustomPlaybackStateOnAdBreakComplete: true
+			},
+			updateImaSettings: () => {},
+			countdownText: 'Ad'
 		}
 		this.options = { ...defaultOptions, ...options }
 
@@ -104,6 +107,7 @@ export default class ImaPlugin {
 		this.onAdComplete = this.onAdComplete.bind(this)
 		this.onAdLoaded = this.onAdLoaded.bind(this)
 		this.onAllAdsCompleted = this.onAllAdsCompleted.bind(this)
+		this.onAdSkipped = this.onAdSkipped.bind(this)
 		this.updateCountdown = this.updateCountdown.bind(this)
 	}
 
@@ -166,7 +170,9 @@ export default class ImaPlugin {
 
 	initAdObjects() {
 		this.adsLoaded = false
-		window.google.ima.settings.setLocale(this.options.locale)
+		if (this.options.updateImaSettings instanceof Function) {
+			this.options.updateImaSettings(window.google.ima.settings)
+		}
 
 		this.adDisplayContainer = new window.google.ima.AdDisplayContainer(
 			this.adContainer,
@@ -204,7 +210,14 @@ export default class ImaPlugin {
 	}
 
 	onAdsManagerLoaded(adsManagerLoadedEvent: ImaEvent) {
-		this.adsManager = adsManagerLoadedEvent.getAdsManager(this.player.media)
+		const adsRenderingSettings = {
+			...new window.google.ima.AdsRenderingSettings(),
+			...this.options.adsRenderingSettings
+		}
+		this.adsManager = adsManagerLoadedEvent.getAdsManager(
+			this.player.media,
+			adsRenderingSettings
+		)
 
 		this.adsManager.addEventListener(
 			window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
@@ -223,7 +236,7 @@ export default class ImaPlugin {
 			window.google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
 			this.onAllAdsCompleted
 		)
-		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.SKIPPED, this.onAdComplete)
+		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.SKIPPED, this.onAdSkipped)
 
 		this.player.dispatchEvent('adsmanager', {
 			adsManager: this.adsManager
@@ -278,6 +291,11 @@ export default class ImaPlugin {
 
 	onAllAdsCompleted() {
 		this.clean()
+	}
+
+	onAdSkipped() {
+		this.clean()
+		this.player.play()
 	}
 
 	onAdError() {

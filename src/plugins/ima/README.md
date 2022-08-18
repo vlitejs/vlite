@@ -1,4 +1,4 @@
-# Plugin: Cast
+# Plugin: IMA
 
 Supports for Google IMA SDK.
 
@@ -55,8 +55,22 @@ The plugin exposes the following native `CustomEvent` on the `.v-vlite` element.
 
 ## Configuration
 
-[Locale codes](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/localization#locale-codes)
-[IMA sample tags](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags)
+The plugin allows customization with an optional object as the third parameter of the `registerPlugin` function.
+
+| Event Type             |     Type     |        Default        | Description                                                                                                                                                                                                  |
+| ---------------------- | :----------: | :-------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `adTagUrl`             |   `String`   |         `''`          | Specify the **required** ad tag URL that is requested from the ad server. See the [IMA sample tags](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags)                    |
+| `adsRenderingSettings` |   `Object`   |       See below       | Customize the ads rendering settings. See the [AdsRenderingSettings](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/reference/js/google.ima.AdsRenderingSettings) reference |
+| `updateImaSettings`    | `Function()` | `(imaSettings) => {}` | Update the Google IMA settings. The `window.google.ima.settings` property is exposed as a parameter                                                                                                          |
+| `countdownText`        |   `String`   |         `Ad`          | Customize the count down text                                                                                                                                                                                |
+
+The default value for the `adsRenderingSettings` property is the following object:
+
+```json
+{
+  "restoreCustomPlaybackStateOnAdBreakComplete": true
+}
+```
 
 ## SDK documentation
 
