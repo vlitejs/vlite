@@ -349,6 +349,7 @@ export default class ImaPlugin {
 	 */
 	onAllAdsCompleted() {
 		this.clean()
+		this.player.play()
 	}
 
 	/**
