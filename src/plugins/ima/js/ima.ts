@@ -9,13 +9,15 @@ declare global {
 				}
 				AdEvent: {
 					Type: {
+						CONTENT_PAUSE_REQUESTED: string
+						CONTENT_RESUME_REQUESTED: string
 						STARTED: string
 						PAUSED: string
 						RESUMED: string
-						LOADED: string
 						COMPLETE: string
-						CONTENT_PAUSE_REQUESTED: string
-						CONTENT_RESUME_REQUESTED: string
+						LOADED: string
+						ALL_ADS_COMPLETED: string
+						SKIPPED: string
 					}
 				}
 				AdErrorEvent: {
@@ -31,6 +33,9 @@ declare global {
 				}
 				AdDisplayContainer: Constructable<any>
 				AdsLoader: Constructable<any>
+				settings: {
+					setLocale: (locale: string) => void
+				}
 			}
 		}
 	}
@@ -50,15 +55,15 @@ export default class ImaPlugin {
 	player: any
 	options: any
 	playerIsReady: boolean
-	imaSdkIsReady: boolean
+	sdkIsReady: boolean
 	adContainer!: HTMLElement
 	adCountDown!: HTMLElement
 	countdownTimer: number
 	resumeAd: boolean
-	adsLoaded: boolean
-	adsManager: any
-	adsLoader: any
 	adDisplayContainer: any
+	adsLoader: any
+	adsManager: any
+	adsLoaded: boolean
 	currentAd: null | any
 
 	providers = ['html5']
@@ -72,28 +77,34 @@ export default class ImaPlugin {
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
-		this.options = options
+
+		const defaultOptions = {
+			locale: 'en',
+			countdownText: 'Advertisement'
+		}
+		this.options = { ...defaultOptions, ...options }
 
 		this.playerIsReady = false
-		this.imaSdkIsReady = false
+		this.sdkIsReady = false
 		this.adsLoaded = false
 		this.countdownTimer = 0
 		this.resumeAd = false
 		this.currentAd = null
 
+		this.onBigPlayButtonClick = this.onBigPlayButtonClick.bind(this)
+		this.loadAds = this.loadAds.bind(this)
 		this.onResize = this.onResize.bind(this)
 		this.onAdsManagerLoaded = this.onAdsManagerLoaded.bind(this)
 		this.onAdError = this.onAdError.bind(this)
 		this.onContentPauseRequested = this.onContentPauseRequested.bind(this)
 		this.onContentResumeRequested = this.onContentResumeRequested.bind(this)
+		this.onAdStarted = this.onAdStarted.bind(this)
 		this.onAdPaused = this.onAdPaused.bind(this)
 		this.onAdResumed = this.onAdResumed.bind(this)
-		this.onAdLoaded = this.onAdLoaded.bind(this)
-		this.onAdStarted = this.onAdStarted.bind(this)
 		this.onAdComplete = this.onAdComplete.bind(this)
-		this.loadAds = this.loadAds.bind(this)
+		this.onAdLoaded = this.onAdLoaded.bind(this)
+		this.onAllAdsCompleted = this.onAllAdsCompleted.bind(this)
 		this.updateCountdown = this.updateCountdown.bind(this)
-		this.onBigPlayButtonClick = this.onBigPlayButtonClick.bind(this)
 	}
 
 	/**
@@ -109,7 +120,7 @@ export default class ImaPlugin {
 		script.type = 'text/javascript'
 		script.src = '//imasdk.googleapis.com/js/sdkloader/ima3.js'
 		script.onload = () => {
-			this.imaSdkIsReady = true
+			this.sdkIsReady = true
 			this.onPlayerAndImaSdkReady()
 		}
 		document.getElementsByTagName('body')[0].appendChild(script)
@@ -120,17 +131,8 @@ export default class ImaPlugin {
 		this.onPlayerAndImaSdkReady()
 	}
 
-	onResize() {
-		this.adsManager &&
-			this.adsManager.resize(
-				this.player.media.clientWidth,
-				this.player.media.clientHeight,
-				window.google.ima.ViewMode.NORMAL
-			)
-	}
-
 	onPlayerAndImaSdkReady() {
-		if (this.playerIsReady && this.imaSdkIsReady) {
+		if (this.playerIsReady && this.sdkIsReady) {
 			this.render()
 			this.adContainer = this.player.elements.container.querySelector('.v-ad')
 			this.adCountDown = this.player.elements.container.querySelector('.v-adCountDown')
@@ -149,12 +151,10 @@ export default class ImaPlugin {
 	}
 
 	addEvents() {
-		window.addEventListener('resize', this.onResize)
-		this.player.media.addEventListener('ended', () => {
-			this.adsLoader.contentComplete()
-		})
+		this.player.media.addEventListener('ended', () => this.adsLoader.contentComplete())
 		this.player.elements.bigPlay.addEventListener('click', this.onBigPlayButtonClick)
 		this.player.on('play', this.loadAds)
+		window.addEventListener('resize', this.onResize)
 	}
 
 	onBigPlayButtonClick() {
@@ -166,6 +166,7 @@ export default class ImaPlugin {
 
 	initAdObjects() {
 		this.adsLoaded = false
+		window.google.ima.settings.setLocale(this.options.locale)
 
 		this.adDisplayContainer = new window.google.ima.AdDisplayContainer(
 			this.adContainer,
@@ -198,10 +199,6 @@ export default class ImaPlugin {
 		this.adsManager = adsManagerLoadedEvent.getAdsManager(this.player.media)
 
 		this.adsManager.addEventListener(
-			window.google.ima.AdErrorEvent.Type.AD_ERROR,
-			this.onAdError
-		)
-		this.adsManager.addEventListener(
 			window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
 			this.onContentPauseRequested
 		)
@@ -214,6 +211,11 @@ export default class ImaPlugin {
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.RESUMED, this.onAdResumed)
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.COMPLETE, this.onAdComplete)
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.LOADED, this.onAdLoaded)
+		this.adsManager.addEventListener(
+			window.google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
+			this.onAllAdsCompleted
+		)
+		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.SKIPPED, this.onAdComplete)
 	}
 
 	onContentPauseRequested() {
@@ -240,11 +242,7 @@ export default class ImaPlugin {
 		const remainingSeconds = Math.floor(remainingTime % 60)
 			.toString()
 			.padStart(2, '0')
-		this.adCountDown.innerHTML = `Advertisement ${remainingMinutes}:${remainingSeconds}`
-	}
-
-	onAdComplete() {
-		this.clean()
+		this.adCountDown.innerHTML = `${this.options.countdownText} ${remainingMinutes}:${remainingSeconds}`
 	}
 
 	onAdPaused() {
@@ -256,6 +254,18 @@ export default class ImaPlugin {
 	onAdResumed() {
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
+	}
+
+	onAdComplete() {
+		window.clearInterval(this.countdownTimer)
+	}
+
+	onAdLoaded(e: ImaEvent) {
+		!e.getAd().isLinear() && this.player.play()
+	}
+
+	onAllAdsCompleted() {
+		this.clean()
 	}
 
 	onAdError() {
@@ -282,8 +292,13 @@ export default class ImaPlugin {
 		}
 	}
 
-	onAdLoaded(e: ImaEvent) {
-		!e.getAd().isLinear() && this.player.play()
+	onResize() {
+		this.adsManager &&
+			this.adsManager.resize(
+				this.player.media.clientWidth,
+				this.player.media.clientHeight,
+				window.google.ima.ViewMode.NORMAL
+			)
 	}
 
 	clean() {

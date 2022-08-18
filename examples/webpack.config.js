@@ -14,8 +14,9 @@ module.exports = (env, argv) => {
 	const config = {
 		entry: {
 			html5: resolveApp('examples/html5/config.js'),
-			audio: resolveApp('examples/audio/config.js'),
 			'html5-hls': resolveApp('examples/html5-hls/config.js'),
+			'html5-ima': resolveApp('examples/html5-ima/config.js'),
+			audio: resolveApp('examples/audio/config.js'),
 			youtube: resolveApp('examples/youtube/config.js'),
 			vimeo: resolveApp('examples/vimeo/config.js'),
 			dailymotion: resolveApp('examples/dailymotion/config.js')
@@ -91,6 +92,12 @@ module.exports = (env, argv) => {
 				filename: 'html5-hls/index.html',
 				template: resolveApp('examples/html5-hls/index.html'),
 				chunks: ['html5-hls'],
+				publicPath: '../'
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'html5-ima/index.html',
+				template: resolveApp('examples/html5-ima/index.html'),
+				chunks: ['html5-ima'],
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({

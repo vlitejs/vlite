@@ -43,6 +43,11 @@ new Vlitejs('#player', {
 });
 ```
 
+## Configuration
+
+https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/localization
+https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/tags
+
 ## SDK documentation
 
 See the [Google IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side) documentation.
