@@ -71,6 +71,7 @@ export default class ImaPlugin {
 	adsLoader: any
 	adsManager: any
 	adsLoaded: boolean
+	adError: boolean
 	adTimeoutReached: boolean
 	playIsWaiting: boolean
 
@@ -104,6 +105,7 @@ export default class ImaPlugin {
 		this.countdownTimer = 0
 		this.timerAdTimeout = 0
 		this.resumeAd = false
+		this.adError = false
 		this.adTimeoutReached = false
 		this.playIsWaiting = false
 
@@ -391,8 +393,11 @@ export default class ImaPlugin {
 	 * @param {ImaEvent} e Ad event
 	 */
 	onAdError(e: ImaEvent) {
+		this.adError = true
+		clearTimeout(this.timerAdTimeout)
+
 		try {
-			const { type, errorMessage, errorCode } = e.getError()?.j
+			const { type, errorCode, errorMessage } = e.getError()?.j
 			console.warn(`${type} ${errorCode}: ${errorMessage}`)
 		} catch {
 			console.warn(`onAdError`, e)
@@ -408,7 +413,7 @@ export default class ImaPlugin {
 	 * On player play
 	 */
 	onPlayerPlay() {
-		if (this.adTimeoutReached) return
+		if (this.adError || this.adTimeoutReached) return
 
 		if (this.isAdReady()) {
 			this.waitingAd()
@@ -447,6 +452,7 @@ export default class ImaPlugin {
 	 * The plugin will wait until the timeout is reached
 	 */
 	waitingAd() {
+		console.log('waiting ads')
 		this.playIsWaiting = true
 		this.player.pause()
 
