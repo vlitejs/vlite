@@ -65,12 +65,14 @@ export default class ImaPlugin {
 	adContainer!: HTMLElement
 	adCountDown!: HTMLElement
 	countdownTimer: number
+	timerAdTimeout: number
 	resumeAd: boolean
 	adDisplayContainer: any
 	adsLoader: any
 	adsManager: any
 	adsLoaded: boolean
-	currentAd: null | any
+	adTimeoutReached: boolean
+	playIsWaiting: boolean
 
 	providers = ['html5']
 	types = ['video']
@@ -91,7 +93,8 @@ export default class ImaPlugin {
 			},
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			updateImaSettings: () => {},
-			countdownText: 'Ad'
+			countdownText: 'Ad',
+			adTimeout: 5000
 		}
 		this.options = { ...defaultOptions, ...options }
 
@@ -99,8 +102,10 @@ export default class ImaPlugin {
 		this.sdkIsReady = false
 		this.adsLoaded = false
 		this.countdownTimer = 0
+		this.timerAdTimeout = 0
 		this.resumeAd = false
-		this.currentAd = null
+		this.adTimeoutReached = false
+		this.playIsWaiting = false
 
 		this.onBigPlayButtonClick = this.onBigPlayButtonClick.bind(this)
 		this.onPlayerPlay = this.onPlayerPlay.bind(this)
@@ -288,6 +293,11 @@ export default class ImaPlugin {
 		this.player.dispatchEvent('adsmanager', {
 			adsManager: this.adsManager
 		})
+
+		if (this.playIsWaiting && !this.adTimeoutReached) {
+			clearTimeout(this.timerAdTimeout)
+			this.onPlayerPlay()
+		}
 	}
 
 	/**
@@ -306,11 +316,9 @@ export default class ImaPlugin {
 
 	/**
 	 * On ad started
-	 * @param {ImaEvent} e Ad event
 	 */
-	onAdStarted(e: ImaEvent) {
+	onAdStarted() {
 		this.player.isAd = true
-		this.currentAd = e.getAd()
 
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
@@ -380,6 +388,7 @@ export default class ImaPlugin {
 
 	/**
 	 * On ad error
+	 * @param {ImaEvent} e Ad event
 	 */
 	onAdError(e: ImaEvent) {
 		try {
@@ -389,16 +398,23 @@ export default class ImaPlugin {
 			console.warn(`onAdError`, e)
 		}
 		this.destroy()
-		this.player.options.autoplay && this.player.play()
+
+		if (this.player.options.autoplay || this.playIsWaiting) {
+			this.player.play()
+		}
 	}
 
 	/**
 	 * On player play
 	 */
 	onPlayerPlay() {
-		if (this.adsLoaded || !this.adDisplayContainer || !this.adsManager) {
+		if (this.adTimeoutReached) return
+
+		if (this.isAdReady()) {
+			this.waitingAd()
 			return
 		}
+
 		this.adsLoaded = true
 		this.adDisplayContainer.initialize()
 
@@ -416,19 +432,51 @@ export default class ImaPlugin {
 		} catch (e: any) {
 			this.onAdError(e)
 		}
+	}
 
-		setTimeout(() => {
-			this.adsManager.pause()
-		}, 4000)
+	/**
+	 * Check if ad is ready to display
+	 * @returns {boolean} Ad is ready
+	 */
+	isAdReady() {
+		return this.adsLoaded || !this.adDisplayContainer || !this.adsManager
+	}
+
+	/**
+	 * The ad is not ready to display, but the playback has been triggered
+	 * The plugin will wait until the timeout is reached
+	 */
+	waitingAd() {
+		this.playIsWaiting = true
+		this.player.pause()
+
+		// Use setTimeout to force the loading state after other calls made by the player
+		window.setTimeout(() => this.player.loading(true), 0)
+
+		this.timerAdTimeout = window.setTimeout(() => {
+			this.onAdTimeoutReached()
+		}, this.options.adTimeout)
+	}
+
+	/**
+	 * On ad timeout reached
+	 */
+	onAdTimeoutReached() {
+		this.adTimeoutReached = true
+		this.player.loading(false)
+
+		this.onAdError({
+			// @ts-ignore
+			errorMessage: 'Timeout is reached'
+		})
+		this.playIsWaiting = false
 	}
 
 	/**
 	 * On volume change, update the ad volume
 	 */
 	onVolumeChange() {
-		this.player.getVolume().then((volume: number) => {
-			this.adsManager.setVolume(volume)
-		})
+		this.player.getVolume().then((volume: number) => this.adsManager.setVolume(volume))
 	}
 
 	/**

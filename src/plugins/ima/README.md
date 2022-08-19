@@ -63,6 +63,7 @@ The plugin allows customization with an optional object as the third parameter o
 | `adsRenderingSettings` |   `Object`   |       See below       | Customize the ads rendering settings. See the [AdsRenderingSettings](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side/reference/js/google.ima.AdsRenderingSettings) reference |
 | `updateImaSettings`    | `Function()` | `(imaSettings) => {}` | Update the Google IMA settings. The `window.google.ima.settings` property is exposed as a parameter                                                                                                          |
 | `countdownText`        |   `String`   |         `Ad`          | Customize the count down text                                                                                                                                                                                |
+| `adTimeout`            |   `Number`   |        `5000`         | If the ads take too long to load, the ads are canceled and the video plays automatically                                                                                                                     |
 
 The default value for the `adsRenderingSettings` property is the following object:
 
