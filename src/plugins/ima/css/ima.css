@@ -6,6 +6,11 @@
 		width: 100%;
 		height: 100%;
 		z-index: 1;
+		display: none;
+
+		&.v-active {
+			display: block;
+		}
 	}
 
 	&-adCountDown {
@@ -25,12 +30,26 @@
 			visibility: hidden;
 			opacity: 0;
 		}
+
+		.v-poster {
+			display: none;
+		}
 	}
 
 	&-adPaused {
 		.v-bigPlay {
 			visibility: visible;
 			opacity: 1;
+		}
+	}
+
+	&-adNonLinear {
+		.v-ad {
+			transform: translateY(calc((var(--vlite-controlBarHeight) + 10px) * -1));
+		}
+
+		.v-adCountDown {
+			display: none;
 		}
 	}
 }

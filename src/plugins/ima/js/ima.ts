@@ -62,6 +62,7 @@ export default class ImaPlugin {
 	options: any
 	playerIsReady: boolean
 	sdkIsReady: boolean
+	currentAd!: any
 	adContainer!: HTMLElement
 	adCountDown!: HTMLElement
 	countdownTimer: number
@@ -74,6 +75,8 @@ export default class ImaPlugin {
 	adError: boolean
 	adTimeoutReached: boolean
 	playIsWaiting: boolean
+	isLinearAd: boolean
+	playerIsEnded: boolean
 
 	providers = ['html5']
 	types = ['video']
@@ -108,8 +111,11 @@ export default class ImaPlugin {
 		this.adError = false
 		this.adTimeoutReached = false
 		this.playIsWaiting = false
+		this.isLinearAd = false
+		this.playerIsEnded = false
 
 		this.onBigPlayButtonClick = this.onBigPlayButtonClick.bind(this)
+		this.onClickOnAdContainer = this.onClickOnAdContainer.bind(this)
 		this.onPlayerPlay = this.onPlayerPlay.bind(this)
 		this.onVolumeChange = this.onVolumeChange.bind(this)
 		this.onPlayerEnterFullscreen = this.onPlayerEnterFullscreen.bind(this)
@@ -124,7 +130,6 @@ export default class ImaPlugin {
 		this.onAdPaused = this.onAdPaused.bind(this)
 		this.onAdResumed = this.onAdResumed.bind(this)
 		this.onAdComplete = this.onAdComplete.bind(this)
-		this.onAdLoaded = this.onAdLoaded.bind(this)
 		this.onAllAdsCompleted = this.onAllAdsCompleted.bind(this)
 		this.onAdSkipped = this.onAdSkipped.bind(this)
 		this.updateCountdown = this.updateCountdown.bind(this)
@@ -190,6 +195,7 @@ export default class ImaPlugin {
 	 */
 	addEvents() {
 		this.player.elements.bigPlay.addEventListener('click', this.onBigPlayButtonClick)
+		this.adContainer.addEventListener('click', this.onClickOnAdContainer)
 		this.player.on('play', this.onPlayerPlay)
 		this.player.on('volumechange', this.onVolumeChange)
 		this.player.on('enterfullscreen', this.onPlayerEnterFullscreen)
@@ -205,6 +211,16 @@ export default class ImaPlugin {
 		if (this.resumeAd) {
 			this.resumeAd = false
 			this.adsManager.resume()
+		}
+	}
+
+	/**
+	 * On click on ad container
+	 * Only for non-linear ads, as the video continues to play during the ad
+	 */
+	onClickOnAdContainer() {
+		if (!this.isLinearAd) {
+			this.player.elements.playPause.dispatchEvent(new Event('click', { bubbles: true }))
 		}
 	}
 
@@ -247,7 +263,7 @@ export default class ImaPlugin {
 		adsRequest.linearAdSlotWidth = this.player.media.clientWidth
 		adsRequest.linearAdSlotHeight = this.player.media.clientHeight
 		adsRequest.nonLinearAdSlotWidth = this.player.media.clientWidth
-		adsRequest.nonLinearAdSlotHeight = this.player.media.clientHeight / 3
+		adsRequest.nonLinearAdSlotHeight = this.player.media.clientHeight / 3 // Default to 1/3 of the player
 		this.adsLoader.requestAds(adsRequest)
 
 		this.player.dispatchEvent('adsrequest', {
@@ -285,7 +301,6 @@ export default class ImaPlugin {
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.PAUSED, this.onAdPaused)
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.RESUMED, this.onAdResumed)
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.COMPLETE, this.onAdComplete)
-		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.LOADED, this.onAdLoaded)
 		this.adsManager.addEventListener(
 			window.google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
 			this.onAllAdsCompleted
@@ -306,6 +321,7 @@ export default class ImaPlugin {
 	 * On content pause requested
 	 */
 	onContentPauseRequested() {
+		this.adContainer.classList.add('v-active')
 		this.player.isPaused === false && this.player.pause()
 	}
 
@@ -313,19 +329,27 @@ export default class ImaPlugin {
 	 * On content resume requested
 	 */
 	onContentResumeRequested() {
-		this.player.play()
+		this.adContainer.classList.remove('v-active')
+		!this.playerIsEnded && this.player.play()
 	}
 
 	/**
 	 * On ad started
+	 * @param {ImaEvent} e Ad event
 	 */
-	onAdStarted() {
-		this.player.isAd = true
+	onAdStarted(e: ImaEvent) {
+		this.currentAd = e.getAd()
+		this.isLinearAd = this.currentAd.isLinear()
 
+		this.player.elements.container.classList[this.isLinearAd ? 'remove' : 'add'](
+			'v-adNonLinear'
+		)
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
 
-		this.countdownTimer = window.setInterval(this.updateCountdown, 250)
+		if (this.isLinearAd) {
+			this.countdownTimer = window.setInterval(this.updateCountdown, 250)
+		}
 	}
 
 	/**
@@ -365,19 +389,11 @@ export default class ImaPlugin {
 	}
 
 	/**
-	 * On ad loaded
-	 * @param {ImaEvent} e Ad event
-	 */
-	onAdLoaded(e: ImaEvent) {
-		!e.getAd().isLinear() && this.player.play()
-	}
-
-	/**
 	 * On all ads completed
 	 */
 	onAllAdsCompleted() {
 		this.clean()
-		this.player.play()
+		!this.playerIsEnded && this.player.play()
 	}
 
 	/**
@@ -413,9 +429,11 @@ export default class ImaPlugin {
 	 * On player play
 	 */
 	onPlayerPlay() {
-		if (this.adError || this.adTimeoutReached) return
+		this.playerIsEnded = false
 
-		if (this.isAdReady()) {
+		if (this.adsLoaded || this.adError || this.adTimeoutReached) return
+
+		if (!this.adDisplayContainer || !this.adsManager) {
 			this.waitingAd()
 			return
 		}
@@ -440,24 +458,18 @@ export default class ImaPlugin {
 	}
 
 	/**
-	 * Check if ad is ready to display
-	 * @returns {boolean} Ad is ready
-	 */
-	isAdReady() {
-		return this.adsLoaded || !this.adDisplayContainer || !this.adsManager
-	}
-
-	/**
 	 * The ad is not ready to display, but the playback has been triggered
 	 * The plugin will wait until the timeout is reached
 	 */
 	waitingAd() {
-		console.log('waiting ads')
 		this.playIsWaiting = true
-		this.player.pause()
 
-		// Use setTimeout to force the loading state after other calls made by the player
-		window.setTimeout(() => this.player.loading(true), 0)
+		if (this.isLinearAd) {
+			this.player.pause()
+
+			// Use setTimeout to force the loading state after other calls made by the player
+			window.setTimeout(() => this.player.loading(true), 0)
+		}
 
 		this.timerAdTimeout = window.setTimeout(() => {
 			this.onAdTimeoutReached()
@@ -502,6 +514,7 @@ export default class ImaPlugin {
 	 * On player ended
 	 */
 	onPlayerEnded() {
+		this.playerIsEnded = true
 		this.adsLoader.contentComplete()
 	}
 
@@ -531,14 +544,27 @@ export default class ImaPlugin {
 	}
 
 	/**
+	 * Remove event listeners
+	 */
+	removeEventListener() {
+		this.player.elements.bigPlay.removeEventListener('click', this.onBigPlayButtonClick)
+		this.adContainer.removeEventListener('click', this.onClickOnAdContainer)
+		this.player.off('play', this.onPlayerPlay)
+		this.player.off('volumechange', this.onVolumeChange)
+		this.player.off('enterfullscreen', this.onPlayerEnterFullscreen)
+		this.player.off('exitfullscreen', this.onPlayerExitFullscreen)
+		this.player.off('ended', this.onPlayerEnded)
+		window.removeEventListener('resize', this.onResize)
+	}
+
+	/**
 	 * Clean up ad management
 	 */
 	clean() {
-		this.player.isAd = false
-		this.adContainer.setAttribute('hidden', '')
-		this.player.elements.bigPlay.removeEventListener('click', this.onBigPlayButtonClick)
+		this.removeEventListener()
 		window.clearInterval(this.countdownTimer)
 		this.adCountDown.remove()
+		this.adContainer.classList.remove('v-active')
 		this.player.elements.container.classList.remove('v-adPlaying', 'v-adPaused')
 	}
 

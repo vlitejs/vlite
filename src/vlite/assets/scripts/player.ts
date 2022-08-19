@@ -13,7 +13,6 @@ export default class Player {
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
 	isCast: boolean
-	isAd: boolean
 	isFullScreen: boolean
 	isMuted: boolean
 	isPaused: null | boolean
@@ -50,7 +49,6 @@ export default class Player {
 		this.media = Vlitejs.media
 		this.options = Vlitejs.options
 		this.isCast = false
-		this.isAd = false
 
 		this.elements = {
 			container: Vlitejs.container,
@@ -332,8 +330,6 @@ export default class Player {
 	 * Play the media element
 	 */
 	play() {
-		if (this.isAd) return
-
 		if (this.isPaused === null) {
 			this.elements.container.classList.remove('v-firstStart')
 
