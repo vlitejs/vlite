@@ -6,6 +6,7 @@ declare global {
 			ima: {
 				ViewMode: {
 					NORMAL: string
+					FULLSCREEN: string
 				}
 				AdEvent: {
 					Type: {
@@ -42,7 +43,13 @@ declare global {
 
 interface ImaEvent {
 	getAd: any
-	getError: () => void
+	getError: () => {
+		j: {
+			type: string
+			errorCode: number
+			errorMessage: string
+		}
+	}
 	getAdsManager: (adsManagerLoadedEvent: any, adsRenderingSettings: object) => void
 }
 
@@ -96,7 +103,11 @@ export default class ImaPlugin {
 		this.currentAd = null
 
 		this.onBigPlayButtonClick = this.onBigPlayButtonClick.bind(this)
-		this.loadAds = this.loadAds.bind(this)
+		this.onPlayerPlay = this.onPlayerPlay.bind(this)
+		this.onVolumeChange = this.onVolumeChange.bind(this)
+		this.onPlayerEnterFullscreen = this.onPlayerEnterFullscreen.bind(this)
+		this.onPlayerExitFullscreen = this.onPlayerExitFullscreen.bind(this)
+		this.onPlayerEnded = this.onPlayerEnded.bind(this)
 		this.onResize = this.onResize.bind(this)
 		this.onAdsManagerLoaded = this.onAdsManagerLoaded.bind(this)
 		this.onAdError = this.onAdError.bind(this)
@@ -171,9 +182,12 @@ export default class ImaPlugin {
 	 * Add event listeners
 	 */
 	addEvents() {
-		this.player.media.addEventListener('ended', () => this.adsLoader.contentComplete())
 		this.player.elements.bigPlay.addEventListener('click', this.onBigPlayButtonClick)
-		this.player.on('play', this.loadAds)
+		this.player.on('play', this.onPlayerPlay)
+		this.player.on('volumechange', this.onVolumeChange)
+		this.player.on('enterfullscreen', this.onPlayerEnterFullscreen)
+		this.player.on('exitfullscreen', this.onPlayerExitFullscreen)
+		this.player.on('ended', this.onPlayerEnded)
 		window.addEventListener('resize', this.onResize)
 	}
 
@@ -248,6 +262,10 @@ export default class ImaPlugin {
 			adsRenderingSettings
 		)
 
+		this.adsManager.addEventListener(
+			window.google.ima.AdErrorEvent.Type.AD_ERROR,
+			this.onAdError
+		)
 		this.adsManager.addEventListener(
 			window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
 			this.onContentPauseRequested
@@ -363,15 +381,21 @@ export default class ImaPlugin {
 	/**
 	 * On ad error
 	 */
-	onAdError() {
-		this.clean()
-		this.player.play()
+	onAdError(e: ImaEvent) {
+		try {
+			const { type, errorMessage, errorCode } = e.getError()?.j
+			console.warn(`${type} ${errorCode}: ${errorMessage}`)
+		} catch {
+			console.warn(`onAdError`, e)
+		}
+		this.destroy()
+		this.player.options.autoplay && this.player.play()
 	}
 
 	/**
-	 * Load ads
+	 * On player play
 	 */
-	loadAds() {
+	onPlayerPlay() {
 		if (this.adsLoaded || !this.adDisplayContainer || !this.adsManager) {
 			return
 		}
@@ -384,9 +408,59 @@ export default class ImaPlugin {
 				this.player.media.clientHeight,
 				window.google.ima.ViewMode.NORMAL
 			)
-			this.adsManager.start()
-		} catch {
-			this.onAdError()
+
+			this.player.getVolume().then((volume: number) => {
+				this.adsManager.setVolume(volume)
+				this.adsManager.start()
+			})
+		} catch (e: any) {
+			this.onAdError(e)
+		}
+
+		setTimeout(() => {
+			this.adsManager.pause()
+		}, 4000)
+	}
+
+	/**
+	 * On volume change, update the ad volume
+	 */
+	onVolumeChange() {
+		this.player.getVolume().then((volume: number) => {
+			this.adsManager.setVolume(volume)
+		})
+	}
+
+	/**
+	 * On player enter fullscreen, resize the ad
+	 */
+	onPlayerEnterFullscreen() {
+		if (this.adsManager) {
+			this.adsManager.resize(
+				window.screen.width,
+				window.screen.height,
+				window.google.ima.ViewMode.FULLSCREEN
+			)
+		}
+	}
+
+	/**
+	 * On player ended
+	 */
+	onPlayerEnded() {
+		this.adsLoader.contentComplete()
+	}
+
+	/**
+	 * On player exit fullscreen, resize the ad
+	 */
+	onPlayerExitFullscreen() {
+		if (this.adsManager) {
+			this.adsManager.resize(
+				this.player.media.clientWidth,
+				this.player.media.clientHeight,
+				window.google.ima.ViewMode.NORMAL
+			)
 		}
 	}
 
@@ -419,8 +493,17 @@ export default class ImaPlugin {
 	 */
 	destroy() {
 		this.clean()
-		this.adsManager && this.adsManager.destroy()
-		this.adDisplayContainer && this.adDisplayContainer.destroy()
-		this.adsLoader && this.adsLoader.destroy()
+		if (this.adsManager) {
+			this.adsManager.destroy()
+			this.adsManager = null
+		}
+		if (this.adDisplayContainer) {
+			this.adDisplayContainer.destroy()
+			this.adDisplayContainer = null
+		}
+		if (this.adsLoader) {
+			this.adsLoader.destroy()
+			this.adsLoader = null
+		}
 	}
 }
