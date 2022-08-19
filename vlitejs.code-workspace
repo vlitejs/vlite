@@ -31,7 +31,7 @@
         "recommendations": [
             "esbenp.prettier-vscode",
             "dbaeumer.vscode-eslint",
-            "mhmadhamster.postcss-language"
+            "csstools.postcss"
         ]
     }
 }
