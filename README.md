@@ -43,6 +43,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
 - [**Picture-in-Picture**](./src/plugins/pip/README.md) - Supports Picture-in-Picture API.
 - [**Cast**](./src/plugins/cast/README.md) - Supports for Google Cast API.
+- [**AirPlay**](./src/plugins/airplay/README.md) - Supports for Apple AirPlay API.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.

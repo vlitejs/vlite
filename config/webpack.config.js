@@ -51,6 +51,11 @@ const plugins = [
 		entrykey: 'plugins/cast',
 		library: `${libraryName}Cast`,
 		path: './src/plugins/cast/config'
+	},
+	{
+		entrykey: 'plugins/airplay',
+		library: `${libraryName}Airplay`,
+		path: './src/plugins/airplay/config'
 	}
 ]
 

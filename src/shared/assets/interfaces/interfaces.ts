@@ -37,7 +37,7 @@ export interface playerParameters {
 
 export interface pluginParameter {
 	player: playerParameters
-	options: any
+	options?: any
 }
 
 export interface configEvent {
