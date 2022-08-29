@@ -39,7 +39,7 @@
 		"test:markdown": "markdownlint-cli2 '**/*.md' --ignore node_modules",
 		"test:stylelint": "stylelint './src/**/*.css' './docs/theme/assets/stylesheets/**/*.css' --config ./config/stylelint.config.js",
 		"test:stylelint:fix": "stylelint './src/**/*.css' './docs/theme/assets/stylesheets/**/*.css' --config ./config/stylelint.config.js --fix",
-		"test:type-check": "tsc --noEmit"
+		"test:types": "tsc --noEmit"
 	},
 	"browserslist": [
 		"last 2 chrome version",
