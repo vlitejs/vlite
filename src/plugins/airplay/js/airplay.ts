@@ -1,4 +1,4 @@
-import svgAirPlay from 'shared/assets/svgs/airPlay.svg'
+import svgAirPlay from 'shared/assets/svgs/airplay.svg'
 import { pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 declare global {
