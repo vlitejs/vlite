@@ -98,6 +98,10 @@ export default class CastPlugin {
 		this.isMediaLoadedChanged = this.isMediaLoadedChanged.bind(this)
 		this.onClickOnCastButton = this.onClickOnCastButton.bind(this)
 		this.updateSubtitle = this.updateSubtitle.bind(this)
+		this.onMediaPlay = this.onMediaPlay.bind(this)
+		this.onMediaPause = this.onMediaPause.bind(this)
+		this.onMediaVolumeChange = this.onMediaVolumeChange.bind(this)
+		this.onMediaTimeupdate = this.onMediaTimeupdate.bind(this)
 	}
 
 	/**
@@ -200,7 +204,7 @@ export default class CastPlugin {
 
 	/**
 	 * On cast state change
-	 * Cast event
+	 * @param {Event} e Event data
 	 */
 	onCastStateChange(e: CastEvent) {
 		const sessionState = e.sessionState
@@ -409,27 +413,51 @@ export default class CastPlugin {
 	 * Cast event
 	 */
 	isMediaLoadedChanged() {
-		this.player.on('play', () => {
-			if (!this.remotePlayer.isMediaLoaded) return
-			this.remotePlayerController.playOrPause()
+		this.player.on('play', this.onMediaPlay)
+		this.player.on('pause', this.onMediaPause)
+		this.player.on('volumechange', this.onMediaVolumeChange)
+		this.player.on('timeupdate', this.onMediaTimeupdate)
+	}
+
+	/**
+	 * On media play event
+	 */
+	onMediaPlay() {
+		if (!this.remotePlayer.isMediaLoaded) return
+
+		this.remotePlayerController.playOrPause()
+	}
+
+	/**
+	 * On media pause event
+	 */
+	onMediaPause() {
+		if (!this.remotePlayer.isMediaLoaded) return
+
+		this.remotePlayerController.playOrPause()
+	}
+
+	/**
+	 * On media volume change event
+	 */
+	onMediaVolumeChange() {
+		if (!this.remotePlayer.isMediaLoaded) return
+
+		this.player.getVolume().then((volume: number) => {
+			this.remotePlayer.volumeLevel = this.player.isMuted ? 0 : volume
+			this.remotePlayerController.setVolumeLevel()
 		})
-		this.player.on('pause', () => {
-			if (!this.remotePlayer.isMediaLoaded) return
-			this.remotePlayerController.playOrPause()
-		})
-		this.player.on('volumechange', () => {
-			if (!this.remotePlayer.isMediaLoaded) return
-			this.player.getVolume().then((volume: number) => {
-				this.remotePlayer.volumeLevel = this.player.isMuted ? 0 : volume
-				this.remotePlayerController.setVolumeLevel()
-			})
-		})
-		this.player.on('timeupdate', () => {
-			if (!this.remotePlayer.isMediaLoaded) return
-			this.player.getCurrentTime().then((currentTime: number) => {
-				this.remotePlayer.currentTime = currentTime
-				this.remotePlayerController.seek()
-			})
+	}
+
+	/**
+	 * On media time update event
+	 */
+	onMediaTimeupdate() {
+		if (!this.remotePlayer.isMediaLoaded) return
+
+		this.player.getCurrentTime().then((currentTime: number) => {
+			this.remotePlayer.currentTime = currentTime
+			this.remotePlayerController.seek()
 		})
 	}
 
@@ -453,5 +481,9 @@ export default class CastPlugin {
 		this.castButton.removeEventListener('click', this.onClickOnCastButton)
 		this.player.off('trackdisabled', this.updateSubtitle)
 		this.player.off('trackenabled', this.updateSubtitle)
+		this.player.off('play', this.onMediaPlay)
+		this.player.off('pause', this.onMediaPause)
+		this.player.off('volumechange', this.onMediaVolumeChange)
+		this.player.off('timeupdate', this.onMediaTimeupdate)
 	}
 }
