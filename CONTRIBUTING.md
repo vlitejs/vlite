@@ -37,6 +37,9 @@ npm run test:types
 
 # Run Markdown linter
 npm run test:markdown
+
+# Run all tests (eslint, stylelint, types, markdown)
+npm run test
 ```
 
 **Production**
@@ -50,7 +53,7 @@ npm run build
 
 - `./config` - Contains configuration files for ESLint, Stylelint, postCSS, Prettier, Babel and Webpack.
 - `./src` - Contains the source code. The codebase is written in `ES2015` in TypeScript.
-- `./examples` - Contains the examples code. The codebase is written in `ES2015` in TypeScript.
+- `./examples` - Contains the examples code.
 
 ## Pull requests
 

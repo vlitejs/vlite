@@ -34,6 +34,7 @@
 		"clean": "rm -rf ./dist/ ./examples/dist/",
 		"start": "rm -rf ./dist/ && webpack --mode=development --config config/webpack.config.js",
 		"start:example": "rm -rf ./examples/dist/ && webpack serve --mode=development --config=./examples/webpack.config.js",
+		"test": "npm run test:eslint && npm run test:stylelint && npm run test:types && npm run test:markdown",
 		"test:eslint": "eslint ./src --config config/.eslintrc.js --ignore-pattern dist",
 		"test:eslint:fix": "eslint ./src --config config/.eslintrc.js --ignore-pattern dist --fix",
 		"test:markdown": "markdownlint-cli2 '**/*.md' --ignore node_modules",
