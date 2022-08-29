@@ -52,3 +52,7 @@ The plugin exposes the following native `Event` on the `.v-vlite` element.
 | --------------- | ------------------------------------------ |
 | `trackenabled`  | Sent when a track is enabled and displayed |
 | `trackdisabled` | Sent when a track is disabled and hidden   |
+
+## Demo
+
+See the [Subtitle plugin](https://jsfiddle.net/yoriiis/cbe0z3uo) demo.

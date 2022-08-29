@@ -32,3 +32,7 @@ new Vlitejs('#player');
 ```
 
 > The `provider` parameter on the `Vlitejs` constructor is `html5` by default.
+
+## Demo
+
+See demos of [HTML5 video provider](https://jsfiddle.net/yoriiis/42v8m3cp) and [HTML5 audio provider](https://jsfiddle.net/yoriiis/19pnqkge).

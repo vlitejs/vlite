@@ -41,6 +41,10 @@ new Vlitejs('#player', {
 });
 ```
 
+## Demo
+
+See the [Dailymotion provider](https://jsfiddle.net/yoriiis/rf3mtjhx) demo.
+
 ## API documentation
 
 See the [Dailymotion player API](https://developers.dailymotion.com/player/#player-library-script) documentation.

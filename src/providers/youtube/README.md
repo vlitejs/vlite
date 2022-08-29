@@ -37,6 +37,10 @@ new Vlitejs('#player', {
 });
 ```
 
+## Demo
+
+See the [Youtube provider](https://jsfiddle.net/yoriiis/sykde7q8) demo.
+
 ## SDK documentation
 
 See the [Youtube player API](https://developers.google.com/youtube/iframe_api_reference) documentation.

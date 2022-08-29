@@ -353,6 +353,6 @@ The player accepts the following keyboard shortcuts.
 
 Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the `vLitejs` logo.
 
-## Licence
+## License
 
 `vLitejs` is licensed under the [MIT License](https://opensource.org/licenses/MIT). Created with &#9825; by [@yoriiis](http://github.com/yoriiis).

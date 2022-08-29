@@ -48,3 +48,7 @@ The plugin exposes the following native `Event` on the `.v-vlite` element.
 | ---------- | ------------------------------------------------------- |
 | `enterpip` | Sent when the video switches to picture-in-picture mode |
 | `leavepip` | Sent when the video exits picture-in-picture mode       |
+
+## Demo
+
+See the [Picture-in-Picture plugin](https://jsfiddle.net/yoriiis/fdyjt8pg) demo.
