@@ -1,6 +1,6 @@
 # vLitejs
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/vlitejs/vlite/Build/main?style=for-the-badge) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/vlitejs/vlite/Build/main?style=for-the-badge)](https://github.com/vlitejs/vlite/actions/workflows/build.yml) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs)
 
 <p align="center">
     <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
