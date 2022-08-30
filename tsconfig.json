@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"outDir": "../lib",
+		"outDir": "./lib",
 		"allowJs": true,
 		"checkJs": false,
 		"target": "es2017",
@@ -12,11 +12,11 @@
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
 		"module": "amd",
-		"baseUrl": "../src",
+		"baseUrl": "./src",
 		"paths": {
 			"shared": ["./shared"]
 		},
 		"resolveJsonModule": true
 	},
-	"include": ["../src/**/*.ts"]
+	"include": ["./src/**/*.ts"]
 }
