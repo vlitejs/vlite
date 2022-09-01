@@ -88,4 +88,8 @@
 			display: block;
 		}
 	}
+
+	&-vlite video::-webkit-media-text-track-display {
+		display: none;
+	}
 }
