@@ -127,6 +127,11 @@ class Vlitejs {
 		this.autoHideGranted =
 			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
 
+		// Disable fullscreen on iPhone, not supported yet
+		if (/(iPhone)/gi.test(window.navigator.userAgent)) {
+			this.options.fullscreen = false
+		}
+
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
 		this.onKeydown = this.onKeydown.bind(this)
@@ -188,7 +193,7 @@ class Vlitejs {
 			this.container.addEventListener('click', this.onClickOnPlayer)
 			this.container.addEventListener('dblclick', this.onDoubleClickOnPlayer)
 			this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
-			window.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
+			document.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
 		this.container.addEventListener('keydown', this.onKeydown)
 	}
