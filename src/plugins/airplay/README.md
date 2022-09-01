@@ -49,3 +49,7 @@ The plugin exposes the following native `Event` on the `.v-vlite` element.
 | ----------------------- | ---------------------------------------------- |
 | `airplaysessionstarted` | Sent when the airplay session is established.  |
 | `airplaysessionended`   | Sent when the airplay session is disconnected. |
+
+## Limits
+
+The [subtitle](../subtitle) plugin does not display subtitles on the AirPlay screen.
