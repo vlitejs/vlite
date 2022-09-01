@@ -196,7 +196,7 @@ The player controls can be customized with the following parameters:
 | `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                       |
 | `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider      |
 
-- _&sup1; Video only._
+- _&sup1; Video only. Not yet supported on iPhone._
 - _&sup2; Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans))._
 - _&sup3; See [Youtube embed options](https://developers.google.com/youtube/player_parameters#Parameters) and [Vimeo embed options](https://github.com/vimeo/player.js/#embed-options)._
 
@@ -340,14 +340,14 @@ The player accepts the following keyboard shortcuts.
 
 vLitejs supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
 
-| Browser    | Supported |
-| ---------- | :-------: |
-| Chrome     |  &#9989;  |
-| Firefox    |  &#9989;  |
-| Opera      |  &#9989;  |
-| Edge       |  &#9989;  |
-| Safari     |  &#9989;  |
-| iOS Safari |  &#9989;  |
+| Browser    |     Supported      |
+| ---------- | :----------------: |
+| Chrome     | :white_check_mark: |
+| Firefox    | :white_check_mark: |
+| Opera      | :white_check_mark: |
+| Edge       | :white_check_mark: |
+| Safari     | :white_check_mark: |
+| iOS Safari | :white_check_mark: |
 
 ## Contributors
 
