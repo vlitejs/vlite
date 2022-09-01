@@ -1,6 +1,7 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/subtitle.css'
 import '../../dist/plugins/cast.css'
+import '../../dist/plugins/airplay.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'

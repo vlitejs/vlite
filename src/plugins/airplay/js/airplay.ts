@@ -32,6 +32,8 @@ export default class AirPlayPlugin {
 		this.player = player
 		this.airPlayAvailable = window.WebKitPlaybackTargetAvailabilityEvent instanceof Function
 
+		this.onWebKitPlaybackTargetAvailabilityChanged =
+			this.onWebKitPlaybackTargetAvailabilityChanged.bind(this)
 		this.onWebKitCurrentPlaybackTargetWirelessChanged =
 			this.onWebKitCurrentPlaybackTargetWirelessChanged.bind(this)
 		this.onClickOnAirPlayButton = this.onClickOnAirPlayButton.bind(this)
