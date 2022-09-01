@@ -6,7 +6,7 @@
 		width: 58px;
 		height: 58px;
 		transform: translateX(-50%) translateY(-50%);
-		z-index: 2;
+		z-index: 3;
 		transition: opacity var(--vlite-transition);
 
 		svg {
