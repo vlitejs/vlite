@@ -6,18 +6,18 @@
     <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
 </p>
 
-`vLitejs` is a fast and lightweight JavaScript library for customizing video and audio player. Written in native JavaScript without dependency, it is built around an API of providers and plugins to extend these capabilities and keep the core with the minimal functionnalities.
+vLitejs (pronounced `/viːlaɪt/`) is a fast and lightweight JavaScript library for customizing video and audio player. Written in native JavaScript without dependency, it is built around an API of providers and plugins to extend these capabilities and keep the core with the minimal functionnalities.
 
 HTML5 video and audio players are automatically included. Other providers like Youtube or Vimeo can be loaded on demand with the [Provider API](./src/providers/README.md). Plugins uses the same logic and can be loaded on demand by the [Plugin API](/src/plugins/README.md). Others providers and plugins can be created and loaded by the library.
 
-## Why `vLitejs`?
+## Why vLitejs?
 
 - If you are concerned about your app's loading performance, this library makes sense as it is extremely lightweight compared to the competition (only 6 KB).
 - It is quite rare to need to be compatible with HTML5, Youtube, Vimeo and Dailymotion at the same time. The library contains by default only HTML5 capabilities and exposed the Provider API to extend capabilities with other providers.
 - If you need specific behaviors, the plugin API allows to extends the library capabilities.
 - If you need to create a video or audio player with a custom skin harmonized for all web browsers.
 
-Sizes of the `vLitejs` bundle compared to the competition:
+Sizes of the vLitejs bundle compared to the competition:
 
 |              | vLitejs |  Plyr  | Videojs |
 | ------------ | :-----: | :----: | :-----: |
@@ -52,13 +52,13 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 ### Examples
 
-The project includes several examples of `vLitejs` implementation in the directory `examples`. Run the following commands to build the assets for the examples:
+The project includes several examples of vLitejs implementation in the directory `examples`. Run the following commands to build the assets for the examples:
 
 ```bash
 npm run build && npm run build:example
 ```
 
-If you're interested in playing around with `vLitejs`, you can use the online code playground on JSFiddle:
+If you're interested in playing around with vLitejs, you can use the online code playground on JSFiddle:
 
 - [HTML5 video](https://jsfiddle.net/yoriiis/42v8m3cp)
 - [HTML5 video HLS.js](https://jsfiddle.net/yoriiis/63hkza8n)
@@ -71,12 +71,12 @@ If you're interested in playing around with `vLitejs`, you can use the online co
 
 ### NPM
 
-NPM is the recommended installation method. Install `vlitejs` in your project with the following command:
+NPM is the recommended installation method. Install vLitejs in your project with the following command:
 
 ```bash
 npm install vlitejs --save-dev
 # or
-yarn add vlitejs  --dev
+yarn add vlitejs --dev
 ```
 
 ### CDN
@@ -126,14 +126,14 @@ You can also download it and include it with a script tag. The library will be r
 
 ### Initialization
 
-Import `vLitejs` styleheet and the JavaScript library as an ES6 modules.
+Import vLitejs styleheet and the JavaScript library as an ES6 modules.
 
 ```javascript
 import 'vlitejs/dist/vlite.css';
 import Vlitejs from 'vlitejs';
 ```
 
-The `Vlitejs` constructor accepts the following parameters:
+The vLitejs constructor accepts the following parameters:
 
 | Arguments |         Type          | Default | Description                                                      |
 | --------- | :-------------------: | :-----: | ---------------------------------------------------------------- |
@@ -233,7 +233,7 @@ new Vlitejs('#player', {
 
 ### Events
 
-`vLitejs` exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo and Dailymotion. Each plugin has its own events which are detailed in their dedicated documentation.
+vLitejs exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo and Dailymotion. Each plugin has its own events which are detailed in their dedicated documentation.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |
@@ -338,7 +338,7 @@ The player accepts the following keyboard shortcuts.
 
 ## Browser support
 
-`vLitejs` supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
+vLitejs supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
 
 | Browser    | Supported |
 | ---------- | :-------: |
@@ -351,8 +351,8 @@ The player accepts the following keyboard shortcuts.
 
 ## Contributors
 
-Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the `vLitejs` logo.
+Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the vLitejs logo.
 
 ## License
 
-`vLitejs` is licensed under the [MIT License](https://opensource.org/licenses/MIT). Created with &#9825; by [@yoriiis](http://github.com/yoriiis).
+vLitejs is licensed under the [MIT License](https://opensource.org/licenses/MIT). Created with &#9825; by [@yoriiis](http://github.com/yoriiis).
