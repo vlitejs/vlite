@@ -7,7 +7,7 @@ interface interfaceProvidersOptions {
 	[key: string]: any
 }
 
-export const vliteProviders: interfaceVliteProviders = {
+const vliteProviders: interfaceVliteProviders = {
 	html5: PlayerHtml5
 }
 const providersOptions: interfaceProvidersOptions = {}

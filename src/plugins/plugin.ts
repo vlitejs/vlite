@@ -8,7 +8,7 @@ export interface interfacePluginsInstance {
 	options: any
 }
 
-export const vlitePlugins: interfaceVlitePlugins = {}
+const vlitePlugins: interfaceVlitePlugins = {}
 const pluginsOptions: any = {}
 
 /**
