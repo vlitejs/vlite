@@ -39,7 +39,7 @@ new Vlitejs('#player', {
 
 ## Demo
 
-See the [Vimeo provider](https://jsfiddle.net/yoriiis/dazey3w5) demo.
+See the [Vimeo provider](https://glitch.com/edit/#!/vlitejs-vimeo-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) demo.
 
 ## SDK documentation
 

@@ -43,7 +43,7 @@ new Vlitejs('#player', {
 
 ## Demo
 
-See the [Dailymotion provider](https://jsfiddle.net/yoriiis/rf3mtjhx) demo.
+See the [Dailymotion provider](https://glitch.com/edit/#!/vlitejs-dailymotion-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) demo.
 
 ## API documentation
 

@@ -35,4 +35,4 @@ new Vlitejs('#player');
 
 ## Demo
 
-See demos of [HTML5 video provider](https://jsfiddle.net/yoriiis/42v8m3cp) and [HTML5 audio provider](https://jsfiddle.net/yoriiis/19pnqkge).
+See demos of [HTML5 video provider](https://glitch.com/edit/#!/vlitejs-html5-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) and [HTML5 audio provider](https://glitch.com/edit/#!/vlitejs-html5-audio?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false).

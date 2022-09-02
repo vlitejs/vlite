@@ -37,7 +37,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - **Fullscreen** - Supports native fullscreen API.
 - [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
-- [**Streaming**](https://jsfiddle.net/yoriiis/63hkza8n) - Support HLS.js streaming playback.
+- [**Streaming**](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) - Support HLS.js streaming playback.
 - [**Events**](#Events) - Standardized events for all web browsers, providers and plugins.
 - **Autoload API** - Youtube, Vimeo and Dailymotion API are automatically loaded by their provider.
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
@@ -50,6 +50,19 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 [![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://vlite.js.org)
 
+<center>You can support this project with [GitHub Sponsors](https://github.com/sponsors/vlitejs)! &#9825;</center>
+
+### Playground
+
+If you're interested in playing around with vLitejs, you can use the online code playgrounds on [Glitch](https://glitch.com/@yoriiis/vlitejs):
+
+- [HTML5 video](https://glitch.com/edit/#!/vlitejs-html5-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [HTML5 video HLS.js](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [HTML5 audio](https://glitch.com/edit/#!/vlitejs-html5-audio?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [Youtube](https://glitch.com/edit/#!/vlitejs-youtube-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [Vimeo](https://glitch.com/edit/#!/vlitejs-vimeo-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [Dailymotion](https://glitch.com/edit/#!/vlitejs-dailymotion-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+
 ### Examples
 
 The project includes several examples of vLitejs implementation in the directory `examples`. Run the following commands to build the assets for the examples:
@@ -57,15 +70,6 @@ The project includes several examples of vLitejs implementation in the directory
 ```bash
 npm run build && npm run build:example
 ```
-
-If you're interested in playing around with vLitejs, you can use the online code playground on JSFiddle:
-
-- [HTML5 video](https://jsfiddle.net/yoriiis/42v8m3cp)
-- [HTML5 video HLS.js](https://jsfiddle.net/yoriiis/63hkza8n)
-- [HTML5 audio](https://jsfiddle.net/yoriiis/19pnqkge)
-- [Youtube](https://jsfiddle.net/yoriiis/sykde7q8)
-- [Vimeo](https://jsfiddle.net/yoriiis/dazey3w5)
-- [Dailymotion](https://jsfiddle.net/yoriiis/rf3mtjhx)
 
 ## Installation
 

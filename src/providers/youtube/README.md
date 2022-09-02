@@ -39,7 +39,7 @@ new Vlitejs('#player', {
 
 ## Demo
 
-See the [Youtube provider](https://jsfiddle.net/yoriiis/sykde7q8) demo.
+See the [Youtube provider](https://glitch.com/edit/#!/vlitejs-youtube-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) demo.
 
 ## SDK documentation
 
