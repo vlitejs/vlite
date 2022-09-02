@@ -7,6 +7,7 @@
 		height: 100%;
 		z-index: 1;
 		display: none;
+		transition: transform var(--vlite-transition);
 
 		&.v-active {
 			display: block;
@@ -25,17 +26,6 @@
 		pointer-events: none;
 	}
 
-	&-adPlaying {
-		.v-bigPlay {
-			visibility: hidden;
-			opacity: 0;
-		}
-
-		.v-poster {
-			display: none;
-		}
-	}
-
 	&-adPaused {
 		.v-bigPlay {
 			visibility: visible;
@@ -43,8 +33,26 @@
 		}
 	}
 
+	/* Linear ad */
+	:not(&-adNonLinear) {
+		&.v-adPlaying {
+			.v-bigPlay {
+				visibility: hidden;
+				opacity: 0;
+			}
+		}
+
+		&.v-adPlaying,
+		&.v-adPaused {
+			.v-poster {
+				display: none;
+			}
+		}
+	}
+
+	/* Non-linear ad */
 	&-adNonLinear {
-		.v-ad {
+		.v-controlBar:not(.v-hidden) + .v-ad {
 			transform: translateY(calc((var(--vlite-controlBarHeight) + 10px) * -1));
 		}
 

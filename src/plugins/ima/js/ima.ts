@@ -98,7 +98,8 @@ export default class ImaPlugin {
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			updateImaSettings: () => {},
 			countdownText: 'Ad',
-			adTimeout: 5000
+			adTimeout: 5000,
+			debug: false
 		}
 		this.options = { ...defaultOptions, ...options }
 
@@ -149,7 +150,9 @@ export default class ImaPlugin {
 		const script = document.createElement('script')
 		script.defer = true
 		script.type = 'text/javascript'
-		script.src = '//imasdk.googleapis.com/js/sdkloader/ima3.js'
+		script.src = `//imasdk.googleapis.com/js/sdkloader/ima3${
+			this.options.debug ? '_debug' : ''
+		}.js`
 		script.onload = () => {
 			this.sdkIsReady = true
 			this.onPlayerAndSdkReady()
@@ -341,12 +344,25 @@ export default class ImaPlugin {
 		this.currentAd = e.getAd()
 		this.isLinearAd = this.currentAd.isLinear()
 
+		// Video play is prevent only when linear ad is playing
+		if (this.isLinearAd) {
+			this.player.isLinearAd = true
+		}
+
+		// Non-linear ad does not trigger the CONTENT_PAUSE_REQUESTED event
+		!this.isLinearAd && this.adContainer.classList.add('v-active')
 		this.player.elements.container.classList[this.isLinearAd ? 'remove' : 'add'](
 			'v-adNonLinear'
 		)
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
+		this.startCountdownTimer()
+	}
 
+	/**
+	 * Start the countdown timer only for linear ad
+	 */
+	startCountdownTimer() {
 		if (this.isLinearAd) {
 			this.countdownTimer = window.setInterval(this.updateCountdown, 250)
 		}
@@ -368,6 +384,7 @@ export default class ImaPlugin {
 	 * On ad paused
 	 */
 	onAdPaused() {
+		window.clearInterval(this.countdownTimer)
 		this.resumeAd = true
 		this.player.elements.container.classList.add('v-adPaused')
 		this.player.elements.container.classList.remove('v-adPlaying')
@@ -377,6 +394,7 @@ export default class ImaPlugin {
 	 * On ad resumed
 	 */
 	onAdResumed() {
+		this.startCountdownTimer()
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
 	}
@@ -561,10 +579,11 @@ export default class ImaPlugin {
 	 * Clean up ad management
 	 */
 	clean() {
+		this.player.isLinearAd = false
 		this.removeEventListener()
 		window.clearInterval(this.countdownTimer)
 		this.adCountDown.remove()
-		this.adContainer.classList.remove('v-active')
+		this.adContainer.classList.remove('v-active', 'v-adNonLinear')
 		this.player.elements.container.classList.remove('v-adPlaying', 'v-adPaused')
 	}
 
