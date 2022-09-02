@@ -6,8 +6,8 @@ import BigPlayTemplate from '../../components/big-play/assets/scripts/big-play'
 import OverlayTemplate from '../../components/overlay/assets/scripts/overlay'
 import PosterTemplate from '../../components/poster/assets/scripts/poster'
 import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
-import { registerProvider, getProviderInstance, vliteProviders } from '../../../providers/provider'
-import { registerPlugin, initializePlugins, vlitePlugins } from '../../../plugins/plugin'
+import { registerProvider, getProviderInstance } from '../../../providers/provider'
+import { registerPlugin, initializePlugins } from '../../../plugins/plugin'
 
 type TimerHandle = number
 
@@ -389,10 +389,6 @@ class Vlitejs {
 	 * Destroy the player
 	 */
 	destroy() {
-		// Remove registered providers and plugins
-		Object.keys(vliteProviders).forEach((key) => delete vliteProviders[key])
-		Object.keys(vlitePlugins).forEach((key) => delete vlitePlugins[key])
-
 		this.removeEvents()
 		this.player.destroy()
 		this.player.controlBar.destroy()
