@@ -50,7 +50,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 [![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://vlite.js.org)
 
-<center>You can support this project with [GitHub Sponsors](https://github.com/sponsors/vlitejs)! &#9825;</center>
+<center>You can support this project with <a href="https://github.com/sponsors/vlitejs">GitHub Sponsors</a>! &#9825;</center>
 
 ### Playground
 
