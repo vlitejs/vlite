@@ -69,6 +69,7 @@ export default class ImaPlugin {
 	playerIsReady: boolean
 	sdkIsReady: boolean
 	currentAd!: any
+	cuePoints!: Array<number>
 	adContainer!: HTMLElement
 	timerAdTimeout: number
 	resumeAd: boolean
@@ -191,8 +192,9 @@ export default class ImaPlugin {
 	 * Render the plugin HTML
 	 */
 	render() {
-		const template = '<div class="v-ad">'
-		this.player.elements.container.insertAdjacentHTML('beforeend', template)
+		const template = document.createElement('div')
+		template.classList.add('v-ad')
+		this.player.elements.container.appendChild(template)
 	}
 
 	/**
@@ -319,6 +321,15 @@ export default class ImaPlugin {
 		)
 		this.adsManager.addEventListener(window.google.ima.AdEvent.Type.SKIPPED, this.onAdSkipped)
 
+		this.cuePoints = this.adsManager.getCuePoints()
+		if (
+			Array.isArray(this.cuePoints) &&
+			this.cuePoints.length &&
+			this.player.elements.progressBar
+		) {
+			this.addCuePoints()
+		}
+
 		this.player.dispatchEvent('adsmanager', {
 			adsManager: this.adsManager
 		})
@@ -341,6 +352,7 @@ export default class ImaPlugin {
 	 * On content resume requested
 	 */
 	onContentResumeRequested() {
+		this.clean()
 		this.adContainer.classList.remove('v-active')
 		!this.playerIsEnded && this.player.play()
 	}
@@ -429,6 +441,30 @@ export default class ImaPlugin {
 		if (this.player.options.autoplay || this.playIsWaiting) {
 			this.player.play()
 		}
+	}
+
+	/**
+	 * Add cue point to the progress bar
+	 */
+	addCuePoints() {
+		const cues = document.createElement('div')
+		cues.classList.add('v-cuePoints')
+
+		this.player.getDuration().then((duration: number) => {
+			this.cuePoints
+				.filter(
+					(cuePoint: number) => cuePoint !== 0 && cuePoint !== -1 && cuePoint < duration
+				)
+				.forEach((cuePoint: number) => {
+					const cuePercentage = (cuePoint * 100) / duration
+					const cue = document.createElement('span')
+					cue.classList.add('v-cuePoint')
+					cue.style.left = `${cuePercentage}%`
+					cues.appendChild(cue)
+				})
+
+			this.player.elements.controlBar.appendChild(cues)
+		})
 	}
 
 	/**
@@ -568,7 +604,6 @@ export default class ImaPlugin {
 	 */
 	clean() {
 		this.player.isLinearAd = false
-		this.removeEventListener()
 		this.adContainer.classList.remove('v-active', 'v-adNonLinear')
 		this.player.elements.container.classList.remove('v-adPlaying', 'v-adPaused')
 	}
@@ -578,6 +613,8 @@ export default class ImaPlugin {
 	 */
 	destroy() {
 		this.clean()
+		this.removeEventListener()
+
 		if (this.adsManager) {
 			this.adsManager.destroy()
 			this.adsManager = null

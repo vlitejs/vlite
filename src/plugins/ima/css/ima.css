@@ -60,4 +60,23 @@
 			display: none;
 		}
 	}
+
+	&-cuePoints {
+		position: absolute;
+		top: 0;
+		left: var(--vlite-controlBarHorizontalPadding);
+		right: var(--vlite-controlBarHorizontalPadding);
+		height: var(--vlite-progressBarHeight);
+	}
+
+	&-cuePoint {
+		background-color: var(--vlite-colorPrimary);
+		display: block;
+		height: 100%;
+		left: 0;
+		opacity: 0.8;
+		position: absolute;
+		top: 0;
+		width: 3px;
+	}
 }
