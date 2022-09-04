@@ -34,8 +34,14 @@ declare global {
 				}
 				AdDisplayContainer: Constructable<any>
 				AdsLoader: Constructable<any>
-				settings: object
+				settings: {
+					setDisableCustomPlaybackForIOS10Plus: (status: boolean) => void
+				}
 				AdsRenderingSettings: Constructable<any>
+				UiElements: {
+					AD_ATTRIBUTION: string
+					COUNTDOWN: string
+				}
 			}
 		}
 	}
@@ -64,8 +70,6 @@ export default class ImaPlugin {
 	sdkIsReady: boolean
 	currentAd!: any
 	adContainer!: HTMLElement
-	adCountDown!: HTMLElement
-	countdownTimer: number
 	timerAdTimeout: number
 	resumeAd: boolean
 	adDisplayContainer: any
@@ -93,11 +97,11 @@ export default class ImaPlugin {
 		const defaultOptions = {
 			adTagUrl: '',
 			adsRenderingSettings: {
-				restoreCustomPlaybackStateOnAdBreakComplete: true
+				restoreCustomPlaybackStateOnAdBreakComplete: true,
+				enablePreloading: true
 			},
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			updateImaSettings: () => {},
-			countdownText: 'Ad',
 			adTimeout: 5000,
 			debug: false
 		}
@@ -106,7 +110,6 @@ export default class ImaPlugin {
 		this.playerIsReady = false
 		this.sdkIsReady = false
 		this.adsLoaded = false
-		this.countdownTimer = 0
 		this.timerAdTimeout = 0
 		this.resumeAd = false
 		this.adError = false
@@ -133,7 +136,6 @@ export default class ImaPlugin {
 		this.onAdComplete = this.onAdComplete.bind(this)
 		this.onAllAdsCompleted = this.onAllAdsCompleted.bind(this)
 		this.onAdSkipped = this.onAdSkipped.bind(this)
-		this.updateCountdown = this.updateCountdown.bind(this)
 	}
 
 	/**
@@ -173,9 +175,9 @@ export default class ImaPlugin {
 	 */
 	onPlayerAndSdkReady() {
 		if (this.playerIsReady && this.sdkIsReady) {
+			this.player.loading(false)
 			this.render()
 			this.adContainer = this.player.elements.container.querySelector('.v-ad')
-			this.adCountDown = this.player.elements.container.querySelector('.v-adCountDown')
 
 			this.addEvents()
 			this.initAdObjects()
@@ -189,7 +191,7 @@ export default class ImaPlugin {
 	 * Render the plugin HTML
 	 */
 	render() {
-		const template = `<div class="v-ad"><div class="v-adCountDown"></div>`
+		const template = '<div class="v-ad">'
 		this.player.elements.container.insertAdjacentHTML('beforeend', template)
 	}
 
@@ -232,6 +234,9 @@ export default class ImaPlugin {
 	 */
 	initAdObjects() {
 		this.adsLoaded = false
+		window.google.ima.settings.setDisableCustomPlaybackForIOS10Plus(
+			this.player.options.playsinline
+		)
 		if (this.options.updateImaSettings instanceof Function) {
 			this.options.updateImaSettings(window.google.ima.settings)
 		}
@@ -281,6 +286,10 @@ export default class ImaPlugin {
 	onAdsManagerLoaded(adsManagerLoadedEvent: ImaEvent) {
 		const adsRenderingSettings = {
 			...new window.google.ima.AdsRenderingSettings(),
+			uiElements: [
+				window.google.ima.UiElements.AD_ATTRIBUTION,
+				window.google.ima.UiElements.COUNTDOWN
+			],
 			...this.options.adsRenderingSettings
 		}
 		this.adsManager = adsManagerLoadedEvent.getAdsManager(
@@ -341,6 +350,9 @@ export default class ImaPlugin {
 	 * @param {ImaEvent} e Ad event
 	 */
 	onAdStarted(e: ImaEvent) {
+		// Prevent the loader from being above the ad
+		this.player.loading(false)
+
 		this.currentAd = e.getAd()
 		this.isLinearAd = this.currentAd.isLinear()
 
@@ -356,35 +368,12 @@ export default class ImaPlugin {
 		)
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
-		this.startCountdownTimer()
-	}
-
-	/**
-	 * Start the countdown timer only for linear ad
-	 */
-	startCountdownTimer() {
-		if (this.isLinearAd) {
-			this.countdownTimer = window.setInterval(this.updateCountdown, 250)
-		}
-	}
-
-	/**
-	 * Update the ad count down
-	 */
-	updateCountdown() {
-		const remainingTime = this.adsManager.getRemainingTime()
-		const remainingMinutes = Math.floor(remainingTime / 60)
-		const remainingSeconds = Math.floor(remainingTime % 60)
-			.toString()
-			.padStart(2, '0')
-		this.adCountDown.innerHTML = `${this.options.countdownText} ${remainingMinutes}:${remainingSeconds}`
 	}
 
 	/**
 	 * On ad paused
 	 */
 	onAdPaused() {
-		window.clearInterval(this.countdownTimer)
 		this.resumeAd = true
 		this.player.elements.container.classList.add('v-adPaused')
 		this.player.elements.container.classList.remove('v-adPlaying')
@@ -394,7 +383,6 @@ export default class ImaPlugin {
 	 * On ad resumed
 	 */
 	onAdResumed() {
-		this.startCountdownTimer()
 		this.player.elements.container.classList.add('v-adPlaying')
 		this.player.elements.container.classList.remove('v-adPaused')
 	}
@@ -403,7 +391,7 @@ export default class ImaPlugin {
 	 * On ad complete
 	 */
 	onAdComplete() {
-		window.clearInterval(this.countdownTimer)
+		/** Can be used */
 	}
 
 	/**
@@ -486,7 +474,7 @@ export default class ImaPlugin {
 			this.player.pause()
 
 			// Use setTimeout to force the loading state after other calls made by the player
-			window.setTimeout(() => this.player.loading(true), 0)
+			// window.setTimeout(() => this.player.loading(true), 0)
 		}
 
 		this.timerAdTimeout = window.setTimeout(() => {
@@ -581,8 +569,6 @@ export default class ImaPlugin {
 	clean() {
 		this.player.isLinearAd = false
 		this.removeEventListener()
-		window.clearInterval(this.countdownTimer)
-		this.adCountDown.remove()
 		this.adContainer.classList.remove('v-active', 'v-adNonLinear')
 		this.player.elements.container.classList.remove('v-adPlaying', 'v-adPaused')
 	}

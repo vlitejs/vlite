@@ -200,6 +200,8 @@ export default class Player {
 			this.play()
 		}
 
+		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
+
 		// Call the onReady functions of components
 		this.options.controls && this.controlBar.onReady()
 		Object.keys(this.plugins).forEach((id) => {
@@ -207,7 +209,6 @@ export default class Player {
 		})
 
 		this.loading(false)
-		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 	}
 
 	/**
