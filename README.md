@@ -195,7 +195,7 @@ The player controls can be customized with the following parameters:
 | `fullscreen`&sup1;      |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
 | `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                       |
 | `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video      |
-| `playsinline`&sup1;     |   `Boolean`    | `false` | Add the `playsinline` attribute to the video         |
+| `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video         |
 | `loop`                  |   `Boolean`    | `false` | Whether to loop the current media                    |
 | `muted`&sup1;           |   `Boolean`    | `false` | Whether to mute the current media                    |
 | `autoHide`&sup1;        |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity |
