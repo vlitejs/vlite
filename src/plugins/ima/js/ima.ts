@@ -371,10 +371,11 @@ export default class ImaPlugin {
 		// Video play is prevent only when linear ad is playing
 		if (this.isLinearAd) {
 			this.player.isLinearAd = true
+		} else {
+			// Non-linear ad does not trigger the CONTENT_PAUSE_REQUESTED event
+			this.adContainer.classList.add('v-active')
 		}
 
-		// Non-linear ad does not trigger the CONTENT_PAUSE_REQUESTED event
-		!this.isLinearAd && this.adContainer.classList.add('v-active')
 		this.player.elements.container.classList[this.isLinearAd ? 'remove' : 'add'](
 			'v-adNonLinear'
 		)
