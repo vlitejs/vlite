@@ -80,6 +80,8 @@ The default value for the `adsRenderingSettings` property is the following objec
 window.google.ima.UiElements.AD_ATTRIBUTION
 window.google.ima.UiElements.COUNTDOWN
 
+`playsinline` is required for iOS
+
 ## SDK documentation
 
 See the [Google IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/html5/client-side) documentation.
