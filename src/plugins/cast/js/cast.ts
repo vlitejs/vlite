@@ -112,7 +112,7 @@ export default class CastPlugin {
 			this.initCastApi()
 		} else {
 			window.__onGCastApiAvailable = (isAvailable: boolean) => {
-				isAvailable && this.initCastApi()
+				isAvailable && window.chrome.cast && this.initCastApi()
 			}
 			this.loadWebSenderApi()
 		}
