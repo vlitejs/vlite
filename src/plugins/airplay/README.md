@@ -15,8 +15,6 @@ Supports for Apple AirPlay API.
 | Media type&sup3;  | `'video'`                                  |
 
 - _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
-- _&sup2;Providers: `html5|youtube|vimeo`_
-- _&sup3;Media type: `video|audio`_
 
 ## Usage
 
