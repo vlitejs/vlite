@@ -1,0 +1,82 @@
+.v {
+	&-ad {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		display: none;
+		transition: transform var(--vlite-transition);
+
+		&.v-active {
+			display: block;
+		}
+	}
+
+	&-adCountDown {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		color: #000;
+		width: auto;
+		padding: 10px;
+		font-size: 12px;
+		line-height: 12px;
+		pointer-events: none;
+	}
+
+	&-adPaused {
+		.v-bigPlay {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+
+	/* Linear ad */
+	:not(&-adNonLinear) {
+		&.v-adPlaying {
+			.v-bigPlay {
+				visibility: hidden;
+				opacity: 0;
+			}
+		}
+
+		&.v-adPlaying,
+		&.v-adPaused {
+			.v-poster {
+				display: none;
+			}
+		}
+	}
+
+	/* Non-linear ad */
+	&-adNonLinear {
+		.v-controlBar:not(.v-hidden) + .v-ad {
+			transform: translateY(calc((var(--vlite-controlBarHeight) + 10px) * -1));
+		}
+
+		.v-adCountDown {
+			display: none;
+		}
+	}
+
+	&-cuePoints {
+		position: absolute;
+		top: 0;
+		left: var(--vlite-controlBarHorizontalPadding);
+		right: var(--vlite-controlBarHorizontalPadding);
+		height: var(--vlite-progressBarHeight);
+	}
+
+	&-cuePoint {
+		background-color: var(--vlite-colorPrimary);
+		display: block;
+		height: 100%;
+		left: 0;
+		opacity: 0.8;
+		position: absolute;
+		top: 0;
+		width: 3px;
+	}
+}

@@ -13,6 +13,7 @@ export default class Player {
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
 	isCast: boolean
+	isLinearAd: boolean
 	isFullScreen: boolean
 	isMuted: boolean
 	isPaused: null | boolean
@@ -49,6 +50,7 @@ export default class Player {
 		this.media = Vlitejs.media
 		this.options = Vlitejs.options
 		this.isCast = false
+		this.isLinearAd = false
 
 		this.elements = {
 			container: Vlitejs.container,
@@ -198,6 +200,8 @@ export default class Player {
 			this.play()
 		}
 
+		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
+
 		// Call the onReady functions of components
 		this.options.controls && this.controlBar.onReady()
 		Object.keys(this.plugins).forEach((id) => {
@@ -205,7 +209,6 @@ export default class Player {
 		})
 
 		this.loading(false)
-		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 	}
 
 	/**
@@ -234,9 +237,14 @@ export default class Player {
 	/**
 	 * Dispatch custom event on the container
 	 * @param {String} type Event type
+	 * @param {Object} detail Event detail
 	 */
-	dispatchEvent(type: string) {
-		this.elements.container.dispatchEvent(new Event(type))
+	dispatchEvent(type: string, detail?: any) {
+		this.elements.container.dispatchEvent(
+			new window.CustomEvent(type, {
+				detail
+			})
+		)
 	}
 
 	/**
@@ -325,6 +333,8 @@ export default class Player {
 	 * Play the media element
 	 */
 	play() {
+		if (this.isLinearAd) return
+
 		if (this.isPaused === null) {
 			this.elements.container.classList.remove('v-firstStart')
 

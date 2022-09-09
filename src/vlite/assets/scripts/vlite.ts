@@ -37,7 +37,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		fullscreen: true,
 		poster: null,
 		bigPlay: true,
-		playsinline: false,
+		playsinline: true,
 		loop: false,
 		muted: false,
 		autoHide: false,

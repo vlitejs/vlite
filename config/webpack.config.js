@@ -56,6 +56,11 @@ const plugins = [
 		entrykey: 'plugins/airplay',
 		library: `${libraryName}Airplay`,
 		path: './src/plugins/airplay/config'
+	},
+	{
+		entrykey: 'plugins/ima',
+		library: `${libraryName}Ima`,
+		path: './src/plugins/ima/config'
 	}
 ]
 

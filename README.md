@@ -44,6 +44,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Picture-in-Picture**](./src/plugins/pip/README.md) - Supports Picture-in-Picture API.
 - [**Cast**](./src/plugins/cast/README.md) - Supports for Google Cast API.
 - [**AirPlay**](./src/plugins/airplay/README.md) - Supports for Apple AirPlay API.
+- [**Monetization**](./src/plugins/ima/README.md) - Supports for Google IMA SDK.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
 - [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
@@ -194,7 +195,7 @@ The player controls can be customized with the following parameters:
 | `fullscreen`&sup1;      |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
 | `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                       |
 | `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video      |
-| `playsinline`&sup1;     |   `Boolean`    | `false` | Add the `playsinline` attribute to the video         |
+| `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video         |
 | `loop`                  |   `Boolean`    | `false` | Whether to loop the current media                    |
 | `muted`&sup1;           |   `Boolean`    | `false` | Whether to mute the current media                    |
 | `autoHide`&sup1;        |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity |
