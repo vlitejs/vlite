@@ -155,6 +155,7 @@ export default class AirPlayPlugin {
 		} else {
 			this.player.dispatchEvent('airplaysessionended')
 			this.airPlayButton.classList.remove('v-active')
+			this.player.pause()
 		}
 	}
 

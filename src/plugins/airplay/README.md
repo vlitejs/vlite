@@ -47,8 +47,8 @@ The plugin exposes the following native `Event` on the `.v-vlite` element.
 
 | Event Type              | Description                                    |
 | ----------------------- | ---------------------------------------------- |
-| `airplaysessionstarted` | Sent when the airplay session is established.  |
-| `airplaysessionended`   | Sent when the airplay session is disconnected. |
+| `airplaysessionstarted` | Sent when the AirPlay session is established.  |
+| `airplaysessionended`   | Sent when the AirPlay session is disconnected. |
 
 ## Limits
 
