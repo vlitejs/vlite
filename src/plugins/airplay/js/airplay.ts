@@ -45,27 +45,25 @@ export default class AirPlayPlugin {
 	 * Initialize the plugin
 	 */
 	init() {
-		this.addEvents()
+		this.airPlayAvailable && this.addEvents()
 	}
 
 	/**
 	 * Add event listeners
 	 */
 	addEvents() {
-		if (this.airPlayAvailable) {
-			this.render()
-			this.airPlayButton = this.player.elements.container.querySelector('.v-airPlayButton')
+		this.render()
+		this.airPlayButton = this.player.elements.container.querySelector('.v-airPlayButton')
 
-			!this.player.isFullScreen && this.addAirPlayEvents()
-			this.player.media.addEventListener(
-				'webkitcurrentplaybacktargetiswirelesschanged',
-				this.onWebKitCurrentPlaybackTargetWirelessChanged
-			)
+		!this.player.isFullScreen && this.addAirPlayEvents()
+		this.player.media.addEventListener(
+			'webkitcurrentplaybacktargetiswirelesschanged',
+			this.onWebKitCurrentPlaybackTargetWirelessChanged
+		)
 
-			this.airPlayButton.addEventListener('click', this.onClickOnAirPlayButton)
-			this.player.on('enterfullscreen', this.onEnterFullscreen)
-			this.player.on('exitfullscreen', this.onExitFullscreen)
-		}
+		this.airPlayButton.addEventListener('click', this.onClickOnAirPlayButton)
+		this.player.on('enterfullscreen', this.onEnterFullscreen)
+		this.player.on('exitfullscreen', this.onExitFullscreen)
 	}
 
 	/**
