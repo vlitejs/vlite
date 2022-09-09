@@ -1,10 +1,12 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/subtitle.css'
 import '../../dist/plugins/cast.css'
+import '../../dist/plugins/airplay.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
 import VlitejsCast from '../../dist/plugins/cast.js'
+import VlitejsAirplay from '../../dist/plugins/airplay.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
@@ -17,6 +19,7 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 		subtitle: 'Walt Disney Animation Studios'
 	}
 })
+Vlitejs.registerPlugin('airplay', VlitejsAirplay)
 
 /* eslint-disable no-unused-vars */
 const vlite = new Vlitejs('#player', {
@@ -35,7 +38,7 @@ const vlite = new Vlitejs('#player', {
 		muted: false,
 		autoHide: true
 	},
-	plugins: ['subtitle', 'pip', 'cast'],
+	plugins: ['subtitle', 'pip', 'cast', 'airplay'],
 	onReady: function (player) {
 		console.log(player)
 
