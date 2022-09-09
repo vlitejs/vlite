@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 4.2.0
+
+### New features
+
+- Add the Google IMA SDK plugin ([#77](https://github.com/vlitejs/vlite/pull/77))
+- Add the AirPlay plugin ([#82](https://github.com/vlitejs/vlite/pull/82))
+
+### Updates
+
+- Enable `playsinline` by default ([f142964](https://github.com/vlitejs/vlite/commit/f142964e96f451c35a201758924f046143df37a9))
+- Call Vlitejs `onReady` function before the plugins `onReady` functions ([7620e16](https://github.com/vlitejs/vlite/commit/7620e16#diff-72c3d7a0754b76d6ad0c31ddbf698d283c13d17a71fe6b07c8a795adac8d4762))
+- Use native `aspect-ratio` for player responsive ([b9816bc](https://github.com/vlitejs/vlite/commit/b9816bc2d68246078e73ace363248e5bfa4bc068))
+- Disable fullscreen on iPhone (not supported yet) ([49c9567](https://github.com/vlitejs/vlite/commit/49c9567b71216c4214c753742d7c4758dd486d14))
+
 ## 4.1.2
 
 ### Fixes
