@@ -60,6 +60,7 @@ If you're interested in playing around with vLitejs, you can use the online code
 
 - [HTML5 video](https://glitch.com/edit/#!/vlitejs-html5-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
 - [HTML5 video HLS.js](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
+- [HTML5 video with Google Ima SDK](https://glitch.com/edit/#!/vlitejs-html5-video-ima?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
 - [HTML5 audio](https://glitch.com/edit/#!/vlitejs-html5-audio?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
 - [Youtube](https://glitch.com/edit/#!/vlitejs-youtube-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
 - [Vimeo](https://glitch.com/edit/#!/vlitejs-vimeo-video?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false)
