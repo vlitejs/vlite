@@ -506,13 +506,10 @@ export default class ImaPlugin {
 	 */
 	waitingAd() {
 		this.playIsWaiting = true
+		this.player.pause()
 
-		if (this.isLinearAd) {
-			this.player.pause()
-
-			// Use setTimeout to force the loading state after other calls made by the player
-			// window.setTimeout(() => this.player.loading(true), 0)
-		}
+		// Use setTimeout to force the loading state after other calls made by the player
+		window.setTimeout(() => this.player.loading(true), 0)
 
 		this.timerAdTimeout = window.setTimeout(() => {
 			this.onAdTimeoutReached()
