@@ -193,7 +193,7 @@ The player controls can be customized with the following parameters:
 | `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar          |
 | `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar      |
 | `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar         |
-| `fullscreen`&sup1;      |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
+| `fullscreen`&sup1; ⁴      |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
 | `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                       |
 | `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video      |
 | `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video         |
@@ -203,9 +203,10 @@ The player controls can be customized with the following parameters:
 | `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                       |
 | `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider      |
 
-- _&sup1; Video only. Not yet supported on iPhone._
+- _&sup1; Video only._
 - _&sup2; Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans))._
 - _&sup3; See [Youtube embed options](https://developers.google.com/youtube/player_parameters#Parameters) and [Vimeo embed options](https://github.com/vimeo/player.js/#embed-options)._
+- _⁴ Fullscreen API not yet supported on iPhone._
 
 > The `autoplay` parameter automatically activates the `muted` option because the API can only be initiated by a user gesture (see [Autoplay policy changes](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes)).
 
