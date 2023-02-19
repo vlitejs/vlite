@@ -21,10 +21,10 @@ export default function controlBar({
 	isMuted: boolean
 }): string {
 	return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
-		options.time ? timeElement() : ''
-	}${options.progressBar ? progressBarElement() : ''}${
 		options.volume ? volumeElement({ isMuted }) : ''
-	}${options.fullscreen ? fullscreenElement() : ''}</div>`
+	}${options.time ? timeElement() : ''}${options.progressBar ? progressBarElement() : ''}${
+		options.fullscreen ? fullscreenElement() : ''
+	}</div>`
 }
 
 /**
@@ -48,7 +48,7 @@ function timeElement(): string {
  * @returns {String} Generated HTML
  */
 function progressBarElement(): string {
-	return `<input type="range" class="v-progressBar" min="0" max="100" step="0.01" value="0" aria-label="Seek" aria-valuemin="0" />`
+	return `<input type="range" class="v-progressBar v-progressBarStyle" min="0" max="100" step="0.01" value="0" aria-label="Seek" aria-valuemin="0" />`
 }
 
 /**

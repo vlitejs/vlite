@@ -1,10 +1,14 @@
 import '../../dist/vlite.css'
+import '../../dist/plugins/volume-bar.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsDailymotion from '../../dist/providers/dailymotion.js'
+import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
 
 Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
 	playerId: 'x9scg'
 })
+Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
+
 const vlite = new Vlitejs('#player', {
 	options: {
 		controls: true,
@@ -22,6 +26,7 @@ const vlite = new Vlitejs('#player', {
 		autoHide: true
 	},
 	provider: 'dailymotion',
+	plugins: ['volume-bar'],
 	onReady: (player) => {
 		console.log(player)
 

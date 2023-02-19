@@ -1,5 +1,9 @@
 import '../../dist/vlite.css'
+import '../../dist/plugins/volume-bar.css'
 import Vlitejs from '../../dist/vlite.js'
+import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
+
+Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
 const vlite = new Vlitejs('#player', {
 	options: {
@@ -11,6 +15,7 @@ const vlite = new Vlitejs('#player', {
 		volume: true,
 		loop: false
 	},
+	plugins: ['volume-bar'],
 	onReady: (player) => {
 		console.log(player)
 

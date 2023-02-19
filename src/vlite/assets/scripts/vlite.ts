@@ -1,6 +1,6 @@
 import Player from './player'
 import validateTarget from 'validate-target'
-import { checkSupportFullScreen, getCSSTransitionDuration } from 'shared/utils/utils'
+import { checkSupportFullScreen } from 'shared/utils/utils'
 import LoaderTemplate from '../../components/loader/assets/scripts/loader'
 import BigPlayTemplate from '../../components/big-play/assets/scripts/big-play'
 import OverlayTemplate from '../../components/overlay/assets/scripts/overlay'
@@ -272,10 +272,8 @@ class Vlitejs {
 			(activeElement === this.container || activeElement === this.player.elements.volume)
 		) {
 			if (keyCode === 38) {
-				this.animateVolumeButton()
 				this.increaseVolume()
 			} else if (keyCode === 40) {
-				this.animateVolumeButton()
 				this.decreaseVolume()
 			}
 		}
@@ -320,9 +318,10 @@ class Vlitejs {
 	 * Increase the player volume
 	 */
 	increaseVolume() {
+		//@todo: fix bug with vimeo
 		this.player.isMuted && this.player.unMute()
 		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(volume + 0.05)
+			this.player.setVolume(Math.round((volume + 0.1) * 10) / 10)
 		})
 	}
 
@@ -331,22 +330,8 @@ class Vlitejs {
 	 */
 	decreaseVolume() {
 		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(volume - 0.05)
+			this.player.setVolume(Math.round((volume - 0.1) * 10) / 10)
 		})
-	}
-
-	/**
-	 * Animate the volume button in CSS
-	 */
-	animateVolumeButton() {
-		if (this.player.elements.volume) {
-			const duration = getCSSTransitionDuration({
-				target: this.player.elements.volume,
-				isMilliseconds: true
-			})
-			this.player.elements.volume.classList.add('v-animate')
-			setTimeout(() => this.player.elements.volume.classList.remove('v-animate'), duration)
-		}
 	}
 
 	/**

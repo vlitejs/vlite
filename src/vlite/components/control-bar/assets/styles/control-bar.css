@@ -21,9 +21,12 @@
 	}
 
 	&-progressBar {
+		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
+	}
+
+	&-progressBarStyle {
 		transition: height var(--vlite-transition), top var(--vlite-transition);
 		z-index: 1;
-		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
 		appearance: none;
 		-webkit-tap-highlight-color: transparent;
 		user-select: none;
@@ -87,10 +90,6 @@
 	&-volumeButton {
 		transition: transform var(--vlite-transition), opacity var(--vlite-transition);
 		flex-shrink: 0;
-
-		&.v-animate {
-			transform: translateY(-3px);
-		}
 	}
 
 	&-controlBar {

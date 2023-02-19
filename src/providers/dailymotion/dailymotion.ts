@@ -182,7 +182,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 * @param {Number} volume New volume
 		 */
 		methodSetVolume(volume: number) {
-			this.instance.setVolume(volume * 100)
+			this.instance.setVolume(volume)
 		}
 
 		/**

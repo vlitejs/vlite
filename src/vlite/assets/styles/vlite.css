@@ -138,8 +138,6 @@
 
 		svg {
 			fill: var(--vlite-controlsColor);
-			width: 28px;
-			height: 28px;
 		}
 
 		&.v-playPauseButton svg {

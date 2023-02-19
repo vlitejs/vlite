@@ -61,6 +61,11 @@ const plugins = [
 		entrykey: 'plugins/ima',
 		library: `${libraryName}Ima`,
 		path: './src/plugins/ima/config'
+	},
+	{
+		entrykey: 'plugins/volume-bar',
+		library: `${libraryName}VolumeBar`,
+		path: './src/plugins/volume-bar/config'
 	}
 ]
 
