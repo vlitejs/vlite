@@ -145,24 +145,9 @@
 			height: 17px;
 		}
 
-		&.v-subtitleButton svg {
-			width: 26px;
-			height: 22px;
-		}
-
 		&.v-volumeButton svg {
 			width: 24px;
 			height: 20px;
-		}
-
-		&.v-pipButton svg {
-			width: 26px;
-			height: 22px;
-		}
-
-		&.v-castButton svg {
-			width: 26px;
-			height: 22px;
 		}
 
 		&.v-fullscreenButton svg {

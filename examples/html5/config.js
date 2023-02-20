@@ -1,5 +1,6 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/subtitle.css'
+import '../../dist/plugins/pip.css'
 import '../../dist/plugins/cast.css'
 import '../../dist/plugins/airplay.css'
 import '../../dist/plugins/volume-bar.css'

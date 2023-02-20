@@ -97,11 +97,9 @@ export default class Subtitle {
 		)
 
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
-		const insertPosition = this.getInsertPosition()
-		const targetElement = this.player.elements.container.querySelector(insertPosition.selector)
-		if (controlBar && targetElement) {
-			targetElement.insertAdjacentHTML(insertPosition.position as string, this.getTemplate())
-		}
+		controlBar
+			.querySelector('.v-controlBarRight')
+			.insertAdjacentHTML('afterbegin' as string, this.getTemplate())
 	}
 
 	/**
@@ -152,39 +150,6 @@ export default class Subtitle {
 					</div>
 				</div>
 			`
-	}
-
-	/**
-	 * Get the insertion position according to the available controls
-	 * @returns {Object} Selector and position for the subtitle button
-	 */
-	getInsertPosition(): InsertPosition {
-		if (this.player.options.progressBar) {
-			return {
-				selector: '.v-progressBar',
-				position: 'afterend'
-			}
-		} else if (this.player.options.volume) {
-			return {
-				selector: '.v-volumeButton',
-				position: 'beforebegin'
-			}
-		} else if (this.player.elements.container.querySelector('.v-pipButton')) {
-			return {
-				selector: '.v-pipButton',
-				position: 'beforebegin'
-			}
-		} else if (this.player.options.fullscreen) {
-			return {
-				selector: '.v-fullscreenButton',
-				position: 'beforebegin'
-			}
-		} else {
-			return {
-				selector: '.v-controlBar',
-				position: 'beforeend'
-			}
-		}
 	}
 
 	/**

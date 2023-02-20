@@ -27,7 +27,7 @@ export default class VolumeBar {
 	 * Initialize
 	 */
 	init() {
-		if (this.player.options.controls) {
+		if (this.player.options.controls && this.player.options.volume) {
 			this.render()
 			this.volumeBar = this.player.elements.container.querySelector('.v-volumeBar')
 			this.addEvents()
@@ -36,7 +36,7 @@ export default class VolumeBar {
 
 	onReady() {
 		this.player.getVolume().then((volume: number) => {
-			this.updateVolumeBar(volume)
+			this.updateVolumeBar(this.player.isMuted ? 0 : volume)
 		})
 	}
 
@@ -54,13 +54,7 @@ export default class VolumeBar {
 			'.v-volumeButton'
 		) as HTMLElement
 
-		if (controlBar) {
-			if (volumeButton) {
-				volumeButton.insertAdjacentHTML('afterend', template)
-			} else {
-				controlBar.insertAdjacentHTML('beforeend', template)
-			}
-		}
+		volumeButton.insertAdjacentHTML('afterend', template)
 	}
 
 	/**
@@ -73,7 +67,7 @@ export default class VolumeBar {
 
 	onInputVolumeBar(e: Event) {
 		const target = e.target as HTMLInputElement
-		const value = parseInt(target.value)
+		const value = parseFloat(target.value)
 		this.updateVolumeBar(value)
 		target.setAttribute('aria-valuenow', `${Math.round(value)}`)
 		this.player.setVolume(value)
@@ -83,13 +77,20 @@ export default class VolumeBar {
 	 * On volume change, update the ad volume
 	 */
 	onVolumeChange(e: CustomEvent) {
-		if (this.player.isMuted) {
-			this.volumeBar.value = '0'
-			this.updateVolumeBar(0)
-		} else if (e.detail && e.detail.volume) {
-			const volume = e.detail.volume
+		const { volume } = e?.detail || {}
+		if (volume) {
 			this.volumeBar.value = `${volume}`
 			this.updateVolumeBar(volume)
+		} else {
+			if (this.player.isMuted) {
+				this.volumeBar.value = '0'
+				this.updateVolumeBar(0)
+			} else {
+				this.player.getVolume().then((volume: number) => {
+					this.volumeBar.value = `${volume}`
+					this.updateVolumeBar(volume)
+				})
+			}
 		}
 	}
 

@@ -210,7 +210,8 @@ export default class ControlBar {
 	getTemplate(): string {
 		return `${TemplateControlBar({
 			options: this.player.options,
-			isMuted: this.player.isMuted
+			isMuted: this.player.isMuted,
+			isVideo: this.type === 'video'
 		})}`
 	}
 

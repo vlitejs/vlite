@@ -11,20 +11,31 @@ import { Options } from 'shared/assets/interfaces/interfaces'
  * @param {Object} options
  * @param {Object} options.options Player options
  * @param {Boolean} options.isMuted Player is muted
+ * @param {Boolean} options.isVideo Player type is video
  * @returns {String} Generated HTML
  */
 export default function controlBar({
 	options,
-	isMuted
+	isMuted,
+	isVideo
 }: {
 	options: Options
 	isMuted: boolean
+	isVideo: boolean
 }): string {
+	if (isVideo) {
+		return `<div class="v-controlBar">${
+			options.progressBar ? progressBarElement() : ''
+		}<div class="v-controlBarLeft">${options.playPause ? playPauseElement() : ''}${
+			options.volume ? volumeElement({ isMuted }) : ''
+		}${options.time ? timeElement() : ''}</div><div class="v-controlBarRight">${
+			options.fullscreen ? fullscreenElement() : ''
+		}</div></div>`
+	}
+
 	return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
-		options.volume ? volumeElement({ isMuted }) : ''
-	}${options.time ? timeElement() : ''}${options.progressBar ? progressBarElement() : ''}${
-		options.fullscreen ? fullscreenElement() : ''
-	}</div>`
+		options.progressBar ? progressBarElement() : ''
+	}${options.time ? timeElement() : ''}${options.volume ? volumeElement({ isMuted }) : ''}</div>`
 }
 
 /**

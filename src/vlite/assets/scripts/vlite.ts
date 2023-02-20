@@ -318,7 +318,6 @@ class Vlitejs {
 	 * Increase the player volume
 	 */
 	increaseVolume() {
-		//@todo: fix bug with vimeo
 		this.player.isMuted && this.player.unMute()
 		this.player.getVolume().then((volume: number) => {
 			this.player.setVolume(Math.round((volume + 0.1) * 10) / 10)
