@@ -1,12 +1,12 @@
 .v {
 	&-castButton {
-		&.v-active svg {
-			fill: var(--vlite-colorPrimary);
-		}
-
 		svg {
 			width: 26px;
 			height: 22px;
+		}
+
+		&.v-active svg {
+			fill: var(--vlite-colorPrimary);
 		}
 	}
 
