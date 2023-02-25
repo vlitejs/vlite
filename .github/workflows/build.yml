@@ -37,6 +37,11 @@ jobs:
           cache-dependency-path: ./package-lock.json
           node-version: 18
 
+      - name: Debug
+        run: |
+          echo ${{ github.ref }}
+          echo ${{ github.event_name }}
+
       - name: Install dependencies
         run: npm ci
 
