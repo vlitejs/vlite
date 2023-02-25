@@ -39,8 +39,7 @@ jobs:
 
       - name: Debug
         run: |
-          echo ${{ github.ref }}
-          echo ${{ github.event_name }}
+          echo ${{ github.event.pull_request }}
 
       - name: Install dependencies
         run: npm ci
