@@ -291,7 +291,7 @@ The player instance exposes the following methods, accessible when the player is
 | `getCurrentTime()`     |         -          | `Promise` | Get the current time              |
 | `getDuration()`        |         -          | `Promise` | Get the duration                  |
 | `mute()`               |         -          |     -     | Mute the volume                   |
-| `unMmute()`            |         -          |     -     | Unmute the volume                 |
+| `unMute()`             |         -          |     -     | Unmute the volume                 |
 | `seekTo(time)`         |      `Number`      |     -     | Seek to a current time in seconds |
 | `requestFullscreen()`  |         -          |     -     | Request the fullscreen            |
 | `exitFullscreen()`     |         -          |     -     | Exit the fullscreen               |
