@@ -2,6 +2,8 @@
 
 Supports for volume bar to adjust the media volume.
 
+> **Note** Available on screen more than `500px`.
+
 ## Overview
 
 | <!-- -->          | <!-- -->                                         |
@@ -37,7 +39,3 @@ new Vlitejs('#player', {
   plugins: ['volume-bar']
 });
 ```
-
-## Demo
-
-See the [volume-bar plugin](TODO) demo.
