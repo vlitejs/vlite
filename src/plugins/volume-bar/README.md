@@ -39,3 +39,7 @@ new Vlitejs('#player', {
   plugins: ['volume-bar']
 });
 ```
+
+## Demo
+
+See the [volume-bar plugin on audio](https://glitch.com/edit/#!/vlitejs-html5-audio-volume-bar?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) and [volume-bar plugin on video](https://glitch.com/edit/#!/vlitejs-html5-video-volume-bar?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) demo.
