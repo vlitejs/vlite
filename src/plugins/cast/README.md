@@ -14,7 +14,7 @@ Supports for Google Cast API.
 | Provider&sup2;    | `'html5'`                            |
 | Media type&sup3;  | `'video'`                            |
 
-- _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+> **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
 ## Usage
 
