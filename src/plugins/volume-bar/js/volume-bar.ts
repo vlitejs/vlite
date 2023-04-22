@@ -49,10 +49,16 @@ export default class VolumeBar {
 	 */
 	render() {
 		const template = `<input type="range" class="v-volumeBar v-progressBarStyle" min="0" max="1" step="0.1" value="1" aria-label="Volume" aria-valuemin="0" />`
+		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
+		const volumeButton = this.player.elements.container.querySelector('.v-volumeButton')
 
-		this.player.elements.container
-			.querySelector('.v-volumeButton')
-			.insertAdjacentHTML('afterend', template)
+		// Wrap volume button to group button and progress bar
+		const volumeArea = document.createElement('div')
+		volumeArea.classList.add('v-volumeArea')
+		volumeButton.parentNode.insertBefore(volumeArea, volumeButton)
+		volumeArea.appendChild(volumeButton)
+
+		volumeButton.insertAdjacentHTML('afterend', template)
 	}
 
 	/**

@@ -97,9 +97,17 @@ export default class Subtitle {
 		)
 
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
-		controlBar
-			.querySelector('.v-controlBarRight')
-			.insertAdjacentHTML('afterbegin' as string, this.getTemplate())
+		const fullscreenButton = this.player.elements.container.querySelector(
+			'.v-fullscreenButton'
+		) as HTMLElement
+
+		if (controlBar) {
+			if (fullscreenButton) {
+				fullscreenButton.insertAdjacentHTML('beforebegin', this.getTemplate())
+			} else {
+				controlBar.insertAdjacentHTML('beforeend', this.getTemplate())
+			}
+		}
 	}
 
 	/**

@@ -78,9 +78,7 @@ export default class AirPlayPlugin {
 			if (fullscreenButton) {
 				fullscreenButton.insertAdjacentHTML('beforebegin', template)
 			} else {
-				controlBar
-					.querySelector('.v-controlBarRight')
-					.insertAdjacentHTML('beforeend', template)
+				controlBar.insertAdjacentHTML('beforeend', template)
 			}
 		}
 	}

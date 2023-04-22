@@ -24,18 +24,18 @@ export default function controlBar({
 	isVideo: boolean
 }): string {
 	if (isVideo) {
-		return `<div class="v-controlBar">${
-			options.progressBar ? progressBarElement() : ''
-		}<div class="v-controlBarLeft">${options.playPause ? playPauseElement() : ''}${
+		return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
+			options.time ? timeElement() : ''
+		}${options.progressBar ? progressBarElement() : ''}${
 			options.volume ? volumeElement({ isMuted }) : ''
-		}${options.time ? timeElement() : ''}</div><div class="v-controlBarRight">${
-			options.fullscreen ? fullscreenElement() : ''
-		}</div></div>`
+		}${options.fullscreen ? fullscreenElement() : ''}</div>`
 	}
 
 	return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
-		options.progressBar ? progressBarElement() : ''
-	}${options.time ? timeElement() : ''}${options.volume ? volumeElement({ isMuted }) : ''}</div>`
+		options.time ? timeElement() : ''
+	}${options.progressBar ? progressBarElement() : ''}${
+		options.volume ? volumeElement({ isMuted }) : ''
+	}</div>`
 }
 
 /**

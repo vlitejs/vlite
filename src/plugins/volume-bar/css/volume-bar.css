@@ -1,7 +1,12 @@
 .v {
+	&-volumeArea {
+		display: flex;
+	}
+
 	&-volumeBar {
-		width: 52px;
-		margin-right: 10px;
+		transition: width var(--vlite-transition), margin var(--vlite-transition);
+		overflow: hidden;
+		width: 0;
 	}
 }
 
@@ -9,6 +14,15 @@
 	.v {
 		&-volumeBar {
 			display: none;
+		}
+	}
+}
+
+@media (hover: hover) {
+	.v {
+		&-volumeArea:hover &-volumeBar {
+			width: 52px;
+			margin-right: 10px;
 		}
 	}
 }
