@@ -1,7 +1,7 @@
 import { pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 /**
- * Vlitejs Picture-in-Picture plugin
+ * Vlitejs Volume bar plugin
  * @module Vlitejs/plugins/VolumeBar
  */
 export default class VolumeBar {
@@ -34,12 +34,19 @@ export default class VolumeBar {
 		}
 	}
 
+	/**
+	 * On player ready
+	 */
 	onReady() {
 		this.player.getVolume().then((volume: number) => {
 			this.updateVolumeBar(this.player.isMuted ? 0 : volume)
 		})
 	}
 
+	/**
+	 * Update the volume bar
+	 * @param {number} volume Volume level
+	 */
 	updateVolumeBar(volume: number) {
 		this.volumeBar.style.setProperty('--vlite-progressValue', `${volume * 100}%`)
 	}
@@ -48,17 +55,20 @@ export default class VolumeBar {
 	 * Render the plugin HTML
 	 */
 	render() {
-		const template = `<input type="range" class="v-volumeBar v-progressBarStyle" min="0" max="1" step="0.1" value="1" aria-label="Volume" aria-valuemin="0" tabindex="0" />`
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
-		const volumeButton = this.player.elements.container.querySelector('.v-volumeButton')
 
-		// Wrap volume button to group button and progress bar
-		const volumeArea = document.createElement('div')
-		volumeArea.classList.add('v-volumeArea')
-		volumeButton.parentNode.insertBefore(volumeArea, volumeButton)
-		volumeArea.appendChild(volumeButton)
+		if (controlBar) {
+			const volumeButton = this.player.elements.container.querySelector('.v-volumeButton')
+			const template = `<input type="range" class="v-volumeBar v-progressBarStyle" min="0" max="1" step="0.1" value="1" aria-label="Volume" aria-valuemin="0" tabindex="0" />`
 
-		volumeButton.insertAdjacentHTML('afterend', template)
+			// Wrap volume button to group button and progress bar
+			const volumeArea = document.createElement('div')
+			volumeArea.classList.add('v-volumeArea')
+			volumeButton.parentNode.insertBefore(volumeArea, volumeButton)
+			volumeArea.appendChild(volumeButton)
+
+			volumeArea.insertAdjacentHTML('beforeend', template)
+		}
 	}
 
 	/**
@@ -69,9 +79,14 @@ export default class VolumeBar {
 		this.player.on('volumechange', this.onVolumeChange)
 	}
 
+	/**
+	 * On input volume bar
+	 * @param {Event} e Event data
+	 */
 	onInputVolumeBar(e: Event) {
 		const target = e.target as HTMLInputElement
 		const value = parseFloat(target.value)
+
 		this.updateVolumeBar(value)
 		target.setAttribute('aria-valuenow', `${Math.round(value)}`)
 		this.player.setVolume(value)
@@ -82,6 +97,7 @@ export default class VolumeBar {
 	 */
 	onVolumeChange(e: CustomEvent) {
 		const { volume } = e?.detail || {}
+
 		if (volume) {
 			this.volumeBar.value = `${volume}`
 			this.updateVolumeBar(volume)
@@ -102,6 +118,6 @@ export default class VolumeBar {
 	 * Destroy the plugin
 	 */
 	destroy() {
-		this.volumeBar.removeEventListener('click', this.onInputVolumeBar)
+		this.volumeBar.removeEventListener('input', this.onInputVolumeBar)
 	}
 }

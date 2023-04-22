@@ -102,8 +102,8 @@
 		padding-right: var(--vlite-controlBarHorizontalPadding);
 		transition: opacity var(--vlite-transition);
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: flex-end;
 
 		&:hover {
 			opacity: 1 !important;
@@ -115,16 +115,30 @@
 	}
 
 	&-audio {
-		.v-progressBarStyle {
-			height: 25px;
+		.v-playPauseButton {
+			order: 1;
+		}
+
+		.v-progressBar {
+			order: 2;
+		}
+
+		.v-time {
+			order: 3;
+			padding: 0 8px 0 12px;
+		}
+
+		.v-progressBar + .v-volumeButton,
+		.v-progressBar + .v-volumeArea {
+			order: 4;
 		}
 
 		.v-controlBar {
 			padding-top: 0;
 		}
 
-		.v-time {
-			padding: 0 8px 0 12px;
+		.v-progressBarStyle {
+			height: 25px;
 		}
 	}
 
