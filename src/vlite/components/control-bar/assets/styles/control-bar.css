@@ -113,16 +113,6 @@
 		}
 	}
 
-	&-controlBarLeft {
-		display: flex;
-		flex-direction: row;
-	}
-
-	&-controlBarRight {
-		display: flex;
-		flex-direction: row;
-	}
-
 	&-audio {
 		.v-progressBarStyle {
 			height: 25px;

@@ -1,6 +1,7 @@
 .v {
 	&-volumeArea {
 		display: flex;
+		align-items: center;
 	}
 
 	&-volumeBar {
