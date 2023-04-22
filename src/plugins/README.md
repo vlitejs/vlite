@@ -10,6 +10,7 @@ Each plugin can be loaded on demand with the API.
 | ------------------------------------- | ------------------------------------------ |
 | [Subtitle](./subtitle/README.md)      | Supports for multiple caption tracks (VTT) |
 | [Picture-in-Picture](./pip/README.md) | Supports for picture-in-picture mode       |
+| [Volume bar](./volume-bar/README.md)  | Supports for volume bar                    |
 | [Cast](./cast/README.md)              | Supports for Google Cast API               |
 | [AirPlay](./airplay/README.md)        | Supports for Apple AirPlay API             |
 | [Ima](./ima/README.md)                | Supports for Google IMA SDK                |

@@ -62,24 +62,6 @@ export function getBrowserPrefix(): string {
 }
 
 /**
- * Get CSS transition duration value
- * @param {HTMLElement} target - Target element to calculate from
- * @param {Boolean} isMilliseconds - Should the duration be returned in milliseconds or not
- * @returns {Number} Transition duration in seconds or milliseconds
- */
-export function getCSSTransitionDuration({
-	target,
-	isMilliseconds = false
-}: {
-	target: HTMLElement
-	isMilliseconds: boolean
-}) {
-	return (
-		parseFloat(window.getComputedStyle(target).transitionDuration) * (isMilliseconds ? 1000 : 1)
-	)
-}
-
-/**
  * Check if the device is touch
  * @returns {Boolean} Is touch
  */

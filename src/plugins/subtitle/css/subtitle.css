@@ -1,4 +1,11 @@
 .v {
+	&-subtitleButton {
+		svg {
+			width: 26px;
+			height: 22px;
+		}
+	}
+
 	&-captions {
 		position: absolute;
 		left: 50%;

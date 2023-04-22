@@ -1,5 +1,10 @@
 .v {
 	&-airPlayButton {
+		svg {
+			width: 28px;
+			height: 28px;
+		}
+
 		&.v-active svg {
 			fill: var(--vlite-colorPrimary);
 		}

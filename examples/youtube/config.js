@@ -1,8 +1,11 @@
 import '../../dist/vlite.css'
+import '../../dist/plugins/volume-bar.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsYoutube from '../../dist/providers/youtube.js'
+import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
+Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
 /* eslint-disable no-unused-vars */
 const vlite = new Vlitejs('#player', {
@@ -23,6 +26,7 @@ const vlite = new Vlitejs('#player', {
 		providerParams: {}
 	},
 	provider: 'youtube',
+	plugins: ['volume-bar'],
 	onReady: function (player) {
 		console.log(player)
 

@@ -4,15 +4,15 @@ Supports for Picture-in-Picture mode.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                          |
-| ----------------- | --------------------------------- |
-| Name              | `pip`                             |
-| Global name&sup1; | `window.VlitejsPip`               |
-| Path              | `vlitejs/dist/plugins/pip`        |
-| Entry point       | `vlitejs/dist/plugins/pip/pip.js` |
-| Stylesheet        | -                                 |
-| Provider&sup2;    | `'html5'`                         |
-| Media type&sup3;  | `'video'`                         |
+| <!-- -->          | <!-- -->                           |
+| ----------------- | ---------------------------------- |
+| Name              | `pip`                              |
+| Global name&sup1; | `window.VlitejsPip`                |
+| Path              | `vlitejs/dist/plugins/pip`         |
+| Entry point       | `vlitejs/dist/plugins/pip/pip.js`  |
+| Stylesheet        | `vlitejs/dist/plugins/pip/pip.css` |
+| Provider&sup2;    | `'html5'`                          |
+| Media type&sup3;  | `'video'`                          |
 
 - _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 

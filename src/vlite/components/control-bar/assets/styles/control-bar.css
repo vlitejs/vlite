@@ -21,9 +21,12 @@
 	}
 
 	&-progressBar {
+		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
+	}
+
+	&-progressBarStyle {
 		transition: height var(--vlite-transition), top var(--vlite-transition);
 		z-index: 1;
-		width: calc(100% - 2 * var(--vlite-controlBarHorizontalPadding));
 		appearance: none;
 		-webkit-tap-highlight-color: transparent;
 		user-select: none;
@@ -87,10 +90,6 @@
 	&-volumeButton {
 		transition: transform var(--vlite-transition), opacity var(--vlite-transition);
 		flex-shrink: 0;
-
-		&.v-animate {
-			transform: translateY(-3px);
-		}
 	}
 
 	&-controlBar {
@@ -116,17 +115,12 @@
 	}
 
 	&-audio {
-		.v-progressBar {
-			order: 2;
-			height: 25px;
-		}
-
-		.v-controlBar {
-			padding-top: 0;
-		}
-
 		.v-playPauseButton {
 			order: 1;
+		}
+
+		.v-progressBar {
+			order: 2;
 		}
 
 		.v-time {
@@ -134,8 +128,17 @@
 			padding: 0 8px 0 12px;
 		}
 
-		.v-volumeButton {
+		.v-progressBar + .v-volumeButton,
+		.v-progressBar + .v-volumeArea {
 			order: 4;
+		}
+
+		.v-controlBar {
+			padding-top: 0;
+		}
+
+		.v-progressBarStyle {
+			height: 25px;
 		}
 	}
 

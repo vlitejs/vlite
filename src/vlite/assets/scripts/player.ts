@@ -412,7 +412,9 @@ export default class Player {
 		}
 
 		this.methodSetVolume(volume)
-		this.dispatchEvent('volumechange')
+		this.dispatchEvent('volumechange', {
+			volume
+		})
 	}
 
 	/**
