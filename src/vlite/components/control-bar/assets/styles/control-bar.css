@@ -103,6 +103,7 @@
 		transition: opacity var(--vlite-transition);
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 
 		&:hover {
 			opacity: 1 !important;
@@ -120,7 +121,6 @@
 
 		.v-controlBar {
 			padding-top: 0;
-			align-items: center;
 		}
 
 		.v-time {

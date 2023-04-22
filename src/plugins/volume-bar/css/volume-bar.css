@@ -2,12 +2,19 @@
 	&-volumeArea {
 		display: flex;
 		align-items: center;
+		height: 100%;
 	}
 
 	&-volumeBar {
 		transition: width var(--vlite-transition), margin var(--vlite-transition);
 		overflow: hidden;
 		width: 0;
+		height: 25px;
+
+		&:focus-visible {
+			width: 52px;
+			margin-right: 10px;
+		}
 	}
 }
 

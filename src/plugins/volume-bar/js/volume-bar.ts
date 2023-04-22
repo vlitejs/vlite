@@ -48,7 +48,7 @@ export default class VolumeBar {
 	 * Render the plugin HTML
 	 */
 	render() {
-		const template = `<input type="range" class="v-volumeBar v-progressBarStyle" min="0" max="1" step="0.1" value="1" aria-label="Volume" aria-valuemin="0" />`
+		const template = `<input type="range" class="v-volumeBar v-progressBarStyle" min="0" max="1" step="0.1" value="1" aria-label="Volume" aria-valuemin="0" tabindex="0" />`
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const volumeButton = this.player.elements.container.querySelector('.v-volumeButton')
 
