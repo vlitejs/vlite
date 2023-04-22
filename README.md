@@ -6,7 +6,7 @@
     <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />
 </p>
 
-vLitejs (pronounced <code>/vi&#x2D0;la&#x26A;t/</code>) is a fast and lightweight JavaScript library for customizing video and audio player. Written in native JavaScript without dependency, it is built around an API of providers and plugins to extend these capabilities and keep the core with the minimal functionalities.
+`vlitejs` (pronounced <code>/vi&#x2D0;la&#x26A;t/</code>) is a fast and lightweight JavaScript library for customizing video and audio player. Written in native JavaScript without dependency, it is built around an API of providers and plugins to extend these capabilities and keep the core with the minimal functionalities.
 
 HTML5 video and audio players are automatically included. Other providers like Youtube or Vimeo can be loaded on demand with the [Provider API](./src/providers/README.md). Plugins uses the same logic and can be loaded on demand by the [Plugin API](/src/plugins/README.md). Others providers and plugins can be created and loaded by the library.
 
@@ -17,15 +17,15 @@ HTML5 video and audio players are automatically included. Other providers like Y
 - If you need specific behaviors, the plugin API allows to extends the library capabilities.
 - If you need to create a video or audio player with a custom skin harmonized for all web browsers.
 
-Sizes of the vLitejs bundle compared to the competition:
+Sizes of the `vlitejs` bundle compared to the competition:
 
-|              | vLitejs |  Plyr  | Videojs |
-| ------------ | :-----: | :----: | :-----: |
-| Uncompressed |  73 KB  | 310 KB | 2000 KB |
-| Compressed   |  26 KB  | 120 KB | 537 KB  |
-| Gzip         |  6 KB   | 30 KB  | 149 KB  |
+|              | `vlitejs` | `plyr` | `video.js` |
+| ------------ | :-------: | :----: | :--------: |
+| Uncompressed |   73 KB   | 310 KB |  2000 KB   |
+| Compressed   |   26 KB   | 120 KB |   537 KB   |
+| Gzip         |   6 KB    | 30 KB  |   149 KB   |
 
-_\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
+> **Note** _`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 
 ---
 
@@ -68,7 +68,7 @@ If you're interested in playing around with vLitejs, you can use the online code
 
 ### Examples
 
-The project includes several examples of vLitejs implementation in the directory `examples`. Run the following commands to build the assets for the examples:
+The project includes several examples of `vlitejs` implementation in the directory `examples`. Run the following commands to build the assets for the examples:
 
 ```bash
 npm run build && npm run build:example
@@ -78,11 +78,13 @@ npm run build && npm run build:example
 
 ### NPM
 
-NPM is the recommended installation method. Install vLitejs in your project with the following command:
+NPM is the recommended installation method. Install `vlitejs` in your project with the following command:
 
 ```bash
 npm install vlitejs --save-dev
-# or
+```
+
+```bash
 yarn add vlitejs --dev
 ```
 
@@ -95,7 +97,7 @@ You can also download it and include it with a script tag. The library will be r
 <script src="https://cdn.jsdelivr.net/npm/vlitejs@4" crossorigin></script>
 ```
 
-> You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
+> **Note** You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
 
 ## How it works
 
@@ -133,14 +135,14 @@ You can also download it and include it with a script tag. The library will be r
 
 ### Initialization
 
-Import vLitejs styleheet and the JavaScript library as an ES6 modules.
+Import `vlitejs` styleheet and the JavaScript library as an ES6 modules.
 
 ```javascript
 import 'vlitejs/dist/vlite.css';
 import Vlitejs from 'vlitejs';
 ```
 
-The vLitejs constructor accepts the following parameters:
+The `vlitejs` constructor accepts the following parameters:
 
 | Arguments |         Type          | Default | Description                                                      |
 | --------- | :-------------------: | :-----: | ---------------------------------------------------------------- |
@@ -203,11 +205,13 @@ The player controls can be customized with the following parameters:
 | `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                       |
 | `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider      |
 
-- _&sup1; Video only._
-- _&sup2; Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans))._
-- _&sup3; See [Youtube embed options](https://developers.google.com/youtube/player_parameters#Parameters) and [Vimeo embed options](https://github.com/vimeo/player.js/#embed-options)._
-- _⁴ Fullscreen API not yet supported on iPhone._
-
+> **Note**
+>
+> - _&sup1; Video only._
+> - _&sup2; Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans))._
+> - _&sup3; See [Youtube embed options](https://developers.google.com/youtube/player_parameters#Parameters) and [Vimeo embed options](https://github.com/vimeo/player.js/#embed-options)._
+> - _⁴ Fullscreen API not yet supported on iPhone._
+>
 > The `autoplay` parameter automatically activates the `muted` option because the API can only be initiated by a user gesture (see [Autoplay policy changes](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes)).
 
 Example of customization for the `autoHide` and the `poster` options.
@@ -237,11 +241,11 @@ new Vlitejs('#player', {
 });
 ```
 
-> The `onReady` function can also be written with an arrow function.
+> **Note** The `onReady` function can also be written with an arrow function.
 
 ### Events
 
-vLitejs exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers, even for Youtube, Vimeo and Dailymotion. Each plugin has its own events which are detailed in their dedicated documentation.
+`vlitejs` exposes the following native `Event` on the `.v-vlite` element. Events are standardized for all providers. Each plugin has its own events which are detailed in their dedicated documentation.
 
 | Event Type              | Description                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------- |
@@ -254,7 +258,7 @@ vLitejs exposes the following native `Event` on the `.v-vlite` element. Events a
 | `exitfullscreen`&sup1;  | Sent when the video exits fullscreen mode                                               |
 | `ended`                 | Sent when playback completes                                                            |
 
-_&sup1; Video only._
+> **Note** > _&sup1; Video only._
 
 Example of a listener when the media triggers a `play` event.
 
@@ -335,18 +339,18 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 
 The player accepts the following keyboard shortcuts.
 
-|        Key        | Action                  |
-| :---------------: | ----------------------- |
-| <kbd>space</kbd>  | Toggle playback         |
-|  <kbd>Esc</kbd>   | Exit the fullscreen     |
-| <kbd>&larr;</kbd> | Seek backward of `5s`   |
-| <kbd>&rarr;</kbd> | Seek forward of `5s`    |
-| <kbd>&uarr;</kbd> | Increase volume of `5%` |
-| <kbd>&darr;</kbd> | Decrease volume of `5%` |
+|        Key        | Action                   |
+| :---------------: | ------------------------ |
+| <kbd>space</kbd>  | Toggle playback          |
+|  <kbd>Esc</kbd>   | Exit the fullscreen      |
+| <kbd>&larr;</kbd> | Seek backward of `5s`    |
+| <kbd>&rarr;</kbd> | Seek forward of `5s`     |
+| <kbd>&uarr;</kbd> | Increase volume of `10%` |
+| <kbd>&darr;</kbd> | Decrease volume of `10%` |
 
 ## Browser support
 
-vLitejs supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
+`vlitejs` supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
 
 | Browser    |     Supported      |
 | ---------- | :----------------: |
@@ -359,8 +363,10 @@ vLitejs supports the latest 2 versions of most modern browsers with the [.browse
 
 ## Contributors
 
-Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the vLitejs logo.
+Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the `vlitejs` logo.
 
 ## License
 
-vLitejs is licensed under the [MIT License](https://opensource.org/licenses/MIT). Created with &#9825; by [@yoriiis](http://github.com/yoriiis).
+`vlitejs` is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+Created with &#9825; by [@yoriiis](https://github.com/yoriiis).

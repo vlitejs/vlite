@@ -2,7 +2,7 @@
 
 Supports for Youtube player with the [Youtube player API](https://developers.google.com/youtube/iframe_api_reference).
 
-> The Youtube API is automatically loaded by the provider.
+> **Note** The Youtube API is automatically loaded by the provider.
 
 ## Overview
 
@@ -13,7 +13,7 @@ Supports for Youtube player with the [Youtube player API](https://developers.goo
 | Path              | `vlitejs/dist/providers/youtube`    |
 | Entry point       | `vlitejs/dist/providers/youtube.js` |
 
-- _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+> **Note** _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
 ## Usage
 

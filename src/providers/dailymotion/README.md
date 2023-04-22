@@ -2,7 +2,7 @@
 
 Supports for Dailymotion player with the [Dailymotion player API](https://developers.dailymotion.com/player/#player-library-script).
 
-> The Dailymotion API is automatically loaded by the provider.
+> **Note** The Dailymotion API is automatically loaded by the provider.
 
 ## Overview
 
@@ -13,7 +13,7 @@ Supports for Dailymotion player with the [Dailymotion player API](https://develo
 | Path              | `vlitejs/dist/providers/dailymotion`    |
 | Entry point       | `vlitejs/dist/providers/dailymotion.js` |
 
-- _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+> **Note** _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
 ## Usage
 

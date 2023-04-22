@@ -31,7 +31,7 @@ import Vlitejs from 'vlitejs';
 new Vlitejs('#player');
 ```
 
-> The `provider` parameter on the `Vlitejs` constructor is `html5` by default.
+> **Note** The `provider` parameter on the `Vlitejs` constructor is `html5` by default.
 
 ## Demo
 

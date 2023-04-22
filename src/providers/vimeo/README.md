@@ -2,7 +2,7 @@
 
 Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics).
 
-> The Vimeo SDK is automatically loaded by the provider.
+> **Note** The Vimeo SDK is automatically loaded by the provider.
 
 ## Overview
 
@@ -13,7 +13,7 @@ Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.co
 | Path              | `vlitejs/dist/providers/vimeo`    |
 | Entry point       | `vlitejs/dist/providers/vimeo.js` |
 
-- _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+> **Note** _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
 ## Usage
 
