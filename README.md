@@ -38,7 +38,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
 - [**Streaming**](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) - Support HLS.js streaming playback.
-- [**Events**](#Events) - Standardized events for all web browsers, providers and plugins.
+- [**Events**](#events) - Standardized events for all web browsers, providers and plugins.
 - **Autoload API** - Youtube, Vimeo and Dailymotion API are automatically loaded by their provider.
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
 - [**Picture-in-Picture**](./src/plugins/pip/README.md) - Supports Picture-in-Picture API.
@@ -47,7 +47,7 @@ _\*`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
 - [**Monetization**](./src/plugins/ima/README.md) - Supports for Google IMA SDK.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
-- [**Shortcuts**](#Shortcuts) - Supports keyboard shortcuts.
+- [**Shortcuts**](#shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
 
 [![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://vlite.js.org)
@@ -145,7 +145,7 @@ The vLitejs constructor accepts the following parameters:
 | Arguments |         Type          | Default | Description                                                      |
 | --------- | :-------------------: | :-----: | ---------------------------------------------------------------- |
 | selector  | `String\|HTMLElement` | `null`  | Unique CSS selector string or `HTMLElement` to target the player |
-| config    |       `Object`        |  `{}`   | [Player configuration](#Configuration) (optional)                |
+| config    |       `Object`        |  `{}`   | [Player configuration](#configuration) (optional)                |
 
 Initialize the player with a CSS selector string.
 
@@ -167,8 +167,8 @@ The second arguments of the contructor is an optional object with the following 
 
 | Arguments  |       Type       |  Default  | Description                                                          |
 | ---------- | :--------------: | :-------: | -------------------------------------------------------------------- |
-| `options`  |     `Object`     |   `{}`    | [Player options](#Options)                                           |
-| `onReady`  | `Function\|null` |  `null`   | Callback function executed when the [player is ready](#Player-ready) |
+| `options`  |     `Object`     |   `{}`    | [Player options](#options)                                           |
+| `onReady`  | `Function\|null` |  `null`   | Callback function executed when the [player is ready](#player-ready) |
 | `provider` |     `String`     | `'html5'` | [Player provider](./src/providers/README.md)                         |
 | `plugins`  |     `Array`      |   `[]`    | [Player plugins](./src/plugins/README.md)                            |
 
@@ -193,7 +193,7 @@ The player controls can be customized with the following parameters:
 | `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar          |
 | `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar      |
 | `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar         |
-| `fullscreen`&sup1; ⁴      |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
+| `fullscreen`&sup1; ⁴    |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
 | `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                       |
 | `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video      |
 | `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video         |
@@ -225,7 +225,7 @@ new Vlitejs('#player', {
 
 The callback function `onReady` is automatically executed when the player is ready. The HTML5 video and audio listen to the `canplay|loadedmetadata` event. The Youtube, Vimeo and Dailymotion provider listen to the `onready` event returned by their API.
 
-The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#Methods).
+The function exposes the `player` parameter as the player instance. You can use it to interact with the player instance and the [player methods](#methods).
 
 Example of a player `muted` when ready:
 
