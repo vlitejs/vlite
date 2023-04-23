@@ -1,8 +1,4 @@
 import './vlite.css'
-import 'components/loader/loader'
-import 'components/big-play/big-play'
-import 'components/overlay/overlay'
-import 'components/poster/poster'
 
 import Player from './player'
 import validateTarget from 'validate-target'
