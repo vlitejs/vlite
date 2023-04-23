@@ -11,6 +11,7 @@ import VlitejsCast from '../../dist/plugins/cast.js'
 import VlitejsAirplay from '../../dist/plugins/airplay.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
 
+console.log('ok')
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
 Vlitejs.registerPlugin('cast', VlitejsCast, {
