@@ -1,6 +1,5 @@
 import './vlite.css'
 import 'components/loader/loader'
-import 'components/control-bar/control-bar'
 import 'components/big-play/big-play'
 import 'components/overlay/overlay'
 import 'components/poster/poster'
