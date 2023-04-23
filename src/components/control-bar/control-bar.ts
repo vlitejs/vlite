@@ -130,7 +130,7 @@ export default class ControlBar {
 		target.style.setProperty('--vlite-progressValue', `${target.value}%`)
 
 		// Without the poster, the play is not triggered
-		this.player.elements.container.classList.contains('v-firstStart') && this.player.play()
+		this.player.elements.outerContainer.classList.contains('v-firstStart') && this.player.play()
 
 		this.player.getDuration().then((duration: number) => {
 			this.player.seekTo((parseFloat(target.value) * duration) / 100)
@@ -176,7 +176,7 @@ export default class ControlBar {
 	togglePlayPause(e: Event) {
 		e.preventDefault()
 
-		this.player.elements.container.classList.contains('v-paused')
+		this.player.elements.outerContainer.classList.contains('v-paused')
 			? this.player.play()
 			: this.player.pause()
 	}
