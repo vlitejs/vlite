@@ -40,32 +40,32 @@ const plugins = [
 	{
 		entrykey: 'plugins/subtitle',
 		library: `${libraryName}Subtitle`,
-		path: './src/plugins/subtitle/config'
+		path: './src/plugins/subtitle/subtitle.ts'
 	},
 	{
 		entrykey: 'plugins/pip',
 		library: `${libraryName}Pip`,
-		path: './src/plugins/pip/config'
+		path: './src/plugins/pip/pip.ts'
 	},
 	{
 		entrykey: 'plugins/cast',
 		library: `${libraryName}Cast`,
-		path: './src/plugins/cast/config'
+		path: './src/plugins/cast/cast.ts'
 	},
 	{
 		entrykey: 'plugins/airplay',
 		library: `${libraryName}Airplay`,
-		path: './src/plugins/airplay/config'
+		path: './src/plugins/airplay/airplay.ts'
 	},
 	{
 		entrykey: 'plugins/ima',
 		library: `${libraryName}Ima`,
-		path: './src/plugins/ima/config'
+		path: './src/plugins/ima/ima.ts'
 	},
 	{
 		entrykey: 'plugins/volume-bar',
 		library: `${libraryName}VolumeBar`,
-		path: './src/plugins/volume-bar/config'
+		path: './src/plugins/volume-bar/volume-bar.ts'
 	}
 ]
 
@@ -152,7 +152,10 @@ const generator = ({ entry, library = false, isProduction }) => {
 		resolve: {
 			extensions: ['.js', '.ts', '.css'],
 			alias: {
-				shared: resolveApp('src/shared')
+				shared: resolveApp('src/shared'),
+				components: resolveApp('src/components'),
+				providers: resolveApp('src/providers'),
+				plugins: resolveApp('src/plugins')
 			}
 		},
 		context: appDirectory,
@@ -234,7 +237,7 @@ module.exports = (env, argv) => {
 	configs.push(
 		generator({
 			entry: {
-				vlite: './src/vlite/config.js'
+				vlite: './src/core/vlite.ts'
 			},
 			library: libraryName,
 			isProduction

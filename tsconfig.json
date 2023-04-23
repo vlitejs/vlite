@@ -14,7 +14,10 @@
 		"module": "amd",
 		"baseUrl": "./src",
 		"paths": {
-			"shared": ["./shared"]
+			"shared": ["./shared"],
+			"components": ["./components"],
+			"provider": ["./provider"],
+			"plugins": ["./plugins"]
 		},
 		"resolveJsonModule": true
 	},
