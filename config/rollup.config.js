@@ -58,7 +58,7 @@ if (isProduction) {
 
 const entries = [
 	{
-		path: 'src/vlite/config.js',
+		path: 'src/core/vlite.ts',
 		output: `${outputDirectory}/vlite.js`
 	},
 	{
@@ -74,27 +74,27 @@ const entries = [
 		output: `${outputDirectory}/providers/dailymotion.js`
 	},
 	{
-		path: 'src/plugins/subtitle/config.js',
+		path: 'src/plugins/subtitle/subtitle.ts',
 		output: `${outputDirectory}/plugins/subtitle.js`
 	},
 	{
-		path: 'src/plugins/pip/config.js',
+		path: 'src/plugins/pip/pip.ts',
 		output: `${outputDirectory}/plugins/pip.js`
 	},
 	{
-		path: 'src/plugins/cast/config.js',
+		path: 'src/plugins/cast/cast.ts',
 		output: `${outputDirectory}/plugins/cast.js`
 	},
 	{
-		path: 'src/plugins/airplay/config.js',
+		path: 'src/plugins/airplay/airplay.ts',
 		output: `${outputDirectory}/plugins/airplay.js`
 	},
 	{
-		path: 'src/plugins/ima/config.js',
+		path: 'src/plugins/ima/ima.ts',
 		output: `${outputDirectory}/plugins/ima.js`
 	},
 	{
-		path: 'src/plugins/volume-bar/config.js',
+		path: 'src/plugins/volume-bar/volume-bar.ts',
 		output: `${outputDirectory}/plugins/volume-bar.js`
 	}
 ]

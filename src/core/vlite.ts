@@ -1,6 +1,6 @@
 import './vlite.css'
 
-import Player from './player'
+import Player from './player.js'
 import validateTarget from 'validate-target'
 import { checkSupportFullScreen } from 'shared/utils/utils.js'
 import LoaderTemplate from 'components/loader/loader.js'
