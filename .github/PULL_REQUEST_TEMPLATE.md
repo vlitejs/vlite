@@ -1,9 +1,29 @@
-## Description
+<!--
+  Please place an x (without) in all [ ] that apply
+-->
 
-Please describe the change as necessary.
-If it's a feature or enhancement please be as detailed as possible.
-If it's a bug fix, please link the issue that it fixes or describe the bug in as much detail.
+This PR contains a:
 
-## Specific Changes proposed
+- [ ] **bugfix**
+- [ ] new **feature**
+- [ ] **code refactor**
+- [ ] **test update** <!-- if bug or feature is checked, this should be too -->
+- [ ] **typo fix**
+- [ ] **metadata update**
 
-Please list the specific changes involved in this pull request.
+### Motivation / Use-Case
+
+<!--
+  Please explain the motivation or use-case for your change.
+  What existing problem does the PR solve?
+  If this PR addresses an issue, please link to the issue.
+-->
+
+### Breaking Changes
+
+<!--
+  If this PR introduces a breaking change, please describe the impact and a
+  migration path for existing applications.
+-->
+
+### Additional Info

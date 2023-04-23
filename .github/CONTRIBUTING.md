@@ -1,6 +1,6 @@
-# Contributing to vLitejs
+# Contributing to `vlitejs`
 
-Thanks for being interesting on vLitejs! Before submitting your contribution, be sure to take a moment and read the following guide.
+Thanks for being interesting on `vlitejs`! Before submitting your contribution, be sure to take a moment and read the following guide.
 
 - [How to contribute to Open Source](https://opensource.guide/how-to-contribute)
 - [Building welcoming communities](https://opensource.guide/building-community)
@@ -76,4 +76,4 @@ Make sure the following is done when submitting a pull request:
 
 ## License
 
-By contributing to vLitejs, you agree that your contributions will be licensed under its [MIT license](https://github.com/vlitejs/vlite/blob/main/LICENSE).
+By contributing to `vlitejs`, you agree that your contributions will be licensed under its [MIT license](https://github.com/vlitejs/vlite/blob/main/LICENSE).
