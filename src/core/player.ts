@@ -1,9 +1,3 @@
-import './vlite.css'
-import 'components/loader/loader'
-import 'components/big-play/big-play'
-import 'components/overlay/overlay'
-import 'components/poster/poster'
-
 import { formatVideoTime, isTouch } from 'shared/utils/utils'
 import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
 import ControlBar from 'components/control-bar/control-bar'
