@@ -69,7 +69,7 @@ export default class Sticky {
 	 * Render the plugin HTML
 	 */
 	render() {
-		//@ TODO: svg is cropped
+		// @TODO: svg is cropped
 		const template = `<button class="v-closeStickyButton">${svgClose}</button>`
 		this.player.elements.container.insertAdjacentHTML('beforeend', template)
 	}
