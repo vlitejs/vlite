@@ -1,4 +1,4 @@
-import { FullScreenSupport } from 'shared/assets/interfaces/interfaces'
+import { FullScreenSupport } from 'shared/assets/interfaces/interfaces.js'
 
 declare global {
 	interface Document {

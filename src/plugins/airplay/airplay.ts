@@ -1,6 +1,6 @@
 import './airplay.css'
 import svgAirPlay from 'shared/assets/svgs/airplay.svg'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter } from 'shared/assets/interfaces/interfaces.js'
 
 declare global {
 	interface Window {

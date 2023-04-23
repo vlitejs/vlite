@@ -1,5 +1,5 @@
 import './ima.css'
-import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces.js'
 
 declare global {
 	interface Window {

@@ -1,20 +1,20 @@
-const fs = require('fs')
-const path = require('path')
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const { name, version, license, author } = require('../package.json')
+import fs from 'fs'
+import path from 'path'
+import webpack from 'webpack'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
+// import { name, version, license, author } from '../package.json'
 
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 const libraryName = 'Vlitejs'
 
 // Banner for vLitejs assets
-const banner = `@license ${license}
-@name ${name}
-@version ${version}
-@copyright ${new Date().getUTCFullYear()} ${author}`
+// const banner = `@license ${license}
+// @name ${name}
+// @version ${version}
+// @copyright ${new Date().getUTCFullYear()} ${author}`
 
 // Providers list
 const providers = [
@@ -84,9 +84,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 	}
 	if (library) {
 		output.library = {
-			name: library,
-			type: 'umd',
-			export: 'default'
+			type: 'module'
 		}
 	}
 
@@ -132,9 +130,9 @@ const generator = ({ entry, library = false, isProduction }) => {
 						{
 							loader: 'postcss-loader',
 							options: {
-								postcssOptions: {
-									config: resolveApp('config/postcss.config.js')
-								}
+								// postcssOptions: {
+								// 	config: resolveApp('config/postcss.config.js')
+								// }
 							}
 						}
 					]
@@ -164,8 +162,8 @@ const generator = ({ entry, library = false, isProduction }) => {
 				filename: '[name].css',
 				chunkFilename: '[name].css'
 			}),
-			new webpack.optimize.ModuleConcatenationPlugin(),
-			new webpack.BannerPlugin(banner)
+			new webpack.optimize.ModuleConcatenationPlugin()
+			// new webpack.BannerPlugin(banner)
 		],
 		stats: {
 			assets: true,
@@ -211,7 +209,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 	return config
 }
 
-module.exports = (env, argv) => {
+export default function webpackConfig(env, argv) {
 	const isProduction = argv.mode === 'production'
 	const configs = []
 

@@ -1,5 +1,5 @@
 import './volume-bar.css'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter } from 'shared/assets/interfaces/interfaces.js'
 
 /**
  * Vlitejs Volume bar plugin

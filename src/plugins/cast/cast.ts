@@ -1,6 +1,6 @@
 import './cast.css'
 import svgCast from 'shared/assets/svgs/cast.svg'
-import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces.js'
 
 declare global {
 	interface Window {

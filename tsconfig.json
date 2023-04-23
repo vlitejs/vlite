@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "node",
+		"moduleResolution": "NodeNext",
 		"outDir": "./lib",
 		"allowJs": true,
 		"checkJs": false,
@@ -8,10 +8,12 @@
 		"lib": ["es2017", "dom"],
 		"strict": true,
 		"esModuleInterop": true,
-		"declaration": false,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"declarationDir": "types",
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
-		"module": "amd",
+		"module": "nodenext",
 		"baseUrl": "./src",
 		"paths": {
 			"shared": ["./shared"],

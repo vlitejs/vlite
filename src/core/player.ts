@@ -1,6 +1,6 @@
-import { formatVideoTime, isTouch } from 'shared/utils/utils'
-import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
-import ControlBar from 'components/control-bar/control-bar'
+import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
+import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces.js'
+import ControlBar from 'components/control-bar/control-bar.js'
 
 /**
  * Vlitejs Player
