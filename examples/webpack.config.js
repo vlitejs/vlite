@@ -72,8 +72,8 @@ module.exports = (env, argv) => {
 			port: 3000,
 			compress: true,
 			hot: true,
-			host: '0.0.0.0',
-			https: true,
+			// host: '0.0.0.0',
+			// https: true, // For IMA plugin
 			open: ['/html5']
 		},
 		context: appDirectory,
