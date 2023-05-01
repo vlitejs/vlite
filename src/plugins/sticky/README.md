@@ -69,4 +69,4 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 
 ## Demo
 
-See the [sticky plugin](TODO) demo.
+See the [Sticky plugin](https://glitch.com/edit/#!/vlitejs-html5-video-sticky?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) demo.

@@ -1,6 +1,6 @@
 {
 	"name": "vlitejs",
-	"version": "4.2.0",
+	"version": "5.0.0",
 	"description": "vLitejs is a fast and lightweight Javascript library for customizing video and audio player in Javascript with a minimalist theme (HTML5, Youtube, Vimeo, Dailymotion)",
 	"keywords": [
 		"video",
@@ -19,7 +19,9 @@
 		"chromecast",
 		"airplay",
 		"monetization",
-		"ima-sdk"
+		"ima-sdk",
+		"sticky",
+		"volume bar"
 	],
 	"homepage": "https://vlite.js.org",
 	"bugs": "https://github.com/vlitejs/vlite/issues",

@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## 5.0.0
+
+### ⚠️ Breaking changes
+
+- Minimum supported `Node.js` version is `16.20.0` ([#97](https://github.com/vlitejs/vlite/pull/97))
+- Update HTML ([#99](https://github.com/vlitejs/vlite/pull/99))
+  - Remove `vlite-js` CSS classe
+  - Remove `v-controlButton` on `v-bigPlay`
+  - Add nested container `v-container` for sticky compatibility
+
+### New features
+
+- Add the volume bar plugin ([#90](https://github.com/vlitejs/vlite/pull/90))
+- Add the sticky plugin ([#99](https://github.com/vlitejs/vlite/pull/99))
+
+### Updates
+
+- Update README.md ([#95](https://github.com/vlitejs/vlite/pull/95), [#96](https://github.com/vlitejs/vlite/pull/96))
+- New directory structure ([#98](https://github.com/vlitejs/vlite/pull/98))
+
 ## 4.2.0
 
 ### New features
