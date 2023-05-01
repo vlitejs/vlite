@@ -1,3 +1,4 @@
+import './sticky.css'
 import svgClose from 'shared/assets/svgs/close.svg'
 import { pluginParameter } from 'shared/assets/interfaces/interfaces'
 
