@@ -28,7 +28,9 @@ Vlitejs.registerPlugin('airplay', VlitejsAirplay)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 Vlitejs.registerPlugin('sticky', VlitejsSticky, {
 	mode: 'instant',
-	offset: 50
+	width: 500,
+	offset: 20,
+	ratio: 16 / 9
 })
 
 /* eslint-disable no-unused-vars */

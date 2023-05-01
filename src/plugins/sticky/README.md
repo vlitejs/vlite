@@ -54,14 +54,16 @@ The plugin allows customization with an optional object as the third parameter o
 | Event Type |   Type   |    Default    | Description                                                                                                                                                                                    |
 | ---------- | :------: | :-----------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `mode`     | `String` | `on\|instant` | - `on` The sticky will launch after the player was firstly seen by the user.<br>- `instant` The sticky will launch once the player is loaded and the main player isn't in the user's viewport. |
-| `offset`   | `Number` |     `50`      | Specify the offset from the window                                                                                                                                                             |
-
-@TODO: specify position (top, right, bottom, left) ?
+| `offset`   | `Number` |     `20`      | Specify the offset from the corner of the window                                                                                                                                               |
+| `width`    | `Number` |     `400`     | Specify the width of the sticky player                                                                                                                                                         |
+| `ratio`    | `Number` |    `16/9`     | Specify the ratio of the sticky player                                                                                                                                                         |
 
 ```js
 Vlitejs.registerPlugin('cast', VlitejsCast, {
   mode: 'instant',
-  offset: 50
+  offset: 20,
+  width: 400,
+  ratio: 16 / 9
 });
 ```
 

@@ -2,7 +2,7 @@ import svgClose from 'shared/assets/svgs/close.svg'
 import { pluginParameter } from 'shared/assets/interfaces/interfaces'
 
 interface WindowSizes {
-	innerWidth: number
+	clientWidth: number
 	innerHeight: number
 }
 
@@ -29,19 +29,22 @@ export default class Sticky {
 	 * @constructor
 	 * @param {Object} options
 	 * @param {Class} options.player Player instance
+	 * @param {Object} options.options Plugins options
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
 		this.options = options
 
 		const DEFAULTS = {
-			offset: 50,
-			mode: 'on'
+			mode: 'on',
+			width: 400,
+			offset: 20,
+			ratio: 16 / 9
 		}
 
 		this.options = { ...DEFAULTS, ...this.options }
 		this.windowSizes = {
-			innerWidth: window.innerWidth,
+			clientWidth: document.documentElement.clientWidth,
 			innerHeight: window.innerHeight
 		}
 		this.isSticky = false
@@ -100,6 +103,11 @@ export default class Sticky {
 		this.updateSticky()
 	}
 
+	/**
+	 * Update sticky position
+	 * @param {Object} options
+	 * @param {Boolean} options.resize Update is trigger by the resize event
+	 */
 	updateSticky({ resize = false } = {}) {
 		if (this.isStickyGranted()) {
 			if (!this.isSticky || resize) {
@@ -112,8 +120,11 @@ export default class Sticky {
 		}
 	}
 
+	/**
+	 * On window resize event
+	 */
 	onResize() {
-		this.windowSizes.innerWidth = window.innerWidth
+		this.windowSizes.clientWidth = document.documentElement.clientWidth
 		this.windowSizes.innerHeight = window.innerHeight
 
 		clearTimeout(this.resizeTimer)
@@ -121,13 +132,12 @@ export default class Sticky {
 	}
 
 	/**
-	 * Callback method: On a player intersection actions
+	 * Callback method on player intersection actions
 	 * @callback
-	 * @param {Array} entries List of HTML elements being watched
+	 * @param {Array} entries List of elements being watched
 	 */
 	callbackOnIntersection(entries: Array<IntersectionObserverEntry>) {
 		entries.forEach((entry: IntersectionObserverEntry) => {
-			// @TODO: how if it is several players?
 			if (entry.isIntersecting) {
 				this.inViewport()
 			} else {
@@ -136,6 +146,9 @@ export default class Sticky {
 		})
 	}
 
+	/**
+	 * Player is inside viewport
+	 */
 	inViewport() {
 		this.isPlayerSeen = true
 		this.isOutViewport = false
@@ -143,12 +156,19 @@ export default class Sticky {
 		this.isStickyGranted() && this.setStickyOff()
 	}
 
+	/**
+	 * Player is outside the viewport
+	 */
 	outViewport() {
 		this.isOutViewport = true
 
 		this.isStickyGranted() && this.setStickyOn()
 	}
 
+	/**
+	 * Check if the sticky is granted
+	 * @returns {Boolean} Sticky is granted
+	 */
 	isStickyGranted() {
 		return (
 			!this.stickyIsClosed &&
@@ -157,23 +177,28 @@ export default class Sticky {
 		)
 	}
 
+	/**
+	 * Set the sticky
+	 */
 	setStickyOn() {
 		this.player.dispatchEvent('entersticky')
 
 		this.isSticky = true
 		this.player.elements.outerContainer.classList.add('v-sticky')
 
-		const width = 400
-		const height = 400 * 0.5625
-		const x = this.windowSizes.innerWidth - width - this.options.offset
+		const height = this.options.width / this.options.ratio
+		const x = this.windowSizes.clientWidth - this.options.width - this.options.offset
 		const y = this.windowSizes.innerHeight - height - this.options.offset
 
-		this.player.elements.container.style.width = `${width}px`
+		this.player.elements.container.style.width = `${this.options.width}px`
 		this.player.elements.container.style.height = `${height}px`
 
 		this.player.elements.container.style.transform = `translate3d(${x}px, ${y}px, 0)`
 	}
 
+	/**
+	 * Unset the sticky
+	 */
 	setStickyOff() {
 		this.player.dispatchEvent('leavesticky')
 
@@ -186,7 +211,7 @@ export default class Sticky {
 	}
 
 	/**
-	 * On click on the subtitle button
+	 * On click on the close button
 	 * @param {Event} e Event data
 	 */
 	onClickOnCloseStickyButton(e: Event) {
