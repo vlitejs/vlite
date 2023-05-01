@@ -61,6 +61,7 @@ class Vlitejs {
 	supportFullScreen: FullScreenSupport
 	options: Options
 	autoHideGranted: boolean
+	outerContainer: HTMLElement
 	container: HTMLElement
 	player: any
 	controlBar: any
@@ -143,7 +144,8 @@ class Vlitejs {
 		const ProviderInstance = getProviderInstance(provider, Player)
 
 		this.wrapElement()
-		this.container = this.media.parentNode as HTMLElement
+		this.container = this.media.closest('.v-container') as HTMLElement
+		this.outerContainer = this.container.closest('.v-vlite') as HTMLElement
 
 		this.type === 'video' && this.renderLayout()
 		this.player = new ProviderInstance({
@@ -166,12 +168,23 @@ class Vlitejs {
 	 * Wrap the media element
 	 */
 	wrapElement() {
-		const wrapper = document.createElement('div')
-		wrapper.classList.add('v-vlite', 'v-firstStart', 'v-paused', 'v-loading', `v-${this.type}`)
-		wrapper.setAttribute('tabindex', '0')
+		const outerContainer = document.createElement('div')
+		outerContainer.classList.add(
+			'v-vlite',
+			'v-firstStart',
+			'v-paused',
+			'v-loading',
+			`v-${this.type}`
+		)
+
+		const container = document.createElement('div')
+		container.setAttribute('tabindex', '0')
+		container.classList.add('v-container')
+		outerContainer.appendChild(container)
+
 		const parentElement = this.media.parentNode as HTMLElement
-		parentElement.insertBefore(wrapper, this.media)
-		wrapper.appendChild(this.media)
+		parentElement.insertBefore(outerContainer, this.media)
+		container.appendChild(this.media)
 	}
 
 	/**

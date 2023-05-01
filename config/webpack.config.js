@@ -66,6 +66,11 @@ const plugins = [
 		entrykey: 'plugins/volume-bar',
 		library: `${libraryName}VolumeBar`,
 		path: './src/plugins/volume-bar/volume-bar.ts'
+	},
+	{
+		entrykey: 'plugins/sticky',
+		library: `${libraryName}Sticky`,
+		path: './src/plugins/sticky/sticky.ts'
 	}
 ]
 

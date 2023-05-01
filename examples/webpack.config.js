@@ -16,6 +16,7 @@ module.exports = (env, argv) => {
 			html5: resolveApp('examples/html5/config.js'),
 			'html5-hls': resolveApp('examples/html5-hls/config.js'),
 			'html5-ima': resolveApp('examples/html5-ima/config.js'),
+			'html5-sticky': resolveApp('examples/html5-sticky/config.js'),
 			audio: resolveApp('examples/audio/config.js'),
 			youtube: resolveApp('examples/youtube/config.js'),
 			vimeo: resolveApp('examples/vimeo/config.js'),
@@ -71,8 +72,8 @@ module.exports = (env, argv) => {
 			port: 3000,
 			compress: true,
 			hot: true,
-			host: '0.0.0.0',
-			https: true,
+			// host: '0.0.0.0',
+			// https: true, // For IMA plugin
 			open: ['/html5']
 		},
 		context: appDirectory,
@@ -98,6 +99,12 @@ module.exports = (env, argv) => {
 				filename: 'html5-ima/index.html',
 				template: resolveApp('examples/html5-ima/index.html'),
 				chunks: ['html5-ima'],
+				publicPath: '../'
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'html5-sticky/index.html',
+				template: resolveApp('examples/html5-sticky/index.html'),
+				chunks: ['html5-sticky'],
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({

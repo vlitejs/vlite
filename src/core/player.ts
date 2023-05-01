@@ -24,6 +24,7 @@ export default class Player {
 	}
 
 	elements: {
+		outerContainer: HTMLElement
 		container: HTMLElement
 		bigPlay: HTMLElement | null
 		poster: HTMLElement | null
@@ -53,6 +54,7 @@ export default class Player {
 
 		this.elements = {
 			container: Vlitejs.container,
+			outerContainer: Vlitejs.outerContainer,
 			bigPlay: Vlitejs.container.querySelector('.v-bigPlay'),
 			poster: Vlitejs.container.querySelector('.v-poster'),
 			controlBar: null,
@@ -251,7 +253,7 @@ export default class Player {
 	 * @param {Boolean} state Status of the loader
 	 */
 	loading(state: boolean) {
-		this.elements.container.classList[state ? 'add' : 'remove']('v-loading')
+		this.elements.outerContainer.classList[state ? 'add' : 'remove']('v-loading')
 		this.dispatchEvent('progress')
 	}
 
@@ -307,8 +309,8 @@ export default class Player {
 		if (this.options.loop) {
 			this.play()
 		} else {
-			this.elements.container.classList.replace('v-playing', 'v-paused')
-			this.elements.container.classList.add('v-firstStart')
+			this.elements.outerContainer.classList.replace('v-playing', 'v-paused')
+			this.elements.outerContainer.classList.add('v-firstStart')
 		}
 
 		if (this.elements.poster) {
@@ -335,7 +337,7 @@ export default class Player {
 		if (this.isLinearAd) return
 
 		if (this.isPaused === null) {
-			this.elements.container.classList.remove('v-firstStart')
+			this.elements.outerContainer.classList.remove('v-firstStart')
 
 			if (this.type === 'video' && this.elements.poster) {
 				this.elements.poster.classList.remove('v-active')
@@ -344,7 +346,7 @@ export default class Player {
 
 		!this.isCast && this.methodPlay()
 		this.isPaused = false
-		this.elements.container.classList.replace('v-paused', 'v-playing')
+		this.elements.outerContainer.classList.replace('v-paused', 'v-playing')
 
 		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Pause')
@@ -365,7 +367,7 @@ export default class Player {
 	pause() {
 		!this.isCast && this.methodPause()
 		this.isPaused = true
-		this.elements.container.classList.replace('v-playing', 'v-paused')
+		this.elements.outerContainer.classList.replace('v-playing', 'v-paused')
 
 		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Play')
@@ -478,7 +480,7 @@ export default class Player {
 			// @ts-ignore: Object is possibly 'null'.
 			this.elements.container[requestFn]()
 			this.isFullScreen = true
-			this.elements.container.classList.add('v-fullscreenButtonDisplay')
+			this.elements.outerContainer.classList.add('v-fullscreenButtonDisplay')
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.add('v-controlPressed')
@@ -502,7 +504,7 @@ export default class Player {
 			!escKey && document[cancelFn]()
 			this.isFullScreen = false
 
-			this.elements.container.classList.remove('v-fullscreenButtonDisplay')
+			this.elements.outerContainer.classList.remove('v-fullscreenButtonDisplay')
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.remove('v-controlPressed')

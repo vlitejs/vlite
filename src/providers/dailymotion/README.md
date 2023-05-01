@@ -22,7 +22,7 @@ First, Dailymotion requires a Player Id to create player with the JavaScript API
 ### HTML
 
 ```html
-<div id="player" class="vlite-js" data-dailymotion-id="<video_id>"></div>
+<div id="player" data-dailymotion-id="<video_id>"></div>
 ```
 
 ### JavaScript

@@ -21,7 +21,7 @@ Supports for multiple caption tracks (VTT).
 ### HTML
 
 ```html
-<video id="player" class="vlite-js" src="<path_to_video_mp4>">
+<video id="player" src="<path_to_video_mp4>">
   <track label="English" kind="subtitles" srclang="en" src="<path_to_subtitle_en.vtt>" default />
   <track label="French" kind="subtitles" srclang="fr" src="<path_to_subtitle_fr.vtt>" />
 </video>

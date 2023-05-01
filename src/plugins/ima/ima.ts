@@ -377,11 +377,11 @@ export default class ImaPlugin {
 			this.adContainer.classList.add('v-active')
 		}
 
-		this.player.elements.container.classList[this.isLinearAd ? 'remove' : 'add'](
+		this.player.elements.outerContainer.classList[this.isLinearAd ? 'remove' : 'add'](
 			'v-adNonLinear'
 		)
-		this.player.elements.container.classList.add('v-adPlaying')
-		this.player.elements.container.classList.remove('v-adPaused')
+		this.player.elements.outerContainer.classList.add('v-adPlaying')
+		this.player.elements.outerContainer.classList.remove('v-adPaused')
 	}
 
 	/**
@@ -389,16 +389,16 @@ export default class ImaPlugin {
 	 */
 	onAdPaused() {
 		this.resumeAd = true
-		this.player.elements.container.classList.add('v-adPaused')
-		this.player.elements.container.classList.remove('v-adPlaying')
+		this.player.elements.outerContainer.classList.add('v-adPaused')
+		this.player.elements.outerContainer.classList.remove('v-adPlaying')
 	}
 
 	/**
 	 * On ad resumed
 	 */
 	onAdResumed() {
-		this.player.elements.container.classList.add('v-adPlaying')
-		this.player.elements.container.classList.remove('v-adPaused')
+		this.player.elements.outerContainer.classList.add('v-adPlaying')
+		this.player.elements.outerContainer.classList.remove('v-adPaused')
 	}
 
 	/**
@@ -604,7 +604,7 @@ export default class ImaPlugin {
 	clean() {
 		this.player.isLinearAd = false
 		this.adContainer.classList.remove('v-active', 'v-adNonLinear')
-		this.player.elements.container.classList.remove('v-adPlaying', 'v-adPaused')
+		this.player.elements.outerContainer.classList.remove('v-adPlaying', 'v-adPaused')
 	}
 
 	/**

@@ -20,7 +20,7 @@ Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.co
 ### HTML
 
 ```html
-<div id="player" class="vlite-js" data-vimeo-id="<video_id>"></div>
+<div id="player" data-vimeo-id="<video_id>"></div>
 ```
 
 ### JavaScript

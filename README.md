@@ -106,31 +106,31 @@ You can also download it and include it with a script tag. The library will be r
 #### HTML5 video
 
 ```html
-<video id="player" class="vlite-js" src="<path_to_video_mp4>"></video>
+<video id="player" src="<path_to_video_mp4>"></video>
 ```
 
 #### HTML5 audio
 
 ```html
-<audio id="player" class="vlite-js" src="<path_to_audio_mp3>"></audio>
+<audio id="player" src="<path_to_audio_mp3>"></audio>
 ```
 
 #### Youtube
 
 ```html
-<div id="player" class="vlite-js" data-youtube-id="<video_id>"></div>
+<div id="player" data-youtube-id="<video_id>"></div>
 ```
 
 #### Vimeo
 
 ```html
-<div id="player" class="vlite-js" data-vimeo-id="<video_id>"></div>
+<div id="player" data-vimeo-id="<video_id>"></div>
 ```
 
 #### Dailymotion
 
 ```html
-<div id="player" class="vlite-js" data-dailymotion-id="<video_id>"></div>
+<div id="player" data-dailymotion-id="<video_id>"></div>
 ```
 
 ### Initialization
