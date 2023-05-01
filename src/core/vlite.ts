@@ -168,17 +168,23 @@ class Vlitejs {
 	 * Wrap the media element
 	 */
 	wrapElement() {
-		const wrapper = document.createElement('div')
-		wrapper.classList.add('v-vlite', 'v-firstStart', 'v-paused', 'v-loading', `v-${this.type}`)
+		const outerContainer = document.createElement('div')
+		outerContainer.classList.add(
+			'v-vlite',
+			'v-firstStart',
+			'v-paused',
+			'v-loading',
+			`v-${this.type}`
+		)
 
-		const wrapper2 = document.createElement('div')
-		wrapper2.setAttribute('tabindex', '0')
-		wrapper2.classList.add('v-container')
-		wrapper.appendChild(wrapper2)
+		const container = document.createElement('div')
+		container.setAttribute('tabindex', '0')
+		container.classList.add('v-container')
+		outerContainer.appendChild(container)
 
 		const parentElement = this.media.parentNode as HTMLElement
-		parentElement.insertBefore(wrapper, this.media)
-		wrapper2.appendChild(this.media)
+		parentElement.insertBefore(outerContainer, this.media)
+		container.appendChild(this.media)
 	}
 
 	/**

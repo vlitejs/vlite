@@ -11,7 +11,6 @@ import VlitejsPip from '../../dist/plugins/pip.js'
 import VlitejsCast from '../../dist/plugins/cast.js'
 import VlitejsAirplay from '../../dist/plugins/airplay.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
-import VlitejsSticky from '../../dist/plugins/sticky'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
@@ -26,12 +25,6 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 })
 Vlitejs.registerPlugin('airplay', VlitejsAirplay)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
-Vlitejs.registerPlugin('sticky', VlitejsSticky, {
-	mode: 'instant',
-	width: 500,
-	offset: 20,
-	ratio: 16 / 9
-})
 
 /* eslint-disable no-unused-vars */
 const vlite = new Vlitejs('#player', {
@@ -50,7 +43,7 @@ const vlite = new Vlitejs('#player', {
 		muted: false,
 		autoHide: true
 	},
-	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar', 'sticky'],
+	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar'],
 	onReady: function (player) {
 		console.log(player)
 
@@ -68,8 +61,6 @@ const vlite = new Vlitejs('#player', {
 		player.on('ended', () => console.log('ended'))
 		player.on('castsessionstarted', () => console.log('castsessionstarted'))
 		player.on('castsessionended', () => console.log('castsessionended'))
-		player.on('entersticky', () => console.log('entersticky'))
-		player.on('leavesticky', () => console.log('leavesticky'))
 	}
 })
 /* eslint-enable no-unused-vars */
