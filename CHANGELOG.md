@@ -9,6 +9,7 @@
   - Remove `vlite-js` CSS classe
   - Remove `v-controlButton` on `v-bigPlay`
   - Add nested container `v-container` for sticky compatibility
+- Add css file for PIP plugin ([#90](https://github.com/vlitejs/vlite/pull/90))
 
 ### New features
 
@@ -17,8 +18,17 @@
 
 ### Updates
 
+- Increase or decrease the volume by 0.1 and fix the round
 - Update README.md ([#95](https://github.com/vlitejs/vlite/pull/95), [#96](https://github.com/vlitejs/vlite/pull/96))
 - New directory structure ([#98](https://github.com/vlitejs/vlite/pull/98))
+
+### Removes
+
+- Remove animation on volume button ([#90](https://github.com/vlitejs/vlite/pull/90))
+
+### Fixes
+
+- Fix Dailymotion volume ([#90](https://github.com/vlitejs/vlite/pull/90))
 
 ## 4.2.0
 
