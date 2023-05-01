@@ -88,6 +88,8 @@ npm install vlitejs --save-dev
 yarn add vlitejs --dev
 ```
 
+> **Note** Minimum supported `Node.js` version is `16.20.0`.
+
 ### CDN
 
 You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`.
