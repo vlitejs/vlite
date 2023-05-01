@@ -38,6 +38,7 @@ Sizes of the `vlitejs` bundle compared to the competition:
 - [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
 - [**Streaming**](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) - Support HLS.js streaming playback.
+- [**Sticky**](./src/plugins/sticky/README.md) - Support for sticky.
 - [**Events**](#events) - Standardized events for all web browsers, providers and plugins.
 - **Autoload API** - Youtube, Vimeo and Dailymotion API are automatically loaded by their provider.
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
