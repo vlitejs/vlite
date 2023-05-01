@@ -96,8 +96,8 @@ yarn add vlitejs --dev
 You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`.
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
-<script src="https://cdn.jsdelivr.net/npm/vlitejs@4" crossorigin></script>
+<link href="https://cdn.jsdelivr.net/npm/vlitejs@5/dist/vlite.css" rel="stylesheet" crossorigin />
+<script src="https://cdn.jsdelivr.net/npm/vlitejs@5" crossorigin></script>
 ```
 
 > **Note** You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
