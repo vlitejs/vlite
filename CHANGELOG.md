@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 5.0.1
+
+### Fixes
+
+- Fix Vimeo iframe size ([f142964](https://github.com/vlitejs/vlite/commit/94b2f5a2ecaefaf798598fc065c7fb3e35f82443))
+
+### Updates
+
+- Update sticky plugin providers ([f142964](https://github.com/vlitejs/vlite/commit/dfcd78bf0949525618bf84b4fa8750c4d6ffa94a))
+
 ## 5.0.0
 
 ### ⚠️ Breaking changes
