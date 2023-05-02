@@ -91,9 +91,8 @@
 	}
 
 	.v-container,
-	.v-container > iframe,
-	.v-container > audio,
-	.v-container > video {
+	.v-media,
+	.v-media > iframe {
 		width: 100%;
 		height: 100%;
 	}

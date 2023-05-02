@@ -189,6 +189,7 @@ export default class Player {
 	 */
 	onReady() {
 		this.options.muted && this.mute()
+		this.media.classList.add('v-media')
 
 		// The iframe needs to be ignored by the focus
 		this.media.setAttribute('tabindex', '-1')
