@@ -23,7 +23,7 @@ export default class Sticky {
 	observer!: IntersectionObserver
 	resizeTimer!: number
 
-	providers = ['html5']
+	providers = ['html5', 'youtube', 'dailymotion', 'vimeo']
 	types = ['video']
 
 	/**

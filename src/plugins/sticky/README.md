@@ -4,15 +4,15 @@ Supports for sticky mode.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                                 |
-| ----------------- | ---------------------------------------- |
-| Name              | `sticky`                                 |
-| Global name&sup1; | `window.VlitejsSticky`                   |
-| Path              | `vlitejs/dist/plugins/sticky`            |
-| Entry point       | `vlitejs/dist/plugins/sticky/sticky.js`  |
-| Stylesheet        | `vlitejs/dist/plugins/sticky/sticky.css` |
-| Provider&sup2;    | `'html5'`                                |
-| Media type&sup3;  | `'video'`                                |
+| <!-- -->          | <!-- -->                                     |
+| ----------------- | -------------------------------------------- |
+| Name              | `sticky`                                     |
+| Global name&sup1; | `window.VlitejsSticky`                       |
+| Path              | `vlitejs/dist/plugins/sticky`                |
+| Entry point       | `vlitejs/dist/plugins/sticky/sticky.js`      |
+| Stylesheet        | `vlitejs/dist/plugins/sticky/sticky.css`     |
+| Provider&sup2;    | `'html5', 'youtube', 'vimeo', 'dailymotion'` |
+| Media type&sup3;  | `'video'`                                    |
 
 > **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
@@ -59,7 +59,7 @@ The plugin allows customization with an optional object as the third parameter o
 | `ratio`    | `Number` |    `16/9`     | Specify the ratio of the sticky player                                                                                                                                                         |
 
 ```js
-Vlitejs.registerPlugin('cast', VlitejsCast, {
+Vlitejs.registerPlugin('sticky', VlitejsSticky, {
   mode: 'instant',
   offset: 20,
   width: 400,
