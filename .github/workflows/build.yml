@@ -48,7 +48,7 @@ jobs:
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' && matrix.node == '16'
         with:
           name: dist
           path: dist
