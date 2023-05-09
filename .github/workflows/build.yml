@@ -8,6 +8,10 @@ on:
   release:
     types: [published]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -48,14 +52,18 @@ jobs:
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
-        if: github.event_name == 'release' && matrix.node == '16'
+        if: github.event_name == 'release' &&
+          matrix.node == '16' &&
+          matrix.os == 'ubuntu-latest'
         with:
           name: dist
           path: dist
 
   publish-npm:
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.release.target_commitish == 'main'
+    if: success() &&
+      github.event_name == 'release' &&
+      github.event.release.target_commitish == 'main'
     environment: 'npm-production'
     needs: [build]
     concurrency:
