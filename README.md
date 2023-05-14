@@ -19,13 +19,13 @@ HTML5 video and audio players are automatically included. Other providers like Y
 
 Sizes of the `vlitejs` bundle compared to the competition:
 
-|              | `vlitejs` | `plyr` | `video.js` |
-| ------------ | :-------: | :----: | :--------: |
-| Uncompressed |   73 KB   | 310 KB |  2000 KB   |
-| Compressed   |   26 KB   | 120 KB |   537 KB   |
-| Gzip         |   6 KB    | 30 KB  |   149 KB   |
+|              | [`vlitejs`](https://bundlephobia.com/package/vlitejs@5.0.1) | [`plyr`](https://bundlephobia.com/package/plyr@3.7.8) | [`video.js`](https://bundlephobia.com/package/video.js@8.3.0) |
+| ------------ | :---------------------------------------------------------: | :---------------------------------------------------: | :-----------------------------------------------------------: |
+| Uncompressed |                            68 KB                            |                        299 KB                         |                            2100 KB                            |
+| Compressed   |                            27 KB                            |                        110 KB                         |                            560 KB                             |
+| Gzip         |                            6 KB                             |                         32 KB                         |                            159 KB                             |
 
-> **Note** _`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
+> **Note** _`vlitejs 5.0.1`, `plyr 3.7.8`, `videojs 8.3.0`_
 
 ---
 
