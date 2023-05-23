@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 5.0.2
+
+### Updates
+
+- Add funding key in `package.json` ([31313e2](https://github.com/vlitejs/vlite/commit/31313e24fc17726d085343bf522437ba4a3b78c2))
+
 ## 5.0.1
 
 ### Fixes
