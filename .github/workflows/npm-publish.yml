@@ -5,5 +5,7 @@ on:
     types: [published]
 
 jobs:
-  coverage:
+  npm-publish:
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
