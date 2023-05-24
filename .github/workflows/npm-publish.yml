@@ -1,0 +1,9 @@
+name: Publish Node.js Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  coverage:
+    uses: yoriiis/actions/.github/workflows/npm-publish.yml@main

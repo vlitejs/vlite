@@ -3,10 +3,10 @@ name: Build & Publish
 on:
   push:
     branches:
-      - '**'
+      - main
   pull_request:
-  release:
-    types: [published]
+    branches:
+      - main
 
 jobs:
   build:
@@ -45,39 +45,3 @@ jobs:
 
       - name: Build example
         run: npm run build:example
-
-      - name: Upload package dist artifacts
-        uses: actions/upload-artifact@v3
-        if: github.event_name == 'release' &&
-          matrix.node == '16' &&
-          matrix.os == 'ubuntu-latest'
-        with:
-          name: package-dist
-          path: dist
-
-  publish-npm:
-    runs-on: ubuntu-latest
-    if: success() &&
-      github.event_name == 'release' &&
-      github.event.release.target_commitish == 'main'
-    environment: npm
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Download package dist artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: package-dist
-          path: dist
-
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'npm'
-          cache-dependency-path: ./package-lock.json
-          node-version: 16
-          registry-url: 'https://registry.npmjs.org'
-
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
