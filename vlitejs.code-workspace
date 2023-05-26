@@ -25,7 +25,8 @@
         "search.exclude": {
             "**/node_modules": true
         },
-        "editor.rulers": [100]
+        "editor.rulers": [100],
+        "files.eol": "\n",
     },
     "extensions": {
         "recommendations": [
