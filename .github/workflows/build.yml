@@ -17,4 +17,5 @@ jobs:
     uses: yoriiis/actions/.github/workflows/test-and-build.yml@main
     with:
       node-version: ${{ matrix.node-version }}
+      os: ${{ matrix.os }}
       command-build: npm run build && npm run build:example
