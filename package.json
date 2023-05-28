@@ -49,8 +49,8 @@
 		"test:eslint": "eslint ./src --config config/.eslintrc.js --ignore-pattern dist",
 		"test:eslint:fix": "eslint ./src --config config/.eslintrc.js --ignore-pattern dist --fix",
 		"test:markdown": "markdownlint-cli2 '**/*.md' '.github/*.md'",
-		"test:stylelint": "stylelint \"./src/**/*.css\" \"./docs/theme/assets/stylesheets/**/*.css\" --config ./config/stylelint.config.js",
-		"test:stylelint:fix": "stylelint \"./src/**/*.css\" \"./docs/theme/assets/stylesheets/**/*.css\" --config ./config/stylelint.config.js --fix",
+		"test:stylelint": "stylelint \"./src/**/*.css\" --config ./config/stylelint.config.js",
+		"test:stylelint:fix": "stylelint \"./src/**/*.css\" --config ./config/stylelint.config.js --fix",
 		"test:types": "tsc --noEmit"
 	},
 	"browserslist": [
