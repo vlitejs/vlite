@@ -353,7 +353,7 @@ The player accepts the following keyboard shortcuts.
 
 ## Browser support
 
-`vlitejs` supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
+`vlitejs` supports the latest 2 versions of most modern browsers with the Browserslist config.
 
 | Browser    |     Supported      |
 | ---------- | :----------------: |
