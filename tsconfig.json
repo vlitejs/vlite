@@ -1,25 +1,27 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "node",
-		"outDir": "./lib",
-		"allowJs": true,
-		"checkJs": false,
+		"strict": true,
+		"module": "amd",
+		"moduleResolution": "nodenext",
 		"target": "es2017",
 		"lib": ["es2017", "dom"],
-		"strict": true,
-		"esModuleInterop": true,
+		"outDir": "./lib",
 		"declaration": false,
+		"allowJs": true,
+		"checkJs": false,
+		"esModuleInterop": true,
 		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 		"allowSyntheticDefaultImports": true,
-		"module": "amd",
+		"resolveJsonModule": true,
 		"baseUrl": "./src",
 		"paths": {
 			"shared": ["./shared"],
 			"components": ["./components"],
 			"provider": ["./provider"],
-			"plugins": ["./plugins"]
-		},
-		"resolveJsonModule": true
+			"plugins": ["./plugins"],
+			"core": ["./core"]
+		}
 	},
 	"include": ["./src/**/*.ts"]
 }

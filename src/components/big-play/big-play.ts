@@ -3,7 +3,7 @@ import svgBigPlay from 'shared/assets/svgs/big-play.svg'
 
 /**
  * Big play template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 export default function bigPlay(): string {
 	return `<button class="v-bigPlay">${svgBigPlay}</button>`

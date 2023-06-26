@@ -7,7 +7,7 @@ Thanks for being interesting on `vlitejs`! Before submitting your contribution, 
 
 ## Installation
 
-1. Make sure that minimum [Node.js](https://nodejs.org) version is `16.20.0` and npm is installed.
+1. Make sure that minimum [Node.js](https://nodejs.org) version is `18.16.0` and npm is installed.
 2. After cloning the repository, run `npm install` at the root of the repository.
 3. To start the development server, run `npm run start`.
 

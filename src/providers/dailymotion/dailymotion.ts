@@ -1,20 +1,20 @@
-import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+import { playerParameters, configEvent } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
 		Vlitejs: {
 			Player: any
 		}
-		VlitejsDailymotionQueue: Array<any>
+		VlitejsDailymotionQueue: any[]
 		dailymotion: {
 			createPlayer: (selectorId: string, options: { video: string }) => Promise<void>
 		}
 	}
 }
-interface interfaceProvidersOptions {
+type interfaceProvidersOptions = {
 	playerId: string
 }
-interface interfacePlayerState {
+type interfacePlayerState = {
 	playerVolume: number
 	videoTime: number
 	videoDuration: number
@@ -22,8 +22,8 @@ interface interfacePlayerState {
 
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player
- * @param {Class} Player
- * @returns {Class} Provider class extended from vLitejs Player
+ * @param Player
+ * @returns Provider class extended from vLitejs Player
  */
 export default function DailymotionProvider(Player: any, options: interfaceProvidersOptions) {
 	const providerObjectName = 'dailymotion'
@@ -55,7 +55,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 	 */
 	return class PlayerDailymotion extends Player {
 		params: object
-		events: Array<configEvent>
+		events: configEvent[]
 		instance: any
 
 		constructor(props: playerParameters) {
@@ -84,7 +84,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Wait until the API is ready
-		 * @returns {Promise} The player is ready
+		 * @returns The player is ready
 		 */
 		waitUntilVideoIsReady(): Promise<void> {
 			return new window.Promise((resolve) => {
@@ -137,7 +137,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get the player instance
-		 * @returns {Object} Dailymotion API instance
+		 * @returns Dailymotion API instance
 		 */
 		getInstance(): any {
 			return this.instance
@@ -145,7 +145,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get the player current time
-		 * @returns {Promise<number>} Current time of the video
+		 * @returns>} Current time of the video
 		 */
 		getCurrentTime(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
@@ -155,7 +155,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get the player duration
-		 * @returns {Promise<number>} Duration of the video
+		 * @returns>} Duration of the video
 		 */
 		getDuration(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
@@ -179,7 +179,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Set volume method of the player
-		 * @param {Number} volume New volume
+		 * @param volume New volume
 		 */
 		methodSetVolume(volume: number) {
 			this.instance.setVolume(volume)
@@ -187,7 +187,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get volume method of the player
-		 * @returns {Promise<Number>} Player volume
+		 * @returns>} Player volume
 		 */
 		methodGetVolume(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
@@ -211,7 +211,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Set the new current time for the player
-		 * @param {Number} Current time video
+		 * @param Current time video
 		 */
 		methodSeekTo(newTime: number) {
 			this.instance.seek(newTime)

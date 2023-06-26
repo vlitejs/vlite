@@ -6,13 +6,13 @@ import TemplateControlBar from './templates/control-bar'
 export default class ControlBar {
 	player: any
 	type: string
-	touchEvents: Array<string>
+	touchEvents: string[]
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
-	 * @param {String} options.type Player type (video|audio)
+	 * @param options
+	 * @param options.player Player instance
+	 * @param options.type Player type (video|audio)
 	 */
 	constructor({ player, type }: { player: any; type: string }) {
 		this.player = player
@@ -41,8 +41,8 @@ export default class ControlBar {
 	 */
 	cacheElements() {
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
-		this.player.elements.controlBar = controlBar
-		if (this.player.elements.controlBar) {
+		if (controlBar) {
+			this.player.elements.controlBar = controlBar
 			this.player.elements.playPause = controlBar.querySelector('.v-playPauseButton')
 			this.player.elements.progressBar = controlBar.querySelector('.v-progressBar')
 			this.player.elements.currentTime = controlBar.querySelector('.v-currentTime')
@@ -107,7 +107,7 @@ export default class ControlBar {
 	/**
 	 * On touch event progress bar
 	 * Fix for touch devices
-	 * @param {TouchEvent} e Touch event data
+	 * @param e Touch event data
 	 */
 	onTouchEventProgressBar(e: TouchEvent) {
 		e.preventDefault()
@@ -123,7 +123,7 @@ export default class ControlBar {
 
 	/**
 	 * On input event on the progress bar
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onInputProgressBar(e: Event) {
 		const target = e.target as HTMLInputElement
@@ -139,7 +139,7 @@ export default class ControlBar {
 
 	/**
 	 * On click on the control bar
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnControlBar(e: Event) {
 		const target = e.target
@@ -171,7 +171,7 @@ export default class ControlBar {
 
 	/**
 	 * Toggle the video status (play|pause)
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	togglePlayPause(e: Event) {
 		e.preventDefault()
@@ -183,7 +183,7 @@ export default class ControlBar {
 
 	/**
 	 * Toggle the volume
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	toggleVolume(e: Event) {
 		e.preventDefault()
@@ -195,7 +195,7 @@ export default class ControlBar {
 
 	/**
 	 * Toggle the fullscreen
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	toggleFullscreen(e: Event) {
 		e.preventDefault()
@@ -205,8 +205,7 @@ export default class ControlBar {
 
 	/**
 	 * Get the template
-	 * @param {Object} data Template's data
-	 * @returns {String} Generated HTML
+	 * @returns Generated HTML
 	 */
 	getTemplate(): string {
 		return `${TemplateControlBar({

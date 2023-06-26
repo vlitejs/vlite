@@ -7,17 +7,13 @@ import LoaderTemplate from 'components/loader/loader'
 import BigPlayTemplate from 'components/big-play/big-play'
 import OverlayTemplate from 'components/overlay/overlay'
 import PosterTemplate from 'components/poster/poster'
-import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces'
+import { Options, FullScreenSupport } from 'shared/assets/types/types'
 import { registerProvider, getProviderInstance } from 'providers/provider'
 import { registerPlugin, initializePlugins } from 'plugins/plugin'
 
 type TimerHandle = number
 
-export interface interfaceDefaultOptions {
-	[key: string]: {
-		[key: string]: any
-	}
-}
+export type interfaceDefaultOptions = Record<string, Record<string, any>>
 
 const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
@@ -53,7 +49,6 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
  * @module vLite/entrypoint
  */
 class Vlitejs {
-	Player: any
 	media: HTMLVideoElement | HTMLAudioElement | HTMLDivElement
 	provider: string
 	onReady: () => void
@@ -63,7 +58,7 @@ class Vlitejs {
 	autoHideGranted: boolean
 	outerContainer: HTMLElement
 	container: HTMLElement
-	player: any
+	player: Player
 	controlBar: any
 	registerPlugin!: () => void
 	registerProvider!: () => void
@@ -71,12 +66,12 @@ class Vlitejs {
 
 	/**
 	 * @constructor
-	 * @param {(String|HTMLElement)} selector CSS selector or HTML element
-	 * @param {Object} options
-	 * @param {Object} options.options Player options
-	 * @param {String} options.provider Player provider
-	 * @param {Object} options.plugins Player plugins
-	 * @param {Function} options.onReady Callback function when the player is ready
+	 * @param selector CSS selector or HTML element
+	 * @param options
+	 * @param options.options Player options
+	 * @param options.provider Player provider
+	 * @param options.plugins Player plugins
+	 * @param options.onReady Callback function when the player is ready
 	 */
 	constructor(
 		selector: string | HTMLElement,
@@ -89,7 +84,7 @@ class Vlitejs {
 		}: {
 			options?: Options | object
 			provider?: string
-			plugins?: Array<string>
+			plugins?: string[]
 			onReady?: () => void
 		} = {}
 	) {
@@ -115,7 +110,7 @@ class Vlitejs {
 		this.supportFullScreen = checkSupportFullScreen()
 
 		// Update config from element attributes
-		const htmlAttributes: Array<string> = ['autoplay', 'playsinline', 'muted', 'loop']
+		const htmlAttributes: string[] = ['autoplay', 'playsinline', 'muted', 'loop']
 		htmlAttributes.forEach((item: string) => {
 			if (this.media.hasAttribute(item)) {
 				// @ts-ignore
@@ -215,7 +210,7 @@ class Vlitejs {
 
 	/**
 	 * On click on the player
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnPlayer(e: Event) {
 		const target = e.target as HTMLElement
@@ -233,7 +228,7 @@ class Vlitejs {
 
 	/**
 	 * On double click on the player
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onDoubleClickOnPlayer(e: Event) {
 		const target = e.target
@@ -250,7 +245,7 @@ class Vlitejs {
 
 	/**
 	 * On keydown event on the media element
-	 * @param {KeyboardEvent} e Event listener datas
+	 * @param e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
 		const activeElement = document.activeElement
@@ -321,7 +316,7 @@ class Vlitejs {
 
 	/**
 	 * Trigger the video fast forward (front and rear)
-	 * @param {String} direction Direction (backward|forward)
+	 * @param direction Direction (backward|forward)
 	 */
 	fastForward(direction: string) {
 		this.player.getCurrentTime().then((seconds: number) => {
@@ -364,7 +359,7 @@ class Vlitejs {
 	startAutoHideTimer() {
 		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				this.player.elements.controlBar.classList.add('v-hidden')
+				this.player.elements.controlBar!.classList.add('v-hidden')
 			}, this.options.autoHideDelay)
 		}
 	}

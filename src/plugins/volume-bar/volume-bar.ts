@@ -1,5 +1,5 @@
 import './volume-bar.css'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter } from 'shared/assets/types/types'
 
 /**
  * Vlitejs Volume bar plugin
@@ -14,8 +14,8 @@ export default class VolumeBar {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
+	 * @param options
+	 * @param options.player Player instance
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
@@ -46,7 +46,7 @@ export default class VolumeBar {
 
 	/**
 	 * Update the volume bar
-	 * @param {number} volume Volume level
+	 * @param volume Volume level
 	 */
 	updateVolumeBar(volume: number) {
 		this.volumeBar.style.setProperty('--vlite-progressValue', `${volume * 100}%`)
@@ -82,7 +82,7 @@ export default class VolumeBar {
 
 	/**
 	 * On input volume bar
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onInputVolumeBar(e: Event) {
 		const target = e.target as HTMLInputElement

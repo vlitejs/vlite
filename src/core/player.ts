@@ -1,5 +1,5 @@
 import { formatVideoTime, isTouch } from 'shared/utils/utils'
-import { Options, playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+import { Options, playerParameters, configEvent } from 'shared/assets/types/types'
 import ControlBar from 'components/control-bar/control-bar'
 
 /**
@@ -16,12 +16,10 @@ export default class Player {
 	isFullScreen: boolean
 	isMuted: boolean
 	isPaused: null | boolean
-	controlBar: any
-	playerEvents: Array<configEvent>
+	controlBar: ControlBar
+	playerEvents: configEvent[]
 	isTouch: boolean
-	plugins: {
-		[key: string]: any
-	}
+	plugins: Record<string, any>
 
 	elements: {
 		outerContainer: HTMLElement
@@ -39,9 +37,9 @@ export default class Player {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.Vlitejs Vlitejs instance
-	 * @param {HTMLElement} options.type Player type (video|audio)
+	 * @param options
+	 * @param options.Vlitejs Vlitejs instance
+	 * @param options.type Player type (video|audio)
 	 */
 	constructor({ Vlitejs, type }: playerParameters) {
 		this.Vlitejs = Vlitejs
@@ -215,8 +213,8 @@ export default class Player {
 
 	/**
 	 * Add media action listeners on the container
-	 * @param {String} type Event type
-	 * @param {EventListener} listener Event listener
+	 * @param type Event type
+	 * @param listener Event listener
 	 */
 	on(type: string, listener: EventListener) {
 		if (listener instanceof Function) {
@@ -227,8 +225,8 @@ export default class Player {
 
 	/**
 	 * Remove media action listeners on the container
-	 * @param {String} type Event type
-	 * @param {EventListener} listener Event listener
+	 * @param type Event type
+	 * @param listener Event listener
 	 */
 	off(type: string, listener: EventListener) {
 		if (listener instanceof Function) {
@@ -238,10 +236,10 @@ export default class Player {
 
 	/**
 	 * Dispatch custom event on the container
-	 * @param {String} type Event type
-	 * @param {Object} detail Event detail
+	 * @param type Event type
+	 * @param detail Event detail
 	 */
-	dispatchEvent(type: string, detail?: any) {
+	dispatchEvent(type: string, detail?: unknown) {
 		this.elements.container.dispatchEvent(
 			new window.CustomEvent(type, {
 				detail
@@ -251,7 +249,7 @@ export default class Player {
 
 	/**
 	 * Update the loader status
-	 * @param {Boolean} state Status of the loader
+	 * @param state Status of the loader
 	 */
 	loading(state: boolean) {
 		this.elements.outerContainer.classList[state ? 'add' : 'remove']('v-loading')
@@ -274,10 +272,10 @@ export default class Player {
 
 	/**
 	 * Update the progress bar
-	 * @param {Object} options
-	 * @param {String} options.seconds Current time in seconds
-	 * @param {String} options.duration Duration in seconds
-	 * @param {Boolean} options.isRemote Cast mode is enabled
+	 * @param options
+	 * @param options.seconds Current time in seconds
+	 * @param options.duration Duration in seconds
+	 * @param options.isRemote Cast mode is enabled
 	 */
 	updateProgressBar({
 		seconds,
@@ -395,7 +393,7 @@ export default class Player {
 
 	/**
 	 * Set player volume
-	 * @param {Number} volume New volume
+	 * @param volume New volume
 	 */
 	setVolume(volume: number) {
 		if (volume > 1) {
@@ -421,7 +419,7 @@ export default class Player {
 
 	/**
 	 * Get player volume
-	 * @returns {Promise<Number>} Player volume
+	 * @returns Player volume
 	 */
 	getVolume(): Promise<number> {
 		return new window.Promise((resolve) => {
@@ -463,7 +461,7 @@ export default class Player {
 
 	/**
 	 * Update the current time of the media element
-	 * @param {Number} newTime New current time of the media element
+	 * @param newTime New current time of the media element
 	 */
 	seekTo(newTime: number) {
 		this.methodSeekTo(newTime)
@@ -494,8 +492,8 @@ export default class Player {
 
 	/**
 	 * Exit the fullscreen
-	 * @param {Object} options
-	 * @param {Boolean} options.escKey The exit is trigger by the esk key
+	 * @param options
+	 * @param options.escKey The exit is trigger by the esk key
 	 */
 	exitFullscreen({ escKey = false }: { escKey?: boolean } = {}) {
 		const { cancelFn } = this.Vlitejs.supportFullScreen

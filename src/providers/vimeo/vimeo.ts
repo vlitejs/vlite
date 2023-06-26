@@ -1,11 +1,11 @@
-import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+import { playerParameters, configEvent } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
 		Vlitejs: {
 			Player: any
 		}
-		VlitejsVimeoQueue: Array<any>
+		VlitejsVimeoQueue: any[]
 		Vimeo: {
 			Player: any
 		}
@@ -14,8 +14,8 @@ declare global {
 
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player
- * @param {Class} Player
- * @returns {Class} Provider class extended from vLitejs Player
+ * @param Player
+ * @returns Provider class extended from vLitejs Player
  */
 export default function VimeoProvider(Player: any) {
 	const providerObjectName = 'Vimeo'
@@ -46,7 +46,7 @@ export default function VimeoProvider(Player: any) {
 	 */
 	return class PlayerVimeo extends Player {
 		params: object
-		events: Array<configEvent>
+		events: configEvent[]
 		instance: any
 
 		constructor(props: playerParameters) {
@@ -81,7 +81,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Wait until the API is ready
-		 * @returns {Promise} The player is ready
+		 * @returns The player is ready
 		 */
 		waitUntilVideoIsReady(): Promise<void> {
 			return new window.Promise((resolve) => {
@@ -121,7 +121,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get the player instance
-		 * @returns {Object} Vimeo API instance
+		 * @returns Vimeo API instance
 		 */
 		getInstance(): any {
 			return this.instance
@@ -129,7 +129,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get the player current time
-		 * @returns {Promise<Number>} Current time of the video
+		 * @returns>} Current time of the video
 		 */
 		getCurrentTime(): Promise<number> {
 			return new window.Promise((resolve) => {
@@ -139,7 +139,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get the player duration
-		 * @returns {Promise<Number>} Duration of the video
+		 * @returns>} Duration of the video
 		 */
 		getDuration(): Promise<number> {
 			return new window.Promise((resolve) => {
@@ -163,7 +163,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Set volume method of the player
-		 * @param {Number} volume New volume
+		 * @param volume New volume
 		 */
 		methodSetVolume(volume: number) {
 			this.instance.setVolume(volume)
@@ -171,7 +171,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get volume method of the player
-		 * @returns {Promise<Number>} Player volume
+		 * @returns>} Player volume
 		 */
 		methodGetVolume(): Promise<number> {
 			return new window.Promise((resolve) => {
@@ -197,7 +197,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Set the new current time for the player
-		 * @param {Number} Current time video
+		 * @param Current time video
 		 */
 		methodSeekTo(newTime: number) {
 			this.instance.setCurrentTime(newTime)

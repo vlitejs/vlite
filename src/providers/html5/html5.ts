@@ -1,9 +1,9 @@
-import { playerParameters, configEvent } from 'shared/assets/interfaces/interfaces'
+import { playerParameters, configEvent } from 'shared/assets/types/types'
 
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player
- * @param {Class} Player
- * @returns {Class} Provider class extended from vLitejs Player
+ * @param Player
+ * @returns Provider class extended from vLitejs Player
  */
 export default function Html5Provider(Player: any) {
 	/**
@@ -11,7 +11,7 @@ export default function Html5Provider(Player: any) {
 	 * @module vlitejs/Player/PlayerHtml5
 	 */
 	return class PlayerHtml5 extends Player {
-		events: Array<configEvent>
+		events: configEvent[]
 
 		constructor(props: playerParameters) {
 			super(props)
@@ -38,7 +38,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Wait until the video is ready
-		 * @returns {Promise<Event>} The video is ready
+		 * @returns The video is ready
 		 */
 		waitUntilVideoIsReady(): Promise<any> {
 			return new window.Promise<void>((resolve) => {
@@ -66,7 +66,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Get the player instance
-		 * @returns {Object} Media element
+		 * @returns Media element
 		 */
 		getInstance(): HTMLElement {
 			return this.media
@@ -74,7 +74,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Get the player current time
-		 * @returns {Promise<Number>} Current time of the video
+		 * @returns Current time of the video
 		 */
 		getCurrentTime(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.media.currentTime))
@@ -82,7 +82,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Get the player duration
-		 * @returns {Promise<number>} Duration of the video
+		 * @returns Duration of the video
 		 */
 		getDuration(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.media.duration))
@@ -104,7 +104,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Set volume method of the player
-		 * @param {Number} volume New volume
+		 * @param volume New volume
 		 */
 		methodSetVolume(volume: number) {
 			this.media.volume = volume
@@ -112,7 +112,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Get volume method of the player
-		 * @returns {Promise<Number>} Player volume
+		 * @returns Player volume
 		 */
 		methodGetVolume(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.media.volume))
@@ -136,7 +136,7 @@ export default function Html5Provider(Player: any) {
 
 		/**
 		 * Set the new current time for the player
-		 * @param {Number} Current time video
+		 * @param Current time video
 		 */
 		methodSeekTo(newTime: number) {
 			this.media.currentTime = newTime
