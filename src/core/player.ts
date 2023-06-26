@@ -1,14 +1,13 @@
 import { formatVideoTime, isTouch } from 'shared/utils/utils'
 import { Options, playerParameters, configEvent } from 'shared/assets/types/types'
 import ControlBar from 'components/control-bar/control-bar'
-import Vlitejs from 'core/vlite'
 
 /**
  * Vlitejs Player
  * @module Vlitejs/Player
  */
 export default class Player {
-	Vlitejs: Vlitejs
+	Vlitejs: any
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
 	options: Options
@@ -201,7 +200,7 @@ export default class Player {
 			this.play()
 		}
 
-		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this)
+		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 
 		// Call the onReady functions of components
 		this.options.controls && this.controlBar.onReady()
