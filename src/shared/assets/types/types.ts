@@ -1,15 +1,17 @@
-export interface Constructable<T> {
+import Player from 'core/player'
+
+export type Constructable<T> = {
 	new (...args: any): T
 }
 
-export interface FullScreenSupport {
+export type FullScreenSupport = {
 	requestFn: string
 	cancelFn: string
 	changeEvent: string
 	isFullScreen: string
 }
 
-export interface Options {
+export type Options = {
 	autoplay: boolean
 	controls: boolean
 	playPause: boolean
@@ -27,20 +29,20 @@ export interface Options {
 	[key: string]: boolean | null | string | number
 }
 
-export interface playerParameters {
+export type playerParameters = {
 	media: HTMLAudioElement | HTMLVideoElement
-	container: HTMLElement
+	container: Element
 	options: Options
 	type: string
 	Vlitejs: any
 }
 
-export interface pluginParameter {
-	player: playerParameters
+export type pluginParameter = {
+	player: Player
 	options: any
 }
 
-export interface configEvent {
+export type configEvent = {
 	type: string
 	listener: EventListener
 }

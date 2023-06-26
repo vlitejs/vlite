@@ -1,8 +1,6 @@
-export interface interfaceVlitePlugins {
-	[key: string]: any
-}
+export type interfaceVlitePlugins = Record<string, any>
 
-export interface interfacePluginsInstance {
+export type interfacePluginsInstance = {
 	id: string
 	Plugin: any
 	options: any
@@ -13,11 +11,11 @@ const pluginsOptions: any = {}
 
 /**
  * Get plugins instances from the registered list
- * @param {Array} plugins List of plugins to enabled
- * @returns {Array} List of plugins instances to enabled
+ * @param plugins List of plugins to enabled
+ * @returns List of plugins instances to enabled
  */
-export function getPluginInstance(plugins: Array<string>): Array<interfacePluginsInstance> {
-	const pluginsInstance: Array<interfacePluginsInstance> = []
+export function getPluginInstance(plugins: string[]): interfacePluginsInstance[] {
+	const pluginsInstance: interfacePluginsInstance[] = []
 	const pluginsIds = Object.keys(vlitePlugins)
 
 	plugins.forEach((id: string) => {
@@ -37,10 +35,10 @@ export function getPluginInstance(plugins: Array<string>): Array<interfacePlugin
 
 /**
  * Register the plugin
- * @param {String} id Plugin ID
- * @param {any} instance Plugin instance
- * @param {Object} options Plugin options
- * @returns {undefined} No value to return
+ * @param id Plugin ID
+ * @param instance Plugin instance
+ * @param options Plugin options
+ * @returns No value to return
  */
 export function registerPlugin(id: string, instance: any, options: any): undefined {
 	if (typeof instance !== 'undefined') {
@@ -59,11 +57,11 @@ export function registerPlugin(id: string, instance: any, options: any): undefin
 
 /**
  * Initialize plugins
- * @param {Object} options
- * @param {Array} options.plugins Plugins list
- * @param {String} options.provider Player provider
- * @param {Array} options.type Player type (video|audio)
- * @param {Array} options.player Player instance
+ * @param options
+ * @param options.plugins Plugins list
+ * @param options.provider Player provider
+ * @param options.type Player type (video|audio)
+ * @param options.player Player instance
  */
 export function initializePlugins({
 	plugins,
@@ -71,7 +69,7 @@ export function initializePlugins({
 	type,
 	player
 }: {
-	plugins: Array<any>
+	plugins: any[]
 	provider: string
 	type: string
 	player: any

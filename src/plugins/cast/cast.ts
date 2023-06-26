@@ -1,58 +1,9 @@
+import Player from 'core/player'
 import './cast.css'
 import svgCast from 'shared/assets/svgs/cast.svg'
-import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces'
+import { Constructable } from 'shared/assets/types/types'
 
-declare global {
-	interface Window {
-		chrome: {
-			cast: {
-				media: {
-					TextTrackType: {
-						SUBTITLES: string
-					}
-					TrackType: {
-						TEXT: string
-					}
-					DEFAULT_MEDIA_RECEIVER_APP_ID: string
-					MediaInfo: Constructable<any>
-					TextTrackStyle: Constructable<any>
-					GenericMediaMetadata: Constructable<any>
-					LoadRequest: Constructable<any>
-					Track: Constructable<any>
-					EditTracksInfoRequest: Constructable<any>
-				}
-				AutoJoinPolicy: {
-					ORIGIN_SCOPED: string
-				}
-				Image: Constructable<any>
-			}
-		}
-		cast: {
-			framework: {
-				CastContext: {
-					getInstance: () => void
-				}
-				RemotePlayer: Constructable<any>
-				RemotePlayerController: Constructable<any>
-				CastContextEventType: {
-					SESSION_STATE_CHANGED: string
-				}
-				RemotePlayerEventType: {
-					CURRENT_TIME_CHANGED: string
-					IS_MEDIA_LOADED_CHANGED: string
-				}
-				SessionState: {
-					SESSION_STARTED: string
-					SESSION_RESUMED: string
-					SESSION_ENDED: string
-				}
-			}
-		}
-		__onGCastApiAvailable: (isAvailable: boolean) => void
-	}
-}
-
-interface Subtitle {
+type Subtitle = {
 	index: number
 	url: string
 	label: string
@@ -60,9 +11,17 @@ interface Subtitle {
 	isDefault: boolean
 }
 
-interface CastEvent {
+type CastEvent = {
 	sessionState: string
 	value: number
+}
+
+type pluginParameter = {
+	player: Player
+	options: {
+		textTrackStyle?: unknown
+		metadata?: unknown
+	}
 }
 
 /**
@@ -70,29 +29,29 @@ interface CastEvent {
  * @module Vlitejs/plugins/cast
  */
 export default class CastPlugin {
-	player: any
+	player: Player
 	options: any
 	castButton!: HTMLElement
-	castContext: any
+	castContext!: any
 	remotePlayer: any
 	remotePlayerController: any
-	subtitles: Array<Subtitle>
-	backupAutoHide: boolean | null
+	subtitles: Subtitle[]
+	backupAutoHide: boolean
 
 	providers = ['html5']
 	types = ['video']
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
-	 * @param {Object} options.options Plugins options
+	 * @param options
+	 * @param options.player Player instance
+	 * @param options.options Plugins options
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
 		this.options = options
 		this.subtitles = []
-		this.backupAutoHide = null
+		this.backupAutoHide = false
 
 		this.onCastStateChange = this.onCastStateChange.bind(this)
 		this.onCurrentTimeChanged = this.onCurrentTimeChanged.bind(this)
@@ -121,7 +80,7 @@ export default class CastPlugin {
 
 	/**
 	 * Check if the Cast framework is already available
-	 * @returns {Boolean} Cast framework is available
+	 * @returns Cast framework is available
 	 */
 	isCastFrameworkAlreadyAvailable() {
 		return !!(
@@ -159,9 +118,15 @@ export default class CastPlugin {
 		)
 
 		this.render()
-		this.castButton = this.player.elements.container.querySelector('.v-castButton')
-		this.subtitles = this.getSubtitles()
-		this.addEvents()
+		const castButton = this.player.elements.container.querySelector('.v-castButton')
+
+		if (castButton) {
+			this.castButton = this.player.elements.container!.querySelector(
+				'.v-castButton'
+			) as HTMLElement
+			this.subtitles = this.getSubtitles()
+			this.addEvents()
+		}
 	}
 
 	/**
@@ -205,7 +170,7 @@ export default class CastPlugin {
 
 	/**
 	 * On cast state change
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onCastStateChange(e: CastEvent) {
 		const sessionState = e.sessionState
@@ -237,7 +202,7 @@ export default class CastPlugin {
 
 	/**
 	 * On click on cast button, open the cast selection UI
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnCastButton(e: Event) {
 		e.preventDefault()
@@ -305,7 +270,7 @@ export default class CastPlugin {
 		this.player.elements.outerContainer.classList.remove('v-remote')
 		this.castButton.classList.remove('v-active')
 		this.player.isCast = false
-		this.player.elements.container.querySelector('.v-deviceName').remove()
+		this.player.elements.container.querySelector('.v-deviceName')!.remove()
 
 		if (!this.player.isPaused) {
 			this.player.methodPlay()
@@ -317,21 +282,21 @@ export default class CastPlugin {
 
 	/**
 	 * Get subtitles data from the media
-	 * @returns {Array<Subtitle>} List of subtitles with somes fields
+	 * @returns List of subtitles with somes fields
 	 */
-	getSubtitles(): Array<Subtitle> {
-		return [...this.player.media.querySelectorAll('track')].map((track, index) => ({
+	getSubtitles(): Subtitle[] {
+		return Array.from(this.player.media.querySelectorAll('track')).map((track: any, index) => ({
 			index,
-			url: track.getAttribute('src'),
-			label: track.getAttribute('label'),
-			language: track.getAttribute('srclang'),
-			isDefault: track.hasAttribute('default')
+			url: track.getAttribute('src') ?? '',
+			label: track.getAttribute('label') ?? '',
+			language: track.getAttribute('srclang') ?? '',
+			isDefault: track.hasAttribute('default') ?? ''
 		}))
 	}
 
 	/**
 	 * Get the cast session
-	 * @returns {Object} Current cast session
+	 * @returns Current cast session
 	 */
 	getSession(): any {
 		return this.castContext.getCurrentSession()
@@ -344,8 +309,7 @@ export default class CastPlugin {
 		const session = this.getSession()
 		if (!session) return
 
-		const mediaInfo = new window.chrome.cast.media.MediaInfo(this.player.media.src)
-		mediaInfo.contentType = 'video/mp4'
+		const mediaInfo = new window.chrome.cast.media.MediaInfo(this.player.media.src, 'video/mp4')
 
 		if (this.subtitles.length) {
 			mediaInfo.tracks = this.getCastTracks()
@@ -354,6 +318,7 @@ export default class CastPlugin {
 		const textTrackStyle = new window.chrome.cast.media.TextTrackStyle()
 		textTrackStyle.backgroundColor = '#ffffff00'
 		textTrackStyle.edgeColor = '#00000016'
+		// @ts-ignore
 		textTrackStyle.edgeType = 'DROP_SHADOW'
 		textTrackStyle.fontFamily = 'CASUAL'
 		textTrackStyle.fontScale = 1.0
@@ -384,7 +349,7 @@ export default class CastPlugin {
 
 	/**
 	 *  Get the cast Track
-	 * @returns {Array} List of cast Track
+	 * @returns List of cast Track
 	 */
 	getCastTracks() {
 		return this.subtitles.map(({ url, label, language }, index) => {
@@ -403,7 +368,7 @@ export default class CastPlugin {
 
 	/**
 	 * Get the default track or the first one if no match
-	 * @returns {Object} Active track
+	 * @returns Active track
 	 */
 	getActiveTrack(): Subtitle {
 		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]

@@ -1,4 +1,4 @@
-import { FullScreenSupport } from 'shared/assets/interfaces/interfaces'
+import { FullScreenSupport } from 'shared/assets/types/types'
 
 declare global {
 	interface Document {
@@ -11,8 +11,8 @@ declare global {
 
 /**
  * Convert video time second to 00:00 display
- * @param {Number} time Current time
- * @returns {String} Formatted time
+ * @param time Current time
+ * @returns Formatted time
  */
 export function formatVideoTime(time: number): string {
 	const ms = time * 1000
@@ -30,7 +30,7 @@ export function formatVideoTime(time: number): string {
 
 /**
  * Check fullscreen support API on different browsers and cached prefixs
- * @returns {Object} Fullscreen utils functions
+ * @returns Fullscreen utils functions
  */
 export function checkSupportFullScreen(): FullScreenSupport {
 	const prefix = getBrowserPrefix()
@@ -45,7 +45,7 @@ export function checkSupportFullScreen(): FullScreenSupport {
 
 /**
  * Get browser prefix used by the fullscreen API
- * @returns {String} Browser prefix (webkit|moz|ms)
+ * @returns Browser prefix (webkit|moz|ms)
  */
 export function getBrowserPrefix(): string {
 	if (document.exitFullscreen instanceof Function) return ''
@@ -63,7 +63,7 @@ export function getBrowserPrefix(): string {
 
 /**
  * Check if the device is touch
- * @returns {Boolean} Is touch
+ * @returns Is touch
  */
 export function isTouch(): boolean {
 	return !!('ontouchstart' in document.documentElement)

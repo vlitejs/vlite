@@ -1,8 +1,8 @@
 import './sticky.css'
 import svgClose from 'shared/assets/svgs/close.svg'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces'
+import { pluginParameter } from 'shared/assets/types/types'
 
-interface WindowSizes {
+type WindowSizes = {
 	clientWidth: number
 	innerHeight: number
 }
@@ -28,9 +28,9 @@ export default class Sticky {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
-	 * @param {Object} options.options Plugins options
+	 * @param options
+	 * @param options.player Player instance
+	 * @param options.options Plugins options
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
@@ -106,8 +106,8 @@ export default class Sticky {
 
 	/**
 	 * Update sticky position
-	 * @param {Object} options
-	 * @param {Boolean} options.resize Update is trigger by the resize event
+	 * @param options
+	 * @param options.resize Update is trigger by the resize event
 	 */
 	updateSticky({ resize = false } = {}) {
 		if (this.isStickyGranted()) {
@@ -135,9 +135,9 @@ export default class Sticky {
 	/**
 	 * Callback method on player intersection actions
 	 * @callback
-	 * @param {Array} entries List of elements being watched
+	 * @param entries List of elements being watched
 	 */
-	callbackOnIntersection(entries: Array<IntersectionObserverEntry>) {
+	callbackOnIntersection(entries: IntersectionObserverEntry[]) {
 		entries.forEach((entry: IntersectionObserverEntry) => {
 			if (entry.isIntersecting) {
 				this.inViewport()
@@ -168,7 +168,7 @@ export default class Sticky {
 
 	/**
 	 * Check if the sticky is granted
-	 * @returns {Boolean} Sticky is granted
+	 * @returns Sticky is granted
 	 */
 	isStickyGranted() {
 		return (
@@ -213,7 +213,7 @@ export default class Sticky {
 
 	/**
 	 * On click on the close button
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnCloseStickyButton(e: Event) {
 		e.preventDefault()
