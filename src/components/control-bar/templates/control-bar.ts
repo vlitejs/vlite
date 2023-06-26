@@ -33,9 +33,7 @@ export default function controlBar({
 
 	return `<div class="v-controlBar">${options.playPause ? playPauseElement() : ''}${
 		options.time ? timeElement() : ''
-	}${options.progressBar ? progressBarElement() : ''}${
-		options.volume ? volumeElement({ isMuted }) : ''
-	}</div>`
+	}${options.progressBar ? progressBarElement() : ''}</div>`
 }
 
 /**

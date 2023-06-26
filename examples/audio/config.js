@@ -15,9 +15,9 @@ const vlite = new Vlitejs('#player', {
 		volume: true,
 		loop: false
 	},
-	plugins: ['volume-bar'],
+	// plugins: ['volume-bar'],
 	onReady: (player) => {
-		console.log(player)
+		console.log({ player })
 
 		player.on('play', () => console.log('play'))
 		player.on('pause', () => console.log('pause'))
