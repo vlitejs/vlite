@@ -1,6 +1,7 @@
 name: Deploy preview to Vercel
 
 on:
+  workflow_dispatch:
   pull_request:
 
 jobs:
