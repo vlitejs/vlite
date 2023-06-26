@@ -1,7 +1,6 @@
 import Player from 'core/player'
 import './cast.css'
 import svgCast from 'shared/assets/svgs/cast.svg'
-import { Constructable } from 'shared/assets/types/types'
 
 type Subtitle = {
 	index: number
