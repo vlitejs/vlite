@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  netlify:
+  vercel-preview:
     uses: yoriiis/actions/.github/workflows/vercel-preview-deploy.yml@main
     with:
       node-version: 18
