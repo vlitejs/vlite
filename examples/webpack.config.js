@@ -13,6 +13,7 @@ module.exports = (env, argv) => {
 
 	const config = {
 		entry: {
+			home: resolveApp('examples/config.js'),
 			html5: resolveApp('examples/html5/config.js'),
 			'html5-hls': resolveApp('examples/html5-hls/config.js'),
 			'html5-ima': resolveApp('examples/html5-ima/config.js'),
@@ -71,10 +72,9 @@ module.exports = (env, argv) => {
 			historyApiFallback: true,
 			port: 3000,
 			compress: true,
-			hot: true,
+			hot: true
 			// host: '0.0.0.0',
 			// https: true, // For IMA plugin
-			open: ['/html5']
 		},
 		context: appDirectory,
 		plugins: [
@@ -83,6 +83,11 @@ module.exports = (env, argv) => {
 				chunkFilename: 'styles/[name].css'
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
+			new HtmlWebpackPlugin({
+				filename: 'index.html',
+				template: resolveApp('examples/index.html'),
+				chunks: ['home']
+			}),
 			new HtmlWebpackPlugin({
 				filename: 'html5/index.html',
 				template: resolveApp('examples/html5/index.html'),
