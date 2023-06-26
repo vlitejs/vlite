@@ -1,0 +1,17 @@
+name: Deploy preview to Vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  netlify:
+    uses: yoriiis/actions/.github/workflows/vercel-preview-deploy.yml@main
+    with:
+      node-version: 18
+      build-dir: netlify
+      command-build: npm run build && npm run build:example
+    secrets:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
