@@ -37,20 +37,20 @@ body:
     attributes:
       label: Vlite.js
       description: What version of the library are you using?
-      placeholder: e.g. 4.0.2
+      placeholder: e.g. 5.0.2
   - type: input
     validations:
       required: true
     attributes:
       label: Browser
       description: Which browser and which version are you using?
-      placeholder: e.g. Chrome 92
+      placeholder: e.g. Chrome 114
   - type: input
     validations:
       required: true
     attributes:
       label: OS
-      placeholder: e.g. macOS 11.5.2
+      placeholder: e.g. macOS 13.4
   - type: textarea
     attributes:
       label: Additional context
