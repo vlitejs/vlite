@@ -4,85 +4,21 @@ const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const { name, version, license, author } = require('../package.json')
+const { libraryName, banner, providers, plugins } = require('./package')
 
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
-const libraryName = 'Vlitejs'
-
-// Banner for vLitejs assets
-const banner = `@license ${license}
-@name ${name}
-@version ${version}
-@copyright ${new Date().getUTCFullYear()} ${author}`
-
-// Providers list
-const providers = [
-	{
-		entrykey: 'providers/youtube',
-		library: `${libraryName}Youtube`,
-		path: './src/providers/youtube/youtube'
-	},
-	{
-		entrykey: 'providers/vimeo',
-		library: `${libraryName}Vimeo`,
-		path: './src/providers/vimeo/vimeo'
-	},
-	{
-		entrykey: 'providers/dailymotion',
-		library: `${libraryName}Dailymotion`,
-		path: './src/providers/dailymotion/dailymotion'
-	}
-]
-
-// Plugins list
-const plugins = [
-	{
-		entrykey: 'plugins/subtitle',
-		library: `${libraryName}Subtitle`,
-		path: './src/plugins/subtitle/subtitle.ts'
-	},
-	{
-		entrykey: 'plugins/pip',
-		library: `${libraryName}Pip`,
-		path: './src/plugins/pip/pip.ts'
-	},
-	{
-		entrykey: 'plugins/cast',
-		library: `${libraryName}Cast`,
-		path: './src/plugins/cast/cast.ts'
-	},
-	{
-		entrykey: 'plugins/airplay',
-		library: `${libraryName}Airplay`,
-		path: './src/plugins/airplay/airplay.ts'
-	},
-	{
-		entrykey: 'plugins/ima',
-		library: `${libraryName}Ima`,
-		path: './src/plugins/ima/ima.ts'
-	},
-	{
-		entrykey: 'plugins/volume-bar',
-		library: `${libraryName}VolumeBar`,
-		path: './src/plugins/volume-bar/volume-bar.ts'
-	},
-	{
-		entrykey: 'plugins/sticky',
-		library: `${libraryName}Sticky`,
-		path: './src/plugins/sticky/sticky.ts'
-	}
-]
+const firstLetterUppercase = (string) => string.charAt(0).toUpperCase() + string.slice(1)
 
 /**
  *
- * @param {Object} options Generator options
+ * @param {Object} options
  * @param {Object} options.entry Webpack entry
  * @param {Boolean} options.library Webpack library name
  * @param {Boolean} options.isProduction Webpack production mode
  * @returns {Object} Webpack configuration object
  */
-const generator = ({ entry, library = false, isProduction }) => {
+const createConfig = ({ entry, library = false, isProduction }) => {
 	const output = {
 		path: resolveApp('dist'),
 		filename: '[name].js'
@@ -95,7 +31,7 @@ const generator = ({ entry, library = false, isProduction }) => {
 		}
 	}
 
-	const config = {
+	return {
 		watch: !isProduction,
 		entry,
 		watchOptions: {
@@ -170,7 +106,8 @@ const generator = ({ entry, library = false, isProduction }) => {
 				chunkFilename: '[name].css'
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
-			new webpack.BannerPlugin(banner)
+			new webpack.BannerPlugin(banner),
+			...(isProduction ? [new webpack.ProgressPlugin()] : [])
 		],
 		stats: {
 			assets: true,
@@ -208,47 +145,36 @@ const generator = ({ entry, library = false, isProduction }) => {
 			splitChunks: false
 		}
 	}
-
-	if (!isProduction) {
-		config.plugins.push(new webpack.ProgressPlugin())
-	}
-
-	return config
 }
 
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
-	const configs = []
 
-	const configsProviders = providers.map((provider) =>
-		generator({
+	return [
+		...providers.map((provider) =>
+			createConfig({
+				entry: {
+					[`providers/${provider}`]: `./src/providers/${provider}/${provider}`
+				},
+				library: `${libraryName}${firstLetterUppercase(provider)}`,
+				isProduction
+			})
+		),
+		...plugins.map((plugin) =>
+			createConfig({
+				entry: {
+					[`plugins/${plugin}`]: `./src/plugins/${plugin}/${plugin}`
+				},
+				library: `${libraryName}${firstLetterUppercase(plugin)}`,
+				isProduction
+			})
+		),
+		createConfig({
 			entry: {
-				[provider.entrykey]: provider.path
-			},
-			library: provider.library,
-			isProduction
-		})
-	)
-	const configsPlugins = plugins.map((plugin) =>
-		generator({
-			entry: {
-				[plugin.entrykey]: plugin.path
-			},
-			library: plugin.library,
-			isProduction
-		})
-	)
-
-	configs.push(
-		generator({
-			entry: {
-				vlite: './src/core/vlite.ts'
+				vlite: './src/core/vlite'
 			},
 			library: libraryName,
 			isProduction
-		}),
-		...configsProviders,
-		...configsPlugins
-	)
-	return configs
+		})
+	]
 }
