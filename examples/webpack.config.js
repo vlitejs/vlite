@@ -1,19 +1,19 @@
-const fs = require('fs')
-const path = require('path')
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import fs from 'fs'
+import path from 'path'
+import webpack from 'webpack'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 
-module.exports = (env, argv) => {
+export default function webpackConfig(env, argv) {
 	const isProduction = argv.mode === 'production'
 
 	return {
 		entry: {
-			home: resolveApp('examples/config.js'),
+			home: resolveApp('examples/home/config.js'),
 			html5: resolveApp('examples/html5/config.js'),
 			'html5-hls': resolveApp('examples/html5-hls/config.js'),
 			'html5-ima': resolveApp('examples/html5-ima/config.js'),
@@ -54,7 +54,7 @@ module.exports = (env, argv) => {
 							loader: 'postcss-loader',
 							options: {
 								postcssOptions: {
-									config: resolveApp('config/postcss.config.js')
+									config: resolveApp('config/postcss.config.cjs')
 								}
 							}
 						}
@@ -85,7 +85,7 @@ module.exports = (env, argv) => {
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new HtmlWebpackPlugin({
 				filename: 'index.html',
-				template: resolveApp('examples/index.html'),
+				template: resolveApp('examples/home/index.html'),
 				chunks: ['home']
 			}),
 			new HtmlWebpackPlugin({

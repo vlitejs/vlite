@@ -2,7 +2,7 @@ import '../../dist/vlite.css'
 import '../../dist/plugins/volume-bar.css'
 import Vlitejs from '../../dist/vlite.js'
 import VlitejsYoutube from '../../dist/providers/youtube.js'
-import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
+import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)

@@ -1,6 +1,6 @@
 import './sticky.css'
 import svgClose from 'shared/assets/svgs/close.svg'
-import { pluginParameter } from 'shared/assets/types/types'
+import { pluginParameter } from 'shared/assets/types/types.js'
 
 type WindowSizes = {
 	clientWidth: number

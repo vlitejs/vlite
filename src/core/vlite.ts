@@ -7,11 +7,9 @@ import LoaderTemplate from 'components/loader/loader.js'
 import BigPlayTemplate from 'components/big-play/big-play.js'
 import OverlayTemplate from 'components/overlay/overlay.js'
 import PosterTemplate from 'components/poster/poster.js'
-import { Options, FullScreenSupport } from 'shared/assets/interfaces/interfaces.js'
+import { Options, FullScreenSupport } from 'shared/assets/types/types.js'
 import { registerProvider, getProviderInstance } from 'providers/provider.js'
 import { registerPlugin, initializePlugins } from 'plugins/plugin.js'
-
-type TimerHandle = number
 
 export type interfaceDefaultOptions = Record<string, Record<string, any>>
 

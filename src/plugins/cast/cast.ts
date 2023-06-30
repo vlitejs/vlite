@@ -1,4 +1,4 @@
-import Player from 'core/player'
+import Player from 'core/player.js'
 import './cast.css'
 import svgCast from 'shared/assets/svgs/cast.svg'
 

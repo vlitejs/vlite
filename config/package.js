@@ -1,10 +1,12 @@
-const { license, name, version, author } = require('../package.json')
+import { license, name, version, author } from '../package.json'
 
-exports.libraryName = 'Vlitejs'
-exports.banner = `@license ${license}
-@name ${name}
-@version ${version}
-@copyright ${new Date().getUTCFullYear()} ${author}`
+export const banner =
+	'/*!\n' +
+	` * @license ${license}\n` +
+	` * @name ${name}\n` +
+	` * @version ${version}\n` +
+	` * @copyright ${new Date().getUTCFullYear()} ${author}\n` +
+	' */'
 
-exports.providers = ['youtube', 'vimeo', 'dailymotion']
-exports.plugins = ['subtitle', 'pip', 'cast', 'airplay', 'ima', 'volume-bar', 'sticky']
+export const providers = ['youtube', 'vimeo', 'dailymotion']
+export const plugins = ['subtitle', 'pip', 'cast', 'airplay', 'ima', 'volume-bar', 'sticky']
