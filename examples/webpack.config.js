@@ -45,14 +45,6 @@ export default function webpackConfig(env, argv) {
 						{
 							loader: 'css-loader'
 						}
-						// {
-						// 	loader: 'postcss-loader',
-						// 	options: {
-						// 		postcssOptions: {
-						// 			config: resolveApp('config/postcss.config.cjs')
-						// 		}
-						// 	}
-						// }
 					]
 				}
 			]
