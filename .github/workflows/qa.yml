@@ -1,0 +1,16 @@
+name: QA
+
+on:
+  merge_group:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  audit:
+    uses: yoriiis/actions/.github/workflows/qa.yml@main
+    with:
+      node-version: 18
