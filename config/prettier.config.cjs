@@ -5,6 +5,7 @@ module.exports = {
 	trailingComma: 'none',
 	singleQuote: true,
 	arrowParens: 'always',
+	endOfLine: 'lf',
 	overrides: [
 		{
 			files: '*.md',

@@ -1,5 +1,51 @@
 # CHANGELOG
 
+## 5.0.2
+
+### Updates
+
+- Add funding key in `package.json` ([31313e2](https://github.com/vlitejs/vlite/commit/31313e24fc17726d085343bf522437ba4a3b78c2))
+
+## 5.0.1
+
+### Fixes
+
+- Fix Vimeo iframe size ([f142964](https://github.com/vlitejs/vlite/commit/94b2f5a2ecaefaf798598fc065c7fb3e35f82443))
+
+### Updates
+
+- Update sticky plugin providers ([f142964](https://github.com/vlitejs/vlite/commit/dfcd78bf0949525618bf84b4fa8750c4d6ffa94a))
+
+## 5.0.0
+
+### ⚠️ Breaking changes
+
+- Minimum supported `Node.js` version is `16.20.0` ([#97](https://github.com/vlitejs/vlite/pull/97))
+- Update HTML ([#99](https://github.com/vlitejs/vlite/pull/99))
+  - Remove `vlite-js` CSS classe
+  - Remove `v-controlButton` on `v-bigPlay`
+  - Add nested container `v-container` for sticky compatibility
+- Add css file for PIP plugin ([#90](https://github.com/vlitejs/vlite/pull/90))
+
+### New features
+
+- Add the volume bar plugin ([#90](https://github.com/vlitejs/vlite/pull/90))
+- Add the sticky plugin ([#99](https://github.com/vlitejs/vlite/pull/99))
+
+### Updates
+
+- Increase or decrease the volume by 0.1 and fix the round
+- Update README.md ([#95](https://github.com/vlitejs/vlite/pull/95), [#96](https://github.com/vlitejs/vlite/pull/96))
+- New directory structure ([#98](https://github.com/vlitejs/vlite/pull/98))
+
+### Removes
+
+- Remove animation on volume button ([#90](https://github.com/vlitejs/vlite/pull/90))
+
+### Fixes
+
+- Fix Dailymotion volume ([#90](https://github.com/vlitejs/vlite/pull/90))
+
 ## 4.2.0
 
 ### New features

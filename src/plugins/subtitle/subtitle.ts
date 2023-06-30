@@ -3,7 +3,7 @@ import validateTarget from 'validate-target'
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces.js'
+import { pluginParameter } from 'shared/assets/types/types.js'
 
 /**
  * Vlitejs Subtitle plugin
@@ -11,7 +11,7 @@ import { pluginParameter } from 'shared/assets/interfaces/interfaces.js'
  */
 export default class Subtitle {
 	player: any
-	tracks: Array<TextTrack>
+	tracks: TextTrack[]
 	activeTrack!: TextTrack | null
 	captions!: HTMLElement
 	subtitleButton!: HTMLElement
@@ -23,8 +23,8 @@ export default class Subtitle {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
+	 * @param options
+	 * @param options.player Player instance
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
@@ -70,7 +70,7 @@ export default class Subtitle {
 
 	/**
 	 * Get the default track or the first one if no match
-	 * @returns {TextTrack} Active track
+	 * @returns Active track
 	 */
 	getActiveTrack(): TextTrack {
 		return this.tracks.find((track) => track.mode === 'showing') || this.tracks[0]
@@ -129,7 +129,7 @@ export default class Subtitle {
 
 	/**
 	 * Get template
-	 * @returns {String} String template
+	 * @returns String template
 	 */
 	getTemplate(): string {
 		return `
@@ -166,7 +166,7 @@ export default class Subtitle {
 
 	/**
 	 * On click on the subtitle button
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnSubtitleButton(e: Event) {
 		e.preventDefault()
@@ -181,7 +181,7 @@ export default class Subtitle {
 
 	/**
 	 * On click on the subtitle list
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnSubtitlesList(e: Event | CustomEvent) {
 		e.preventDefault()
@@ -219,8 +219,8 @@ export default class Subtitle {
 
 	/**
 	 * Get the ttrack by language
-	 * @param {String} language Language of the track
-	 * @returns {TextTrack} TextTrack for the current language
+	 * @param language Language of the track
+	 * @returns TextTrack for the current language
 	 */
 	getTrackByLanguage(language: string): TextTrack | null {
 		return this.tracks.find((track) => track.language === language) || null
@@ -228,8 +228,8 @@ export default class Subtitle {
 
 	/**
 	 * Update the cues to add enter and exit callback functions
-	 * @param {Object} options
-	 * @param {Boolean} options.isDisabled Disable cues
+	 * @param options
+	 * @param options.isDisabled Disable cues
 	 */
 	updateCues({ isDisabled = false }: { isDisabled?: boolean } = {}) {
 		if (this.activeTrack && this.activeTrack.cues && this.activeTrack.cues.length) {
@@ -262,7 +262,7 @@ export default class Subtitle {
 
 	/**
 	 * Add the custom cue
-	 * @param {TextTrackCue} cue Current cue to add
+	 * @param cue Current cue to add
 	 */
 	addCue(cue: TextTrackCue) {
 		// @ts-ignore

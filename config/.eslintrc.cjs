@@ -20,13 +20,15 @@ module.exports = {
 
 	rules: {
 		'@typescript-eslint/ban-ts-comment': 'off',
+		'@typescript-eslint/no-non-null-assertion': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
 		indent: ['error', 'tab', { ignoredNodes: ['TemplateLiteral *'], SwitchCase: 1 }],
 		'no-tabs': 0,
 		'space-before-function-paren': [
 			'error',
 			{ anonymous: 'always', named: 'never', asyncArrow: 'always' }
-		]
+		],
+		'linebreak-style': ['error', 'unix']
 	},
 
 	globals: {

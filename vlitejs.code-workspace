@@ -3,35 +3,44 @@
 		{
 			"path": "."
 		}
-    ],
-    "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "[javascript][typescript][postcss][html][markdown][json][markdown]": {
-            "editor.formatOnSave": true,
-            "editor.tabSize": 4,
-            "editor.rulers": [100]
-        },
-        "editor.tabSize": 4,
-        "files.associations": {
-            "*.css": "postcss",
-            "*.html": "html",
-            "*.ts": "typescript",
-            "*.json": "json"
-        },
-        "files.trimTrailingWhitespace": true,
-        "javascript.format.enable": false,
-        "javascript.validate.enable": false,
-        "typescript.validate.enable": false,
-        "search.exclude": {
-            "**/node_modules": true
-        },
-        "editor.rulers": [100]
-    },
-    "extensions": {
-        "recommendations": [
-            "esbenp.prettier-vscode",
-            "dbaeumer.vscode-eslint",
-            "csstools.postcss"
-        ]
-    }
+	],
+	"settings": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"[javascript][typescript][postcss][html][markdown][json][markdown]": {
+			"editor.formatOnSave": true,
+			"editor.tabSize": 4,
+			"editor.rulers": [100]
+		},
+		"[yaml]": {
+			"editor.tabSize": 2,
+			"editor.detectIndentation": true,
+			"editor.insertSpaces": true,
+			"editor.autoIndent": "none"
+		},
+		"editor.tabSize": 4,
+		"files.associations": {
+			"*.css": "postcss",
+			"*.html": "html",
+			"*.ts": "typescript",
+			"*.json": "json",
+			"*.yaml": "yaml",
+			"*.yml": "yaml"
+		},
+		"files.trimTrailingWhitespace": true,
+		"javascript.format.enable": false,
+		"javascript.validate.enable": false,
+		"typescript.validate.enable": false,
+		"search.exclude": {
+			"**/node_modules": true
+		},
+		"editor.rulers": [100],
+		"files.eol": "\n",
+	},
+	"extensions": {
+		"recommendations": [
+			"esbenp.prettier-vscode",
+			"dbaeumer.vscode-eslint",
+			"csstools.postcss"
+		]
+	}
 }

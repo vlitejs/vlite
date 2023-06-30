@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = {
 	config: {
 		MD013: false, // Line length

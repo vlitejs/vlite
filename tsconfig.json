@@ -1,25 +1,27 @@
 {
 	"compilerOptions": {
+		"strict": true,
+		"module": "nodenext",
 		"moduleResolution": "NodeNext",
-		"outDir": "./lib",
-		"allowJs": true,
-		"checkJs": false,
 		"target": "es2017",
 		"lib": ["es2017", "dom"],
-		"strict": true,
-		"esModuleInterop": true,
+		"outDir": "./lib",
 		"declaration": false,
+		"allowJs": true,
+		"checkJs": false,
+		"esModuleInterop": true,
 		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 		"allowSyntheticDefaultImports": true,
-		"module": "nodenext",
+		"resolveJsonModule": true,
 		"baseUrl": "./src",
 		"paths": {
 			"shared": ["./shared"],
 			"components": ["./components"],
 			"provider": ["./provider"],
-			"plugins": ["./plugins"]
-		},
-		"resolveJsonModule": true
+			"plugins": ["./plugins"],
+			"core": ["./core"]
+		}
 	},
 	"include": ["./src/**/*.ts"]
 }

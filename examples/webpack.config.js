@@ -11,11 +11,13 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
 
-	const config = {
+	return {
 		entry: {
+			home: resolveApp('examples/config.js'),
 			html5: resolveApp('examples/html5/config.js'),
 			'html5-hls': resolveApp('examples/html5-hls/config.js'),
 			'html5-ima': resolveApp('examples/html5-ima/config.js'),
+			'html5-sticky': resolveApp('examples/html5-sticky/config.js'),
 			audio: resolveApp('examples/audio/config.js'),
 			youtube: resolveApp('examples/youtube/config.js'),
 			vimeo: resolveApp('examples/vimeo/config.js'),
@@ -70,10 +72,9 @@ module.exports = (env, argv) => {
 			historyApiFallback: true,
 			port: 3000,
 			compress: true,
-			hot: true,
-			host: '0.0.0.0',
-			https: true,
-			open: ['/html5']
+			hot: true
+			// host: '0.0.0.0',
+			// https: true, // For IMA plugin
 		},
 		context: appDirectory,
 		plugins: [
@@ -82,6 +83,11 @@ module.exports = (env, argv) => {
 				chunkFilename: 'styles/[name].css'
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
+			new HtmlWebpackPlugin({
+				filename: 'index.html',
+				template: resolveApp('examples/index.html'),
+				chunks: ['home']
+			}),
 			new HtmlWebpackPlugin({
 				filename: 'html5/index.html',
 				template: resolveApp('examples/html5/index.html'),
@@ -98,6 +104,12 @@ module.exports = (env, argv) => {
 				filename: 'html5-ima/index.html',
 				template: resolveApp('examples/html5-ima/index.html'),
 				chunks: ['html5-ima'],
+				publicPath: '../'
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'html5-sticky/index.html',
+				template: resolveApp('examples/html5-sticky/index.html'),
+				chunks: ['html5-sticky'],
 				publicPath: '../'
 			}),
 			new HtmlWebpackPlugin({
@@ -123,7 +135,8 @@ module.exports = (env, argv) => {
 				template: resolveApp('examples/audio/index.html'),
 				chunks: ['audio'],
 				publicPath: '../'
-			})
+			}),
+			...(isProduction ? [new webpack.ProgressPlugin()] : [])
 		],
 		stats: {
 			assets: true,
@@ -161,10 +174,4 @@ module.exports = (env, argv) => {
 			splitChunks: false
 		}
 	}
-
-	if (!isProduction) {
-		config.plugins.push(new webpack.ProgressPlugin())
-	}
-
-	return config
 }

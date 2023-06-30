@@ -19,13 +19,13 @@ HTML5 video and audio players are automatically included. Other providers like Y
 
 Sizes of the `vlitejs` bundle compared to the competition:
 
-|              | `vlitejs` | `plyr` | `video.js` |
-| ------------ | :-------: | :----: | :--------: |
-| Uncompressed |   73 KB   | 310 KB |  2000 KB   |
-| Compressed   |   26 KB   | 120 KB |   537 KB   |
-| Gzip         |   6 KB    | 30 KB  |   149 KB   |
+|              | [`vlitejs`](https://bundlephobia.com/package/vlitejs@5.0.1) | [`plyr`](https://bundlephobia.com/package/plyr@3.7.8) | [`video.js`](https://bundlephobia.com/package/video.js@8.3.0) |
+| ------------ | :---------------------------------------------------------: | :---------------------------------------------------: | :-----------------------------------------------------------: |
+| Uncompressed |                            68 KB                            |                        299 KB                         |                            2100 KB                            |
+| Compressed   |                            27 KB                            |                        110 KB                         |                            560 KB                             |
+| Gzip         |                            6 KB                             |                         32 KB                         |                            159 KB                             |
 
-> **Note** _`vlitejs 4.0.0`, `plyr 3.6.4`, `videojs 7.11.4`_
+> **Note** _`vlitejs 5.0.1`, `plyr 3.7.8`, `videojs 8.3.0`_
 
 ---
 
@@ -38,6 +38,7 @@ Sizes of the `vlitejs` bundle compared to the competition:
 - [**Provider API**](./src/providers/README.md) - Use the available providers or create your own.
 - [**Plugin API**](./src/plugins/README.md) - Use the available plugins or create your own.
 - [**Streaming**](https://glitch.com/edit/#!/vlitejs-html5-video-hls?previewSize=50&attributionHidden=false&sidebarCollapsed=false&path=index.html&previewFirst=false) - Support HLS.js streaming playback.
+- [**Sticky**](./src/plugins/sticky/README.md) - Support for sticky.
 - [**Events**](#events) - Standardized events for all web browsers, providers and plugins.
 - **Autoload API** - Youtube, Vimeo and Dailymotion API are automatically loaded by their provider.
 - [**Subtitles**](./src/plugins/subtitle/README.md) - Supports multiple subtitle tracks (VTT).
@@ -88,13 +89,15 @@ npm install vlitejs --save-dev
 yarn add vlitejs --dev
 ```
 
+> **Note** Minimum supported `Node.js` version is `16.20.0`.
+
 ### CDN
 
 You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`.
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/vlitejs@4/dist/vlite.css" rel="stylesheet" crossorigin />
-<script src="https://cdn.jsdelivr.net/npm/vlitejs@4" crossorigin></script>
+<link href="https://cdn.jsdelivr.net/npm/vlitejs@5/dist/vlite.css" rel="stylesheet" crossorigin />
+<script src="https://cdn.jsdelivr.net/npm/vlitejs@5" crossorigin></script>
 ```
 
 > **Note** You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
@@ -106,31 +109,31 @@ You can also download it and include it with a script tag. The library will be r
 #### HTML5 video
 
 ```html
-<video id="player" class="vlite-js" src="<path_to_video_mp4>"></video>
+<video id="player" src="<path_to_video_mp4>"></video>
 ```
 
 #### HTML5 audio
 
 ```html
-<audio id="player" class="vlite-js" src="<path_to_audio_mp3>"></audio>
+<audio id="player" src="<path_to_audio_mp3>"></audio>
 ```
 
 #### Youtube
 
 ```html
-<div id="player" class="vlite-js" data-youtube-id="<video_id>"></div>
+<div id="player" data-youtube-id="<video_id>"></div>
 ```
 
 #### Vimeo
 
 ```html
-<div id="player" class="vlite-js" data-vimeo-id="<video_id>"></div>
+<div id="player" data-vimeo-id="<video_id>"></div>
 ```
 
 #### Dailymotion
 
 ```html
-<div id="player" class="vlite-js" data-dailymotion-id="<video_id>"></div>
+<div id="player" data-dailymotion-id="<video_id>"></div>
 ```
 
 ### Initialization
@@ -350,7 +353,7 @@ The player accepts the following keyboard shortcuts.
 
 ## Browser support
 
-`vlitejs` supports the latest 2 versions of most modern browsers with the [.browserslistrc](https://github.com/vlitejs/vlite/blob/main/.browserslistrc) config.
+`vlitejs` supports the latest 2 versions of most modern browsers with the Browserslist config.
 
 | Browser    |     Supported      |
 | ---------- | :----------------: |

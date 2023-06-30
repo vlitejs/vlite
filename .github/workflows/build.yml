@@ -1,43 +1,22 @@
 name: Build
 
 on:
+  merge_group:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [16, 18, 20]
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-          cache: 'npm'
-          cache-dependency-path: ./package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Test ESLint
-        run: npm run test:eslint
-
-      - name: Test Stylelint
-        run: npm run test:stylelint
-
-      - name: Test Typescript
-        run: npm run test:types
-
-      - name: Test markdown
-        run: npm run test:markdown
-
-      - name: Build
-        run: npm run build
-
-      # - name: Build example
-      #   run: npm run build:example
+        node-version: [16, 18, 20]
+    uses: yoriiis/actions/.github/workflows/test-and-build.yml@main
+    with:
+      node-version: ${{ matrix.node-version }}
+      os: ${{ matrix.os }}
+      command-build: npm run build && npm run build:example

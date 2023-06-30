@@ -13,11 +13,7 @@ import { registerPlugin, initializePlugins } from 'plugins/plugin.js'
 
 type TimerHandle = number
 
-export interface interfaceDefaultOptions {
-	[key: string]: {
-		[key: string]: any
-	}
-}
+export type interfaceDefaultOptions = Record<string, Record<string, any>>
 
 const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
@@ -53,7 +49,6 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
  * @module vLite/entrypoint
  */
 class Vlitejs {
-	Player: any
 	media: HTMLVideoElement | HTMLAudioElement | HTMLDivElement
 	provider: string
 	onReady: () => void
@@ -61,8 +56,9 @@ class Vlitejs {
 	supportFullScreen: FullScreenSupport
 	options: Options
 	autoHideGranted: boolean
+	outerContainer: HTMLElement
 	container: HTMLElement
-	player: any
+	player: Player
 	controlBar: any
 	registerPlugin!: () => void
 	registerProvider!: () => void
@@ -70,12 +66,12 @@ class Vlitejs {
 
 	/**
 	 * @constructor
-	 * @param {(String|HTMLElement)} selector CSS selector or HTML element
-	 * @param {Object} options
-	 * @param {Object} options.options Player options
-	 * @param {String} options.provider Player provider
-	 * @param {Object} options.plugins Player plugins
-	 * @param {Function} options.onReady Callback function when the player is ready
+	 * @param selector CSS selector or HTML element
+	 * @param options
+	 * @param options.options Player options
+	 * @param options.provider Player provider
+	 * @param options.plugins Player plugins
+	 * @param options.onReady Callback function when the player is ready
 	 */
 	constructor(
 		selector: string | HTMLElement,
@@ -88,7 +84,7 @@ class Vlitejs {
 		}: {
 			options?: Options | object
 			provider?: string
-			plugins?: Array<string>
+			plugins?: string[]
 			onReady?: () => void
 		} = {}
 	) {
@@ -114,7 +110,7 @@ class Vlitejs {
 		this.supportFullScreen = checkSupportFullScreen()
 
 		// Update config from element attributes
-		const htmlAttributes: Array<string> = ['autoplay', 'playsinline', 'muted', 'loop']
+		const htmlAttributes: string[] = ['autoplay', 'playsinline', 'muted', 'loop']
 		htmlAttributes.forEach((item: string) => {
 			if (this.media.hasAttribute(item)) {
 				// @ts-ignore
@@ -143,7 +139,8 @@ class Vlitejs {
 		const ProviderInstance = getProviderInstance(provider, Player)
 
 		this.wrapElement()
-		this.container = this.media.parentNode as HTMLElement
+		this.container = this.media.closest('.v-container') as HTMLElement
+		this.outerContainer = this.container.closest('.v-vlite') as HTMLElement
 
 		this.type === 'video' && this.renderLayout()
 		this.player = new ProviderInstance({
@@ -166,12 +163,23 @@ class Vlitejs {
 	 * Wrap the media element
 	 */
 	wrapElement() {
-		const wrapper = document.createElement('div')
-		wrapper.classList.add('v-vlite', 'v-firstStart', 'v-paused', 'v-loading', `v-${this.type}`)
-		wrapper.setAttribute('tabindex', '0')
+		const outerContainer = document.createElement('div')
+		outerContainer.classList.add(
+			'v-vlite',
+			'v-firstStart',
+			'v-paused',
+			'v-loading',
+			`v-${this.type}`
+		)
+
+		const container = document.createElement('div')
+		container.setAttribute('tabindex', '0')
+		container.classList.add('v-container')
+		outerContainer.appendChild(container)
+
 		const parentElement = this.media.parentNode as HTMLElement
-		parentElement.insertBefore(wrapper, this.media)
-		wrapper.appendChild(this.media)
+		parentElement.insertBefore(outerContainer, this.media)
+		container.appendChild(this.media)
 	}
 
 	/**
@@ -202,7 +210,7 @@ class Vlitejs {
 
 	/**
 	 * On click on the player
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnPlayer(e: Event) {
 		const target = e.target as HTMLElement
@@ -220,7 +228,7 @@ class Vlitejs {
 
 	/**
 	 * On double click on the player
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onDoubleClickOnPlayer(e: Event) {
 		const target = e.target
@@ -237,7 +245,7 @@ class Vlitejs {
 
 	/**
 	 * On keydown event on the media element
-	 * @param {KeyboardEvent} e Event listener datas
+	 * @param e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
 		const activeElement = document.activeElement
@@ -308,7 +316,7 @@ class Vlitejs {
 
 	/**
 	 * Trigger the video fast forward (front and rear)
-	 * @param {String} direction Direction (backward|forward)
+	 * @param direction Direction (backward|forward)
 	 */
 	fastForward(direction: string) {
 		this.player.getCurrentTime().then((seconds: number) => {
@@ -351,7 +359,7 @@ class Vlitejs {
 	startAutoHideTimer() {
 		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				this.player.elements.controlBar.classList.add('v-hidden')
+				this.player.elements.controlBar!.classList.add('v-hidden')
 			}, this.options.autoHideDelay)
 		}
 	}

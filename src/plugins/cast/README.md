@@ -21,7 +21,7 @@ Supports for Google Cast API.
 ### HTML
 
 ```html
-<video id="player" class="vlite-js" src="<path_to_video_mp4>"></video>
+<video id="player" src="<path_to_video_mp4>"></video>
 ```
 
 ### JavaScript

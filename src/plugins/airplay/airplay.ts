@@ -1,13 +1,13 @@
 import './airplay.css'
 import svgAirPlay from 'shared/assets/svgs/airplay.svg'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces.js'
+import { pluginParameter } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Window {
 		WebKitPlaybackTargetAvailabilityEvent: () => void
 	}
 }
-interface WebkitEvent {
+type WebkitEvent = {
 	availability: string
 }
 
@@ -26,8 +26,8 @@ export default class AirPlayPlugin {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
+	 * @param options
+	 * @param options.player Player instance
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
@@ -106,7 +106,7 @@ export default class AirPlayPlugin {
 
 	/**
 	 * Detects when AirPlay availability changes
-	 * @param {WebkitEvent} e Event data
+	 * @param e Event data
 	 */
 	onWebKitPlaybackTargetAvailabilityChanged(e: WebkitEvent) {
 		switch (e.availability) {
@@ -121,7 +121,7 @@ export default class AirPlayPlugin {
 
 	/**
 	 * On click on airplay button, open the airplay selection UI
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	onClickOnAirPlayButton(e: Event) {
 		e.preventDefault()

@@ -2,7 +2,7 @@ import './loader.css'
 
 /**
  * Loader template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 export default function loader(): string {
 	return `

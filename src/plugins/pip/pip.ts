@@ -1,6 +1,6 @@
 import './pip.css'
 import svgPip from 'shared/assets/svgs/pip.svg'
-import { pluginParameter } from 'shared/assets/interfaces/interfaces.js'
+import { pluginParameter } from 'shared/assets/types/types.js'
 
 /**
  * Vlitejs Picture-in-Picture plugin
@@ -15,8 +15,8 @@ export default class PiP {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
+	 * @param options
+	 * @param options.player Player instance
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
@@ -43,7 +43,7 @@ export default class PiP {
 
 	/**
 	 * Check if the PIP API is available and not disabled
-	 * @returns {Boolean} PIP API status
+	 * @returns PIP API status
 	 */
 	isPipApiAvailable(): boolean {
 		return (
@@ -82,7 +82,7 @@ export default class PiP {
 
 	/**
 	 * On click on the PIP button
-	 * @param {Event} e Event data
+	 * @param e Event data
 	 */
 	async onClickOnPipButton(e: Event) {
 		e.preventDefault()

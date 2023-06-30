@@ -1,0 +1,13 @@
+name: Publish Node.js Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  npm:
+    uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
+    with:
+      node-version: 16
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

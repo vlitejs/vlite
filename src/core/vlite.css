@@ -90,8 +90,9 @@
 		pointer-events: none;
 	}
 
-	.vlite-js,
-	.vlite-js > iframe {
+	.v-container,
+	.v-media,
+	.v-media > iframe {
 		width: 100%;
 		height: 100%;
 	}

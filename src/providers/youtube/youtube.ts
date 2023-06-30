@@ -1,11 +1,11 @@
-import { playerParameters } from 'shared/assets/interfaces/interfaces.js'
+import { playerParameters } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Window {
 		Vlitejs: {
 			Player: any
 		}
-		VlitejsYoutubeQueue: Array<any>
+		VlitejsYoutubeQueue: any[]
 		YT: {
 			Player: any
 			PlayerState: {
@@ -22,8 +22,8 @@ declare global {
 
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player
- * @param {Class} Player
- * @returns {Class} Provider class extended from vLitejs Player
+ * @param Player
+ * @returns Provider class extended from vLitejs Player
  */
 export default function YoutubeProvider(Player: any) {
 	const providerObjectName = 'YT'
@@ -82,7 +82,7 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Wait until the API is ready
-		 * @returns {Promise} The player is ready
+		 * @returns The player is ready
 		 */
 		waitUntilVideoIsReady(): Promise<void> {
 			return new window.Promise((resolve) => {
@@ -118,7 +118,7 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Function executed when the player state changed
-		 * @param {Object} e Event listener datas
+		 * @param e Event listener datas
 		 */
 		onPlayerStateChange(e: any) {
 			this.rafPlaying && window.cancelAnimationFrame(this.rafPlaying)
@@ -156,15 +156,15 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Get the player instance
-		 * @returns {Object} Youtube API instance
+		 * @returns Youtube API instance
 		 */
-		getInstance(): any {
+		getInstance(): unknown {
 			return this.instance
 		}
 
 		/**
 		 * Get the player current time
-		 * @returns {Promise<number>} Current time of the video
+		 * @returns Current time of the video
 		 */
 		getCurrentTime(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
@@ -172,7 +172,7 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Get the player duration
-		 * @returns {Promise<number>} Duration of the video
+		 * @returns Duration of the video
 		 */
 		getDuration(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.instance.getDuration()))
@@ -194,7 +194,7 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Set volume method of the player
-		 * @param {Number} volume New volume
+		 * @param volume New volume
 		 */
 		methodSetVolume(volume: number) {
 			this.instance.setVolume(volume * 100)
@@ -202,7 +202,7 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Get volume method of the player
-		 * @returns {Promise<Number>} Player volume
+		 * @returns Player volume
 		 */
 		methodGetVolume(): Promise<number> {
 			return new window.Promise((resolve) => resolve(this.instance.getVolume() / 100))
@@ -224,7 +224,7 @@ export default function YoutubeProvider(Player: any) {
 
 		/**
 		 * Set the new current time for the player
-		 * @param {Number} Current time video
+		 * @param Current time video
 		 */
 		methodSeekTo(newTime: number) {
 			// Youtube triggers the play when the video is not yet started

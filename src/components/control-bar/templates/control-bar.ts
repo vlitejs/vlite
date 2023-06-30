@@ -4,15 +4,15 @@ import svgVolumeHigh from 'shared/assets/svgs/volume-high.svg'
 import svgVolumeMute from 'shared/assets/svgs/volume-mute.svg'
 import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
 import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
-import { Options } from 'shared/assets/interfaces/interfaces.js'
+import { Options } from 'shared/assets/types/types.js'
 
 /**
  * Big play template
- * @param {Object} options
- * @param {Object} options.options Player options
- * @param {Boolean} options.isMuted Player is muted
- * @param {Boolean} options.isVideo Player type is video
- * @returns {String} Generated HTML
+ * @param options
+ * @param options.options Player options
+ * @param options.isMuted Player is muted
+ * @param options.isVideo Player type is video
+ * @returns Generated HTML
  */
 export default function controlBar({
 	options,
@@ -40,7 +40,7 @@ export default function controlBar({
 
 /**
  * Play pause button template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 function playPauseElement(): string {
 	return `<button class="v-playPauseButton v-controlButton" aria-label="Play">${svgPlay}${svgPause}</button>`
@@ -48,7 +48,7 @@ function playPauseElement(): string {
 
 /**
  * Time template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 function timeElement(): string {
 	return `<div class="v-time"><span class="v-currentTime">00:00</span>&nbsp;/&nbsp;<span class="v-duration"></span></div>`
@@ -56,7 +56,7 @@ function timeElement(): string {
 
 /**
  * Progress bar template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 function progressBarElement(): string {
 	return `<input type="range" class="v-progressBar v-progressBarStyle" min="0" max="100" step="0.01" value="0" aria-label="Seek" aria-valuemin="0" />`
@@ -64,7 +64,7 @@ function progressBarElement(): string {
 
 /**
  * Volume button template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 function volumeElement({ isMuted }: { isMuted: boolean }) {
 	const muteClass = isMuted ? ' v-controlPressed' : ''
@@ -73,7 +73,7 @@ function volumeElement({ isMuted }: { isMuted: boolean }) {
 
 /**
  * Fullscreen button template
- * @returns {String} Generated HTML
+ * @returns Generated HTML
  */
 function fullscreenElement(): string {
 	return `<button class="v-fullscreenButton v-controlButton" aria-label="Enter fullscreen">${svgFullscreen}${svgFullscreenExit}</span></button>`

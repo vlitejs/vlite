@@ -1,11 +1,7 @@
 import PlayerHtml5 from './html5/html5.js'
 
-interface interfaceVliteProviders {
-	[key: string]: any
-}
-interface interfaceProvidersOptions {
-	[key: string]: any
-}
+type interfaceVliteProviders = Record<string, any>
+type interfaceProvidersOptions = Record<string, any>
 
 const vliteProviders: interfaceVliteProviders = {
 	html5: PlayerHtml5
@@ -14,9 +10,9 @@ const providersOptions: interfaceProvidersOptions = {}
 
 /**
  * Get provider instance from the registered list
- * @param {String} provider Provider ID
- * @param {Class} Player Player parent class
- * @returns {Class} Provider class
+ * @param provider Provider ID
+ * @param Player Player parent class
+ * @returns Provider class
  */
 export function getProviderInstance(provider: string, Player: any): any {
 	const ProviderInstance: any = vliteProviders[provider]
@@ -28,10 +24,10 @@ export function getProviderInstance(provider: string, Player: any): any {
 
 /**
  * Register the provider
- * @param {String} id Provider ID
- * @param {any} instance Provider instance
- * @param {Object} options Provider options
- * @returns {undefined} No value to return
+ * @param id Provider ID
+ * @param instance Provider instance
+ * @param options Provider options
+ * @returns No value to return
  */
 export function registerProvider(id: string, instance: any, options: interfaceProvidersOptions) {
 	if (typeof instance !== 'undefined') {

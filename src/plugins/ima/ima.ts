@@ -1,5 +1,5 @@
 import './ima.css'
-import { pluginParameter, Constructable } from 'shared/assets/interfaces/interfaces.js'
+import { pluginParameter, Constructable } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Window {
@@ -48,7 +48,7 @@ declare global {
 	}
 }
 
-interface ImaEvent {
+type ImaEvent = {
 	getAd: any
 	getError: () => {
 		j: {
@@ -70,7 +70,7 @@ export default class ImaPlugin {
 	playerIsReady: boolean
 	sdkIsReady: boolean
 	currentAd!: any
-	cuePoints!: Array<number>
+	cuePoints!: number[]
 	adContainer!: HTMLElement
 	timerAdTimeout: number
 	resumeAd: boolean
@@ -89,9 +89,9 @@ export default class ImaPlugin {
 
 	/**
 	 * @constructor
-	 * @param {Object} options
-	 * @param {Class} options.player Player instance
-	 * @param {Object} options.options Plugins options
+	 * @param options
+	 * @param options.player Player instance
+	 * @param options.options Plugins options
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
@@ -284,7 +284,7 @@ export default class ImaPlugin {
 
 	/**
 	 * On ads manager loaded
-	 * @param {ImaEvent} adsManagerLoadedEvent Ads manager event
+	 * @param adsManagerLoadedEvent Ads manager event
 	 */
 	onAdsManagerLoaded(adsManagerLoadedEvent: ImaEvent) {
 		const adsRenderingSettings = {
@@ -360,7 +360,7 @@ export default class ImaPlugin {
 
 	/**
 	 * On ad started
-	 * @param {ImaEvent} e Ad event
+	 * @param e Ad event
 	 */
 	onAdStarted(e: ImaEvent) {
 		// Prevent the loader from being above the ad
@@ -377,11 +377,11 @@ export default class ImaPlugin {
 			this.adContainer.classList.add('v-active')
 		}
 
-		this.player.elements.container.classList[this.isLinearAd ? 'remove' : 'add'](
+		this.player.elements.outerContainer.classList[this.isLinearAd ? 'remove' : 'add'](
 			'v-adNonLinear'
 		)
-		this.player.elements.container.classList.add('v-adPlaying')
-		this.player.elements.container.classList.remove('v-adPaused')
+		this.player.elements.outerContainer.classList.add('v-adPlaying')
+		this.player.elements.outerContainer.classList.remove('v-adPaused')
 	}
 
 	/**
@@ -389,16 +389,16 @@ export default class ImaPlugin {
 	 */
 	onAdPaused() {
 		this.resumeAd = true
-		this.player.elements.container.classList.add('v-adPaused')
-		this.player.elements.container.classList.remove('v-adPlaying')
+		this.player.elements.outerContainer.classList.add('v-adPaused')
+		this.player.elements.outerContainer.classList.remove('v-adPlaying')
 	}
 
 	/**
 	 * On ad resumed
 	 */
 	onAdResumed() {
-		this.player.elements.container.classList.add('v-adPlaying')
-		this.player.elements.container.classList.remove('v-adPaused')
+		this.player.elements.outerContainer.classList.add('v-adPlaying')
+		this.player.elements.outerContainer.classList.remove('v-adPaused')
 	}
 
 	/**
@@ -426,7 +426,7 @@ export default class ImaPlugin {
 
 	/**
 	 * On ad error
-	 * @param {ImaEvent} e Ad event
+	 * @param e Ad event
 	 */
 	onAdError(e: ImaEvent) {
 		this.adError = true
@@ -604,7 +604,7 @@ export default class ImaPlugin {
 	clean() {
 		this.player.isLinearAd = false
 		this.adContainer.classList.remove('v-active', 'v-adNonLinear')
-		this.player.elements.container.classList.remove('v-adPlaying', 'v-adPaused')
+		this.player.elements.outerContainer.classList.remove('v-adPlaying', 'v-adPaused')
 	}
 
 	/**

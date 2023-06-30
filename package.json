@@ -1,6 +1,6 @@
 {
 	"name": "vlitejs",
-	"version": "4.2.0",
+	"version": "5.0.2",
 	"description": "vLitejs is a fast and lightweight Javascript library for customizing video and audio player in Javascript with a minimalist theme (HTML5, Youtube, Vimeo, Dailymotion)",
 	"keywords": [
 		"video",
@@ -19,11 +19,17 @@
 		"chromecast",
 		"airplay",
 		"monetization",
-		"ima-sdk"
+		"ima-sdk",
+		"sticky",
+		"volume bar"
 	],
 	"homepage": "https://vlite.js.org",
 	"bugs": "https://github.com/vlitejs/vlite/issues",
 	"repository": "https://github.com/vlitejs/vlite.git",
+	"funding": {
+		"type": "individual",
+		"url": "https://github.com/sponsors/yoriiis"
+	},
 	"license": "MIT",
 	"author": "Joris DANIEL",
 	"type": "module",
@@ -56,9 +62,9 @@
 		"test:eslint": "eslint ./src --config config/.eslintrc.cjs --ignore-pattern dist",
 		"test:eslint:fix": "eslint ./src --config config/.eslintrc.cjs --ignore-pattern dist --fix",
 		"test:markdown": "markdownlint-cli2 '**/*.md' '.github/*.md'",
-		"test:stylelint": "stylelint './src/**/*.css' './docs/theme/assets/stylesheets/**/*.css' --config ./config/stylelint.config.cjs",
-		"test:stylelint:fix": "stylelint './src/**/*.css' './docs/theme/assets/stylesheets/**/*.css' --config ./config/stylelint.config.cjs --fix",
-		"test:types": "tsc"
+		"test:stylelint": "stylelint \"./src/**/*.css\" --config ./config/stylelint.config.cjs",
+		"test:stylelint:fix": "stylelint \"./src/**/*.css\" --config ./config/stylelint.config.cjs --fix",
+		"test:types": "tsc --noEmit"
 	},
 	"prettier": "./config/prettier.config.cjs",
 	"dependencies": {
@@ -72,6 +78,7 @@
 		"@rollup/plugin-node-resolve": "^15.0.2",
 		"@rollup/plugin-replace": "^5.0.2",
 		"@rollup/plugin-typescript": "^8.3.0",
+		"@types/chromecast-caf-sender": "^1.0.5",
 		"@typescript-eslint/eslint-plugin": "^5.59.0",
 		"@typescript-eslint/parser": "^5.59.0",
 		"@web/dev-server-rollup": "^0.5.0",
