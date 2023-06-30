@@ -35,12 +35,7 @@ export default function webpackConfig(env, argv) {
 			rules: [
 				{
 					test: /\.js$/,
-					include: [resolveApp('examples'), resolveApp('dist')],
-					use: [
-						{
-							loader: 'babel-loader'
-						}
-					]
+					include: [resolveApp('examples'), resolveApp('dist')]
 				},
 				{
 					test: /\.css$/,
@@ -49,15 +44,15 @@ export default function webpackConfig(env, argv) {
 						MiniCssExtractPlugin.loader,
 						{
 							loader: 'css-loader'
-						},
-						{
-							loader: 'postcss-loader',
-							options: {
-								postcssOptions: {
-									config: resolveApp('config/postcss.config.cjs')
-								}
-							}
 						}
+						// {
+						// 	loader: 'postcss-loader',
+						// 	options: {
+						// 		postcssOptions: {
+						// 			config: resolveApp('config/postcss.config.cjs')
+						// 		}
+						// 	}
+						// }
 					]
 				}
 			]
