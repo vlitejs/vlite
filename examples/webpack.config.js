@@ -11,7 +11,7 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production'
 
-	const config = {
+	return {
 		entry: {
 			home: resolveApp('examples/config.js'),
 			html5: resolveApp('examples/html5/config.js'),
@@ -135,7 +135,8 @@ module.exports = (env, argv) => {
 				template: resolveApp('examples/audio/index.html'),
 				chunks: ['audio'],
 				publicPath: '../'
-			})
+			}),
+			...(isProduction ? [new webpack.ProgressPlugin()] : [])
 		],
 		stats: {
 			assets: true,
@@ -173,10 +174,4 @@ module.exports = (env, argv) => {
 			splitChunks: false
 		}
 	}
-
-	if (!isProduction) {
-		config.plugins.push(new webpack.ProgressPlugin())
-	}
-
-	return config
 }
