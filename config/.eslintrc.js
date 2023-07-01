@@ -37,5 +37,7 @@ module.exports = {
 		window: false,
 		chrome: false,
 		cast: false
-	}
+	},
+
+	ignorePatterns: ['examples']
 }
