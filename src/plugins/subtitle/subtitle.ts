@@ -73,7 +73,7 @@ export default class Subtitle {
 	 * @returns Active track
 	 */
 	getActiveTrack(): TextTrack {
-		return this.tracks.find((track) => track.mode === 'showing') != null || this.tracks[0]
+		return this.tracks.find((track) => track.mode === 'showing') ?? this.tracks[0]
 	}
 
 	/**
@@ -225,7 +225,7 @@ export default class Subtitle {
 	 * @returns TextTrack for the current language
 	 */
 	getTrackByLanguage(language: string): TextTrack | null {
-		return this.tracks.find((track) => track.language === language) != null || null
+		return this.tracks.find((track) => track.language === language) ?? null
 	}
 
 	/**
@@ -234,7 +234,7 @@ export default class Subtitle {
 	 * @param options.isDisabled Disable cues
 	 */
 	updateCues({ isDisabled = false }: { isDisabled?: boolean } = {}) {
-		if (this.activeTrack?.cues.length) {
+		if (this.activeTrack?.cues?.length) {
 			const cues = Array.from(this.activeTrack.cues)
 			const activeCues = this.activeTrack.activeCues
 

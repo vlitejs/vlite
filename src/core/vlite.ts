@@ -121,7 +121,7 @@ class Vlitejs {
 			}
 		})
 
-		this.options = { ...(DEFAULT_OPTIONS[this.type] as const), ...options }
+		this.options = { ...DEFAULT_OPTIONS['video'], ...options } as Options
 		this.autoHideGranted =
 			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
 
@@ -309,7 +309,10 @@ class Vlitejs {
 	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 	 */
 	onChangeFullScreen() {
-		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {
+		if (
+			!document[this.supportFullScreen.isFullScreen as keyof Document] &&
+			this.player.isFullScreen
+		) {
 			this.player.exitFullscreen({ escKey: true })
 		}
 	}

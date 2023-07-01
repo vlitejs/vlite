@@ -98,7 +98,7 @@ export default function VimeoProvider(Player: any) {
 		 * Initialize the player
 		 */
 		async initVimeoPlayer(): Promise<void> {
-			await new window.Promise((resolve) => {
+			await new window.Promise<void>((resolve) => {
 				this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), this.params)
 				this.media = this.instance.element
 				this.instance.ready().then(() => {

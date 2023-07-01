@@ -365,7 +365,7 @@ export default class CastPlugin {
 	 * @returns Active track
 	 */
 	getActiveTrack(): Subtitle {
-		return this.subtitles.find((item) => item.isDefault) != null || this.subtitles[0]
+		return this.subtitles.find((item) => item.isDefault) ?? this.subtitles[0]
 	}
 
 	/**

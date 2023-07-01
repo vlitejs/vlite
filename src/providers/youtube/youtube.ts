@@ -99,7 +99,7 @@ export default function YoutubeProvider(Player: any) {
 		 * Initialize the player
 		 */
 		async initYoutubePlayer(): Promise<void> {
-			await new window.Promise((resolve) => {
+			await new window.Promise<void>((resolve) => {
 				this.instance = new window.YT.Player(this.media.getAttribute('id'), {
 					videoId: this.media.getAttribute('data-youtube-id'),
 					height: '100%',

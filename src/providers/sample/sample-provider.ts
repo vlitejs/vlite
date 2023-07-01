@@ -67,7 +67,7 @@ export default function SampleProvider(Player: any) {
 		 * @returns {Promise} The player is instanciated
 		 */
 		async initPlayer(): Promise<void> {
-			await new window.Promise((resolve) => {
+			await new window.Promise<void>((resolve) => {
 				// Initialize the Player with the API
 				// Resolve the promise when the player is ready
 				// this.instance =

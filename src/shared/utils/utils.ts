@@ -52,8 +52,8 @@ export function getBrowserPrefix(): string {
 	return (
 		prefixs.find(
 			(prefix: string) =>
-				document[prefix + 'ExitFullscreen'] instanceof Function ||
-				document[`${prefix}CancelFullScreen`] instanceof Function
+				(document as any)[prefix + 'ExitFullscreen'] instanceof Function ||
+				(document as any)[`${prefix}CancelFullScreen`] instanceof Function
 		) ?? ''
 	)
 }

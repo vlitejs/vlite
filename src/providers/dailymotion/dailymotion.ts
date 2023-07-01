@@ -101,7 +101,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 * Initialize the player
 		 */
 		async initDailymotionPlayer(): Promise<void> {
-			await new window.Promise((resolve) => {
+			await new window.Promise<void>((resolve) => {
 				window.dailymotion
 					.createPlayer(this.media.getAttribute('id'), {
 						video: this.media.getAttribute('data-dailymotion-id')

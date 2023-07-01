@@ -24,7 +24,7 @@ export interface Options {
 	playsinline: boolean
 	loop: boolean
 	muted: boolean
-	[key: string]: boolean | null | string | number
+	// [key: string]: boolean | null | string | number
 }
 
 export interface playerParameters {
