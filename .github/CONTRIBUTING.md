@@ -26,19 +26,13 @@ npm run start:example
 **Tests**
 
 ```bash
-# Run ESLint linter
-npm run test:eslint
-
-# Run Stylelint linter
-npm run test:stylelint
-
 # Run TypeScript types linter
 npm run test:types
 
 # Run Markdown linter
 npm run test:markdown
 
-# Run all tests (eslint, stylelint, types, markdown)
+# Run all tests (types, markdown)
 npm run test
 ```
 
