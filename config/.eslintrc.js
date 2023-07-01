@@ -25,6 +25,8 @@ module.exports = {
 	],
 
 	rules: {
+		'@typescript-eslint/consistent-type-assertions': 'off',
+		'@typescript-eslint/prefer-ts-expect-error': 'off',
 		'@typescript-eslint/no-misused-promises': 'off',
 		'@typescript-eslint/restrict-template-expressions': 'off',
 		'@typescript-eslint/no-floating-promises': 'off',
