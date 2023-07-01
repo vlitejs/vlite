@@ -10,7 +10,7 @@ on:
     branches:
       - main
 
-#test
+#test 2
 jobs:
   test:
     uses: yoriiis/actions/.github/workflows/qa.yml@main
