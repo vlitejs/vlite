@@ -11,7 +11,8 @@ on:
       - main
 
 jobs:
-  audit:
+  test:
     uses: yoriiis/actions/.github/workflows/qa.yml@main
     with:
       node-version: 18
+      markdown-status: false
