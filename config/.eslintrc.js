@@ -39,5 +39,5 @@ module.exports = {
 		cast: false
 	},
 
-	ignorePatterns: ['examples']
+	ignorePatterns: ['node_modules', 'examples', 'config', 'dist']
 }
