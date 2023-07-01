@@ -20,7 +20,7 @@ export function formatVideoTime(time: number): string {
 	timeInString += min < 10 ? '0' : ''
 	timeInString += `${min}:`
 	timeInString += sec < 10 ? '0' : ''
-	timeInString += sec
+	timeInString += `${sec}`
 
 	return timeInString
 }

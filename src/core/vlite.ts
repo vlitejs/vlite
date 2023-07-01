@@ -121,7 +121,7 @@ class Vlitejs {
 			}
 		})
 
-		this.options = { ...DEFAULT_OPTIONS[this.type], ...options } as Options
+		this.options = { ...(DEFAULT_OPTIONS[this.type] as const), ...options }
 		this.autoHideGranted =
 			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
 
