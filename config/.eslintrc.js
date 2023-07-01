@@ -25,6 +25,10 @@ module.exports = {
 	],
 
 	rules: {
+		'@typescript-eslint/restrict-template-expressions': 'off',
+		'@typescript-eslint/no-floating-promises': 'off',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/strict-boolean-expressions': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/no-non-null-assertion': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',

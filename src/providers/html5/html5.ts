@@ -1,4 +1,4 @@
-import { playerParameters, configEvent } from 'shared/assets/types/types'
+import { type playerParameters, type configEvent } from 'shared/assets/types/types'
 
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player
@@ -40,8 +40,8 @@ export default function Html5Provider(Player: any) {
 		 * Wait until the video is ready
 		 * @returns The video is ready
 		 */
-		waitUntilVideoIsReady(): Promise<any> {
-			return new window.Promise<void>((resolve) => {
+		async waitUntilVideoIsReady(): Promise<any> {
+			await new window.Promise<void>((resolve) => {
 				if (this.media.readyState >= 2 && this.media.duration) {
 					resolve()
 				} else {
@@ -76,16 +76,20 @@ export default function Html5Provider(Player: any) {
 		 * Get the player current time
 		 * @returns Current time of the video
 		 */
-		getCurrentTime(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.media.currentTime))
+		async getCurrentTime(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				resolve(this.media.currentTime)
+			})
 		}
 
 		/**
 		 * Get the player duration
 		 * @returns Duration of the video
 		 */
-		getDuration(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.media.duration))
+		async getDuration(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				resolve(this.media.duration)
+			})
 		}
 
 		/**
@@ -114,8 +118,10 @@ export default function Html5Provider(Player: any) {
 		 * Get volume method of the player
 		 * @returns Player volume
 		 */
-		methodGetVolume(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.media.volume))
+		async methodGetVolume(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				resolve(this.media.volume)
+			})
 		}
 
 		/**

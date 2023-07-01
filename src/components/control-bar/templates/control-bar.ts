@@ -4,7 +4,7 @@ import svgVolumeHigh from 'shared/assets/svgs/volume-high.svg'
 import svgVolumeMute from 'shared/assets/svgs/volume-mute.svg'
 import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
 import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
-import { Options } from 'shared/assets/types/types'
+import { type Options } from 'shared/assets/types/types'
 
 /**
  * Big play template

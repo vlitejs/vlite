@@ -1,4 +1,4 @@
-import { pluginParameter } from 'shared/assets/types/types'
+import { type pluginParameter } from 'shared/assets/types/types'
 
 /**
  * Vlitejs Sample plugin

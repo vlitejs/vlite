@@ -1,8 +1,8 @@
 import './sticky.css'
 import svgClose from 'shared/assets/svgs/close.svg'
-import { pluginParameter } from 'shared/assets/types/types'
+import { type pluginParameter } from 'shared/assets/types/types'
 
-type WindowSizes = {
+interface WindowSizes {
 	clientWidth: number
 	innerHeight: number
 }
@@ -129,7 +129,9 @@ export default class Sticky {
 		this.windowSizes.innerHeight = window.innerHeight
 
 		clearTimeout(this.resizeTimer)
-		this.resizeTimer = window.setTimeout(() => this.updateSticky({ resize: true }), 0)
+		this.resizeTimer = window.setTimeout(() => {
+			this.updateSticky({ resize: true })
+		}, 0)
 	}
 
 	/**

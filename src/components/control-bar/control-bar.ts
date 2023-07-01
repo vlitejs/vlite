@@ -100,8 +100,7 @@ export default class ControlBar {
 				})
 			}
 		}
-		this.player.elements.controlBar &&
-			this.player.elements.controlBar.addEventListener('click', this.onClickOnControlBar)
+		this.player.elements.controlBar?.addEventListener('click', this.onClickOnControlBar)
 	}
 
 	/**
@@ -113,7 +112,7 @@ export default class ControlBar {
 		e.preventDefault()
 
 		const target = e.target as HTMLInputElement
-		const max = parseFloat(target.getAttribute('max') || '100')
+		const max = parseFloat(target.getAttribute('max') ?? '100')
 		const clientRect = target.getBoundingClientRect()
 		const percentage =
 			((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
@@ -232,8 +231,7 @@ export default class ControlBar {
 			}
 		}
 
-		this.player.elements.controlBar &&
-			this.player.elements.controlBar.removeEventListener('click', this.onClickOnControlBar)
+		this.player.elements.controlBar?.removeEventListener('click', this.onClickOnControlBar)
 	}
 
 	/**
@@ -241,6 +239,6 @@ export default class ControlBar {
 	 */
 	destroy() {
 		this.removeEvents()
-		this.player.elements.controlBar && this.player.elements.controlBar.remove()
+		this.player.elements.controlBar?.remove()
 	}
 }

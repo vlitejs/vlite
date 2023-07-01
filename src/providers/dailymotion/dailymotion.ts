@@ -1,4 +1,4 @@
-import { playerParameters, configEvent } from 'shared/assets/types/types'
+import { type playerParameters, type configEvent } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
@@ -11,10 +11,10 @@ declare global {
 		}
 	}
 }
-type interfaceProvidersOptions = {
+interface interfaceProvidersOptions {
 	playerId: string
 }
-type interfacePlayerState = {
+interface interfacePlayerState {
 	playerVolume: number
 	videoTime: number
 	videoDuration: number
@@ -86,8 +86,8 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 * Wait until the API is ready
 		 * @returns The player is ready
 		 */
-		waitUntilVideoIsReady(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async waitUntilVideoIsReady(): Promise<void> {
+			await new window.Promise((resolve) => {
 				// Initialize the player if the API is already available
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initDailymotionPlayer().then(resolve)
@@ -100,8 +100,8 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		/**
 		 * Initialize the player
 		 */
-		initDailymotionPlayer(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async initDailymotionPlayer(): Promise<void> {
+			await new window.Promise((resolve) => {
 				window.dailymotion
 					.createPlayer(this.media.getAttribute('id'), {
 						video: this.media.getAttribute('data-dailymotion-id')
@@ -147,7 +147,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 * Get the player current time
 		 * @returns>} Current time of the video
 		 */
-		getCurrentTime(): Promise<number> {
+		async getCurrentTime(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
 				return state.videoTime
 			})
@@ -157,7 +157,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 * Get the player duration
 		 * @returns>} Duration of the video
 		 */
-		getDuration(): Promise<number> {
+		async getDuration(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
 				return state.videoDuration
 			})
@@ -189,7 +189,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 * Get volume method of the player
 		 * @returns>} Player volume
 		 */
-		methodGetVolume(): Promise<number> {
+		async methodGetVolume(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
 				return state.playerVolume
 			})

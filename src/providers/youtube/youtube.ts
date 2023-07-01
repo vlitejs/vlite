@@ -1,4 +1,4 @@
-import { playerParameters } from 'shared/assets/types/types'
+import { type playerParameters } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
@@ -84,8 +84,8 @@ export default function YoutubeProvider(Player: any) {
 		 * Wait until the API is ready
 		 * @returns The player is ready
 		 */
-		waitUntilVideoIsReady(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async waitUntilVideoIsReady(): Promise<void> {
+			await new window.Promise((resolve) => {
 				// Initialize the player if the API is already available
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initYoutubePlayer().then(resolve)
@@ -98,8 +98,8 @@ export default function YoutubeProvider(Player: any) {
 		/**
 		 * Initialize the player
 		 */
-		initYoutubePlayer(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async initYoutubePlayer(): Promise<void> {
+			await new window.Promise((resolve) => {
 				this.instance = new window.YT.Player(this.media.getAttribute('id'), {
 					videoId: this.media.getAttribute('data-youtube-id'),
 					height: '100%',
@@ -110,7 +110,9 @@ export default function YoutubeProvider(Player: any) {
 							this.media = data.target.getIframe()
 							resolve()
 						},
-						onStateChange: (e: Event) => this.onPlayerStateChange(e)
+						onStateChange: (e: Event) => {
+							this.onPlayerStateChange(e)
+						}
 					}
 				})
 			})
@@ -166,16 +168,20 @@ export default function YoutubeProvider(Player: any) {
 		 * Get the player current time
 		 * @returns Current time of the video
 		 */
-		getCurrentTime(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
+		async getCurrentTime(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				resolve(this.instance.getCurrentTime())
+			})
 		}
 
 		/**
 		 * Get the player duration
 		 * @returns Duration of the video
 		 */
-		getDuration(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.instance.getDuration()))
+		async getDuration(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				resolve(this.instance.getDuration())
+			})
 		}
 
 		/**
@@ -204,8 +210,10 @@ export default function YoutubeProvider(Player: any) {
 		 * Get volume method of the player
 		 * @returns Player volume
 		 */
-		methodGetVolume(): Promise<number> {
-			return new window.Promise((resolve) => resolve(this.instance.getVolume() / 100))
+		async methodGetVolume(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				resolve(this.instance.getVolume() / 100)
+			})
 		}
 
 		/**

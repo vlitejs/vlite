@@ -1,9 +1,6 @@
-import { FullScreenSupport } from 'shared/assets/types/types'
+import { type FullScreenSupport } from 'shared/assets/types/types'
 
 declare global {
-	interface Document {
-		[key: string]: any
-	}
 	interface Window {
 		DocumentTouch: any
 	}
@@ -21,7 +18,7 @@ export function formatVideoTime(time: number): string {
 	let timeInString = ''
 
 	timeInString += min < 10 ? '0' : ''
-	timeInString += min + ':'
+	timeInString += `${min}:`
 	timeInString += sec < 10 ? '0' : ''
 	timeInString += sec
 
@@ -57,7 +54,7 @@ export function getBrowserPrefix(): string {
 			(prefix: string) =>
 				document[prefix + 'ExitFullscreen'] instanceof Function ||
 				document[`${prefix}CancelFullScreen`] instanceof Function
-		) || ''
+		) ?? ''
 	)
 }
 

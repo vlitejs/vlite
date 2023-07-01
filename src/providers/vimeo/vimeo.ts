@@ -1,4 +1,4 @@
-import { playerParameters, configEvent } from 'shared/assets/types/types'
+import { type playerParameters, type configEvent } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
@@ -83,8 +83,8 @@ export default function VimeoProvider(Player: any) {
 		 * Wait until the API is ready
 		 * @returns The player is ready
 		 */
-		waitUntilVideoIsReady(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async waitUntilVideoIsReady(): Promise<void> {
+			await new window.Promise((resolve) => {
 				// Initialize the player if the API is already available or reject
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initVimeoPlayer().then(resolve)
@@ -97,8 +97,8 @@ export default function VimeoProvider(Player: any) {
 		/**
 		 * Initialize the player
 		 */
-		initVimeoPlayer(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async initVimeoPlayer(): Promise<void> {
+			await new window.Promise((resolve) => {
 				this.instance = new window.Vimeo.Player(this.media.getAttribute('id'), this.params)
 				this.media = this.instance.element
 				this.instance.ready().then(() => {
@@ -131,9 +131,11 @@ export default function VimeoProvider(Player: any) {
 		 * Get the player current time
 		 * @returns>} Current time of the video
 		 */
-		getCurrentTime(): Promise<number> {
-			return new window.Promise((resolve) => {
-				this.instance.getCurrentTime().then((seconds: number) => resolve(seconds))
+		async getCurrentTime(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				this.instance.getCurrentTime().then((seconds: number) => {
+					resolve(seconds)
+				})
 			})
 		}
 
@@ -141,9 +143,11 @@ export default function VimeoProvider(Player: any) {
 		 * Get the player duration
 		 * @returns>} Duration of the video
 		 */
-		getDuration(): Promise<number> {
-			return new window.Promise((resolve) => {
-				this.instance.getDuration().then((duration: number) => resolve(duration))
+		async getDuration(): Promise<number> {
+			return await new window.Promise((resolve) => {
+				this.instance.getDuration().then((duration: number) => {
+					resolve(duration)
+				})
 			})
 		}
 
@@ -173,8 +177,8 @@ export default function VimeoProvider(Player: any) {
 		 * Get volume method of the player
 		 * @returns>} Player volume
 		 */
-		methodGetVolume(): Promise<number> {
-			return new window.Promise((resolve) => {
+		async methodGetVolume(): Promise<number> {
+			return await new window.Promise((resolve) => {
 				this.instance.getVolume().then((volume: number) => {
 					resolve(volume)
 				})

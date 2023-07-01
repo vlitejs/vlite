@@ -1,6 +1,6 @@
 export type interfaceVlitePlugins = Record<string, any>
 
-export type interfacePluginsInstance = {
+export interface interfacePluginsInstance {
 	id: string
 	Plugin: any
 	options: any

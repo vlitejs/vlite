@@ -49,8 +49,8 @@ export default function SampleProvider(Player: any) {
 		 * Wait until the API is ready
 		 * @returns {Promise} The player is ready
 		 */
-		waitUntilVideoIsReady() {
-			return new window.Promise((resolve) => {
+		async waitUntilVideoIsReady() {
+			return await new window.Promise((resolve) => {
 				// Initialize the player if the API is already available or reject
 				if (typeof window[providerObjectName] !== 'undefined') {
 					this.initPlayer().then(resolve)
@@ -66,8 +66,8 @@ export default function SampleProvider(Player: any) {
 		 * The promise is resolved when the player is instanciated and ready
 		 * @returns {Promise} The player is instanciated
 		 */
-		initPlayer(): Promise<void> {
-			return new window.Promise((resolve) => {
+		async initPlayer(): Promise<void> {
+			await new window.Promise((resolve) => {
 				// Initialize the Player with the API
 				// Resolve the promise when the player is ready
 				// this.instance =
@@ -87,16 +87,20 @@ export default function SampleProvider(Player: any) {
 		 * Get the player current time
 		 * @returns {Promise<number>} Current time of the video
 		 */
-		getCurrentTime() {
-			return new window.Promise((resolve) => resolve(this.instance.getCurrentTime()))
+		async getCurrentTime() {
+			return await new window.Promise((resolve) => {
+				resolve(this.instance.getCurrentTime())
+			})
 		}
 
 		/**
 		 * Get the player duration
 		 * @returns {Promise<number>} Duration of the video
 		 */
-		getDuration() {
-			return new window.Promise((resolve) => resolve(this.instance.getDuration()))
+		async getDuration() {
+			return await new window.Promise((resolve) => {
+				resolve(this.instance.getDuration())
+			})
 		}
 
 		/**
