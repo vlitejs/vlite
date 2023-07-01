@@ -38,6 +38,6 @@ module.exports = {
 		chrome: false,
 		cast: false
 	},
-
+	//test
 	ignorePatterns: ['node_modules', 'examples', 'config', 'dist']
 }
