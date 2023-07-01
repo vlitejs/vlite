@@ -1,9 +1,19 @@
+declare global {
+	interface Window {
+		Vlitejs: {
+			Player: any
+		}
+		VlitejsProviderQueue: any[]
+		Sample: any
+	}
+}
+
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player
  * @param {Class} Player
  * @returns {Class} Provider class extended from vLitejs Player
  */
-export default function SampleProvider(Player) {
+export default function SampleProvider(Player: any) {
 	window.VlitejsProviderQueue = window.VlitejsProviderQueue || []
 	const providerObjectName = 'Sample'
 
@@ -56,7 +66,7 @@ export default function SampleProvider(Player) {
 		 * The promise is resolved when the player is instanciated and ready
 		 * @returns {Promise} The player is instanciated
 		 */
-		initPlayer() {
+		initPlayer(): Promise<void> {
 			return new window.Promise((resolve) => {
 				// Initialize the Player with the API
 				// Resolve the promise when the player is ready
@@ -121,7 +131,7 @@ export default function SampleProvider(Player) {
 		 * Set the new current time for the player
 		 * @param {Number} Current time video
 		 */
-		methodSeekTo(newTime) {
+		methodSeekTo(newTime: number) {
 			this.instance.seekTo(newTime)
 		}
 
