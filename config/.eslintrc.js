@@ -2,12 +2,13 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		requireConfigFile: false,
-		ecmaVersion: 6,
+		ecmaVersion: 'latest',
 		ecmaFeatures: {
 			impliedStrict: true,
 			experimentalObjectRestSpread: true
 		},
-		sourceType: 'module'
+		sourceType: 'module',
+		project: 'tsconfig.json'
 	},
 
 	env: {
@@ -16,7 +17,12 @@ module.exports = {
 		es6: true
 	},
 
-	extends: ['standard', 'plugin:prettier/recommended', 'plugin:@typescript-eslint/recommended'],
+	extends: [
+		// 'standard',
+		'standard-with-typescript',
+		'plugin:prettier/recommended',
+		'plugin:@typescript-eslint/recommended'
+	],
 
 	rules: {
 		'@typescript-eslint/ban-ts-comment': 'off',
