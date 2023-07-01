@@ -17,5 +17,6 @@ module.exports = {
 				message: 'Expected class selector to be FUN-case with prefix "vlite-"'
 			}
 		]
-	}
+	},
+	ignoreFiles: ['../dist/*.css']
 }
