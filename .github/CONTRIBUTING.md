@@ -29,10 +29,7 @@ npm run start:example
 # Run TypeScript types linter
 npm run test:types
 
-# Run Markdown linter
-npm run test:markdown
-
-# Run all tests (types, markdown)
+# Run all tests (types)
 npm run test
 ```
 
