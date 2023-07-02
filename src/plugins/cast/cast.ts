@@ -1,8 +1,8 @@
-import type Player from 'core/player'
+import Player from 'core/player'
 import './cast.css'
 import svgCast from 'shared/assets/svgs/cast.svg'
 
-interface Subtitle {
+type Subtitle = {
 	index: number
 	url: string
 	label: string
@@ -10,12 +10,12 @@ interface Subtitle {
 	isDefault: boolean
 }
 
-interface CastEvent {
+type CastEvent = {
 	sessionState: string
 	value: number
 }
 
-interface pluginParameter {
+type pluginParameter = {
 	player: Player
 	options: {
 		textTrackStyle?: unknown
@@ -82,7 +82,12 @@ export default class CastPlugin {
 	 * @returns Cast framework is available
 	 */
 	isCastFrameworkAlreadyAvailable() {
-		return !!(window?.cast?.framework && customElements?.get('google-cast-button') != null)
+		return !!(
+			window.cast &&
+			window.cast.framework &&
+			customElements.get &&
+			customElements.get('google-cast-button')
+		)
 	}
 
 	/**
@@ -114,8 +119,8 @@ export default class CastPlugin {
 		this.render()
 		const castButton = this.player.elements.container.querySelector('.v-castButton')
 
-		if (castButton != null) {
-			this.castButton = this.player.elements.container.querySelector(
+		if (castButton) {
+			this.castButton = this.player.elements.container!.querySelector(
 				'.v-castButton'
 			) as HTMLElement
 			this.subtitles = this.getSubtitles()
@@ -131,8 +136,8 @@ export default class CastPlugin {
 		const fullscreenButton = this.player.elements.container.querySelector('.v-fullscreenButton')
 		const template = `<button class="v-castButton v-controlButton">${svgCast}</button>`
 
-		if (controlBar != null) {
-			if (fullscreenButton != null) {
+		if (controlBar) {
+			if (fullscreenButton) {
 				fullscreenButton.insertAdjacentHTML('beforebegin', template)
 			} else {
 				controlBar.insertAdjacentHTML('beforeend', template)
@@ -218,7 +223,7 @@ export default class CastPlugin {
 			activeTrackIds = []
 		} else {
 			const newTrackIndex = this.subtitles.find(({ language }) => language === newLanguage)
-			if (newTrackIndex != null) {
+			if (newTrackIndex) {
 				activeTrackIds = [newTrackIndex.index]
 			}
 		}
@@ -305,14 +310,14 @@ export default class CastPlugin {
 
 		const mediaInfo = new window.chrome.cast.media.MediaInfo(this.player.media.src, 'video/mp4')
 
-		if (this.subtitles.length > 0) {
+		if (this.subtitles.length) {
 			mediaInfo.tracks = this.getCastTracks()
 		}
 
 		const textTrackStyle = new window.chrome.cast.media.TextTrackStyle()
 		textTrackStyle.backgroundColor = '#ffffff00'
 		textTrackStyle.edgeColor = '#00000016'
-		// @ts-expect-error
+		// @ts-ignore
 		textTrackStyle.edgeType = 'DROP_SHADOW'
 		textTrackStyle.fontFamily = 'CASUAL'
 		textTrackStyle.fontScale = 1.0
@@ -335,7 +340,7 @@ export default class CastPlugin {
 		loadRequest.autoplay = this.player.isPaused === false
 		loadRequest.currentTime = this.player.media.currentTime
 
-		if (this.subtitles.length > 0) {
+		if (this.subtitles.length) {
 			loadRequest.activeTrackIds = [this.getActiveTrack().index]
 		}
 		session.loadMedia(loadRequest)
@@ -365,7 +370,7 @@ export default class CastPlugin {
 	 * @returns Active track
 	 */
 	getActiveTrack(): Subtitle {
-		return this.subtitles.find((item) => item.isDefault) ?? this.subtitles[0]
+		return this.subtitles.find((item) => item.isDefault) || this.subtitles[0]
 	}
 
 	/**

@@ -7,7 +7,7 @@ import LoaderTemplate from 'components/loader/loader'
 import BigPlayTemplate from 'components/big-play/big-play'
 import OverlayTemplate from 'components/overlay/overlay'
 import PosterTemplate from 'components/poster/poster'
-import { type Options, type FullScreenSupport } from 'shared/assets/types/types'
+import { Options, FullScreenSupport } from 'shared/assets/types/types'
 import { registerProvider, getProviderInstance } from 'providers/provider'
 import { registerPlugin, initializePlugins } from 'plugins/plugin'
 
@@ -90,7 +90,7 @@ class Vlitejs {
 	) {
 		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
-			// @ts-expect-error: Object is possibly 'null'.
+			// @ts-ignore: Object is possibly 'null'.
 			this.media = document.querySelector(selector)
 		} else if (
 			selector instanceof HTMLVideoElement ||
@@ -113,9 +113,9 @@ class Vlitejs {
 		const htmlAttributes: string[] = ['autoplay', 'playsinline', 'muted', 'loop']
 		htmlAttributes.forEach((item: string) => {
 			if (this.media.hasAttribute(item)) {
-				// @ts-expect-error
+				// @ts-ignore
 				options[item] = true
-				// @ts-expect-error
+				// @ts-ignore
 			} else if (options[item]) {
 				this.media.setAttribute(item, '')
 			}
@@ -255,7 +255,7 @@ class Vlitejs {
 		if (
 			[9, 32, 37, 39].includes(keyCode) &&
 			this.autoHideGranted &&
-			(activeElement === this.container || activeElement?.closest('.v-vlite') != null)
+			(activeElement === this.container || activeElement?.closest('.v-vlite'))
 		) {
 			this.stopAutoHideTimer()
 			this.startAutoHideTimer()
@@ -309,10 +309,7 @@ class Vlitejs {
 	 * @doc https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 	 */
 	onChangeFullScreen() {
-		if (
-			!document[this.supportFullScreen.isFullScreen as keyof Document] &&
-			this.player.isFullScreen
-		) {
+		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {
 			this.player.exitFullscreen({ escKey: true })
 		}
 	}
@@ -350,7 +347,7 @@ class Vlitejs {
 	 * Stop the auto hide timer and show the video control bar
 	 */
 	stopAutoHideTimer() {
-		if (this.type === 'video' && this.player.elements.controlBar != null) {
+		if (this.type === 'video' && this.player.elements.controlBar) {
 			this.player.elements.controlBar.classList.remove('v-hidden')
 			clearTimeout(this.timerAutoHide)
 		}
@@ -360,11 +357,7 @@ class Vlitejs {
 	 * Start the auto hide timer and hide the video control bar after a delay
 	 */
 	startAutoHideTimer() {
-		if (
-			this.type === 'video' &&
-			!this.player.isPaused &&
-			this.player.elements.controlBar != null
-		) {
+		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
 				this.player.elements.controlBar!.classList.add('v-hidden')
 			}, this.options.autoHideDelay)
@@ -397,11 +390,11 @@ class Vlitejs {
 }
 
 // Expose the provider registration
-// @ts-expect-error
+// @ts-ignore
 Vlitejs.registerProvider = registerProvider
 
 // Expose the plugin registration
-// @ts-expect-error
+// @ts-ignore
 Vlitejs.registerPlugin = registerPlugin
 
 export default Vlitejs

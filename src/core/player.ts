@@ -1,5 +1,5 @@
 import { formatVideoTime, isTouch } from 'shared/utils/utils'
-import { type Options, type playerParameters, type configEvent } from 'shared/assets/types/types'
+import { Options, playerParameters, configEvent } from 'shared/assets/types/types'
 import ControlBar from 'components/control-bar/control-bar'
 
 /**
@@ -112,7 +112,7 @@ export default class Player {
 	 * getCurrentTime
 	 * Extends by the provider
 	 */
-	async getCurrentTime(): Promise<number> {
+	getCurrentTime(): Promise<number> {
 		throw new Error('You have to implement the function "getCurrentTime".')
 	}
 
@@ -129,7 +129,7 @@ export default class Player {
 	 * getDuration
 	 * Extends by the provider
 	 */
-	async getDuration(): Promise<number> {
+	getDuration(): Promise<number> {
 		throw new Error('You have to implement the function "getDuration".')
 	}
 
@@ -162,7 +162,7 @@ export default class Player {
 	 * methodGetVolume
 	 * Extends by the provider
 	 */
-	async methodGetVolume(): Promise<number> {
+	methodGetVolume(): Promise<number> {
 		throw new Error('You have to implement the function "methodGetVolume".')
 	}
 
@@ -264,9 +264,8 @@ export default class Player {
 	onTimeUpdate() {
 		if (this.options.time) {
 			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
-				([seconds, duration]: [number, number]) => {
+				([seconds, duration]: [number, number]) =>
 					this.updateProgressBar({ seconds, duration })
-				}
 			)
 		}
 	}
@@ -288,14 +287,14 @@ export default class Player {
 		isRemote?: boolean
 	}) {
 		const currentTime = Math.round(seconds)
-		if (this.elements.progressBar != null) {
+		if (this.elements.progressBar) {
 			const width = (currentTime * 100) / duration
 			this.elements.progressBar.value = `${width}`
 			this.elements.progressBar.style.setProperty('--vlite-progressValue', `${width}%`)
 			this.elements.progressBar.setAttribute('aria-valuenow', `${Math.round(seconds)}`)
 		}
 
-		if (this.elements.currentTime != null) {
+		if (this.elements.currentTime) {
 			this.elements.currentTime.innerHTML = formatVideoTime(currentTime)
 		}
 
@@ -313,17 +312,17 @@ export default class Player {
 			this.elements.outerContainer.classList.add('v-firstStart')
 		}
 
-		if (this.elements.poster != null) {
+		if (this.elements.poster) {
 			this.elements.poster.classList.add('v-active')
 		}
 
-		if (this.elements.progressBar != null) {
+		if (this.elements.progressBar) {
 			this.elements.progressBar.value = '0'
 			this.elements.progressBar.style.setProperty('--vlite-progressValue', '0%')
 			this.elements.progressBar.removeAttribute('aria-valuenow')
 		}
 
-		if (this.elements.currentTime != null) {
+		if (this.elements.currentTime) {
 			this.elements.currentTime.innerHTML = '00:00'
 		}
 
@@ -339,7 +338,7 @@ export default class Player {
 		if (this.isPaused === null) {
 			this.elements.outerContainer.classList.remove('v-firstStart')
 
-			if (this.type === 'video' && this.elements.poster != null) {
+			if (this.type === 'video' && this.elements.poster) {
 				this.elements.poster.classList.remove('v-active')
 			}
 		}
@@ -348,12 +347,12 @@ export default class Player {
 		this.isPaused = false
 		this.elements.outerContainer.classList.replace('v-paused', 'v-playing')
 
-		if (this.elements.playPause != null) {
+		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Pause')
 			this.elements.playPause.classList.add('v-controlPressed')
 		}
 
-		if (this.type === 'video' && this.elements.bigPlay != null) {
+		if (this.type === 'video' && this.elements.bigPlay) {
 			this.elements.bigPlay.setAttribute('aria-label', 'Pause')
 		}
 		this.afterPlayPause()
@@ -369,12 +368,12 @@ export default class Player {
 		this.isPaused = true
 		this.elements.outerContainer.classList.replace('v-playing', 'v-paused')
 
-		if (this.elements.playPause != null) {
+		if (this.elements.playPause) {
 			this.elements.playPause.setAttribute('aria-label', 'Play')
 			this.elements.playPause.classList.remove('v-controlPressed')
 		}
 
-		if (this.type === 'video' && this.elements.bigPlay != null) {
+		if (this.type === 'video' && this.elements.bigPlay) {
 			this.elements.bigPlay.setAttribute('aria-label', 'Play')
 		}
 		this.afterPlayPause()
@@ -402,12 +401,12 @@ export default class Player {
 		} else if (volume <= 0) {
 			volume = 0
 			this.isMuted = true
-			if (this.elements.volume != null) {
+			if (this.elements.volume) {
 				this.elements.volume.classList.add('v-controlPressed')
 			}
 		} else {
 			this.isMuted = false
-			if (this.elements.volume != null) {
+			if (this.elements.volume) {
 				this.elements.volume.classList.remove('v-controlPressed')
 			}
 		}
@@ -422,8 +421,8 @@ export default class Player {
 	 * Get player volume
 	 * @returns Player volume
 	 */
-	async getVolume(): Promise<number> {
-		return await new window.Promise((resolve) => {
+	getVolume(): Promise<number> {
+		return new window.Promise((resolve) => {
 			this.methodGetVolume().then((volume: number) => {
 				resolve(volume)
 			})
@@ -437,7 +436,7 @@ export default class Player {
 		this.methodMute()
 		this.isMuted = true
 
-		if (this.elements.volume != null) {
+		if (this.elements.volume) {
 			this.elements.volume.classList.add('v-controlPressed')
 			this.elements.volume.setAttribute('aria-label', 'Unmute')
 		}
@@ -452,7 +451,7 @@ export default class Player {
 		this.methodUnMute()
 		this.isMuted = false
 
-		if (this.elements.volume != null) {
+		if (this.elements.volume) {
 			this.elements.volume.classList.remove('v-controlPressed')
 			this.elements.volume.setAttribute('aria-label', 'Mute')
 		}
@@ -474,15 +473,15 @@ export default class Player {
 	requestFullscreen() {
 		const { requestFn } = this.Vlitejs.supportFullScreen
 
-		// @ts-expect-error: Object is possibly 'null'.
+		// @ts-ignore: Object is possibly 'null'.
 		if (this.media[requestFn]) {
 			// Request fullscreen on parentNode player, to display custom controls
-			// @ts-expect-error: Object is possibly 'null'.
+			// @ts-ignore: Object is possibly 'null'.
 			this.elements.container[requestFn]()
 			this.isFullScreen = true
 			this.elements.outerContainer.classList.add('v-fullscreenButtonDisplay')
 
-			if (this.elements.fullscreen != null) {
+			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.add('v-controlPressed')
 				this.elements.fullscreen.setAttribute('aria-label', 'Exit fullscreen')
 			}
@@ -499,15 +498,14 @@ export default class Player {
 	exitFullscreen({ escKey = false }: { escKey?: boolean } = {}) {
 		const { cancelFn } = this.Vlitejs.supportFullScreen
 
-		// @ts-expect-error: Object is possibly 'null'.
 		if (document[cancelFn]) {
-			// @ts-expect-error: Object is possibly 'null'.
+			// @ts-ignore: Object is possibly 'null'.
 			!escKey && document[cancelFn]()
 			this.isFullScreen = false
 
 			this.elements.outerContainer.classList.remove('v-fullscreenButtonDisplay')
 
-			if (this.elements.fullscreen != null) {
+			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.remove('v-controlPressed')
 				this.elements.fullscreen.setAttribute('aria-label', 'Enter fullscreen')
 			}
@@ -521,7 +519,7 @@ export default class Player {
 	 * Remove event listeners, player instance and HTML
 	 */
 	destroy() {
-		this.controlBar?.destroy()
+		this.controlBar && this.controlBar.destroy()
 
 		// Call the destroy function on each plugins
 		Object.keys(this.plugins).forEach((id) => {

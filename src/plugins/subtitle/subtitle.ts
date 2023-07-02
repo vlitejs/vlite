@@ -3,7 +3,7 @@ import validateTarget from 'validate-target'
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
-import { type pluginParameter } from 'shared/assets/types/types'
+import { pluginParameter } from 'shared/assets/types/types'
 
 /**
  * Vlitejs Subtitle plugin
@@ -39,7 +39,7 @@ export default class Subtitle {
 	 * Initialize
 	 */
 	init() {
-		if (this.tracks.length > 0 && this.player.options.controls) {
+		if (this.tracks.length && this.player.options.controls) {
 			this.activeTrack = this.getActiveTrack()
 
 			this.hideTracks()
@@ -73,7 +73,7 @@ export default class Subtitle {
 	 * @returns Active track
 	 */
 	getActiveTrack(): TextTrack {
-		return this.tracks.find((track) => track.mode === 'showing') ?? this.tracks[0]
+		return this.tracks.find((track) => track.mode === 'showing') || this.tracks[0]
 	}
 
 	/**
@@ -110,11 +110,11 @@ export default class Subtitle {
 	 * Enable the active track
 	 */
 	enableTrack() {
-		if (this.activeTrack != null) {
+		if (this.activeTrack) {
 			const button = this.subtitlesList.querySelector(
 				`[data-language="${this.activeTrack.language}"]`
 			)
-			if (button != null) {
+			if (button) {
 				button.dispatchEvent(
 					new window.CustomEvent('click', {
 						bubbles: true,
@@ -175,9 +175,7 @@ export default class Subtitle {
 
 		if (this.subtitlesList.classList.contains('v-active')) {
 			const firstItem = this.subtitlesList.querySelector('.v-trackButton') as HTMLElement
-			setTimeout(() => {
-				firstItem.focus()
-			}, this.subtitlesListCssTransitionDuration)
+			setTimeout(() => firstItem.focus(), this.subtitlesListCssTransitionDuration)
 		}
 	}
 
@@ -196,21 +194,21 @@ export default class Subtitle {
 			nodeName: ['button']
 		})
 		const trackActive = this.subtitlesList.querySelector('.v-active')
-		const triggerPlayerFocus = (e as CustomEvent).detail.triggerPlayerFocus ?? true
+		const triggerPlayerFocus = (<CustomEvent>e).detail.triggerPlayerFocus ?? true
 
 		if (language && validateTargetSubtitleListButton) {
-			trackActive?.classList.remove('v-active')
+			trackActive && trackActive.classList.remove('v-active')
 			target.classList.add('v-active')
 
 			if (language === 'off') {
 				this.subtitleButton.classList.add('v-controlPressed')
 				this.captions.classList.remove('v-active')
 				this.captions.innerHTML = ''
-				this.activeTrack != null && this.updateCues({ isDisabled: true })
+				this.activeTrack && this.updateCues({ isDisabled: true })
 			} else {
 				this.subtitleButton.classList.remove('v-controlPressed')
 				this.activeTrack = this.getTrackByLanguage(language)
-				this.activeTrack != null && this.updateCues()
+				this.activeTrack && this.updateCues()
 			}
 
 			triggerPlayerFocus && this.player.elements.container.focus()
@@ -225,7 +223,7 @@ export default class Subtitle {
 	 * @returns TextTrack for the current language
 	 */
 	getTrackByLanguage(language: string): TextTrack | null {
-		return this.tracks.find((track) => track.language === language) ?? null
+		return this.tracks.find((track) => track.language === language) || null
 	}
 
 	/**
@@ -234,7 +232,7 @@ export default class Subtitle {
 	 * @param options.isDisabled Disable cues
 	 */
 	updateCues({ isDisabled = false }: { isDisabled?: boolean } = {}) {
-		if (this.activeTrack?.cues?.length) {
+		if (this.activeTrack && this.activeTrack.cues && this.activeTrack.cues.length) {
 			const cues = Array.from(this.activeTrack.cues)
 			const activeCues = this.activeTrack.activeCues
 
@@ -242,12 +240,12 @@ export default class Subtitle {
 			const _this = this
 
 			const onEnter = function () {
-				// @ts-expect-error
+				// @ts-ignore
 				_this.addCue(this)
 			}
 
 			const onExit = function () {
-				// @ts-expect-error
+				// @ts-ignore
 				_this.hideCue(this)
 			}
 
@@ -256,7 +254,7 @@ export default class Subtitle {
 				cue.onexit = isDisabled ? null : onExit
 			})
 
-			!isDisabled && activeCues != null && activeCues.length && this.addCue(activeCues[0])
+			!isDisabled && activeCues && activeCues.length && this.addCue(activeCues[0])
 
 			this.player.dispatchEvent(isDisabled ? 'trackdisabled' : 'trackenabled')
 		}
@@ -267,7 +265,7 @@ export default class Subtitle {
 	 * @param cue Current cue to add
 	 */
 	addCue(cue: TextTrackCue) {
-		// @ts-expect-error
+		// @ts-ignore
 		this.captions.innerHTML = cue.text
 		this.captions.classList.add('v-active')
 	}

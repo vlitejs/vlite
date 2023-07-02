@@ -1,5 +1,5 @@
 import './ima.css'
-import { type pluginParameter, type Constructable } from 'shared/assets/types/types'
+import { pluginParameter, Constructable } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
@@ -48,7 +48,7 @@ declare global {
 	}
 }
 
-interface ImaEvent {
+type ImaEvent = {
 	getAd: any
 	getError: () => {
 		j: {
@@ -57,7 +57,7 @@ interface ImaEvent {
 			errorMessage: string
 		}
 	}
-	getAdsManager: (adsManagerLoadedEvent: any, adsRenderingSettings: object) => any
+	getAdsManager: (adsManagerLoadedEvent: any, adsRenderingSettings: object) => void
 }
 
 /**
@@ -325,7 +325,7 @@ export default class ImaPlugin {
 		this.cuePoints = this.adsManager.getCuePoints()
 		if (
 			Array.isArray(this.cuePoints) &&
-			this.cuePoints.length > 0 &&
+			this.cuePoints.length &&
 			this.player.elements.progressBar
 		) {
 			this.addCuePoints()
@@ -525,7 +525,7 @@ export default class ImaPlugin {
 		this.player.loading(false)
 
 		this.onAdError({
-			// @ts-expect-error
+			// @ts-ignore
 			errorMessage: 'Timeout is reached'
 		})
 		this.playIsWaiting = false
@@ -576,11 +576,12 @@ export default class ImaPlugin {
 	 * On window resize event
 	 */
 	onResize() {
-		this.adsManager?.resize(
-			this.player.media.clientWidth,
-			this.player.media.clientHeight,
-			window.google.ima.ViewMode.NORMAL
-		)
+		this.adsManager &&
+			this.adsManager.resize(
+				this.player.media.clientWidth,
+				this.player.media.clientHeight,
+				window.google.ima.ViewMode.NORMAL
+			)
 	}
 
 	/**

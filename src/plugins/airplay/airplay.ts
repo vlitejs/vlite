@@ -1,13 +1,13 @@
 import './airplay.css'
 import svgAirPlay from 'shared/assets/svgs/airplay.svg'
-import { type pluginParameter } from 'shared/assets/types/types'
+import { pluginParameter } from 'shared/assets/types/types'
 
 declare global {
 	interface Window {
 		WebKitPlaybackTargetAvailabilityEvent: () => void
 	}
 }
-interface WebkitEvent {
+type WebkitEvent = {
 	availability: string
 }
 

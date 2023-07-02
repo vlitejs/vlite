@@ -1,6 +1,6 @@
 import './pip.css'
 import svgPip from 'shared/assets/svgs/pip.svg'
-import { type pluginParameter } from 'shared/assets/types/types'
+import { pluginParameter } from 'shared/assets/types/types'
 
 /**
  * Vlitejs Picture-in-Picture plugin
@@ -89,6 +89,7 @@ export default class PiP {
 
 		try {
 			if (this.player.media !== document.pictureInPictureElement) {
+				// @ts-ignore
 				await this.player.media.requestPictureInPicture()
 			} else {
 				await document.exitPictureInPicture()
