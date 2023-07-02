@@ -7,8 +7,7 @@ module.exports = {
 			impliedStrict: true,
 			experimentalObjectRestSpread: true
 		},
-		sourceType: 'module',
-		project: 'tsconfig.json'
+		sourceType: 'module'
 	},
 
 	env: {
@@ -18,20 +17,13 @@ module.exports = {
 	},
 
 	extends: [
-		// 'standard',
+		'standard',
 		'standard-with-typescript',
 		'plugin:prettier/recommended',
 		'plugin:@typescript-eslint/recommended'
 	],
 
 	rules: {
-		'@typescript-eslint/consistent-type-assertions': 'off',
-		'@typescript-eslint/prefer-ts-expect-error': 'off',
-		'@typescript-eslint/no-misused-promises': 'off',
-		'@typescript-eslint/restrict-template-expressions': 'off',
-		'@typescript-eslint/no-floating-promises': 'off',
-		'@typescript-eslint/explicit-function-return-type': 'off',
-		'@typescript-eslint/strict-boolean-expressions': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/no-non-null-assertion': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
