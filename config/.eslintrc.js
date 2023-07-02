@@ -16,12 +16,7 @@ module.exports = {
 		es6: true
 	},
 
-	extends: [
-		'standard',
-		'standard-with-typescript',
-		'plugin:prettier/recommended',
-		'plugin:@typescript-eslint/recommended'
-	],
+	extends: ['standard', 'plugin:prettier/recommended', 'plugin:@typescript-eslint/recommended'],
 
 	rules: {
 		'@typescript-eslint/ban-ts-comment': 'off',
