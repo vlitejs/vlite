@@ -2,7 +2,7 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		requireConfigFile: false,
-		ecmaVersion: 6,
+		ecmaVersion: 'latest',
 		ecmaFeatures: {
 			impliedStrict: true,
 			experimentalObjectRestSpread: true
@@ -37,5 +37,7 @@ module.exports = {
 		window: false,
 		chrome: false,
 		cast: false
-	}
+	},
+
+	ignorePatterns: ['node_modules', 'examples', 'config', 'dist']
 }
