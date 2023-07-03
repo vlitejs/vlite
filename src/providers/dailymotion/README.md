@@ -6,14 +6,16 @@ Supports for Dailymotion player with the [Dailymotion player API](https://develo
 
 ## Overview
 
-| <!-- -->          | <!-- -->                                |
-| ----------------- | --------------------------------------- |
-| Name              | `dailymotion`                           |
-| Global name&sup1; | `window.VlitejsDailymotion`             |
-| Path              | `vlitejs/dist/providers/dailymotion`    |
-| Entry point       | `vlitejs/dist/providers/dailymotion.js` |
+| <!-- -->          | <!-- -->                           |
+| ----------------- | ---------------------------------- |
+| Name              | `dailymotion`                      |
+| Global name&sup1; | `window.VlitejsDailymotion`        |
+| Path              | `vlitejs/providers/dailymotion`    |
+| Entry point       | `vlitejs/providers/dailymotion.js` |
 
 > **Note** _&sup1; The global name is only useful if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+>
+> **Warning** Above paths uses package `exports`, with CDN use, add `dist/` after `vlitejs/`
 
 ## Usage
 
@@ -28,9 +30,9 @@ First, Dailymotion requires a Player Id to create player with the JavaScript API
 ### JavaScript
 
 ```js
-import 'vlitejs/dist/vlite.css';
+import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
-import VlitejsDailymotion from 'vlitejs/dist/providers/dailymotion';
+import VlitejsDailymotion from 'vlitejs/providers/dailymotion';
 
 Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
   playerId: '<player_id>' // Required by Dailymotion

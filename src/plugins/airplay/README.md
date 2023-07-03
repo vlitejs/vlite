@@ -4,17 +4,19 @@ Supports for Apple AirPlay API.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                                   |
-| ----------------- | ------------------------------------------ |
-| Name              | `airplay`                                  |
-| Global name&sup1; | `window.VlitejsAirPlay`                    |
-| Path              | `vlitejs/dist/plugins/airplay`             |
-| Entry point       | `vlitejs/dist/plugins/airplay/airplay.js`  |
-| Stylesheet        | `vlitejs/dist/plugins/airplay/airplay.css` |
-| Provider&sup2;    | `'html5'`                                  |
-| Media type&sup3;  | `'video'`                                  |
+| <!-- -->          | <!-- -->                              |
+| ----------------- | ------------------------------------- |
+| Name              | `airplay`                             |
+| Global name&sup1; | `window.VlitejsAirPlay`               |
+| Path              | `vlitejs/plugins/airplay`             |
+| Entry point       | `vlitejs/plugins/airplay/airplay.js`  |
+| Stylesheet        | `vlitejs/plugins/airplay/airplay.css` |
+| Provider&sup2;    | `'html5'`                             |
+| Media type&sup3;  | `'video'`                             |
 
 > **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+>
+> **Warning** Above paths uses package `exports`, with CDN use, add `dist/` after `vlitejs/`
 
 ## Usage
 
@@ -27,10 +29,10 @@ Supports for Apple AirPlay API.
 ### JavaScript
 
 ```js
-import 'vlitejs/dist/vlite.css';
-import 'vlitejs/dist/plugins/airplay.css';
+import 'vlitejs/vlite.css';
+import 'vlitejs/plugins/airplay.css';
 import Vlitejs from 'vlitejs';
-import VlitejsAirPlay from 'vlitejs/dist/plugins/airplay';
+import VlitejsAirPlay from 'vlitejs/plugins/airplay';
 
 Vlitejs.registerPlugin('airplay', VlitejsAirPlay);
 

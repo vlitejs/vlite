@@ -25,7 +25,7 @@ The provider is already inludes in `vLitejs`.
 ### JavaScript
 
 ```js
-import 'vlitejs/dist/vlite.css';
+import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
 
 new Vlitejs('#player');

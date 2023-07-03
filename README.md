@@ -89,6 +89,8 @@ npm install vlitejs --save-dev
 yarn add vlitejs --dev
 ```
 
+> **Warning** vlitejs@6 is ESM and uses the [Node.js package `exports`](https://nodejs.org/api/packages.html#exports).
+>
 > **Note** Minimum supported `Node.js` version is `16.20.0`.
 
 ### CDN
@@ -141,7 +143,7 @@ You can also download it and include it with a script tag. The library will be r
 Import `vlitejs` styleheet and the JavaScript library as an ES6 modules.
 
 ```javascript
-import 'vlitejs/dist/vlite.css';
+import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
 ```
 

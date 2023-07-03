@@ -6,17 +6,19 @@ Supports for Google IMA SDK.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                           |
-| ----------------- | ---------------------------------- |
-| Name              | `ima`                              |
-| Global name&sup1; | `window.VlitejsIma`                |
-| Path              | `vlitejs/dist/plugins/ima`         |
-| Entry point       | `vlitejs/dist/plugins/ima/ima.js`  |
-| Stylesheet        | `vlitejs/dist/plugins/ima/ima.css` |
-| Provider&sup2;    | `'html5'`                          |
-| Media type&sup3;  | `'video'`                          |
+| <!-- -->          | <!-- -->                      |
+| ----------------- | ----------------------------- |
+| Name              | `ima`                         |
+| Global name&sup1; | `window.VlitejsIma`           |
+| Path              | `vlitejs/plugins/ima`         |
+| Entry point       | `vlitejs/plugins/ima/ima.js`  |
+| Stylesheet        | `vlitejs/plugins/ima/ima.css` |
+| Provider&sup2;    | `'html5'`                     |
+| Media type&sup3;  | `'video'`                     |
 
 > **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
+>
+> **Warning** Above paths uses package `exports`, with CDN use, add `dist/` after `vlitejs/`
 
 ## Usage
 
@@ -29,10 +31,10 @@ Supports for Google IMA SDK.
 ### JavaScript
 
 ```js
-import 'vlitejs/dist/vlite.css';
-import 'vlitejs/dist/plugins/ima.css';
+import 'vlitejs/vlite.css';
+import 'vlitejs/plugins/ima.css';
 import Vlitejs from 'vlitejs';
-import VlitejsIma from 'vlitejs/dist/plugins/ima';
+import VlitejsIma from 'vlitejs/plugins/ima';
 
 Vlitejs.registerPlugin('ima', VlitejsIma, {
   adTagUrl: '<your_ad_tag_url>' // Required by Google IMA SDK
