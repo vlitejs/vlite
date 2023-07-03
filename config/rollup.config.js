@@ -1,6 +1,4 @@
 import { resolve } from 'path'
-import commonjs from '@rollup/plugin-commonjs'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import svg from 'rollup-plugin-svg'
 import postcss from 'rollup-plugin-postcss'
@@ -22,8 +20,6 @@ const createConfig = ({ input, outputFile }) => {
 			}
 		],
 		plugins: [
-			commonjs(),
-			nodeResolve({ browser: true }),
 			typescript({
 				include: 'src/**/*.ts'
 			}),
