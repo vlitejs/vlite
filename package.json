@@ -34,18 +34,30 @@
 	"author": "Joris DANIEL",
 	"type": "module",
 	"exports": {
-		".": {
-			"types": "./types/index.d.ts",
-			"import": "./dist/vlite.js"
+		"./plugins/*": {
+			"import": "./dist/plugins/*.js"
 		},
-		"./plugin/airplay": {
-			"types": "./types/plugins/airplay/airplay.d.ts",
-			"import": "./dist/plugins/airplay/airplay.js"
+		"./plugins/*.js": {
+			"import": "./dist/plugins/*.js"
+		},
+		"./plugins/*.css": {
+			"import": "./dist/plugins/*.css"
+		},
+		"./providers/*": {
+			"import": "./dist/providers/*.js"
+		},
+		"./providers/*.js": {
+			"import": "./dist/providers/*.js"
+		},
+		"./vlite.css": {
+			"import": "./dist/vlite.css"
+		},
+		".": {
+			"import": "./dist/vlite.js"
 		}
 	},
 	"main": "dist/vlite.js",
 	"module": "dist/vlite.js",
-	"types": "./types/vlite/assets/scripts/vlite.d.ts",
 	"files": [
 		"dist",
 		"!dist/**/*.map"
