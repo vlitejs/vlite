@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
         node-version: [16, 18, 20]
     uses: yoriiis/actions/.github/workflows/test-and-build.yml@main
     with:
