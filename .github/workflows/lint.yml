@@ -13,3 +13,6 @@ on:
 jobs:
   lint:
     uses: yoriiis/actions/.github/workflows/lint.yml@main
+    with:
+      eslint-config: 'config/.eslintrc.cjs'
+      stylelint-config: 'config/stylelint.config.cjs'
