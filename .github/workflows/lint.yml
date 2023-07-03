@@ -1,4 +1,4 @@
-name: QA
+name: Lint
 
 on:
   workflow_dispatch:
@@ -11,5 +11,5 @@ on:
       - main
 
 jobs:
-  test:
-    uses: yoriiis/actions/.github/workflows/qa.yml@main
+  lint:
+    uses: yoriiis/actions/.github/workflows/lint.yml@main

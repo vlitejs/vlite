@@ -25,13 +25,7 @@ npm run start:example
 
 **Tests**
 
-```bash
-# Run TypeScript types linter
-npm run test:types
-
-# Run all tests (types)
-npm run test
-```
+Tests are run on a shared workflow.
 
 **Production**
 
