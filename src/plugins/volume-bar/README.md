@@ -6,15 +6,15 @@ Supports for volume bar to adjust the media volume.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                                         |
-| ----------------- | ------------------------------------------------ |
-| Name              | `pip`                                            |
-| Global name&sup1; | `window.VlitejsVolumeBar`                        |
-| Path              | `vlitejs/dist/plugins/volume-bar`                |
-| Entry point       | `vlitejs/dist/plugins/volume-bar/volume-bar.js`  |
-| Stylesheet        | `vlitejs/dist/plugins/volume-bar/volume-bar.css` |
-| Provider&sup2;    | `'html5', 'youtube', 'vimeo', 'dailymotion'`     |
-| Media type&sup3;  | `'video', 'audio'`                               |
+| <!-- -->          | <!-- -->                                     |
+| ----------------- | -------------------------------------------- |
+| Name              | `pip`                                        |
+| Global name&sup1; | `window.VlitejsVolumeBar`                    |
+| Path              | `vlitejs/plugins/volume-bar`                 |
+| Entry point       | `vlitejs/plugins/volume-bar/volume-bar.js`   |
+| Stylesheet        | `vlitejs/plugins/volume-bar/volume-bar.css`  |
+| Provider&sup2;    | `'html5', 'youtube', 'vimeo', 'dailymotion'` |
+| Media type&sup3;  | `'video', 'audio'`                           |
 
 - _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
 
@@ -29,9 +29,9 @@ Supports for volume bar to adjust the media volume.
 ### JavaScript
 
 ```js
-import 'vlitejs/dist/vlite.css';
+import 'vlitejs/vlite.css';
 import Vlitejs from 'vlitejs';
-import VlitejsVolumeBar from 'vlitejs/dist/plugins/volume-bar';
+import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar';
 
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar);
 

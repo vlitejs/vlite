@@ -1,17 +1,15 @@
 import './vlite.css'
 
-import Player from './player'
+import Player from './player.js'
 import validateTarget from 'validate-target'
-import { checkSupportFullScreen } from 'shared/utils/utils'
-import LoaderTemplate from 'components/loader/loader'
-import BigPlayTemplate from 'components/big-play/big-play'
-import OverlayTemplate from 'components/overlay/overlay'
-import PosterTemplate from 'components/poster/poster'
-import { Options, FullScreenSupport } from 'shared/assets/types/types'
-import { registerProvider, getProviderInstance } from 'providers/provider'
-import { registerPlugin, initializePlugins } from 'plugins/plugin'
-
-type TimerHandle = number
+import { checkSupportFullScreen } from 'shared/utils/utils.js'
+import LoaderTemplate from 'components/loader/loader.js'
+import BigPlayTemplate from 'components/big-play/big-play.js'
+import OverlayTemplate from 'components/overlay/overlay.js'
+import PosterTemplate from 'components/poster/poster.js'
+import { Options, FullScreenSupport } from 'shared/assets/types/types.js'
+import { registerProvider, getProviderInstance } from 'providers/provider.js'
+import { registerPlugin, initializePlugins } from 'plugins/plugin.js'
 
 export type interfaceDefaultOptions = Record<string, Record<string, any>>
 
@@ -62,7 +60,7 @@ class Vlitejs {
 	controlBar: any
 	registerPlugin!: () => void
 	registerProvider!: () => void
-	timerAutoHide!: TimerHandle
+	timerAutoHide!: number
 
 	/**
 	 * @constructor

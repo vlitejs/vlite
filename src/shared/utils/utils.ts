@@ -1,4 +1,4 @@
-import { FullScreenSupport } from 'shared/assets/types/types'
+import { FullScreenSupport } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Document {

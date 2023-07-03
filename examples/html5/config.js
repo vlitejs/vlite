@@ -9,7 +9,7 @@ import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
 import VlitejsCast from '../../dist/plugins/cast.js'
 import VlitejsAirplay from '../../dist/plugins/airplay.js'
-import VlitejsVolumeBar from '../../dist/plugins/volume-bar'
+import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)

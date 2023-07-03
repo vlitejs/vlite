@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
 		"strict": true,
-		"module": "amd",
-		"moduleResolution": "nodenext",
+		"module": "nodenext",
+		"moduleResolution": "NodeNext",
 		"target": "es2017",
 		"lib": ["es2017", "dom"],
 		"outDir": "./lib",

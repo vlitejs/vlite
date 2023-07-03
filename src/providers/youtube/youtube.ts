@@ -1,4 +1,4 @@
-import { playerParameters } from 'shared/assets/types/types'
+import { playerParameters } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Window {

@@ -1,4 +1,4 @@
-import PlayerHtml5 from './html5/html5'
+import PlayerHtml5 from './html5/html5.js'
 
 type interfaceVliteProviders = Record<string, any>
 type interfaceProvidersOptions = Record<string, any>

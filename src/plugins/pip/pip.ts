@@ -1,6 +1,6 @@
 import './pip.css'
 import svgPip from 'shared/assets/svgs/pip.svg'
-import { pluginParameter } from 'shared/assets/types/types'
+import { pluginParameter } from 'shared/assets/types/types.js'
 
 /**
  * Vlitejs Picture-in-Picture plugin

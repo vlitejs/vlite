@@ -1,7 +1,7 @@
 import './control-bar.css'
-import { formatVideoTime } from 'shared/utils/utils'
+import { formatVideoTime } from 'shared/utils/utils.js'
 import validateTarget from 'validate-target'
-import TemplateControlBar from './templates/control-bar'
+import TemplateControlBar from './templates/control-bar.js'
 
 export default class ControlBar {
 	player: any
