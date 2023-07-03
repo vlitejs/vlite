@@ -6,7 +6,7 @@
 
 #### **This package is now pure ESM.** Please read [Sindre Sorhus ESM note](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more information
 
-- Migrate to ESM and replace `webpack` by `rollup` ([#100](https://github.com/vlitejs/vlite/pull/100))
+- Migrate to ESM with package `exports` and `rollup` ([#100](https://github.com/vlitejs/vlite/pull/100))
 
 ## 5.0.2
 
