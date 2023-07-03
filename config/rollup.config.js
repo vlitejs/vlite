@@ -1,33 +1,22 @@
 import { resolve } from 'path'
-import typescript from '@rollup/plugin-typescript'
-import { terser } from 'rollup-plugin-terser'
-import postcss from 'rollup-plugin-postcss'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-import alias from '@rollup/plugin-alias'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 import svg from 'rollup-plugin-svg'
+import postcss from 'rollup-plugin-postcss'
+import alias from '@rollup/plugin-alias'
+import { terser } from 'rollup-plugin-terser'
 import { banner, providers, plugins } from './package'
 
 const isProduction = process.env.ENV === 'production'
 const outputDirectory = resolve(__dirname, '../dist')
 
 const createConfig = ({ input, outputFile }) => {
-	const terserConfig = terser({
-		format: {
-			comments: (node, comment) => {
-				if (comment.type === 'comment2') {
-					return /Yoriiis/i.test(comment.value)
-				}
-			}
-		}
-	})
-
 	return {
 		input,
 		output: [
 			{
 				banner,
-				exports: 'named',
 				file: `${outputDirectory}/${outputFile}`,
 				format: 'es'
 			}
@@ -43,7 +32,8 @@ const createConfig = ({ input, outputFile }) => {
 				config: {
 					path: resolve(__dirname, 'postcss.config.cjs')
 				},
-				extract: true
+				extract: true,
+				minimize: isProduction
 			}),
 			alias({
 				entries: [
@@ -53,7 +43,7 @@ const createConfig = ({ input, outputFile }) => {
 					{ find: 'plugins', replacement: resolve('src/plugins') }
 				]
 			}),
-			...(isProduction ? [terserConfig] : [])
+			...(isProduction ? [terser()] : [])
 		]
 	}
 }
