@@ -6,7 +6,7 @@ on:
 
 jobs:
   lint:
-    uses: .github/workflows/lint.yml@main
+    uses: vlitejs/vlite/.github/workflows/lint.yml@main
 
   npm:
     needs: lint
