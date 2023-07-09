@@ -8,7 +8,7 @@ Each plugin can be loaded on demand with the API.
 
 | Plugin name                           | Description                                |
 | ------------------------------------- | ------------------------------------------ |
-| [Subtitle](./subtitle/README.md)      | Supports for multiple caption tracks (VTT) |
+| [Subtitle](./subtitle/README.d)       | Supports for multiple caption tracks (VTT) |
 | [Picture-in-Picture](./pip/README.md) | Supports for picture-in-picture mode       |
 | [Volume bar](./volume-bar/README.md)  | Supports for volume bar                    |
 | [Cast](./cast/README.md)              | Supports for Google Cast API               |
