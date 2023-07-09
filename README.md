@@ -353,19 +353,6 @@ The player accepts the following keyboard shortcuts.
 | <kbd>&uarr;</kbd> | Increase volume of `10%` |
 | <kbd>&darr;</kbd> | Decrease volume of `10%` |
 
-## Browser support
-
-`vlitejs` supports the latest 2 versions of most modern browsers with the Browserslist config.
-
-| Browser    |     Supported      |
-| ---------- | :----------------: |
-| Chrome     | :white_check_mark: |
-| Firefox    | :white_check_mark: |
-| Opera      | :white_check_mark: |
-| Edge       | :white_check_mark: |
-| Safari     | :white_check_mark: |
-| iOS Safari | :white_check_mark: |
-
 ## Contributors
 
 Many thanks to [Victor Schirm](https://www.behance.net/victorshm) for the `vlitejs` logo.
