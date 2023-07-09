@@ -74,11 +74,12 @@
 	},
 	"prettier": "./config/prettier.config.cjs",
 	"dependencies": {
-		"validate-target": "^3.0.0"
+		"validate-target": "^3.1.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-alias": "^5.0.0",
 		"@rollup/plugin-buble": "^0.21.3",
+		"@rollup/plugin-node-resolve": "^15.0.2",
 		"@rollup/plugin-replace": "^5.0.2",
 		"@rollup/plugin-typescript": "^8.3.0",
 		"@types/chromecast-caf-sender": "^1.0.5",
