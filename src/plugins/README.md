@@ -8,7 +8,7 @@ Each plugin can be loaded on demand with the API.
 
 | Plugin name                           | Description                                |
 | ------------------------------------- | ------------------------------------------ |
-| [Subtitle](./subtitle/README.d)       | Supports for multiple caption tracks (VTT) |
+| [Subtitle](./subtitle/README.md)      | Supports for multiple caption tracks (VTT) |
 | [Picture-in-Picture](./pip/README.md) | Supports for picture-in-picture mode       |
 | [Volume bar](./volume-bar/README.md)  | Supports for volume bar                    |
 | [Cast](./cast/README.md)              | Supports for Google Cast API               |
@@ -20,7 +20,7 @@ Each plugin can be loaded on demand with the API.
 
 The Plugin API allows you to create other plugins than those referenced by `vLitejs`.
 
-To start your new plugin development, you can use the [sample-plugin.js](https://github.com/vlitejs/vlite/blob/main/src/plugins/sample/sample-plugin.js) file which is made for you. You can also get inspiration from the [subtitle.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/subtitle.ts) and [pip.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/pip.ts) plugin files.
+To start your new plugin development, you can use the [sample-plugin.js](https://github.com/vlitejs/vlite/blob/main/src/plugins/sample/sample-plugin.js) file which is made for you. You can also get inspiration from the [subtitle.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/subtitle/subtitle.ts) and [pip.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/pip/pip.ts) plugin files.
 
 ### Rules
 
