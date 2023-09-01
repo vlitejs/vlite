@@ -77,6 +77,8 @@ npm run build && npm run build:example
 
 ## Installation
 
+> **Warning** vlitejs@6 is ESM and uses the [Node.js package `exports`](https://nodejs.org/api/packages.html#exports).
+
 ### NPM
 
 NPM is the recommended installation method. Install `vlitejs` in your project with the following command:
@@ -89,17 +91,17 @@ npm install vlitejs --save-dev
 yarn add vlitejs --dev
 ```
 
-> **Warning** vlitejs@6 is ESM and uses the [Node.js package `exports`](https://nodejs.org/api/packages.html#exports).
->
 > **Note** Minimum supported `Node.js` version is `16.20.0`.
 
 ### CDN
 
-You can also download it and include it with a script tag. The library will be registered as the global variable `window.Vlitejs`.
+You can also download it and include it with a script tag as an ESM.
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/vlitejs@5/dist/vlite.css" rel="stylesheet" crossorigin />
-<script src="https://cdn.jsdelivr.net/npm/vlitejs@5" crossorigin></script>
+<link href="https://cdn.jsdelivr.net/npm/vlitejs@6/dist/vlite.css" rel="stylesheet" crossorigin />
+<script type="module">
+  import Vlitejs from 'https://cdn.jsdelivr.net/npm/vlitejs@6';
+</script>
 ```
 
 > **Note** You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
@@ -274,16 +276,6 @@ new Vlitejs('#player', {
       // The video starts playing
     });
   }
-});
-```
-
-Events can also be declared outside of the `onReady` function.
-
-```javascript
-const vlite = new Vlitejs('#player');
-
-vlite.player.on('play', () => {
-  // The video starts playing
 });
 ```
 

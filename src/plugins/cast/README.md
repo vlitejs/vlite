@@ -4,19 +4,14 @@ Supports for Google Cast API.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                        |
-| ----------------- | ------------------------------- |
-| Name              | `cast`                          |
-| Global name&sup1; | `window.VlitejsCast`            |
-| Path              | `vlitejs/plugins/cast`          |
-| Entry point       | `vlitejs/plugins/cast/cast.js`  |
-| Stylesheet        | `vlitejs/plugins/cast/cast.css` |
-| Provider&sup2;    | `'html5'`                       |
-| Media type&sup3;  | `'video'`                       |
-
-> **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
->
-> **Warning** Above paths uses package `exports`, with CDN use, add `dist/` after `vlitejs/`
+| <!-- -->         | <!-- -->                        |
+| ---------------- | ------------------------------- |
+| Name             | `cast`                          |
+| Path             | `vlitejs/plugins/cast`          |
+| Entry point      | `vlitejs/plugins/cast/cast.js`  |
+| Stylesheet       | `vlitejs/plugins/cast/cast.css` |
+| Provider&sup2;   | `'html5'`                       |
+| Media type&sup3; | `'video'`                       |
 
 ## Usage
 
@@ -32,7 +27,7 @@ Supports for Google Cast API.
 import 'vlitejs/vlite.css';
 import 'vlitejs/plugins/cast.css';
 import Vlitejs from 'vlitejs';
-import VlitejsCast from 'vlitejs/plugins/cast';
+import VlitejsCast from 'vlitejs/plugins/cast.js';
 
 Vlitejs.registerPlugin('cast', VlitejsCast);
 

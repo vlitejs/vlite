@@ -4,19 +4,14 @@ Supports for sticky mode.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                                     |
-| ----------------- | -------------------------------------------- |
-| Name              | `sticky`                                     |
-| Global name&sup1; | `window.VlitejsSticky`                       |
-| Path              | `vlitejs/plugins/sticky`                     |
-| Entry point       | `vlitejs/plugins/sticky/sticky.js`           |
-| Stylesheet        | `vlitejs/plugins/sticky/sticky.css`          |
-| Provider&sup2;    | `'html5', 'youtube', 'vimeo', 'dailymotion'` |
-| Media type&sup3;  | `'video'`                                    |
-
-> **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
->
-> **Warning** Above paths uses package `exports`, with CDN use, add `dist/` after `vlitejs/`
+| <!-- -->         | <!-- -->                                     |
+| ---------------- | -------------------------------------------- |
+| Name             | `sticky`                                     |
+| Path             | `vlitejs/plugins/sticky`                     |
+| Entry point      | `vlitejs/plugins/sticky/sticky.js`           |
+| Stylesheet       | `vlitejs/plugins/sticky/sticky.css`          |
+| Provider&sup2;   | `'html5', 'youtube', 'vimeo', 'dailymotion'` |
+| Media type&sup3; | `'video'`                                    |
 
 ## Usage
 
@@ -30,8 +25,9 @@ Supports for sticky mode.
 
 ```js
 import 'vlitejs/vlite.css';
+import 'vlitejs/plugins/sticky.css';
 import Vlitejs from 'vlitejs';
-import VlitejsSticky from 'vlitejs/plugins/sticky';
+import VlitejsSticky from 'vlitejs/plugins/sticky.js';
 
 Vlitejs.registerPlugin('sticky', VlitejsSticky);
 

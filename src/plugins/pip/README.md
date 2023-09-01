@@ -4,19 +4,14 @@ Supports for Picture-in-Picture mode.
 
 ## Overview
 
-| <!-- -->          | <!-- -->                      |
-| ----------------- | ----------------------------- |
-| Name              | `pip`                         |
-| Global name&sup1; | `window.VlitejsPip`           |
-| Path              | `vlitejs/plugins/pip`         |
-| Entry point       | `vlitejs/plugins/pip/pip.js`  |
-| Stylesheet        | `vlitejs/plugins/pip/pip.css` |
-| Provider&sup2;    | `'html5'`                     |
-| Media type&sup3;  | `'video'`                     |
-
-> **Note** _&sup1; Useful only if `vLitejs` is included with a `<script>` tag (see [CDN](../../../README.md#CDN) section)._
->
-> **Warning** Above paths uses package `exports`, with CDN use, add `dist/` after `vlitejs/`
+| <!-- -->         | <!-- -->                      |
+| ---------------- | ----------------------------- |
+| Name             | `pip`                         |
+| Path             | `vlitejs/plugins/pip`         |
+| Entry point      | `vlitejs/plugins/pip/pip.js`  |
+| Stylesheet       | `vlitejs/plugins/pip/pip.css` |
+| Provider&sup2;   | `'html5'`                     |
+| Media type&sup3; | `'video'`                     |
 
 ## Usage
 
@@ -30,8 +25,9 @@ Supports for Picture-in-Picture mode.
 
 ```js
 import 'vlitejs/vlite.css';
+import 'vlitejs/plugins/pip.css';
 import Vlitejs from 'vlitejs';
-import VlitejsPip from 'vlitejs/plugins/pip';
+import VlitejsPip from 'vlitejs/plugins/pip.js';
 
 Vlitejs.registerPlugin('pip', VlitejsPip);
 
