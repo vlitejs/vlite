@@ -19,6 +19,7 @@
 		padding: 5px 10px;
 		transform: translateX(-50%);
 		display: none;
+		pointer-events: none;
 
 		&.v-active {
 			display: block;
