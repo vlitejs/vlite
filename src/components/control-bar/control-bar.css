@@ -105,10 +105,6 @@
 		align-items: center;
 		justify-content: flex-end;
 
-		&:hover {
-			opacity: 1 !important;
-		}
-
 		&.v-hidden {
 			opacity: 0;
 		}
@@ -159,6 +155,14 @@
 				left: 50%;
 				transform: translateX(-50%);
 			}
+		}
+	}
+}
+
+@media (hover: hover) {
+	.v {
+		&-controlBar:hover {
+			opacity: 1 !important;
 		}
 	}
 }

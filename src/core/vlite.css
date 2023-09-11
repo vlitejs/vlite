@@ -123,10 +123,6 @@
 			pointer-events: none;
 		}
 
-		&:hover {
-			opacity: 1;
-		}
-
 		&.v-controlPressed .v-iconUnpressed,
 		&:not(.v-controlPressed) .v-iconPressed {
 			display: none;
@@ -154,6 +150,14 @@
 		&.v-fullscreenButton svg {
 			width: 20px;
 			height: 20px;
+		}
+	}
+}
+
+@media (hover: hover) {
+	.v {
+		&-controlButton:hover {
+			opacity: 1;
 		}
 	}
 }

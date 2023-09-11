@@ -23,10 +23,6 @@
 			pointer-events: none;
 		}
 
-		&:hover {
-			opacity: 1;
-		}
-
 		svg {
 			fill: var(--vlite-controlsColor);
 			width: 100%;
@@ -37,6 +33,14 @@
 	&-loading {
 		.v-bigPlay {
 			opacity: 0;
+		}
+	}
+}
+
+@media (hover: hover) {
+	.v {
+		&-bigPlay:hover {
+			opacity: 1;
 		}
 	}
 }

@@ -77,10 +77,6 @@
 			outline-offset: 2px;
 		}
 
-		&:hover {
-			background-color: rgba(0 0 0 / 5%);
-		}
-
 		svg {
 			position: absolute;
 			left: 5px;
@@ -98,5 +94,13 @@
 
 	&-vlite video::-webkit-media-text-track-display {
 		display: none;
+	}
+}
+
+@media (hover: hover) {
+	.v {
+		&-trackButton:hover {
+			background-color: rgba(0 0 0 / 5%);
+		}
 	}
 }

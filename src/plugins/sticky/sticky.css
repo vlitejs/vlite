@@ -33,15 +33,19 @@
 					height: 15px;
 					fill: var(--vlite-controlsColor);
 				}
-
-				&:hover {
-					opacity: 1;
-				}
 			}
 
 			&-pipButton {
 				display: none;
 			}
+		}
+	}
+}
+
+@media (hover: hover) {
+	.v {
+		&-sticky &-closeStickyButton:hover {
+			opacity: 1;
 		}
 	}
 }
