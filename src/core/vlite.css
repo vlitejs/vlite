@@ -100,6 +100,10 @@
 		height: 100%;
 	}
 
+	&-media {
+		position: relative;
+	}
+
 	&-controlButton {
 		position: relative;
 		display: flex;
