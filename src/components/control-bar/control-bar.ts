@@ -167,6 +167,10 @@ export default class ControlBar {
 		} else if (validateTargetFullscreen) {
 			this.toggleFullscreen(e)
 		}
+
+		// Hide controls with timer after clicks
+		this.player.elements.container.focus()
+		this.player.Vlitejs.startAutoHideTimer()
 	}
 
 	/**
@@ -200,7 +204,33 @@ export default class ControlBar {
 	toggleFullscreen(e: Event) {
 		e.preventDefault()
 
-		this.player.isFullScreen ? this.player.exitFullscreen() : this.player.requestFullscreen()
+		if (this.player.isFullScreen) {
+			this.isOrientationApiAvailable() && window.screen.orientation.unlock()
+			this.player.exitFullscreen()
+		} else {
+			this.player.requestFullscreen()
+			try {
+				if (
+					window.matchMedia('(orientation:portrait)').matches &&
+					this.isOrientationApiAvailable()
+				) {
+					window.screen.orientation.lock('landscape').catch((error) => {})
+				}
+			} catch (error) {}
+		}
+	}
+
+	/**
+	 * Check if Orientation API is available
+	 * Firefox is excluded because landscape mode is automatically trigger after the fullscreen
+	 * @returns
+	 */
+	isOrientationApiAvailable() {
+		return (
+			window.screen.orientation &&
+			// @ts-ignore
+			!window.screen.mozOrientation
+		)
 	}
 
 	/**
