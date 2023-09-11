@@ -89,17 +89,17 @@
 	iframe.vlite-js {
 		pointer-events: none;
 	}
-
-	.v-container,
-	.v-media,
-	.v-media > iframe {
-		width: 100%;
-		height: 100%;
-	}
 	/* stylelint-enable selector-class-pattern */
 }
 
 .v {
+	&-container,
+	&-media,
+	&-media > iframe {
+		width: 100%;
+		height: 100%;
+	}
+
 	&-controlButton {
 		position: relative;
 		display: flex;
