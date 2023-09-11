@@ -214,9 +214,11 @@ export default class ControlBar {
 					window.matchMedia('(orientation:portrait)').matches &&
 					this.isOrientationApiAvailable()
 				) {
-					window.screen.orientation.lock('landscape').catch((error) => {})
+					window.screen.orientation.lock('landscape').catch(() => {
+						// Empty catch
+					})
 				}
-			} catch (error) {}
+			} catch {}
 		}
 	}
 
