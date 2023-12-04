@@ -6,5 +6,5 @@ import svgBigPlay from 'shared/assets/svgs/big-play.svg'
  * @returns Generated HTML
  */
 export default function bigPlay(): string {
-	return `<button class="v-bigPlay">${svgBigPlay}</button>`
+	return `<button class="v-bigPlay" aria-label="Play">${svgBigPlay}</button>`
 }
