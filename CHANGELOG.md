@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 6.0.1
+
+### Fixes
+
+- Added initial `aria-label` for `bigPlay` component ([#115](https://github.com/vlitejs/vlite/pull/115))
+
 ## 6.0.0
 
 ### ⚠️ Breaking changes
