@@ -96,7 +96,7 @@
 		position: relative;
 		width: 100%;
 		height: var(--vlite-controlBarHeight);
-		padding-top: var(--vlite-progressBarHeight);
+		padding-top: calc(var(--vlite-progressBarHeight) + 10px);
 		text-align: right;
 		padding-left: var(--vlite-controlBarHorizontalPadding);
 		padding-right: var(--vlite-controlBarHorizontalPadding);
@@ -117,6 +117,7 @@
 
 		.v-progressBar {
 			order: 2;
+			height: 25px;
 		}
 
 		.v-time {
@@ -132,15 +133,11 @@
 		.v-controlBar {
 			padding-top: 0;
 		}
-
-		.v-progressBarStyle {
-			height: 25px;
-		}
 	}
 
 	&-video {
 		.v-progressBar {
-			height: var(--vlite-progressBarHeight);
+			height: calc(var(--vlite-progressBarHeight) + 10px);
 		}
 
 		.v-controlBar {
@@ -154,6 +151,8 @@
 				top: 0;
 				left: 50%;
 				transform: translateX(-50%);
+				display: flex;
+				align-items: flex-end;
 			}
 		}
 	}
