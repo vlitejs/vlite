@@ -41,7 +41,20 @@ export default function Html5Provider(Player: any) {
 		 * @returns The video is ready
 		 */
 		waitUntilVideoIsReady(): Promise<any> {
-			return new window.Promise<void>((resolve) => resolve())
+			return new window.Promise<void>((resolve) => {
+				if (
+					(this.media.readyState >= 2 && this.media.duration) ||
+					(this.media.readyState === 0 && this.media.preload === 'none')
+				) {
+					resolve()
+				} else {
+					// Listen both events
+					// "loadedmetadata" is not fired on Firefox
+					// "canplay" is not fired in iOS
+					this.media.addEventListener('loadedmetadata', resolve, { once: true })
+					this.media.addEventListener('canplay', resolve, { once: true })
+				}
+			})
 		}
 
 		/**
