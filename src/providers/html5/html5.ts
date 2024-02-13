@@ -42,7 +42,10 @@ export default function Html5Provider(Player: any) {
 		 */
 		waitUntilVideoIsReady(): Promise<any> {
 			return new window.Promise<void>((resolve) => {
-				if (this.media.readyState >= 2 && this.media.duration) {
+				if (
+					(this.media.readyState >= 2 && this.media.duration) ||
+					(this.media.readyState === 0 && this.media.preload === 'none')
+				) {
 					resolve()
 				} else {
 					// Listen both events
