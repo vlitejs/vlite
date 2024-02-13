@@ -11,17 +11,21 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 export default function webpackConfig(env, argv) {
 	const isProduction = argv.mode === 'production'
 
-	return {
+	const entries = [
+		'home',
+		'html5',
+		'html5-hls',
+		'html5-ima',
+		'html5-sticky',
+		'audio',
+		'youtube',
+		'vimeo',
+		'dailymotion'
+	]
+
+	const config = {
 		entry: {
-			home: resolveApp('examples/home/config.js'),
-			html5: resolveApp('examples/html5/config.js'),
-			'html5-hls': resolveApp('examples/html5-hls/config.js'),
-			'html5-ima': resolveApp('examples/html5-ima/config.js'),
-			'html5-sticky': resolveApp('examples/html5-sticky/config.js'),
-			audio: resolveApp('examples/audio/config.js'),
-			youtube: resolveApp('examples/youtube/config.js'),
-			vimeo: resolveApp('examples/vimeo/config.js'),
-			dailymotion: resolveApp('examples/dailymotion/config.js')
+			// Entries are populated at the end of the function
 		},
 		watchOptions: {
 			ignored: /node_modules/
@@ -52,78 +56,13 @@ export default function webpackConfig(env, argv) {
 		resolve: {
 			extensions: ['.js', '.css']
 		},
-		devServer: {
-			static: {
-				directory: resolveApp('examples')
-			},
-			historyApiFallback: true,
-			port: 3000,
-			compress: true,
-			hot: true
-			// host: '0.0.0.0',
-			// https: true, // For IMA plugin
-		},
 		context: appDirectory,
 		plugins: [
 			new MiniCssExtractPlugin({
 				filename: 'styles/[name].css',
 				chunkFilename: 'styles/[name].css'
 			}),
-			new webpack.optimize.ModuleConcatenationPlugin(),
-			new HtmlWebpackPlugin({
-				filename: 'index.html',
-				template: resolveApp('examples/home/index.html'),
-				chunks: ['home']
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'html5/index.html',
-				template: resolveApp('examples/html5/index.html'),
-				chunks: ['html5'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'html5-hls/index.html',
-				template: resolveApp('examples/html5-hls/index.html'),
-				chunks: ['html5-hls'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'html5-ima/index.html',
-				template: resolveApp('examples/html5-ima/index.html'),
-				chunks: ['html5-ima'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'html5-sticky/index.html',
-				template: resolveApp('examples/html5-sticky/index.html'),
-				chunks: ['html5-sticky'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'youtube/index.html',
-				template: resolveApp('examples/youtube/index.html'),
-				chunks: ['youtube'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'vimeo/index.html',
-				template: resolveApp('examples/vimeo/index.html'),
-				chunks: ['vimeo'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'dailymotion/index.html',
-				template: resolveApp('examples/dailymotion/index.html'),
-				chunks: ['dailymotion'],
-				publicPath: '../'
-			}),
-			new HtmlWebpackPlugin({
-				filename: 'audio/index.html',
-				template: resolveApp('examples/audio/index.html'),
-				chunks: ['audio'],
-				publicPath: '../'
-			}),
-			...(isProduction ? [new webpack.ProgressPlugin()] : [])
+			new webpack.optimize.ModuleConcatenationPlugin()
 		],
 		stats: {
 			assets: true,
@@ -161,4 +100,33 @@ export default function webpackConfig(env, argv) {
 			splitChunks: false
 		}
 	}
+
+	if (!isProduction) {
+		config.plugins.push(new webpack.ProgressPlugin())
+		config.devServer = {
+			static: {
+				directory: resolveApp('examples')
+			},
+			historyApiFallback: true,
+			port: 3000,
+			compress: true,
+			hot: true
+			// host: '0.0.0.0',
+			// https: true, // For IMA plugin
+		}
+	}
+
+	entries.forEach((key) => {
+		config.entry[key] = resolveApp(`examples/${key}/config.js`)
+		config.plugins.push(
+			new HtmlWebpackPlugin({
+				filename: key === 'home' ? 'index.html' : `${key}/index.html`,
+				template: resolveApp(`examples/${key}/index.html`),
+				chunks: [key],
+				minify: isProduction
+			})
+		)
+	})
+
+	return config
 }
