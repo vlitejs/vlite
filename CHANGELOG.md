@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 6.0.2
+
+### Fixes
+
+- Increase progress bar height ([#119](https://github.com/vlitejs/vlite/pull/119))
+- Fix preload on `html5` provider ([#118](https://github.com/vlitejs/vlite/pull/118))
+
 ## 6.0.1
 
 ### Fixes
