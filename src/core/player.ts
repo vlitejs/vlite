@@ -529,6 +529,7 @@ export default class Player {
 		this.playerEvents.forEach((event) => {
 			this.elements.container.removeEventListener(event.type, event.listener)
 		})
-		this.elements.container.remove()
+		this.media.classList.remove('v-media')
+		this.elements.outerContainer.replaceWith(this.media)
 	}
 }
