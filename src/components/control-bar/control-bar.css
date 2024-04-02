@@ -57,7 +57,7 @@
 		}
 
 		&::-moz-range-track {
-			height: 100%;
+			height: var(--vlite-progressBarHeight);
 			border: none;
 			border-radius: var(--vlite-progressBarHeight);
 			background: linear-gradient(
