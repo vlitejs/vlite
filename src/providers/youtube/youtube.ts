@@ -105,6 +105,7 @@ export default function YoutubeProvider(Player: any) {
 					height: '100%',
 					width: '100%',
 					playerVars: this.params,
+					origin: window.location.origin,
 					events: {
 						onReady: (data: any) => {
 							this.media = data.target.getIframe()
