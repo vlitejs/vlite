@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 6.0.3
+
+### Fixes
+
+- Fix Firefox progress bar height ([#129](https://github.com/vlitejs/vlite/pull/129))
+- Add Youtube `origin` parameter ([#130](https://github.com/vlitejs/vlite/pull/130))
+
 ## 6.0.2
 
 ### Fixes
