@@ -202,13 +202,22 @@ export default class Player {
 
 		this.Vlitejs.onReady instanceof Function && this.Vlitejs.onReady.call(this, this)
 
-		// Call the onReady functions of components
+		if (this.media.preload === 'none' && this.Vlitejs.provider === 'html5') {
+			this.media.addEventListener('loadedmetadata', () => this.triggerOnReady())
+		} else {
+			this.triggerOnReady()
+		}
+		this.loading(false)
+	}
+
+	/**
+	 * Trigger on ready component's functions
+	 */
+	triggerOnReady() {
 		this.options.controls && this.controlBar.onReady()
 		Object.keys(this.plugins).forEach((id) => {
 			this.plugins[id].onReady instanceof Function && this.plugins[id].onReady()
 		})
-
-		this.loading(false)
 	}
 
 	/**
