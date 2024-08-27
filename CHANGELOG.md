@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 6.0.4
+
+### Fixes
+
+- Fix duration when preload is disabled ([#136](https://github.com/vlitejs/vlite/pull/136))
+
 ## 6.0.3
 
 ### Fixes
