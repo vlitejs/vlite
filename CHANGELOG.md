@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 6.0.5
+
+### Fixes
+
+- Fix poster display after the first playback, `isPaused` is reset on media end ([#144](https://github.com/vlitejs/vlite/pull/144))
+
 ## 6.0.4
 
 ### Fixes
