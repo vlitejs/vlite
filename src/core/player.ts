@@ -319,6 +319,7 @@ export default class Player {
 		} else {
 			this.elements.outerContainer.classList.replace('v-playing', 'v-paused')
 			this.elements.outerContainer.classList.add('v-firstStart')
+			this.isPaused = null
 		}
 
 		if (this.elements.poster) {
