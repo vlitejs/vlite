@@ -1,9 +1,9 @@
 import './subtitle.css'
-import validateTarget from 'validate-target'
-import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
-import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgCheck from 'shared/assets/svgs/check.svg'
-import { pluginParameter } from 'shared/assets/types/types.js'
+import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
+import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
+import type { pluginParameter } from 'shared/assets/types/types.js'
+import validateTarget from 'validate-target'
 
 /**
  * Vlitejs Subtitle plugin
@@ -45,9 +45,7 @@ export default class Subtitle {
 			this.hideTracks()
 			this.render()
 
-			this.captions = this.player.elements.container.querySelector(
-				'.v-captions'
-			) as HTMLElement
+			this.captions = this.player.elements.container.querySelector('.v-captions') as HTMLElement
 			this.subtitleButton = this.player.elements.container.querySelector(
 				'.v-subtitleButton'
 			) as HTMLElement
@@ -55,7 +53,7 @@ export default class Subtitle {
 				'.v-subtitlesList'
 			) as HTMLElement
 			this.subtitlesListCssTransitionDuration =
-				parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
+				Number.parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
 
 			this.addEvents()
 		}
@@ -80,17 +78,16 @@ export default class Subtitle {
 	 * Hide tracks on load to prevent the browser for displaying native tracks
 	 */
 	hideTracks() {
-		this.tracks.forEach((track) => (track.mode = 'hidden'))
+		this.tracks.forEach((track) => {
+			track.mode = 'hidden'
+		})
 	}
 
 	/**
 	 * Render the plugin HTML
 	 */
 	render() {
-		this.player.elements.container.insertAdjacentHTML(
-			'beforeend',
-			'<div class="v-captions"></div>'
-		)
+		this.player.elements.container.insertAdjacentHTML('beforeend', '<div class="v-captions"></div>')
 
 		const controlBar = this.player.elements.container.querySelector('.v-controlBar')
 		const fullscreenButton = this.player.elements.container.querySelector(
@@ -197,7 +194,7 @@ export default class Subtitle {
 		const triggerPlayerFocus = (<CustomEvent>e).detail.triggerPlayerFocus ?? true
 
 		if (language && validateTargetSubtitleListButton) {
-			trackActive && trackActive.classList.remove('v-active')
+			trackActive?.classList.remove('v-active')
 			target.classList.add('v-active')
 
 			if (language === 'off') {
@@ -232,7 +229,7 @@ export default class Subtitle {
 	 * @param options.isDisabled Disable cues
 	 */
 	updateCues({ isDisabled = false }: { isDisabled?: boolean } = {}) {
-		if (this.activeTrack && this.activeTrack.cues && this.activeTrack.cues.length) {
+		if (this.activeTrack?.cues?.length) {
 			const cues = Array.from(this.activeTrack.cues)
 			const activeCues = this.activeTrack.activeCues
 

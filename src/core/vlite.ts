@@ -1,15 +1,15 @@
 import './vlite.css'
 
-import Player from './player.js'
-import validateTarget from 'validate-target'
-import { checkSupportFullScreen } from 'shared/utils/utils.js'
-import LoaderTemplate from 'components/loader/loader.js'
 import BigPlayTemplate from 'components/big-play/big-play.js'
+import LoaderTemplate from 'components/loader/loader.js'
 import OverlayTemplate from 'components/overlay/overlay.js'
 import PosterTemplate from 'components/poster/poster.js'
-import { Options, FullScreenSupport } from 'shared/assets/types/types.js'
-import { registerProvider, getProviderInstance } from 'providers/provider.js'
-import { registerPlugin, initializePlugins } from 'plugins/plugin.js'
+import { initializePlugins, registerPlugin } from 'plugins/plugin.js'
+import { getProviderInstance, registerProvider } from 'providers/provider.js'
+import type { FullScreenSupport, Options } from 'shared/assets/types/types.js'
+import { checkSupportFullScreen } from 'shared/utils/utils.js'
+import validateTarget from 'validate-target'
+import Player from './player.js'
 
 export type interfaceDefaultOptions = Record<string, Record<string, any>>
 
@@ -357,7 +357,7 @@ class Vlitejs {
 	startAutoHideTimer() {
 		if (this.type === 'video' && !this.player.isPaused && this.player.elements.controlBar) {
 			this.timerAutoHide = window.setTimeout(() => {
-				this.player.elements.controlBar!.classList.add('v-hidden')
+				this.player.elements.controlBar?.classList.add('v-hidden')
 			}, this.options.autoHideDelay)
 		}
 	}
@@ -371,8 +371,7 @@ class Vlitejs {
 		if (this.type === 'video') {
 			this.container.removeEventListener('click', this.onClickOnPlayer)
 			this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
-			this.autoHideGranted &&
-				this.container.removeEventListener('mousemove', this.onMousemove)
+			this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
 			window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
 	}

@@ -1,6 +1,6 @@
 import '../../dist/vlite.css'
-import Vlitejs from '../../dist/vlite.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
+import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerPlugin('pip', VlitejsPip)
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			autoHide: true
 		},
 		plugins: ['pip'],
-		onReady: function (player) {
+		onReady: (player) => {
 			console.log(player)
 		}
 	})

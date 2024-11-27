@@ -1,9 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import webpack from 'webpack'
+import fs from 'node:fs'
+import path from 'node:path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import webpack from 'webpack'
 
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)

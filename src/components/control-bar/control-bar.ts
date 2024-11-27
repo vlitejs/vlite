@@ -73,10 +73,7 @@ export default class ControlBar {
 	onReady() {
 		this.player.getDuration().then((duration: number) => {
 			if (this.player.elements.progressBar) {
-				this.player.elements.progressBar.setAttribute(
-					'aria-valuemax',
-					`${Math.round(duration)}`
-				)
+				this.player.elements.progressBar.setAttribute('aria-valuemax', `${Math.round(duration)}`)
 			}
 			if (this.player.elements.duration) {
 				this.player.elements.duration.innerHTML = formatVideoTime(duration)
@@ -93,15 +90,11 @@ export default class ControlBar {
 
 			if (this.player.isTouch) {
 				this.touchEvents.forEach((type) => {
-					this.player.elements.progressBar.addEventListener(
-						type,
-						this.onTouchEventProgressBar
-					)
+					this.player.elements.progressBar.addEventListener(type, this.onTouchEventProgressBar)
 				})
 			}
 		}
-		this.player.elements.controlBar &&
-			this.player.elements.controlBar.addEventListener('click', this.onClickOnControlBar)
+		this.player.elements.controlBar?.addEventListener('click', this.onClickOnControlBar)
 	}
 
 	/**
@@ -113,10 +106,9 @@ export default class ControlBar {
 		e.preventDefault()
 
 		const target = e.target as HTMLInputElement
-		const max = parseFloat(target.getAttribute('max') || '100')
+		const max = Number.parseFloat(target.getAttribute('max') || '100')
 		const clientRect = target.getBoundingClientRect()
-		const percentage =
-			((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
+		const percentage = ((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
 		target.value = `${(percentage * 100) / max}`
 		target.dispatchEvent(new Event('input'))
 	}
@@ -133,7 +125,7 @@ export default class ControlBar {
 		this.player.elements.outerContainer.classList.contains('v-firstStart') && this.player.play()
 
 		this.player.getDuration().then((duration: number) => {
-			this.player.seekTo((parseFloat(target.value) * duration) / 100)
+			this.player.seekTo((Number.parseFloat(target.value) * duration) / 100)
 		})
 	}
 
@@ -214,6 +206,7 @@ export default class ControlBar {
 					window.matchMedia('(orientation:portrait)').matches &&
 					this.isOrientationApiAvailable()
 				) {
+					// @ts-ignore https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1615
 					window.screen.orientation.lock('landscape').catch(() => {
 						// Empty catch
 					})
@@ -256,16 +249,12 @@ export default class ControlBar {
 
 			if (this.player.isTouch) {
 				this.touchEvents.forEach((type) => {
-					this.player.elements.progressBar.removeEventListener(
-						type,
-						this.onTouchEventProgressBar
-					)
+					this.player.elements.progressBar.removeEventListener(type, this.onTouchEventProgressBar)
 				})
 			}
 		}
 
-		this.player.elements.controlBar &&
-			this.player.elements.controlBar.removeEventListener('click', this.onClickOnControlBar)
+		this.player.elements.controlBar?.removeEventListener('click', this.onClickOnControlBar)
 	}
 
 	/**
@@ -273,6 +262,6 @@ export default class ControlBar {
 	 */
 	destroy() {
 		this.removeEvents()
-		this.player.elements.controlBar && this.player.elements.controlBar.remove()
+		this.player.elements.controlBar?.remove()
 	}
 }

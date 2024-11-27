@@ -1,4 +1,4 @@
-import { playerParameters } from 'shared/assets/types/types.js'
+import type { playerParameters } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Window {
@@ -131,8 +131,7 @@ export default function YoutubeProvider(Player: any) {
 
 				case window.YT.PlayerState.PLAYING:
 					super.loading(false)
-					this.options.controls &&
-						window.requestAnimationFrame(this.onRafPlaying.bind(this))
+					this.options.controls && window.requestAnimationFrame(this.onRafPlaying.bind(this))
 					break
 
 				case window.YT.PlayerState.BUFFERING:

@@ -1,4 +1,4 @@
-import { playerParameters, configEvent } from 'shared/assets/types/types.js'
+import type { configEvent, playerParameters } from 'shared/assets/types/types.js'
 
 /**
  * The provider function returns the provider Class which is extended from vLitejs Player

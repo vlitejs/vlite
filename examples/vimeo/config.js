@@ -1,8 +1,8 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/volume-bar.css'
-import Vlitejs from '../../dist/vlite.js'
-import VlitejsVimeo from '../../dist/providers/vimeo.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
+import VlitejsVimeo from '../../dist/providers/vimeo.js'
+import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerProvider('vimeo', VlitejsVimeo)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)

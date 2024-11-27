@@ -1,7 +1,7 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/sticky.css'
-import Vlitejs from '../../dist/vlite.js'
 import VlitejsSticky from '../../dist/plugins/sticky.js'
+import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerPlugin('sticky', VlitejsSticky, {
 	mode: 'instant',
@@ -28,7 +28,7 @@ const vlite = new Vlitejs('#player', {
 		autoHide: true
 	},
 	plugins: ['sticky'],
-	onReady: function (player) {
+	onReady: (player) => {
 		console.log(player)
 
 		player.on('entersticky', () => console.log('entersticky'))

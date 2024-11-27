@@ -1,4 +1,4 @@
-import Player from 'core/player.js'
+import type Player from 'core/player.js'
 import './cast.css'
 import svgCast from 'shared/assets/svgs/cast.svg'
 
@@ -83,8 +83,7 @@ export default class CastPlugin {
 	 */
 	isCastFrameworkAlreadyAvailable() {
 		return !!(
-			window.cast &&
-			window.cast.framework &&
+			window.cast?.framework &&
 			customElements.get &&
 			customElements.get('google-cast-button')
 		)
@@ -120,7 +119,7 @@ export default class CastPlugin {
 		const castButton = this.player.elements.container.querySelector('.v-castButton')
 
 		if (castButton) {
-			this.castButton = this.player.elements.container!.querySelector(
+			this.castButton = this.player.elements.container?.querySelector(
 				'.v-castButton'
 			) as HTMLElement
 			this.subtitles = this.getSubtitles()
@@ -218,7 +217,7 @@ export default class CastPlugin {
 			.querySelector('.v-trackButton.v-active')
 			.getAttribute('data-language')
 
-		let activeTrackIds
+		let activeTrackIds: number[] = []
 		if (newLanguage === 'off') {
 			activeTrackIds = []
 		} else {
@@ -269,7 +268,7 @@ export default class CastPlugin {
 		this.player.elements.outerContainer.classList.remove('v-remote')
 		this.castButton.classList.remove('v-active')
 		this.player.isCast = false
-		this.player.elements.container.querySelector('.v-deviceName')!.remove()
+		this.player.elements.container.querySelector('.v-deviceName')?.remove()
 
 		if (!this.player.isPaused) {
 			this.player.methodPlay()

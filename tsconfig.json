@@ -2,10 +2,10 @@
 	"compilerOptions": {
 		"strict": true,
 		"module": "nodenext",
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "nodenext",
 		"target": "es2017",
 		"lib": ["es2017", "dom"],
-		"outDir": "./lib",
+		"outDir": "./dist",
 		"declaration": false,
 		"allowJs": true,
 		"checkJs": false,

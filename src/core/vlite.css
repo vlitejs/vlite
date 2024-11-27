@@ -15,8 +15,8 @@
 	--vlite-progressBarHeight: 5px;
 	--vlite-progressBarBackground: rgba(0 0 0 / 25%);
 
-	font-family: -apple-system, blinkmacsystemfont, 'segoe UI', Helvetica, Arial, sans-serif,
-		'Apple Color Emoji', 'Segoe UI Emoji';
+	font-family: -apple-system, blinkmacsystemfont, "segoe UI", Helvetica, Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji";
 	position: relative;
 	overflow: hidden;
 
@@ -34,7 +34,7 @@
 
 	&.v-video {
 		background-color: #000;
-		aspect-ratio: 16/9;
+		aspect-ratio: 16 / 9;
 	}
 
 	&::-webkit-full-screen {

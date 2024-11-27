@@ -1,5 +1,5 @@
 import './ima.css'
-import { pluginParameter, Constructable } from 'shared/assets/types/types.js'
+import type { Constructable, pluginParameter } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Window {
@@ -154,9 +154,7 @@ export default class ImaPlugin {
 		const script = document.createElement('script')
 		script.defer = true
 		script.type = 'text/javascript'
-		script.src = `//imasdk.googleapis.com/js/sdkloader/ima3${
-			this.options.debug ? '_debug' : ''
-		}.js`
+		script.src = `//imasdk.googleapis.com/js/sdkloader/ima3${this.options.debug ? '_debug' : ''}.js`
 		script.onload = () => {
 			this.sdkIsReady = true
 			this.onPlayerAndSdkReady()
@@ -237,9 +235,7 @@ export default class ImaPlugin {
 	 */
 	initAdObjects() {
 		this.adsLoaded = false
-		window.google.ima.settings.setDisableCustomPlaybackForIOS10Plus(
-			this.player.options.playsinline
-		)
+		window.google.ima.settings.setDisableCustomPlaybackForIOS10Plus(this.player.options.playsinline)
 		if (this.options.updateImaSettings instanceof Function) {
 			this.options.updateImaSettings(window.google.ima.settings)
 		}
@@ -295,15 +291,9 @@ export default class ImaPlugin {
 			],
 			...this.options.adsRenderingSettings
 		}
-		this.adsManager = adsManagerLoadedEvent.getAdsManager(
-			this.player.media,
-			adsRenderingSettings
-		)
+		this.adsManager = adsManagerLoadedEvent.getAdsManager(this.player.media, adsRenderingSettings)
 
-		this.adsManager.addEventListener(
-			window.google.ima.AdErrorEvent.Type.AD_ERROR,
-			this.onAdError
-		)
+		this.adsManager.addEventListener(window.google.ima.AdErrorEvent.Type.AD_ERROR, this.onAdError)
 		this.adsManager.addEventListener(
 			window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
 			this.onContentPauseRequested
@@ -433,10 +423,13 @@ export default class ImaPlugin {
 		clearTimeout(this.timerAdTimeout)
 
 		try {
-			const { type, errorCode, errorMessage } = e.getError()?.j
-			console.warn(`${type} ${errorCode}: ${errorMessage}`)
+			const error = e.getError()
+			if (error?.j) {
+				const { type, errorCode, errorMessage } = error.j
+				console.warn(`${type} ${errorCode}: ${errorMessage}`)
+			}
 		} catch {
-			console.warn(`onAdError`, e)
+			console.warn('onAdError', e)
 		}
 		this.destroy()
 
@@ -454,9 +447,7 @@ export default class ImaPlugin {
 
 		this.player.getDuration().then((duration: number) => {
 			this.cuePoints
-				.filter(
-					(cuePoint: number) => cuePoint !== 0 && cuePoint !== -1 && cuePoint < duration
-				)
+				.filter((cuePoint: number) => cuePoint !== 0 && cuePoint !== -1 && cuePoint < duration)
 				.forEach((cuePoint: number) => {
 					const cuePercentage = (cuePoint * 100) / duration
 					const cue = document.createElement('span')
@@ -576,12 +567,11 @@ export default class ImaPlugin {
 	 * On window resize event
 	 */
 	onResize() {
-		this.adsManager &&
-			this.adsManager.resize(
-				this.player.media.clientWidth,
-				this.player.media.clientHeight,
-				window.google.ima.ViewMode.NORMAL
-			)
+		this.adsManager?.resize(
+			this.player.media.clientWidth,
+			this.player.media.clientHeight,
+			window.google.ima.ViewMode.NORMAL
+		)
 	}
 
 	/**
