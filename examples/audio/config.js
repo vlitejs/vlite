@@ -1,7 +1,7 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/volume-bar.css'
-import Vlitejs from '../../dist/vlite.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
+import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 

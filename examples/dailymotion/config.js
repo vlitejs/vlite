@@ -1,8 +1,8 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/volume-bar.css'
-import Vlitejs from '../../dist/vlite.js'
-import VlitejsDailymotion from '../../dist/providers/dailymotion.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
+import VlitejsDailymotion from '../../dist/providers/dailymotion.js'
+import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
 	playerId: 'x9scg'

@@ -1,4 +1,4 @@
-import Player from 'core/player.js'
+import type Player from 'core/player.js'
 
 export type Constructable<T> = {
 	new (...args: any): T

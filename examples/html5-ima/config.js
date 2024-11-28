@@ -1,7 +1,7 @@
 import '../../dist/vlite.css'
 import '../../dist/plugins/ima.css'
-import Vlitejs from '../../dist/vlite.js'
 import VlitejsIma from '../../dist/plugins/ima.js'
+import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerPlugin('ima', VlitejsIma, {
 	adTagUrl:
@@ -29,7 +29,7 @@ const vlite = new Vlitejs('#player', {
 		autoHide: true
 	},
 	plugins: ['ima'],
-	onReady: function (player) {
+	onReady: (player) => {
 		console.log(player)
 
 		player.on('adsmanager', (e) => console.log('adsmanager', e.detail))

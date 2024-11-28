@@ -1,5 +1,5 @@
 import './volume-bar.css'
-import { pluginParameter } from 'shared/assets/types/types.js'
+import type { pluginParameter } from 'shared/assets/types/types.js'
 
 /**
  * Vlitejs Volume bar plugin
@@ -86,7 +86,7 @@ export default class VolumeBar {
 	 */
 	onInputVolumeBar(e: Event) {
 		const target = e.target as HTMLInputElement
-		const value = parseFloat(target.value)
+		const value = Number.parseFloat(target.value)
 
 		this.updateVolumeBar(value)
 		target.setAttribute('aria-valuenow', `${Math.round(value)}`)

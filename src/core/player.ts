@@ -1,6 +1,6 @@
-import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
-import { Options, playerParameters, configEvent } from 'shared/assets/types/types.js'
 import ControlBar from 'components/control-bar/control-bar.js'
+import type { Options, configEvent, playerParameters } from 'shared/assets/types/types.js'
+import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
 
 /**
  * Vlitejs Player
@@ -273,8 +273,7 @@ export default class Player {
 	onTimeUpdate() {
 		if (this.options.time) {
 			Promise.all([this.getCurrentTime(), this.getDuration()]).then(
-				([seconds, duration]: [number, number]) =>
-					this.updateProgressBar({ seconds, duration })
+				([seconds, duration]: [number, number]) => this.updateProgressBar({ seconds, duration })
 			)
 		}
 	}
@@ -406,10 +405,11 @@ export default class Player {
 	 * @param volume New volume
 	 */
 	setVolume(volume: number) {
-		if (volume > 1) {
-			volume = 1
-		} else if (volume <= 0) {
-			volume = 0
+		let adjustedVolume = volume
+		if (adjustedVolume > 1) {
+			adjustedVolume = 1
+		} else if (adjustedVolume <= 0) {
+			adjustedVolume = 0
 			this.isMuted = true
 			if (this.elements.volume) {
 				this.elements.volume.classList.add('v-controlPressed')
@@ -421,9 +421,9 @@ export default class Player {
 			}
 		}
 
-		this.methodSetVolume(volume)
+		this.methodSetVolume(adjustedVolume)
 		this.dispatchEvent('volumechange', {
-			volume
+			volume: adjustedVolume
 		})
 	}
 
@@ -529,7 +529,7 @@ export default class Player {
 	 * Remove event listeners, player instance and HTML
 	 */
 	destroy() {
-		this.controlBar && this.controlBar.destroy()
+		this.controlBar?.destroy()
 
 		// Call the destroy function on each plugins
 		Object.keys(this.plugins).forEach((id) => {

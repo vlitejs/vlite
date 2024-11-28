@@ -1,6 +1,6 @@
 import './sticky.css'
 import svgClose from 'shared/assets/svgs/close.svg'
-import { pluginParameter } from 'shared/assets/types/types.js'
+import type { pluginParameter } from 'shared/assets/types/types.js'
 
 type WindowSizes = {
 	clientWidth: number
@@ -63,8 +63,7 @@ export default class Sticky {
 	 */
 	init() {
 		this.render()
-		this.closeStickyButton =
-			this.player.elements.container.querySelector('.v-closeStickyButton')
+		this.closeStickyButton = this.player.elements.container.querySelector('.v-closeStickyButton')
 
 		this.addEvents()
 	}

@@ -1,4 +1,4 @@
-import { FullScreenSupport } from 'shared/assets/types/types.js'
+import type { FullScreenSupport } from 'shared/assets/types/types.js'
 
 declare global {
 	interface Document {
@@ -17,11 +17,11 @@ declare global {
 export function formatVideoTime(time: number): string {
 	const ms = time * 1000
 	const min = (ms / 1000 / 60) << 0
-	const sec = (ms / 1000) % 60 << 0
+	const sec = ((ms / 1000) % 60) << 0
 	let timeInString = ''
 
 	timeInString += min < 10 ? '0' : ''
-	timeInString += min + ':'
+	timeInString += `${min}:`
 	timeInString += sec < 10 ? '0' : ''
 	timeInString += sec
 
@@ -55,7 +55,7 @@ export function getBrowserPrefix(): string {
 	return (
 		prefixs.find(
 			(prefix: string) =>
-				document[prefix + 'ExitFullscreen'] instanceof Function ||
+				document[`${prefix}ExitFullscreen`] instanceof Function ||
 				document[`${prefix}CancelFullScreen`] instanceof Function
 		) || ''
 	)
