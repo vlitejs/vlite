@@ -4,7 +4,7 @@
 
 ### ⚠️ Breaking changes
 
-- Updates Node.js ([#146](https://github.com/yoriiis/chunks-webpack-plugin/pull/146))
+- Updates Node.js ([#146](https://github.com/vlitejs/vlite/pull/146))
   - Minimum supported `Node.js` version is `20.18.0`
   - Updates other packages
   - Migrate ESLint/Prettier to Biome
