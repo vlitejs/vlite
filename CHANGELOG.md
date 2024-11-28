@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 7.0.0
+
+### ⚠️ Breaking changes
+
+- Updates Node.js ([#146](https://github.com/yoriiis/chunks-webpack-plugin/pull/146))
+  - Minimum supported `Node.js` version is `20.18.0`
+  - Updates other packages
+  - Migrate ESLint/Prettier to Biome
+
+### New features
+
+- Add the volume bar plugin ([#90](https://github.com/vlitejs/vlite/pull/90))
+- Add the sticky plugin ([#99](https://github.com/vlitejs/vlite/pull/99))
+
 ## 6.0.5
 
 ### Fixes
