@@ -25,7 +25,10 @@
 	],
 	"homepage": "https://vlite.js.org",
 	"bugs": "https://github.com/vlitejs/vlite/issues",
-	"repository": "https://github.com/vlitejs/vlite.git",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/vlitejs/vlite.git"
+	},
 	"funding": {
 		"type": "individual",
 		"url": "https://github.com/sponsors/yoriiis"
