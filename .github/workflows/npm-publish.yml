@@ -12,6 +12,6 @@ jobs:
     needs: lint
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
     with:
-      node-version: 16
+      node-version: 20
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
