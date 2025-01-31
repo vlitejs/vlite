@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"editor.defaultFormatter": "biomejs.biome",
-		"[javascript][typescript][postcss][html][markdown][json][markdown]": {
+		"[javascript][typescript][css][html][markdown][json][markdown]": {
 			"editor.formatOnSave": true,
 			"editor.tabSize": 4,
 			"editor.rulers": [100]
@@ -19,7 +19,7 @@
 		},
 		"editor.tabSize": 4,
 		"files.associations": {
-			"*.css": "postcss",
+			"*.css": "css",
 			"*.html": "html",
 			"*.ts": "typescript",
 			"*.json": "json",

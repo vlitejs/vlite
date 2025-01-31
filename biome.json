@@ -37,5 +37,12 @@
 			"attributePosition": "auto",
 			"bracketSpacing": true
 		}
+	},
+	"css": {
+		"formatter": {
+			"indentStyle": "tab",
+			"indentWidth": 2,
+			"quoteStyle": "double"
+		}
 	}
 }
