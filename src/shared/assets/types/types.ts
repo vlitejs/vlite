@@ -17,7 +17,9 @@ export type Options = {
 	playPause: boolean
 	progressBar: boolean
 	time: boolean
+	seekTime: number
 	volume: boolean
+	volumeStep: number
 	fullscreen: boolean
 	poster: null | string
 	bigPlay: boolean

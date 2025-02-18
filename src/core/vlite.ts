@@ -20,7 +20,9 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		playPause: true,
 		progressBar: true,
 		time: true,
+		seekTime: 5,
 		volume: true,
+		volumeStep: 0.1,
 		loop: false
 	},
 	video: {
@@ -29,7 +31,9 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		playPause: true,
 		progressBar: true,
 		time: true,
+		seekTime: 5,
 		volume: true,
+		volumeStep: 0.1,
 		fullscreen: true,
 		poster: null,
 		bigPlay: true,
@@ -318,7 +322,9 @@ class Vlitejs {
 	 */
 	fastForward(direction: string) {
 		this.player.getCurrentTime().then((seconds: number) => {
-			this.player.seekTo(direction === 'backward' ? seconds - 5 : seconds + 5)
+			this.player.seekTo(
+				direction === 'backward' ? seconds - this.options.seekTime : seconds + this.options.seekTime
+			)
 		})
 	}
 
@@ -328,7 +334,7 @@ class Vlitejs {
 	increaseVolume() {
 		this.player.isMuted && this.player.unMute()
 		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(Math.round((volume + 0.1) * 10) / 10)
+			this.player.setVolume(Math.min(volume + this.options.volumeStep, 1))
 		})
 	}
 
@@ -337,7 +343,7 @@ class Vlitejs {
 	 */
 	decreaseVolume() {
 		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(Math.round((volume - 0.1) * 10) / 10)
+			this.player.setVolume(Math.max(volume - this.options.volumeStep, 0))
 		})
 	}
 
