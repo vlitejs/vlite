@@ -473,6 +473,15 @@ export default abstract class Player {
 	}
 
 	/**
+	 * Set the media source
+	 * @param source New media source URL
+	 */
+	setSource(source: string) {
+		this.media.src = source
+		this.media.load()
+	}
+
+	/**
 	 * Request the fullscreen
 	 */
 	requestFullscreen() {

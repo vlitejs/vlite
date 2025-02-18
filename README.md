@@ -304,6 +304,7 @@ The player instance exposes the following methods, accessible when the player is
 | `mute()`               |         -          |     -     | Mute the volume                   |
 | `unMute()`             |         -          |     -     | Unmute the volume                 |
 | `seekTo(time)`         |      `Number`      |     -     | Seek to a current time in seconds |
+| `setSource(source)`    |      `String`      |     -     | Set the media source              |
 | `requestFullscreen()`  |         -          |     -     | Request the fullscreen            |
 | `exitFullscreen()`     |         -          |     -     | Exit the fullscreen               |
 | `getInstance()`        |         -          |     -     | Get the player instance           |
