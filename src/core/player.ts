@@ -2,6 +2,8 @@ import ControlBar from 'components/control-bar/control-bar.js'
 import type { Options, configEvent, playerParameters } from 'shared/assets/types/types.js'
 import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
 
+const IMPLEMENT_ERROR_MSG = 'Abstract method must be implemented'
+
 /**
  * Vlitejs Player
  * @module Vlitejs/Player
@@ -87,99 +89,111 @@ export default class Player {
 	/**
 	 * init
 	 * Extends by the provider
+	 * @abstract
 	 */
 	init() {
-		throw new Error('You have to implement the function "init".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * waitUntilVideoIsReady
 	 * Extends by the provider
+	 * @abstract
 	 */
 	waitUntilVideoIsReady() {
-		throw new Error('You have to implement the function "waitUntilVideoIsReady".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * getInstance
 	 * Extends by the provider
+	 * @abstract
 	 */
 	getInstance() {
-		throw new Error('You have to implement the function "getInstance".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * getCurrentTime
 	 * Extends by the provider
+	 * @abstract
 	 */
 	getCurrentTime(): Promise<number> {
-		throw new Error('You have to implement the function "getCurrentTime".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodSeekTo
 	 * Extends by the provider
+	 * @abstract
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	methodSeekTo(newTime: number) {
-		throw new Error('You have to implement the function "methodSeekTo".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * getDuration
 	 * Extends by the provider
+	 * @abstract
 	 */
 	getDuration(): Promise<number> {
-		throw new Error('You have to implement the function "getDuration".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodPlay
 	 * Extends by the provider
+	 * @abstract
 	 */
 	methodPlay() {
-		throw new Error('You have to implement the function "methodPlay".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodPause
 	 * Extends by the provider
+	 * @abstract
 	 */
 	methodPause() {
-		throw new Error('You have to implement the function "methodPause".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodSetVolume
 	 * Extends by the provider
+	 * @abstract
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	methodSetVolume(newVolume: number) {
-		throw new Error('You have to implement the function "methodSetVolume".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodGetVolume
 	 * Extends by the provider
+	 * @abstract
 	 */
 	methodGetVolume(): Promise<number> {
-		throw new Error('You have to implement the function "methodGetVolume".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodMute
 	 * Extends by the provider
+	 * @abstract
 	 */
 	methodMute() {
-		throw new Error('You have to implement the function "methodMute".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
 	 * methodUnMute
 	 * Extends by the provider
+	 * @abstract
 	 */
 	methodUnMute() {
-		throw new Error('You have to implement the function "methodUnMute".')
+		throw new Error(IMPLEMENT_ERROR_MSG)
 	}
 
 	/**
