@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.1.0
+
+### New features
+
+- Add options to customize the shortcuts value of volume and seek by [@rtritto](https://github.com/rtritto) in ([#152](https://github.com/vlitejs/vlite/pull/152))
+
 ## 7.0.0
 
 ### ⚠️ Breaking changes
