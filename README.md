@@ -194,23 +194,25 @@ new Vlitejs('#player', {
 
 The player controls can be customized with the following parameters:
 
-| Options                 |      Type      | Default | Description                                          |
-| ----------------------- | :------------: | :-----: | ---------------------------------------------------- |
-| `controls`&sup1; &sup2; |   `Boolean`    | `true`  | Display the control bar of the video                 |
-| `autoplay`              |   `Boolean`    | `false` | Enable the autoplay of the media                     |
-| `playPause`             |   `Boolean`    | `true`  | Display the play/pause button on the control bar     |
-| `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar          |
-| `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar      |
-| `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar         |
-| `fullscreen`&sup1; ⁴    |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
-| `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                       |
-| `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video      |
-| `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video         |
-| `loop`                  |   `Boolean`    | `false` | Whether to loop the current media                    |
-| `muted`&sup1;           |   `Boolean`    | `false` | Whether to mute the current media                    |
-| `autoHide`&sup1;        |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity |
-| `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                       |
-| `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider      |
+| Options                 |      Type      | Default | Description                                                                  |
+| ----------------------- | :------------: | :-----: | ---------------------------------------------------------------------------- |
+| `controls`&sup1; &sup2; |   `Boolean`    | `true`  | Display the control bar of the video                                         |
+| `autoplay`              |   `Boolean`    | `false` | Enable the autoplay of the media                                             |
+| `playPause`             |   `Boolean`    | `true`  | Display the play/pause button on the control bar                             |
+| `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar                                  |
+| `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar                              |
+| `seekTime`              |   `Number`     |  `5`    | Set seek time seconds of the backward and forward shortcuts                  |
+| `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar                                 |
+| `volumeStep`            |   `Number`     |  `0.1`  | Set the volume step (between 0 and 1) of the increase and decrease shortcuts |
+| `fullscreen`&sup1; ⁴    |   `Boolean`    | `true`  | Display the fullscreen button on the control bar                             |
+| `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                                               |
+| `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video                              |
+| `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video                                 |
+| `loop`                  |   `Boolean`    | `false` | Whether to loop the current media                                            |
+| `muted`&sup1;           |   `Boolean`    | `false` | Whether to mute the current media                                            |
+| `autoHide`&sup1;        |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity                         |
+| `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                                               |
+| `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider                              |
 
 > **Note**
 >
