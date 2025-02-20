@@ -98,6 +98,7 @@
 		"postcss-nested": "^7.0.2",
 		"postcss-preset-env": "^10.1.1",
 		"postcss-url": "^10.1.1",
+		"prettier": "^3.5.1",
 		"rollup": "^4.27.4",
 		"rollup-plugin-postcss": "^4.0.2",
 		"rollup-plugin-svg": "^2.0.0",

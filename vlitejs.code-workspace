@@ -11,12 +11,18 @@
 			"editor.tabSize": 4,
 			"editor.rulers": [100]
 		},
+		"[markdown][html]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
+			"editor.wordWrap": "off"
+		},
 		"[yaml]": {
 			"editor.tabSize": 2,
 			"editor.detectIndentation": true,
 			"editor.insertSpaces": true,
 			"editor.autoIndent": "none"
 		},
+		"prettier.configPath": "./config/prettier.config.cjs",
 		"editor.tabSize": 4,
 		"files.associations": {
 			"*.css": "css",
