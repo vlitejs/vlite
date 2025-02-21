@@ -104,6 +104,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
+		z-index: 6;
 
 		&.v-hidden {
 			opacity: 0;
