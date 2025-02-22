@@ -56,14 +56,6 @@
 		display: none !important;
 	}
 
-	&.v-fullscreenButtonDisplay {
-		.v-controlBar,
-		.v-bigPlay {
-			position: fixed;
-			z-index: 2147483647;
-		}
-	}
-
 	&.v-paused {
 		.v-controlBar.v-hidden {
 			opacity: 1;

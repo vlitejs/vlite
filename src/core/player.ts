@@ -489,7 +489,7 @@ export default class Player {
 			// @ts-ignore: Object is possibly 'null'.
 			this.elements.container[requestFn]()
 			this.isFullScreen = true
-			this.elements.outerContainer.classList.add('v-fullscreenButtonDisplay')
+			this.elements.outerContainer.classList.add('v-fullscreen')
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.add('v-controlPressed')
@@ -513,7 +513,7 @@ export default class Player {
 			!escKey && document[cancelFn]()
 			this.isFullScreen = false
 
-			this.elements.outerContainer.classList.remove('v-fullscreenButtonDisplay')
+			this.elements.outerContainer.classList.remove('v-fullscreen')
 
 			if (this.elements.fullscreen) {
 				this.elements.fullscreen.classList.remove('v-controlPressed')
