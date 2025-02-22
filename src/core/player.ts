@@ -2,13 +2,11 @@ import ControlBar from 'components/control-bar/control-bar.js'
 import type { Options, configEvent, playerParameters } from 'shared/assets/types/types.js'
 import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
 
-const IMPLEMENT_ERROR_MSG = 'Abstract method must be implemented'
-
 /**
  * Vlitejs Player
  * @module Vlitejs/Player
  */
-export default class Player {
+export default abstract class Player {
 	Vlitejs: any
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
@@ -91,110 +89,84 @@ export default class Player {
 	 * Extends by the provider
 	 * @abstract
 	 */
-	init() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract init(): void
 
 	/**
 	 * waitUntilVideoIsReady
 	 * Extends by the provider
 	 * @abstract
 	 */
-	waitUntilVideoIsReady() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract waitUntilVideoIsReady(): Promise<any>
 
 	/**
 	 * getInstance
 	 * Extends by the provider
 	 * @abstract
 	 */
-	getInstance() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract getInstance(): HTMLElement
 
 	/**
 	 * getCurrentTime
 	 * Extends by the provider
 	 * @abstract
 	 */
-	getCurrentTime(): Promise<number> {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract getCurrentTime(): Promise<number>
 
 	/**
 	 * methodSeekTo
 	 * Extends by the provider
 	 * @abstract
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	methodSeekTo(newTime: number) {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodSeekTo(newTime: number): void
 
 	/**
 	 * getDuration
 	 * Extends by the provider
 	 * @abstract
 	 */
-	getDuration(): Promise<number> {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract getDuration(): Promise<number>
 
 	/**
 	 * methodPlay
 	 * Extends by the provider
 	 * @abstract
 	 */
-	methodPlay() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodPlay(): void
 
 	/**
 	 * methodPause
 	 * Extends by the provider
 	 * @abstract
 	 */
-	methodPause() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodPause(): void
 
 	/**
 	 * methodSetVolume
 	 * Extends by the provider
 	 * @abstract
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	methodSetVolume(newVolume: number) {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodSetVolume(newVolume: number): void
 
 	/**
 	 * methodGetVolume
 	 * Extends by the provider
 	 * @abstract
 	 */
-	methodGetVolume(): Promise<number> {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodGetVolume(): Promise<number>
 
 	/**
 	 * methodMute
 	 * Extends by the provider
 	 * @abstract
 	 */
-	methodMute() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodMute(): void
 
 	/**
 	 * methodUnMute
 	 * Extends by the provider
 	 * @abstract
 	 */
-	methodUnMute() {
-		throw new Error(IMPLEMENT_ERROR_MSG)
-	}
+	public abstract methodUnMute(): void
 
 	/**
 	 * On the player is ready
