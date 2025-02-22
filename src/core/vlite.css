@@ -60,7 +60,7 @@
 		.v-controlBar,
 		.v-bigPlay {
 			position: fixed;
-			z-index: 2147483647;
+			z-index: 8;
 		}
 	}
 
