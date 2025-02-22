@@ -67,7 +67,6 @@
 		.v-poster {
 			visibility: hidden;
 			opacity: 0;
-			z-index: 7;
 		}
 	}
 

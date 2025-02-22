@@ -6,7 +6,7 @@
 		width: 58px;
 		height: 58px;
 		transform: translateX(-50%) translateY(-50%);
-		z-index: 3;
+		z-index: 8;
 		transition: opacity var(--vlite-transition);
 		opacity: var(--vlite-controlsOpacity);
 		padding: 0;
