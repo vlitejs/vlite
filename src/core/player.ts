@@ -6,7 +6,7 @@ import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
  * Vlitejs Player
  * @module Vlitejs/Player
  */
-export default class Player {
+export default abstract class Player {
 	Vlitejs: any
 	type: string
 	media: HTMLAudioElement | HTMLVideoElement
@@ -87,100 +87,86 @@ export default class Player {
 	/**
 	 * init
 	 * Extends by the provider
+	 * @abstract
 	 */
-	init() {
-		throw new Error('You have to implement the function "init".')
-	}
+	public abstract init(): void
 
 	/**
 	 * waitUntilVideoIsReady
 	 * Extends by the provider
+	 * @abstract
 	 */
-	waitUntilVideoIsReady() {
-		throw new Error('You have to implement the function "waitUntilVideoIsReady".')
-	}
+	public abstract waitUntilVideoIsReady(): Promise<any>
 
 	/**
 	 * getInstance
 	 * Extends by the provider
+	 * @abstract
 	 */
-	getInstance() {
-		throw new Error('You have to implement the function "getInstance".')
-	}
+	public abstract getInstance(): HTMLElement
 
 	/**
 	 * getCurrentTime
 	 * Extends by the provider
+	 * @abstract
 	 */
-	getCurrentTime(): Promise<number> {
-		throw new Error('You have to implement the function "getCurrentTime".')
-	}
+	public abstract getCurrentTime(): Promise<number>
 
 	/**
 	 * methodSeekTo
 	 * Extends by the provider
+	 * @abstract
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	methodSeekTo(newTime: number) {
-		throw new Error('You have to implement the function "methodSeekTo".')
-	}
+	public abstract methodSeekTo(newTime: number): void
 
 	/**
 	 * getDuration
 	 * Extends by the provider
+	 * @abstract
 	 */
-	getDuration(): Promise<number> {
-		throw new Error('You have to implement the function "getDuration".')
-	}
+	public abstract getDuration(): Promise<number>
 
 	/**
 	 * methodPlay
 	 * Extends by the provider
+	 * @abstract
 	 */
-	methodPlay() {
-		throw new Error('You have to implement the function "methodPlay".')
-	}
+	public abstract methodPlay(): void
 
 	/**
 	 * methodPause
 	 * Extends by the provider
+	 * @abstract
 	 */
-	methodPause() {
-		throw new Error('You have to implement the function "methodPause".')
-	}
+	public abstract methodPause(): void
 
 	/**
 	 * methodSetVolume
 	 * Extends by the provider
+	 * @abstract
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	methodSetVolume(newVolume: number) {
-		throw new Error('You have to implement the function "methodSetVolume".')
-	}
+	public abstract methodSetVolume(newVolume: number): void
 
 	/**
 	 * methodGetVolume
 	 * Extends by the provider
+	 * @abstract
 	 */
-	methodGetVolume(): Promise<number> {
-		throw new Error('You have to implement the function "methodGetVolume".')
-	}
+	public abstract methodGetVolume(): Promise<number>
 
 	/**
 	 * methodMute
 	 * Extends by the provider
+	 * @abstract
 	 */
-	methodMute() {
-		throw new Error('You have to implement the function "methodMute".')
-	}
+	public abstract methodMute(): void
 
 	/**
 	 * methodUnMute
 	 * Extends by the provider
+	 * @abstract
 	 */
-	methodUnMute() {
-		throw new Error('You have to implement the function "methodUnMute".')
-	}
+	public abstract methodUnMute(): void
 
 	/**
 	 * On the player is ready
