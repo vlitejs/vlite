@@ -58,6 +58,15 @@ export default function Html5Provider(Player: any) {
 		}
 
 		/**
+		 * Set the media source
+		 * @param source New media source URL
+		 */
+		setSource(source: string) {
+			this.media.src = source
+			this.media.load()
+		}
+
+		/**
 		 * Create event listeners
 		 * All listeners are created on class properties to facilitate the deletion of events
 		 */
