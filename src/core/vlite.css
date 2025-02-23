@@ -119,9 +119,19 @@
 			pointer-events: none;
 		}
 
-		&.v-controlPressed .v-iconUnpressed,
-		&:not(.v-controlPressed) .v-iconPressed {
-			display: none;
+		&.v-iconVolume {
+			.v-icon-vol-0,
+			.v-icon-vol-1,
+			.v-icon-vol-2,
+			.v-icon-vol-3 {
+				display: none;
+			}
+			&.v-vol-0 .v-icon-vol-0,
+			&.v-vol-1 .v-icon-vol-1,
+			&.v-vol-2 .v-icon-vol-2,
+			&.v-vol-3 .v-icon-vol-3 {
+				display: block;
+			}
 		}
 
 		&:focus-visible {

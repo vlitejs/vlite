@@ -2,8 +2,7 @@ import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
 import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
 import svgPause from 'shared/assets/svgs/pause.svg'
 import svgPlay from 'shared/assets/svgs/play.svg'
-import svgVolumeHigh from 'shared/assets/svgs/volume-high.svg'
-import svgVolumeMute from 'shared/assets/svgs/volume-mute.svg'
+import svgVolume from 'shared/assets/svgs/volume.svg'
 import type { Options } from 'shared/assets/types/types.js'
 
 /**
@@ -68,7 +67,7 @@ function progressBarElement(): string {
  */
 function volumeElement({ isMuted }: { isMuted: boolean }) {
 	const muteClass = isMuted ? ' v-controlPressed' : ''
-	return `<button class="v-volumeButton v-controlButton${muteClass}">${svgVolumeHigh}${svgVolumeMute}</button>`
+	return `<button class="v-volumeButton v-controlButton${muteClass}">${svgVolume}</button>`
 }
 
 /**
