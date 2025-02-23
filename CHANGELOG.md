@@ -1,10 +1,21 @@
 # CHANGELOG
 
+## 7.2.0
+
+### Fixes
+
+- Use precision to volume value by [@rtritto](https://github.com/rtritto) ([#160](https://github.com/vlitejs/vlite/pull/160))
+
+### Updates
+
+- Remove useless `v-fullscreenButtonDisplay` class and add `v-fullscreen` as a state class by [@rtritto](https://github.com/rtritto) ([#156](https://github.com/vlitejs/vlite/pull/156))
+- Use abstract annotation in `Player.ts` by [@rtritto](https://github.com/rtritto) ([#157](https://github.com/vlitejs/vlite/pull/157))
+
 ## 7.1.0
 
 ### New features
 
-- Add options to customize the shortcuts value of volume and seek by [@rtritto](https://github.com/rtritto) in ([#152](https://github.com/vlitejs/vlite/pull/152))
+- Add options to customize the shortcuts value of volume and seek by [@rtritto](https://github.com/rtritto) ([#152](https://github.com/vlitejs/vlite/pull/152))
 
 ## 7.0.0
 
