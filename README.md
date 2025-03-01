@@ -46,6 +46,7 @@ Sizes of the `vlitejs` bundle compared to the competition:
 - [**Cast**](./src/plugins/cast/README.md) - Supports for Google Cast API.
 - [**AirPlay**](./src/plugins/airplay/README.md) - Supports for Apple AirPlay API.
 - [**Monetization**](./src/plugins/ima/README.md) - Supports for Google IMA SDK.
+- [**Hotkeys**](./src/plugins/hotkeys/README.md) - Supports for hotkeys to add shortcuts.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
 - [**Shortcuts**](#shortcuts) - Supports keyboard shortcuts.
@@ -333,19 +334,6 @@ The player exposes some custom CSS properties, locally scopped under the `.v-vli
 | `--vlite-progressBarBackground`       | `rgba(0 0 0 / 25%)`                               | Progress bar background        |
 
 ---
-
-## Shortcuts
-
-The player accepts the following keyboard shortcuts.
-
-|        Key        | Action                   |
-| :---------------: | ------------------------ |
-| <kbd>space</kbd>  | Toggle playback          |
-|  <kbd>Esc</kbd>   | Exit the fullscreen      |
-| <kbd>&larr;</kbd> | Seek backward of `5s`    |
-| <kbd>&rarr;</kbd> | Seek forward of `5s`     |
-| <kbd>&uarr;</kbd> | Increase volume of `10%` |
-| <kbd>&darr;</kbd> | Decrease volume of `10%` |
 
 ## Contributors
 

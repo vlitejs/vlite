@@ -21,7 +21,8 @@
 		"monetization",
 		"ima-sdk",
 		"sticky",
-		"volume bar"
+		"volume bar",
+		"hotkeys"
 	],
 	"homepage": "https://vlite.js.org",
 	"bugs": "https://github.com/vlitejs/vlite/issues",
