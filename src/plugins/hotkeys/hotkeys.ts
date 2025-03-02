@@ -14,7 +14,6 @@ type HotkeysPluginParameter = {
  */
 export default class Hotkeys {
 	player: any
-	options: any
 	seekTime: number
 	volumeStep: number
 
@@ -25,13 +24,11 @@ export default class Hotkeys {
 	 * @constructor
 	 * @param options
 	 * @param options.player Player instance
-	 * @param options.options Plugins options
 	 */
 	constructor({ player, options = {} }: HotkeysPluginParameter) {
 		this.player = player
-		this.options = options
-		this.seekTime = this.options.seekTime ?? 5
-		this.volumeStep = this.options.volumeStep ?? 0.1
+		this.seekTime = options.seekTime ?? 5
+		this.volumeStep = options.volumeStep ?? 0.1
 
 		this.onKeydown = this.onKeydown.bind(this)
 	}
