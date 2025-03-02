@@ -71,21 +71,13 @@ export default class Hotkeys {
 			// Backward or forward video with arrow keys
 			e.preventDefault()	// Prevent default behavior on input range
 
-			if (keyCode === 37) {
-				this.fastForward('backward')
-			} else {
-				this.fastForward('forward')
-			}
+			this.fastForward(keyCode === 37 ? 'backward' : 'forward')
 		} else if (
 			[38, 40].includes(keyCode) &&
 			(activeElement === this.player.elements.container || activeElement === this.player.elements.volume)
 		) {
 			// Increase or decrease volume with arrow keys
-			if (keyCode === 38) {
-				this.increaseVolume()
-			} else {
-				this.decreaseVolume()
-			}
+			keyCode === 38 ? this.increaseVolume() : this.decreaseVolume()
 		} else if (keyCode === 32 && activeElement === this.player.elements.container) {
 			// Toggle the media playback with spacebar key
 			this.player.controlBar.togglePlayPause(e)
