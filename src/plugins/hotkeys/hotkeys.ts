@@ -24,6 +24,7 @@ export default class Hotkeys {
 	 * @constructor
 	 * @param options
 	 * @param options.player Player instance
+	 * @param options.options Plugins options
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
