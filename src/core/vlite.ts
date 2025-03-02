@@ -206,7 +206,6 @@ class Vlitejs {
 			this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
 			document.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
-		this.container.addEventListener('keydown', this.onKeydown)
 	}
 
 	/**
@@ -289,8 +288,6 @@ class Vlitejs {
 	 * Remove events listeners
 	 */
 	removeEvents() {
-		this.container.removeEventListener('keydown', this.onKeydown)
-
 		if (this.type === 'video') {
 			this.container.removeEventListener('click', this.onClickOnPlayer)
 			this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
