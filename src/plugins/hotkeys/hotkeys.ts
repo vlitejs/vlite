@@ -58,45 +58,38 @@ export default class Hotkeys {
 		const activeElement = document.activeElement
 		const { keyCode } = e
 
-		// Stop and start the auto hide timer on selected key code
 		if (
 			[9, 32, 37, 39].includes(keyCode) &&
 			this.player.autoHideGranted &&
 			(activeElement === this.player.container || activeElement?.closest('.v-vlite'))
 		) {
+			// Stop and start the auto hide timer on selected key code
 			this.player.stopAutoHideTimer()
 			this.player.startAutoHideTimer()
-		}
-
-		// Backward or forward video with arrow keys
-		if (
+		} else if (
 			[37, 39].includes(keyCode) &&
 			(activeElement === this.player.container || activeElement === this.player.elements.progressBar)
 		) {
-			// Prevent default behavior on input range
-			e.preventDefault()
+			// Backward or forward video with arrow keys
+			e.preventDefault()	// Prevent default behavior on input range
 
 			if (keyCode === 37) {
 				this.fastForward('backward')
-			} else if (keyCode === 39) {
+			} else {
 				this.player.fastForward('forward')
 			}
-		}
-
-		// Increase or decrease volume with arrow keys
-		if (
+		} else if (
 			[38, 40].includes(keyCode) &&
 			(activeElement === this.player.container || activeElement === this.player.elements.volume)
 		) {
+			// Increase or decrease volume with arrow keys
 			if (keyCode === 38) {
 				this.increaseVolume()
-			} else if (keyCode === 40) {
+			} else {
 				this.decreaseVolume()
 			}
-		}
-
-		// Toggle the media playback with spacebar key
-		if (keyCode === 32 && activeElement === this.player.container) {
+		} else if (keyCode === 32 && activeElement === this.player.container) {
+			// Toggle the media playback with spacebar key
 			this.player.controlBar.togglePlayPause(e)
 		}
 	}
