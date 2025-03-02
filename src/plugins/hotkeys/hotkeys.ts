@@ -22,6 +22,20 @@ export default class Hotkeys {
 	}
 
 	/**
+	 * Initialize
+	 */
+	init() {
+		this.addEvents()		
+	}
+
+	/**
+	 * Add event listeners
+	 */
+	addEvents() {
+		this.player.container.addEventListener('keydown', this.onKeydown)
+	}
+
+	/**
 	 * On keydown event on the media element
 	 * @param e Event listener datas
 	 */
@@ -101,5 +115,12 @@ export default class Hotkeys {
 		this.player.getVolume().then((volume: number) => {
 			this.player.setVolume(Math.max(Math.round((volume - this.player.options.volumeStep) * 10) / 10, 0))
 		})
+	}
+
+	/**
+	 * Destroy the plugin
+	 */
+	destroy() {
+		this.player.container.removeEventListener('keydown', this.onKeydown)
 	}
 }
