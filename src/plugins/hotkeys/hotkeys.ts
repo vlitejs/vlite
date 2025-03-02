@@ -45,7 +45,7 @@ export default class Hotkeys {
 	 * Add event listeners
 	 */
 	addEvents() {
-		this.player.container.addEventListener('keydown', this.onKeydown)
+		this.player.elements.container.addEventListener('keydown', this.onKeydown)
 	}
 
 	/**
@@ -59,14 +59,14 @@ export default class Hotkeys {
 		if (
 			[9, 32, 37, 39].includes(keyCode) &&
 			this.player.autoHideGranted &&
-			(activeElement === this.player.container || activeElement?.closest('.v-vlite'))
+			(activeElement === this.player.elements.container || activeElement?.closest('.v-vlite'))
 		) {
 			// Stop and start the auto hide timer on selected key code
 			this.player.stopAutoHideTimer()
 			this.player.startAutoHideTimer()
 		} else if (
 			[37, 39].includes(keyCode) &&
-			(activeElement === this.player.container || activeElement === this.player.elements.progressBar)
+			(activeElement === this.player.elements.container || activeElement === this.player.elements.progressBar)
 		) {
 			// Backward or forward video with arrow keys
 			e.preventDefault()	// Prevent default behavior on input range
@@ -78,7 +78,7 @@ export default class Hotkeys {
 			}
 		} else if (
 			[38, 40].includes(keyCode) &&
-			(activeElement === this.player.container || activeElement === this.player.elements.volume)
+			(activeElement === this.player.elements.container || activeElement === this.player.elements.volume)
 		) {
 			// Increase or decrease volume with arrow keys
 			if (keyCode === 38) {
@@ -86,7 +86,7 @@ export default class Hotkeys {
 			} else {
 				this.decreaseVolume()
 			}
-		} else if (keyCode === 32 && activeElement === this.player.container) {
+		} else if (keyCode === 32 && activeElement === this.player.elements.container) {
 			// Toggle the media playback with spacebar key
 			this.player.controlBar.togglePlayPause(e)
 		}
@@ -127,6 +127,6 @@ export default class Hotkeys {
 	 * Destroy the plugin
 	 */
 	destroy() {
-		this.player.container.removeEventListener('keydown', this.onKeydown)
+		this.player.elements.container.removeEventListener('keydown', this.onKeydown)
 	}
 }
