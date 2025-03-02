@@ -202,9 +202,7 @@ The player controls can be customized with the following parameters:
 | `playPause`             |   `Boolean`    | `true`  | Display the play/pause button on the control bar                             |
 | `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar                                  |
 | `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar                              |
-| `seekTime`              |   `Number`     |  `5`    | Set seek time seconds of the backward and forward shortcuts                  |
 | `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar                                 |
-| `volumeStep`            |   `Number`     |  `0.1`  | Set the volume step (between 0 and 1) of the increase and decrease shortcuts |
 | `fullscreen`&sup1; ⁴    |   `Boolean`    | `true`  | Display the fullscreen button on the control bar                             |
 | `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                                               |
 | `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video                              |
