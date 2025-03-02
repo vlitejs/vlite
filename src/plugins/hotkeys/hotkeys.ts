@@ -33,7 +33,7 @@ export default class Hotkeys {
 		this.seekTime = this.options.seekTime ?? 5
 		this.volumeStep = this.options.volumeStep ?? 0.1
 
-		this.player.onKeydown = this.onKeydown.bind(this)
+		this.onKeydown = this.onKeydown.bind(this)
 	}
 
 	/**
