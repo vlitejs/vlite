@@ -1,6 +1,6 @@
 {
 	"name": "vlitejs",
-	"version": "7.2.0",
+	"version": "7.2.1",
 	"description": "vLitejs is a fast and lightweight Javascript library for customizing video and audio player in Javascript with a minimalist theme (HTML5, Youtube, Vimeo, Dailymotion)",
 	"keywords": [
 		"video",

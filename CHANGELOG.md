@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.2.1
+
+### Fixes
+
+- Update loader overlay to make the control bar accessible during loading by [@rtritto](https://github.com/rtritto) ([#155](https://github.com/vlitejs/vlite/pull/155))
+
 ## 7.2.0
 
 ### Fixes
