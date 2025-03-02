@@ -16,7 +16,7 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100%;
+		height: calc(100% - var(--vlite-controlBarHeight));
 		opacity: 0;
 		visibility: hidden;
 		z-index: 5;
@@ -29,6 +29,8 @@
 		margin: 0 auto;
 		width: 70px;
 		text-align: center;
+		position: relative;
+		top: calc(var(--vlite-controlBarHeight) / 2);
 
 		& > div {
 			width: 18px;
