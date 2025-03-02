@@ -74,7 +74,7 @@ export default class Hotkeys {
 			if (keyCode === 37) {
 				this.fastForward('backward')
 			} else {
-				this.player.fastForward('forward')
+				this.fastForward('forward')
 			}
 		} else if (
 			[38, 40].includes(keyCode) &&
