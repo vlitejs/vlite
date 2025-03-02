@@ -20,9 +20,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		playPause: true,
 		progressBar: true,
 		time: true,
-		seekTime: 5,
 		volume: true,
-		volumeStep: 0.1,
 		loop: false
 	},
 	video: {
@@ -31,9 +29,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		playPause: true,
 		progressBar: true,
 		time: true,
-		seekTime: 5,
 		volume: true,
-		volumeStep: 0.1,
 		fullscreen: true,
 		poster: null,
 		bigPlay: true,

@@ -1,11 +1,22 @@
-import type { pluginParameter } from 'shared/assets/types/types.js'
+import type Player from 'core/player.js'
+
+type HotkeysPluginParameter = {
+	player: Player
+	options: {
+		seekTime?: number
+		volumeStep?: number
+	}
+}
 
 /**
- * Vlitejs Volume bar plugin
+ * Vlitejs Hotkeys plugin
  * @module Vlitejs/plugins/Hotkeys
  */
 export default class Hotkeys {
 	player: any
+	options: any
+	seekTime: number
+	volumeStep: number
 
 	providers = ['html5', 'youtube', 'dailymotion', 'vimeo']
 	types = ['video', 'audio']
@@ -14,9 +25,13 @@ export default class Hotkeys {
 	 * @constructor
 	 * @param options
 	 * @param options.player Player instance
+	 * @param options.options Plugins options
 	 */
-	constructor({ player }: pluginParameter) {
+	constructor({ player, options = {} }: HotkeysPluginParameter) {
 		this.player = player
+		this.options = options
+		this.seekTime = this.options.seekTime ?? 5
+		this.volumeStep = this.options.volumeStep ?? 0.1
 
 		this.player.onKeydown = this.onKeydown.bind(this)
 	}
@@ -93,7 +108,7 @@ export default class Hotkeys {
 	fastForward(direction: string) {
 		this.player.getCurrentTime().then((seconds: number) => {
 			this.player.seekTo(
-				direction === 'backward' ? seconds - this.player.options.seekTime : seconds + this.player.options.seekTime
+				direction === 'backward' ? seconds - this.seekTime : seconds + this.seekTime
 			)
 		})
 	}
@@ -104,7 +119,7 @@ export default class Hotkeys {
 	increaseVolume() {
 		this.player.isMuted && this.player.unMute()
 		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(Math.min(Math.round((volume + this.player.options.volumeStep) * 10) / 10, 1))
+			this.player.setVolume(Math.min(Math.round((volume + this.volumeStep) * 10) / 10, 1))
 		})
 	}
 
@@ -113,7 +128,7 @@ export default class Hotkeys {
 	 */
 	decreaseVolume() {
 		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(Math.max(Math.round((volume - this.player.options.volumeStep) * 10) / 10, 0))
+			this.player.setVolume(Math.max(Math.round((volume - this.volumeStep) * 10) / 10, 0))
 		})
 	}
 

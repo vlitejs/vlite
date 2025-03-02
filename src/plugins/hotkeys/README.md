@@ -44,3 +44,19 @@ new Vlitejs('#player', {
   plugins: ['hotkeys']
 });
 ```
+
+## Configuration
+
+The plugin allows customization with an optional object as the third parameter of the `registerPlugin` function.
+
+| Event Type   |    Type    | Default | Description                                                                  |
+| ------------ | :--------: | :-----: | ---------------------------------------------------------------------------- |
+| `seekTime`   |  `Number`  |   `5`   | Set seek time seconds of the backward and forward shortcuts                  |
+| `volumeStep` |  `Number`  |  `0.1`  | Set the volume step (between 0 and 1) of the increase and decrease shortcuts |
+
+```js
+Vlitejs.registerPlugin('hotkeys', VlitejsHotkeys, {
+  seekTime: 3,
+  volumeStep: 0.2
+});
+```
