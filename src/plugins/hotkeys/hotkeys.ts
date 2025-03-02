@@ -1,6 +1,6 @@
 import type Player from 'core/player.js'
 
-type HotkeysPluginParameter = {
+type pluginParameter = {
 	player: Player
 	options: {
 		seekTime?: number
@@ -25,7 +25,7 @@ export default class Hotkeys {
 	 * @param options
 	 * @param options.player Player instance
 	 */
-	constructor({ player, options = {} }: HotkeysPluginParameter) {
+	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
 		this.seekTime = options.seekTime ?? 5
 		this.volumeStep = options.volumeStep ?? 0.1
