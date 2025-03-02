@@ -58,12 +58,12 @@ export default class Hotkeys {
 
 		if (
 			[9, 32, 37, 39].includes(keyCode) &&
-			this.player.autoHideGranted &&
+			this.player.Vlitejs.autoHideGranted &&
 			(activeElement === this.player.elements.container || activeElement?.closest('.v-vlite'))
 		) {
 			// Stop and start the auto hide timer on selected key code
-			this.player.stopAutoHideTimer()
-			this.player.startAutoHideTimer()
+			this.player.Vlitejs.stopAutoHideTimer()
+			this.player.Vlitejs.startAutoHideTimer()
 		} else if (
 			[37, 39].includes(keyCode) &&
 			(activeElement === this.player.elements.container || activeElement === this.player.elements.progressBar)
