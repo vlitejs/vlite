@@ -49,7 +49,6 @@ Sizes of the `vlitejs` bundle compared to the competition:
 - [**Hotkeys**](./src/plugins/hotkeys/README.md) - Supports for hotkeys to add keyboard shortcuts.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
-- [**Shortcuts**](#shortcuts) - Supports keyboard shortcuts.
 - **Accessibility** - W3C and A11Y valid.
 
 [![Image of vLitejs](https://yoriiis.github.io/cdn/static/vlitejs/demo-screenshot.jpg)](https://vlite.js.org)
