@@ -15,6 +15,7 @@ Each plugin can be loaded on demand with the API.
 | [AirPlay](./airplay/README.md)        | Supports for Apple AirPlay API             |
 | [Ima](./ima/README.md)                | Supports for Google IMA SDK                |
 | [Sticky](./sticky/README.md)          | Supports for sticky mode                   |
+| [Mobile](./mobile/README.md)          | Supports for mobile                        |
 
 ## Create a custom plugin
 
