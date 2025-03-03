@@ -46,7 +46,7 @@ Sizes of the `vlitejs` bundle compared to the competition:
 - [**Cast**](./src/plugins/cast/README.md) - Supports for Google Cast API.
 - [**AirPlay**](./src/plugins/airplay/README.md) - Supports for Apple AirPlay API.
 - [**Monetization**](./src/plugins/ima/README.md) - Supports for Google IMA SDK.
-- [**Hotkeys**](./src/plugins/hotkeys/README.md) - Supports for hotkeys to add shortcuts.
+- [**Hotkeys**](./src/plugins/hotkeys/README.md) - Supports for hotkeys to add keyboard shortcuts.
 - **Playsinline** - Supports the `playsinline` attribute.
 - **SVG icons** - SVG are inlined into the library, no sprites to includes.
 - [**Shortcuts**](#shortcuts) - Supports keyboard shortcuts.

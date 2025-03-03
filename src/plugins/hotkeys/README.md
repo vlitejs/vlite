@@ -1,6 +1,6 @@
 # Plugin: Hotkeys
 
-Supports for hotkeys to add shortcuts.
+Supports for hotkeys to add keyboard shortcuts.
 
 The player accepts the following keyboard shortcuts.
 
