@@ -38,7 +38,7 @@ export default class Hotkeys {
 	 * Initialize
 	 */
 	init() {
-		this.addEvents()		
+		this.addEvents()
 	}
 
 	/**
@@ -64,21 +64,29 @@ export default class Hotkeys {
 			// Stop and start the auto hide timer on selected key code
 			this.player.Vlitejs.stopAutoHideTimer()
 			this.player.Vlitejs.startAutoHideTimer()
-		} else if (
+		}
+
+		if (
 			[37, 39].includes(keyCode) &&
-			(activeElement === this.player.elements.container || activeElement === this.player.elements.progressBar)
+			(activeElement === this.player.elements.container ||
+				activeElement === this.player.elements.progressBar)
 		) {
 			// Backward or forward video with arrow keys
-			e.preventDefault()	// Prevent default behavior on input range
+			e.preventDefault() // Prevent default behavior on input range
 
 			this.fastForward(keyCode === 37 ? 'backward' : 'forward')
-		} else if (
+		}
+
+		if (
 			[38, 40].includes(keyCode) &&
-			(activeElement === this.player.elements.container || activeElement === this.player.elements.volume)
+			(activeElement === this.player.elements.container ||
+				activeElement === this.player.elements.volume)
 		) {
 			// Increase or decrease volume with arrow keys
 			keyCode === 38 ? this.increaseVolume() : this.decreaseVolume()
-		} else if (keyCode === 32 && activeElement === this.player.elements.container) {
+		}
+
+		if (keyCode === 32 && activeElement === this.player.elements.container) {
 			// Toggle the media playback with spacebar key
 			this.player.controlBar.togglePlayPause(e)
 		}
