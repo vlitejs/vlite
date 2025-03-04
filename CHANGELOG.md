@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 7.3.0
+
+### Updates
+
+- Improve plugin options by [@rtritto](https://github.com/rtritto) ([#167](https://github.com/vlitejs/vlite/pull/167))
+- Move keyboard shortcuts in a new plugin `hotkeys` by [@rtritto](https://github.com/rtritto) ([#165](https://github.com/vlitejs/vlite/pull/165))
+
 ## 7.2.1
 
 ### Fixes
