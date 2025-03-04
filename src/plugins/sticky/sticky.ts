@@ -179,7 +179,9 @@ export default class Sticky {
 	 * @returns Sticky is granted
 	 */
 	isStickyGranted() {
-		return !this.stickyIsClosed && this.isOutViewport && (this.mode === 'instant' || this.isPlayerSeen)
+		return (
+			!this.stickyIsClosed && this.isOutViewport && (this.mode === 'instant' || this.isPlayerSeen)
+		)
 	}
 
 	/**
