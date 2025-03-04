@@ -9,6 +9,7 @@ import VlitejsCast from '../../dist/plugins/cast.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
+import VlitejsHotkeys from '../../dist/plugins/hotkeys.js'
 import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
@@ -24,6 +25,10 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 })
 Vlitejs.registerPlugin('airplay', VlitejsAirplay)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
+Vlitejs.registerPlugin('hotkeys', VlitejsHotkeys, {
+	seekStep: 3,
+	volumeStep: 0.2
+})
 
 /* eslint-disable no-unused-vars */
 const vlite = new Vlitejs('#player', {
@@ -42,7 +47,7 @@ const vlite = new Vlitejs('#player', {
 		muted: false,
 		autoHide: true
 	},
-	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar'],
+	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar', 'hotkeys'],
 	onReady: (player) => {
 		console.log(player)
 

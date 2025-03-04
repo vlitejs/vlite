@@ -20,9 +20,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		playPause: true,
 		progressBar: true,
 		time: true,
-		seekTime: 5,
 		volume: true,
-		volumeStep: 0.1,
 		loop: false
 	},
 	video: {
@@ -31,9 +29,7 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 		playPause: true,
 		progressBar: true,
 		time: true,
-		seekTime: 5,
 		volume: true,
-		volumeStep: 0.1,
 		fullscreen: true,
 		poster: null,
 		bigPlay: true,
@@ -134,7 +130,6 @@ class Vlitejs {
 
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
-		this.onKeydown = this.onKeydown.bind(this)
 		this.onMousemove = this.onMousemove.bind(this)
 		this.onChangeFullScreen = this.onChangeFullScreen.bind(this)
 
@@ -207,7 +202,6 @@ class Vlitejs {
 			this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
 			document.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
-		this.container.addEventListener('keydown', this.onKeydown)
 	}
 
 	/**
@@ -246,57 +240,6 @@ class Vlitejs {
 	}
 
 	/**
-	 * On keydown event on the media element
-	 * @param e Event listener datas
-	 */
-	onKeydown(e: KeyboardEvent) {
-		const activeElement = document.activeElement
-		const { keyCode } = e
-
-		// Stop and start the auto hide timer on selected key code
-		if (
-			[9, 32, 37, 39].includes(keyCode) &&
-			this.autoHideGranted &&
-			(activeElement === this.container || activeElement?.closest('.v-vlite'))
-		) {
-			this.stopAutoHideTimer()
-			this.startAutoHideTimer()
-		}
-
-		// Backward or forward video with arrow keys
-		if (
-			[37, 39].includes(keyCode) &&
-			(activeElement === this.container || activeElement === this.player.elements.progressBar)
-		) {
-			// Prevent default behavior on input range
-			e.preventDefault()
-
-			if (keyCode === 37) {
-				this.fastForward('backward')
-			} else if (keyCode === 39) {
-				this.fastForward('forward')
-			}
-		}
-
-		// Increase or decrease volume with arrow keys
-		if (
-			[38, 40].includes(keyCode) &&
-			(activeElement === this.container || activeElement === this.player.elements.volume)
-		) {
-			if (keyCode === 38) {
-				this.increaseVolume()
-			} else if (keyCode === 40) {
-				this.decreaseVolume()
-			}
-		}
-
-		// Toggle the media playback with spacebar key
-		if (keyCode === 32 && activeElement === this.container) {
-			this.player.controlBar.togglePlayPause(e)
-		}
-	}
-
-	/**
 	 * On mousemove on the player
 	 */
 	onMousemove() {
@@ -314,37 +257,6 @@ class Vlitejs {
 		if (!document[this.supportFullScreen.isFullScreen] && this.player.isFullScreen) {
 			this.player.exitFullscreen({ escKey: true })
 		}
-	}
-
-	/**
-	 * Trigger the video fast forward (front and rear)
-	 * @param direction Direction (backward|forward)
-	 */
-	fastForward(direction: string) {
-		this.player.getCurrentTime().then((seconds: number) => {
-			this.player.seekTo(
-				direction === 'backward' ? seconds - this.options.seekTime : seconds + this.options.seekTime
-			)
-		})
-	}
-
-	/**
-	 * Increase the player volume
-	 */
-	increaseVolume() {
-		this.player.isMuted && this.player.unMute()
-		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(Math.min(Math.round((volume + this.options.volumeStep) * 10) / 10, 1))
-		})
-	}
-
-	/**
-	 * Decrease the player volume
-	 */
-	decreaseVolume() {
-		this.player.getVolume().then((volume: number) => {
-			this.player.setVolume(Math.max(Math.round((volume - this.options.volumeStep) * 10) / 10, 0))
-		})
 	}
 
 	/**
@@ -372,8 +284,6 @@ class Vlitejs {
 	 * Remove events listeners
 	 */
 	removeEvents() {
-		this.container.removeEventListener('keydown', this.onKeydown)
-
 		if (this.type === 'video') {
 			this.container.removeEventListener('click', this.onClickOnPlayer)
 			this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
