@@ -83,7 +83,7 @@ export default class Hotkeys {
 				activeElement === this.player.elements.volume)
 		) {
 			// Increase or decrease volume with arrow keys
-			e.preventDefault() // Prevent the scroll of the page
+			e.preventDefault() // Prevent the vertical scroll of the page
 
 			keyCode === 38 ? this.increaseVolume() : this.decreaseVolume()
 		}
