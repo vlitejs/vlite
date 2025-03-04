@@ -1,6 +1,6 @@
 import './sticky.css'
-import svgClose from 'shared/assets/svgs/close.svg'
 import type Player from 'core/player.js'
+import svgClose from 'shared/assets/svgs/close.svg'
 
 type WindowSizes = {
 	clientWidth: number
@@ -179,11 +179,7 @@ export default class Sticky {
 	 * @returns Sticky is granted
 	 */
 	isStickyGranted() {
-		return (
-			!this.stickyIsClosed &&
-			this.isOutViewport &&
-			(this.mode === 'instant' || this.isPlayerSeen)
-		)
+		return !this.stickyIsClosed && this.isOutViewport && (this.mode === 'instant' || this.isPlayerSeen)
 	}
 
 	/**
