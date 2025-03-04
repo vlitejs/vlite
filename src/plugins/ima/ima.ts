@@ -1,5 +1,20 @@
 import './ima.css'
-import type { Constructable, pluginParameter } from 'shared/assets/types/types.js'
+import type Player from 'core/player.js'
+import type { Constructable } from 'shared/assets/types/types.js'
+
+type pluginParameter = {
+	player: Player
+	options: {
+		adTagUrl?: string
+		adsRenderingSettings?: {
+			restoreCustomPlaybackStateOnAdBreakComplete: boolean
+			enablePreloading: boolean
+		}
+		updateImaSettings?: (settings: any) => void
+		adTimeout?: number
+		debug?: boolean
+	}
+}
 
 declare global {
 	interface Window {
@@ -66,7 +81,6 @@ type ImaEvent = {
  */
 export default class ImaPlugin {
 	player: any
-	options: any
 	playerIsReady: boolean
 	sdkIsReady: boolean
 	currentAd!: any
@@ -83,6 +97,14 @@ export default class ImaPlugin {
 	playIsWaiting: boolean
 	isLinearAd: boolean
 	playerIsEnded: boolean
+	adTagUrl: string
+	adsRenderingSettings: {
+		restoreCustomPlaybackStateOnAdBreakComplete: boolean
+		enablePreloading: boolean
+	}
+	updateImaSettings: (settings: any) => void
+	adTimeout: number
+	debug: boolean
 
 	providers = ['html5']
 	types = ['video']
@@ -96,18 +118,14 @@ export default class ImaPlugin {
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
 
-		const defaultOptions = {
-			adTagUrl: '',
-			adsRenderingSettings: {
-				restoreCustomPlaybackStateOnAdBreakComplete: true,
-				enablePreloading: true
-			},
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			updateImaSettings: () => {},
-			adTimeout: 5000,
-			debug: false
+		this.adTagUrl = options.adTagUrl ?? ''
+		this.adsRenderingSettings = options.adsRenderingSettings ?? {
+			restoreCustomPlaybackStateOnAdBreakComplete: true,
+			enablePreloading: true
 		}
-		this.options = { ...defaultOptions, ...options }
+		this.updateImaSettings = options.updateImaSettings ?? ((_settings: any) => {})
+		this.adTimeout = options.adTimeout ?? 5000
+		this.debug = options.debug ?? false
 
 		this.playerIsReady = false
 		this.sdkIsReady = false
@@ -154,7 +172,7 @@ export default class ImaPlugin {
 		const script = document.createElement('script')
 		script.defer = true
 		script.type = 'text/javascript'
-		script.src = `//imasdk.googleapis.com/js/sdkloader/ima3${this.options.debug ? '_debug' : ''}.js`
+		script.src = `//imasdk.googleapis.com/js/sdkloader/ima3${this.debug ? '_debug' : ''}.js`
 		script.onload = () => {
 			this.sdkIsReady = true
 			this.onPlayerAndSdkReady()
@@ -236,8 +254,8 @@ export default class ImaPlugin {
 	initAdObjects() {
 		this.adsLoaded = false
 		window.google.ima.settings.setDisableCustomPlaybackForIOS10Plus(this.player.options.playsinline)
-		if (this.options.updateImaSettings instanceof Function) {
-			this.options.updateImaSettings(window.google.ima.settings)
+		if (this.updateImaSettings instanceof Function) {
+			this.updateImaSettings(window.google.ima.settings)
 		}
 
 		this.adDisplayContainer = new window.google.ima.AdDisplayContainer(
@@ -266,7 +284,7 @@ export default class ImaPlugin {
 	 */
 	requestAds() {
 		const adsRequest = new window.google.ima.AdsRequest()
-		adsRequest.adTagUrl = this.options.adTagUrl
+		adsRequest.adTagUrl = this.adTagUrl
 		adsRequest.linearAdSlotWidth = this.player.media.clientWidth
 		adsRequest.linearAdSlotHeight = this.player.media.clientHeight
 		adsRequest.nonLinearAdSlotWidth = this.player.media.clientWidth
@@ -289,7 +307,7 @@ export default class ImaPlugin {
 				window.google.ima.UiElements.AD_ATTRIBUTION,
 				window.google.ima.UiElements.COUNTDOWN
 			],
-			...this.options.adsRenderingSettings
+			...this.adsRenderingSettings
 		}
 		this.adsManager = adsManagerLoadedEvent.getAdsManager(this.player.media, adsRenderingSettings)
 
@@ -505,7 +523,7 @@ export default class ImaPlugin {
 
 		this.timerAdTimeout = window.setTimeout(() => {
 			this.onAdTimeoutReached()
-		}, this.options.adTimeout)
+		}, this.adTimeout)
 	}
 
 	/**

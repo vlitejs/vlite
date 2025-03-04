@@ -1,10 +1,20 @@
 import './sticky.css'
 import svgClose from 'shared/assets/svgs/close.svg'
-import type { pluginParameter } from 'shared/assets/types/types.js'
+import type Player from 'core/player.js'
 
 type WindowSizes = {
 	clientWidth: number
 	innerHeight: number
+}
+
+type pluginParameter = {
+	player: Player
+	options: {
+		mode?: string
+		width?: number
+		offset?: number
+		ratio?: number
+	}
 }
 
 /**
@@ -13,7 +23,6 @@ type WindowSizes = {
  */
 export default class Sticky {
 	player: any
-	options: any
 	closeStickyButton!: HTMLElement
 	windowSizes: WindowSizes
 	isSticky: boolean
@@ -22,6 +31,10 @@ export default class Sticky {
 	isOutViewport: null | boolean
 	observer!: IntersectionObserver
 	resizeTimer!: number
+	mode: string
+	width: number
+	offset: number
+	ratio: number
 
 	providers = ['html5', 'youtube', 'dailymotion', 'vimeo']
 	types = ['video']
@@ -34,16 +47,12 @@ export default class Sticky {
 	 */
 	constructor({ player, options = {} }: pluginParameter) {
 		this.player = player
-		this.options = options
 
-		const DEFAULTS = {
-			mode: 'on',
-			width: 400,
-			offset: 20,
-			ratio: 16 / 9
-		}
+		this.mode = options.mode ?? 'on'
+		this.width = options.width ?? 400
+		this.offset = options.offset ?? 20
+		this.ratio = options.ratio ?? 16 / 9
 
-		this.options = { ...DEFAULTS, ...this.options }
 		this.windowSizes = {
 			clientWidth: document.documentElement.clientWidth,
 			innerHeight: window.innerHeight
@@ -173,7 +182,7 @@ export default class Sticky {
 		return (
 			!this.stickyIsClosed &&
 			this.isOutViewport &&
-			(this.options.mode === 'instant' || this.isPlayerSeen)
+			(this.mode === 'instant' || this.isPlayerSeen)
 		)
 	}
 
@@ -186,11 +195,11 @@ export default class Sticky {
 		this.isSticky = true
 		this.player.elements.outerContainer.classList.add('v-sticky')
 
-		const height = this.options.width / this.options.ratio
-		const x = this.windowSizes.clientWidth - this.options.width - this.options.offset
-		const y = this.windowSizes.innerHeight - height - this.options.offset
+		const height = this.width / this.ratio
+		const x = this.windowSizes.clientWidth - this.width - this.offset
+		const y = this.windowSizes.innerHeight - height - this.offset
 
-		this.player.elements.container.style.width = `${this.options.width}px`
+		this.player.elements.container.style.width = `${this.width}px`
 		this.player.elements.container.style.height = `${height}px`
 
 		this.player.elements.container.style.transform = `translate3d(${x}px, ${y}px, 0)`
