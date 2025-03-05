@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.3.1
+
+### Fixes
+
+- Prevent vertical scroll page on the volume hotkeys by [@rtritto](https://github.com/rtritto) ([#168](https://github.com/vlitejs/vlite/pull/168))
+
 ## 7.3.0
 
 ### Updates
