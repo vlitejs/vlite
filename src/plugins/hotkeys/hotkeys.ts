@@ -53,42 +53,27 @@ export default class Hotkeys {
 	 * @param e Event listener datas
 	 */
 	onKeydown(e: KeyboardEvent) {
-		const activeElement = document.activeElement
 		const { keyCode } = e
-
-		if (
-			[9, 32, 37, 39].includes(keyCode) &&
-			this.player.Vlitejs.autoHideGranted &&
-			(activeElement === this.player.elements.container || activeElement?.closest('.v-vlite'))
-		) {
+		if ([9, 32, 37, 39].includes(keyCode)) {
 			// Stop and start the auto hide timer on selected key code
 			this.player.Vlitejs.stopAutoHideTimer()
 			this.player.Vlitejs.startAutoHideTimer()
 		}
-
-		if (
-			[37, 39].includes(keyCode) &&
-			(activeElement === this.player.elements.container ||
-				activeElement === this.player.elements.progressBar)
-		) {
-			// Backward or forward video with arrow keys
+		if (keyCode === 37 || keyCode === 39) {
 			e.preventDefault() // Prevent default behavior on input range
-
+			// Backward or forward video with arrow keys
 			this.fastForward(keyCode === 37 ? 'backward' : 'forward')
 		}
-
-		if (
-			[38, 40].includes(keyCode) &&
-			(activeElement === this.player.elements.container ||
-				activeElement === this.player.elements.volume)
-		) {
-			// Increase or decrease volume with arrow keys
+		if (keyCode === 38 || keyCode === 40) {
 			e.preventDefault() // Prevent the vertical scroll of the page
-
-			keyCode === 38 ? this.increaseVolume() : this.decreaseVolume()
+			// Increase or decrease volume with arrow keys
+			if (keyCode === 38) {
+				this.increaseVolume()
+			} else {
+				this.decreaseVolume()
+			}
 		}
-
-		if (keyCode === 32 && activeElement === this.player.elements.container) {
+		if (keyCode === 32) {
 			// Toggle the media playback with spacebar key
 			this.player.controlBar.togglePlayPause(e)
 		}
