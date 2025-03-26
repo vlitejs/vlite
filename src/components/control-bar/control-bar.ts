@@ -106,7 +106,7 @@ export default class ControlBar {
 		e.preventDefault()
 
 		const target = e.target as HTMLInputElement
-		const max = Number.parseFloat(target.getAttribute('max') || '100')
+		const max = +(target.getAttribute('max') || '100')
 		const clientRect = target.getBoundingClientRect()
 		const percentage = ((e.changedTouches[0].clientX - clientRect.left) / clientRect.width) * 100
 		target.value = `${(percentage * 100) / max}`
@@ -125,7 +125,7 @@ export default class ControlBar {
 		this.player.elements.outerContainer.classList.contains('v-firstStart') && this.player.play()
 
 		this.player.getDuration().then((duration: number) => {
-			this.player.seekTo((Number.parseFloat(target.value) * duration) / 100)
+			this.player.seekTo((+target.value * duration) / 100)
 		})
 	}
 

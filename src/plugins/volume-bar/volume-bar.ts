@@ -86,7 +86,7 @@ export default class VolumeBar {
 	 */
 	onInputVolumeBar(e: Event) {
 		const target = e.target as HTMLInputElement
-		const value = Number.parseFloat(target.value)
+		const value = +target.value
 
 		this.updateVolumeBar(value)
 		target.setAttribute('aria-valuenow', `${Math.round(value)}`)

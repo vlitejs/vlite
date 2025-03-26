@@ -53,7 +53,7 @@ export default class Subtitle {
 				'.v-subtitlesList'
 			) as HTMLElement
 			this.subtitlesListCssTransitionDuration =
-				Number.parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
+				+window.getComputedStyle(this.subtitlesList).transitionDuration * 1000
 
 			this.addEvents()
 		}
