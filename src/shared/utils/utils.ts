@@ -33,19 +33,20 @@ export function formatVideoTime(time: number): string {
  * @returns Fullscreen utils functions
  */
 export function checkSupportFullScreen(): FullScreenSupport {
-  const support = [
-    'requestFullscreen,exitFullscreen,fullscreenchange,fullscreenElement',
-    'webkitRequestFullscreen,webkitExitFullscreen,webkitfullscreenchange,webkitFullscreenElement',
-    'mozRequestFullScreen,mozCancelFullScreen,mozfullscreenchange,mozFullScreenElement',
-    'webkitEnterFullscreen,webkitExitFullscreen,webkitfullscreenchange,webkitDisplayingFullscreen'
-  ]
-  const items: string[] = (support.find((e) => document[e.split(',')[0]] instanceof Function) || support[0]).split(',');
-  return {
-    requestFn: items[0],
-    cancelFn: items[1],
-    changeEvent: items[2],
-    isFullScreen: items[3]
-  }
+	const support = [
+		'requestFullscreen,exitFullscreen,fullscreenchange,fullscreenElement',
+		'webkitRequestFullscreen,webkitExitFullscreen,webkitfullscreenchange,webkitFullscreenElement', // older Chrome
+		'mozRequestFullScreen,mozCancelFullScreen,mozfullscreenchange,mozFullScreenElement', // older Firefox
+		'webkitEnterFullscreen,webkitExitFullscreen,webkitfullscreenchange,webkitDisplayingFullscreen' // Safari
+	]
+	const el = document.createElement('video') // on Safari fullscreen is supported only on <video>
+	const items: string[] = (support.find((e) => (el as any)[e.split(',')[0]] instanceof Function) || support[0]).split(',')
+	return {
+		requestFn: items[0],
+		cancelFn: items[1],
+		changeEvent: items[2],
+		isFullScreen: items[3]
+	}
 }
 
 /**

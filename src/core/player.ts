@@ -467,11 +467,27 @@ export default abstract class Player {
 	 * Request the fullscreen
 	 */
 	requestFullscreen() {
-		const { requestFn } = this.Vlitejs.supportFullScreen
+		const { requestFn, cancelFn, isFullScreen } = this.Vlitejs.supportFullScreen
 
 		// @ts-ignore: Object is possibly 'null'.
 		if (this.media[requestFn]) {
 			// Request fullscreen on parentNode player, to display custom controls
+			if (!(requestFn in this.elements.container)) { // Safari
+					let watcher: number | undefined
+					(this.elements.container as any)[requestFn] = () => {
+					watcher = setInterval(() => {
+						if (!(this.media as any)[isFullScreen])
+							this.exitFullscreen()
+					}, 200)
+					// @ts-ignore: Object is possibly 'null'.
+					this.media[requestFn]()
+				}
+				document[cancelFn] = () => {
+					clearInterval(watcher)
+					// @ts-ignore: Object is possibly 'null'.
+					this.media[cancelFn]()
+				}
+			}
 			// @ts-ignore: Object is possibly 'null'.
 			this.elements.container[requestFn]()
 			this.isFullScreen = true
