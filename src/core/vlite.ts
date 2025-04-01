@@ -123,11 +123,6 @@ class Vlitejs {
 		this.autoHideGranted =
 			this.type === 'video' && !!this.options.autoHide && !!this.options.controls
 
-		// Disable fullscreen on iPhone, not supported yet
-		if (/(iPhone)/gi.test(window.navigator.userAgent)) {
-			this.options.fullscreen = false
-		}
-
 		this.onClickOnPlayer = this.onClickOnPlayer.bind(this)
 		this.onDoubleClickOnPlayer = this.onDoubleClickOnPlayer.bind(this)
 		this.onMousemove = this.onMousemove.bind(this)

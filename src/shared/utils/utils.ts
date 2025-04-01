@@ -33,32 +33,19 @@ export function formatVideoTime(time: number): string {
  * @returns Fullscreen utils functions
  */
 export function checkSupportFullScreen(): FullScreenSupport {
-	const prefix = getBrowserPrefix()
-
-	return {
-		requestFn: prefix ? `${prefix}RequestFullScreen` : 'requestFullscreen',
-		cancelFn: prefix ? `${prefix}ExitFullscreen` : 'exitFullscreen',
-		changeEvent: prefix ? `${prefix}fullscreenchange` : 'fullscreenchange',
-		isFullScreen: prefix ? `${prefix}FullscreenElement` : 'fullscreenElement'
-	}
-}
-
-/**
- * Get browser prefix used by the fullscreen API
- * @returns Browser prefix (webkit|moz|ms)
- */
-export function getBrowserPrefix(): string {
-	if (document.exitFullscreen instanceof Function) return ''
-
-	const prefixs = ['webkit', 'moz', 'ms']
-
-	return (
-		prefixs.find(
-			(prefix: string) =>
-				document[`${prefix}ExitFullscreen`] instanceof Function ||
-				document[`${prefix}CancelFullScreen`] instanceof Function
-		) || ''
-	)
+  const support = [
+    'requestFullscreen,exitFullscreen,fullscreenchange,fullscreenElement',
+    'webkitRequestFullscreen,webkitExitFullscreen,webkitfullscreenchange,webkitFullscreenElement',
+    'mozRequestFullScreen,mozCancelFullScreen,mozfullscreenchange,mozFullScreenElement',
+    'webkitEnterFullscreen,webkitExitFullscreen,webkitfullscreenchange,webkitDisplayingFullscreen'
+  ]
+  const items: string[] = (support.find((e) => document[e.split(',')[0]] instanceof Function) || support[0]).split(',');
+  return {
+    requestFn: items[0],
+    cancelFn: items[1],
+    changeEvent: items[2],
+    isFullScreen: items[3]
+  }
 }
 
 /**
