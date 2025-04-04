@@ -54,7 +54,7 @@ export default class Hotkeys {
 	 */
 	onKeydown(e: KeyboardEvent) {
 		const { keyCode } = e
-		if ([9, 32, 37, 39].includes(keyCode)) {
+		if ([9, 32, 37, 39].includes(keyCode) && this.player.Vlitejs.autoHideGranted) {
 			// Stop and start the auto hide timer on selected key code
 			this.player.Vlitejs.stopAutoHideTimer()
 			this.player.Vlitejs.startAutoHideTimer()
