@@ -222,9 +222,11 @@ export default class ControlBar {
 	 */
 	isOrientationApiAvailable() {
 		return (
-			window.screen.orientation &&
-			// @ts-ignore
-			!window.screen.mozOrientation
+			typeof window.screen.orientation !== 'undefined' &&
+			// @ts-ignore: Ignore TypeScript error for lock/unlock methods
+			typeof window.screen.orientation.lock === 'function' &&
+			// @ts-ignore: Ignore TypeScript error for unlock method
+			typeof window.screen.orientation.unlock === 'function'
 		)
 	}
 
