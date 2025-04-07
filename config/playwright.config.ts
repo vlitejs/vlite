@@ -9,6 +9,12 @@ export default defineConfig({
 		timeout: 60 * 1000,
 		reuseExistingServer: !process.env.CI
 	},
+	reporter: !process.env.GITHUB_ACTIONS
+		? [
+				['list', { printSteps: true, forceColor: true }],
+				['html', { open: 'never' }]
+			]
+		: 'html',
 	projects: [
 		{
 			name: 'Chrome Desktop',
