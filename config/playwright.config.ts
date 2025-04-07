@@ -15,6 +15,12 @@ export default defineConfig({
 				['html', { open: 'never' }]
 			]
 		: 'html',
+	use: {
+		actionTimeout: 0,
+		trace: process.env.GITHUB_ACTIONS ? 'retain-on-failure' : 'on',
+		screenshot: process.env.GITHUB_ACTIONS ? 'only-on-failure' : 'on',
+		video: process.env.GITHUB_ACTIONS ? 'retain-on-failure' : 'on'
+	},
 	projects: [
 		{
 			name: 'Chrome Desktop',
