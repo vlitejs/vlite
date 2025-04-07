@@ -2,3 +2,4 @@ node_modules/
 dist
 lib
 test-results
+playwright-report

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 const providers = ['html5', 'youtube', 'vimeo', 'dailymotion']
 
