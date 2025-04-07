@@ -56,3 +56,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - name: Deploy to Netlify
+        run: |
+          npx netlify deploy --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --dir playwright-report --message "Deploy to Netlify"
