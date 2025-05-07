@@ -2,7 +2,8 @@
 
 Supports for volume bar to adjust the media volume.
 
-> **Note** Available on screen more than `500px`.
+> [!NOTE]
+> Available on screen more than `500px`.
 
 ## Overview
 

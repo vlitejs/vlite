@@ -76,6 +76,7 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 });
 ```
 
+> [!NOTE]
 > The `images` field automatically displays the poster available in the [Vlitejs options](../../../README.md#Options).
 
 See the [Metadata](https://developers.google.com/cast/docs/reference/web_sender/chrome.cast.media.GenericMediaMetadata) reference for available fields.

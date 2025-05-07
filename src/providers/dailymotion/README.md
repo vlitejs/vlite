@@ -2,7 +2,8 @@
 
 Supports for Dailymotion player with the [Dailymotion player API](https://developers.dailymotion.com/player/#player-library-script).
 
-> **Note** The Dailymotion API is automatically loaded by the provider.
+> [!IMPORTANT]
+> The Dailymotion API is automatically loaded by the provider.
 
 ## Overview
 

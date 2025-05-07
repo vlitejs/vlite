@@ -2,7 +2,8 @@
 
 Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics).
 
-> **Note** The Vimeo SDK is automatically loaded by the provider.
+> [!IMPORTANT]
+> The Vimeo SDK is automatically loaded by the provider.
 
 ## Overview
 

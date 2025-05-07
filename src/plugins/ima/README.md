@@ -2,7 +2,8 @@
 
 Supports for Google IMA SDK.
 
-> **Note** The `playsinline` player option is required for iOS.
+> [!NOTE]
+> The `playsinline` player option is required for iOS.
 
 ## Overview
 

@@ -25,7 +25,9 @@ Sizes of the `vlitejs` bundle compared to the competition:
 | Compressed   |   27 KB   | 110 KB |   560 KB   |
 | Gzip         |   6 KB    | 32 KB  |   159 KB   |
 
-> **Note** _`vlitejs 5.0.1`, `plyr 3.7.8`, `videojs 8.3.0`_
+> [!NOTE]
+>
+> - _`vlitejs 5.0.1`, `plyr 3.7.8`, `videojs 8.3.0`_
 
 ---
 
@@ -77,7 +79,8 @@ npm run build && npm run build:example
 
 ## Installation
 
-> **Warning** vlitejs@6 is ESM and uses the [Node.js package `exports`](https://nodejs.org/api/packages.html#exports).
+> [!WARNING]
+> vlitejs@6 is ESM and uses the [Node.js package `exports`](https://nodejs.org/api/packages.html#exports).
 
 ### NPM
 
@@ -91,7 +94,8 @@ npm install vlitejs --save-dev
 yarn add vlitejs --dev
 ```
 
-> **Note** Minimum supported `Node.js` version is `16.20.0`.
+> [!WARNING]
+> The minimum supported `Node.js` version is `16.20.0`.
 
 ### CDN
 
@@ -104,7 +108,8 @@ You can also download it and include it with a script tag as an ESM.
 </script>
 ```
 
-> **Note** You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
+> [!TIP]
+> You can browse the source of the NPM package at [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
 
 ## How it works
 
@@ -194,25 +199,25 @@ new Vlitejs('#player', {
 
 The player controls can be customized with the following parameters:
 
-| Options                 |      Type      | Default | Description                                                                  |
-| ----------------------- | :------------: | :-----: | ---------------------------------------------------------------------------- |
-| `controls`&sup1; &sup2; |   `Boolean`    | `true`  | Display the control bar of the video                                         |
-| `autoplay`              |   `Boolean`    | `false` | Enable the autoplay of the media                                             |
-| `playPause`             |   `Boolean`    | `true`  | Display the play/pause button on the control bar                             |
-| `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar                                  |
-| `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar                              |
-| `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar                                 |
-| `fullscreen`&sup1; ⁴    |   `Boolean`    | `true`  | Display the fullscreen button on the control bar                             |
-| `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                                               |
-| `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video                              |
-| `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video                                 |
-| `loop`                  |   `Boolean`    | `false` | Whether to loop the current media                                            |
-| `muted`&sup1;           |   `Boolean`    | `false` | Whether to mute the current media                                            |
-| `autoHide`&sup1;        |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity                         |
-| `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                                               |
-| `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider                              |
+| Options                 |      Type      | Default | Description                                          |
+| ----------------------- | :------------: | :-----: | ---------------------------------------------------- |
+| `controls`&sup1; &sup2; |   `Boolean`    | `true`  | Display the control bar of the video                 |
+| `autoplay`              |   `Boolean`    | `false` | Enable the autoplay of the media                     |
+| `playPause`             |   `Boolean`    | `true`  | Display the play/pause button on the control bar     |
+| `progressBar`           |   `Boolean`    | `true`  | Display the progress bar on the control bar          |
+| `time`                  |   `Boolean`    | `true`  | Display the time information on the control bar      |
+| `volume`                |   `Boolean`    | `true`  | Display the volume button on the control bar         |
+| `fullscreen`&sup1; ⁴    |   `Boolean`    | `true`  | Display the fullscreen button on the control bar     |
+| `poster`&sup1;          | `String\|null` | `null`  | Customize the video poster url                       |
+| `bigPlay`&sup1;         |   `Boolean`    | `true`  | Display the big play button on the poster video      |
+| `playsinline`&sup1;     |   `Boolean`    | `true`  | Add the `playsinline` attribute to the video         |
+| `loop`                  |   `Boolean`    | `false` | Whether to loop the current media                    |
+| `muted`&sup1;           |   `Boolean`    | `false` | Whether to mute the current media                    |
+| `autoHide`&sup1;        |   `Boolean`    | `false` | Auto hide the control bar in the event of inactivity |
+| `autoHideDelay`&sup1;   |   `Integer`    | `3000`  | Auto hide delay in millisecond                       |
+| `providerParams`&sup3;  |    `Object`    |  `{}`   | Overrides the player parameters of the provider      |
 
-> **Note**
+> [!NOTE]
 >
 > - _&sup1; Video only._
 > - _&sup2; Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans))._
@@ -248,7 +253,8 @@ new Vlitejs('#player', {
 });
 ```
 
-> **Note** The `onReady` function can also be written with an arrow function.
+> [!TIP]
+> The `onReady` function can also be written with an arrow function.
 
 ### Events
 
@@ -265,7 +271,9 @@ new Vlitejs('#player', {
 | `exitfullscreen`&sup1;  | Sent when the video exits fullscreen mode                                               |
 | `ended`                 | Sent when playback completes                                                            |
 
-> **Note** > _&sup1; Video only._
+> [!NOTE]
+>
+> - _&sup1; Video only._
 
 Example of a listener when the media triggers a `play` event.
 
