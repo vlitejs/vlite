@@ -27,7 +27,9 @@ Sizes of the `vlitejs` bundle compared to the competition:
 
 > [!NOTE]
 >
-> - _`vlitejs 5.0.1`, `plyr 3.7.8`, `videojs 8.3.0`_
+> - _`vlitejs 5.0.1`_
+> - `plyr 3.7.8`
+> - _`videojs 8.3.0`_
 
 ---
 
