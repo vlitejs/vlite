@@ -136,6 +136,10 @@ export default class ControlBar {
 	onClickOnControlBar(e: Event) {
 		const target = e.target
 
+        if (target instanceof HTMLElement && target.classList.contains("v-customControlButton")) {
+            return;
+        }
+
 		const validateTargetPlayPauseButton = validateTarget({
 			target,
 			selectorString: '.v-playPauseButton',
