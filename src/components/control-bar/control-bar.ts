@@ -136,10 +136,6 @@ export default class ControlBar {
 	onClickOnControlBar(e: Event) {
 		const target = e.target
 
-        if (target instanceof HTMLElement && target.classList.contains("v-customControlButton")) {
-            return;
-        }
-
 		const validateTargetPlayPauseButton = validateTarget({
 			target,
 			selectorString: '.v-playPauseButton',
@@ -164,8 +160,11 @@ export default class ControlBar {
 			this.toggleFullscreen(e)
 		}
 
+		if (validateTargetPlayPauseButton || validateTargetVolume || validateTargetFullscreen) {
+			this.player.elements.container.focus()
+		}
+
 		// Hide controls with timer after clicks
-		this.player.elements.container.focus()
 		this.player.Vlitejs.startAutoHideTimer()
 	}
 
