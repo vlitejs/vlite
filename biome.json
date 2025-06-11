@@ -5,6 +5,14 @@
 		"ignoreUnknown": false,
 		"ignore": ["**/node_modules", "**/examples", "**/config", "**/dist"]
 	},
+	"overrides": [
+		{
+			"include": ["package.json"],
+			"formatter": {
+				"lineWidth": 1
+			}
+		}
+	],
 	"formatter": {
 		"enabled": true,
 		"useEditorconfig": true,
