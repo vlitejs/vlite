@@ -62,7 +62,10 @@
 	},
 	"main": "dist/vlite.js",
 	"module": "dist/vlite.js",
-	"files": ["dist", "!dist/**/*.map"],
+	"files": [
+		"dist",
+		"!dist/**/*.map"
+	],
 	"scripts": {
 		"biome:check": "biome check",
 		"biome:fix": "biome check --write",
