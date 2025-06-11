@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 7.3.2
+
+### Fixes
+
+- Limit focus changes on control bar internal components by [@leonvogt](https://github.com/leonvogt) ([#176](https://github.com/vlitejs/vlite/pull/176))
+- Remove subtitle focus on first item ([2836a19](https://github.com/vlitejs/vlite/commit/2836a19d95d2e825bfd4a2017d701b266de3dcc3))
+
 ## 7.3.1
 
 ### Fixes
