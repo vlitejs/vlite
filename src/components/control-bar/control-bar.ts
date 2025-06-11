@@ -160,8 +160,11 @@ export default class ControlBar {
 			this.toggleFullscreen(e)
 		}
 
+		if (validateTargetPlayPauseButton || validateTargetVolume || validateTargetFullscreen) {
+			this.player.elements.container.focus()
+		}
+
 		// Hide controls with timer after clicks
-		this.player.elements.container.focus()
 		this.player.Vlitejs.startAutoHideTimer()
 	}
 
