@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.4.0
+
+### Updates
+
+- Disable toggle playback on mobile overlay click ([#178](https://github.com/vlitejs/vlite/pull/178))
+
 ## 7.3.2
 
 ### Fixes
