@@ -66,5 +66,5 @@ export function getBrowserPrefix(): string {
  * @returns Is touch
  */
 export function isTouch(): boolean {
-	return !!('ontouchstart' in document.documentElement)
+	return 'ontouchstart' in window || navigator.maxTouchPoints > 0
 }

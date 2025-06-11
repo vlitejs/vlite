@@ -8,6 +8,7 @@ import { initializePlugins, registerPlugin } from 'plugins/plugin.js'
 import { getProviderInstance, registerProvider } from 'providers/provider.js'
 import type { FullScreenSupport, Options } from 'shared/assets/types/types.js'
 import { checkSupportFullScreen } from 'shared/utils/utils.js'
+import { isTouch } from 'shared/utils/utils.js'
 import validateTarget from 'validate-target'
 import Player from './player.js'
 
@@ -212,11 +213,17 @@ class Vlitejs {
 		const target = e.target as HTMLElement
 		const validateTargetPlayPauseButton = validateTarget({
 			target,
-			selectorString: '.v-poster, .v-overlay, .v-bigPlay',
+			selectorString: '.v-poster, .v-bigPlay',
 			nodeName: ['div', 'button']
 		})
+		const validateTargetOverlay = validateTarget({
+			target,
+			selectorString: '.v-overlay',
+			nodeName: ['div']
+		})
 
-		if (validateTargetPlayPauseButton) {
+		// Touch device will not toggle playback, only display the control bar
+		if (validateTargetPlayPauseButton || (validateTargetOverlay && !isTouch())) {
 			this.player.controlBar.togglePlayPause(e)
 			target.matches('.v-bigPlay') && this.container.focus()
 		}
