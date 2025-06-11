@@ -22,6 +22,12 @@
 			"editor.insertSpaces": true,
 			"editor.autoIndent": "none"
 		},
+		"[javascript][typescript][json][css]": {
+			"editor.codeActionsOnSave": {
+				"quickfix.biome": "explicit",
+				"source.organizeImports.biome": "explicit"
+			}
+		},
 		"prettier.configPath": "./config/prettier.config.cjs",
 		"editor.tabSize": 4,
 		"files.associations": {
