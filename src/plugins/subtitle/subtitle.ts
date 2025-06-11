@@ -169,11 +169,6 @@ export default class Subtitle {
 		e.preventDefault()
 
 		this.subtitlesList.classList.toggle('v-active')
-
-		if (this.subtitlesList.classList.contains('v-active')) {
-			const firstItem = this.subtitlesList.querySelector('.v-trackButton') as HTMLElement
-			setTimeout(() => firstItem.focus(), this.subtitlesListCssTransitionDuration)
-		}
 	}
 
 	/**
