@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   lint:
     uses: vlitejs/vlite/.github/workflows/lint.yml@main
