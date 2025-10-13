@@ -11,5 +11,8 @@ jobs:
   npm:
     needs: lint
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
+    permissions:
+      id-token: write  # Required for OIDC
+      contents: read
     with:
       node-version: 20
