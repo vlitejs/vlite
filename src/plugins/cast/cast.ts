@@ -429,25 +429,27 @@ export default class CastPlugin {
 	 * Destroy the plugin
 	 */
 	destroy() {
-		this.castContext.removeEventListener(
-			window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
-			this.onCastStateChange
-		)
-		this.remotePlayerController.removeEventListener(
-			window.cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED,
-			this.onCurrentTimeChanged
-		)
-		this.remotePlayerController.removeEventListener(
-			window.cast.framework.RemotePlayerEventType.IS_MEDIA_LOADED_CHANGED,
-			this.isMediaLoadedChanged
-		)
+		if (this.isCastFrameworkAlreadyAvailable()) {
+			this.castContext.removeEventListener(
+				window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+				this.onCastStateChange
+			)
+			this.remotePlayerController.removeEventListener(
+				window.cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED,
+				this.onCurrentTimeChanged
+			)
+			this.remotePlayerController.removeEventListener(
+				window.cast.framework.RemotePlayerEventType.IS_MEDIA_LOADED_CHANGED,
+				this.isMediaLoadedChanged
+			)
 
-		this.castButton.removeEventListener('click', this.onClickOnCastButton)
-		this.player.off('trackdisabled', this.updateSubtitle)
-		this.player.off('trackenabled', this.updateSubtitle)
-		this.player.off('play', this.onMediaPlay)
-		this.player.off('pause', this.onMediaPause)
-		this.player.off('volumechange', this.onMediaVolumeChange)
-		this.player.off('timeupdate', this.onMediaTimeupdate)
+			this.castButton?.removeEventListener('click', this.onClickOnCastButton)
+			this.player.off('trackdisabled', this.updateSubtitle)
+			this.player.off('trackenabled', this.updateSubtitle)
+			this.player.off('play', this.onMediaPlay)
+			this.player.off('pause', this.onMediaPause)
+			this.player.off('volumechange', this.onMediaVolumeChange)
+			this.player.off('timeupdate', this.onMediaTimeupdate)
+		}
 	}
 }

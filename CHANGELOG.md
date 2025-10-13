@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.4.1
+
+### Fixes
+
+- Correction of the destroy method on plugins ([#182](https://github.com/vlitejs/vlite/pull/182))
+
 ## 7.4.0
 
 ### Updates
