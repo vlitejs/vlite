@@ -33,6 +33,7 @@ export default class Subtitle {
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
 		this.onClickOnSubtitlesList = this.onClickOnSubtitlesList.bind(this)
+		this.onMediaEnded = this.onMediaEnded.bind(this)
 	}
 
 	/**
@@ -159,6 +160,7 @@ export default class Subtitle {
 	addEvents() {
 		this.subtitleButton.addEventListener('click', this.onClickOnSubtitleButton)
 		this.subtitlesList.addEventListener('click', this.onClickOnSubtitlesList)
+		this.player.media.addEventListener('ended', this.onMediaEnded)
 	}
 
 	/**
@@ -267,6 +269,13 @@ export default class Subtitle {
 	 */
 	hideCue() {
 		this.captions.classList.remove('v-active')
+	}
+
+	/**
+	 * On media ended, hide the caption
+	 */
+	onMediaEnded() {
+		this.hideCue()
 	}
 
 	/**
