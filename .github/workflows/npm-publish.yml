@@ -13,5 +13,3 @@ jobs:
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
     with:
       node-version: 20
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
