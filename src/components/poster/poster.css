@@ -12,7 +12,7 @@
 		cursor: pointer;
 		visibility: hidden;
 		opacity: 0;
-		z-index: 2;
+		z-index: 3;
 
 		&.v-active {
 			opacity: 1;

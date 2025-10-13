@@ -311,6 +311,15 @@ export default abstract class Player {
 			this.elements.poster.classList.add('v-active')
 		}
 
+		if (this.type === 'video' && this.elements.bigPlay) {
+			this.elements.bigPlay.setAttribute('aria-label', 'Play')
+		}
+
+		if (this.elements.playPause) {
+			this.elements.playPause.setAttribute('aria-label', 'Play')
+			this.elements.playPause.classList.remove('v-controlPressed')
+		}
+
 		if (this.elements.progressBar) {
 			this.elements.progressBar.value = '0'
 			this.elements.progressBar.style.setProperty('--vlite-progressValue', '0%')

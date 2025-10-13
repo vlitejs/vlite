@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.4.2
+
+### Fixes
+
+- Reset the play button and subtitles at the end of the media. Update the z-index so that the big play and poster are above the captions ([#183](https://github.com/vlitejs/vlite/pull/183))
+
 ## 7.4.1
 
 ### Fixes
