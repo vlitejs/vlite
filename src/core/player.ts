@@ -515,12 +515,12 @@ export default abstract class Player {
 	 * Remove event listeners, player instance and HTML
 	 */
 	destroy() {
-		this.controlBar?.destroy()
-
 		// Call the destroy function on each plugins
 		Object.keys(this.plugins).forEach((id) => {
 			this.plugins[id].destroy instanceof Function && this.plugins[id].destroy()
 		})
+
+		this.controlBar?.destroy()
 
 		this.playerEvents.forEach((event) => {
 			this.elements.container.removeEventListener(event.type, event.listener)
