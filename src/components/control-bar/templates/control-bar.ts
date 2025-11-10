@@ -1,5 +1,5 @@
-import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
 import svgFullscreen from 'shared/assets/svgs/fullscreen.svg'
+import svgFullscreenExit from 'shared/assets/svgs/fullscreen-exit.svg'
 import svgPause from 'shared/assets/svgs/pause.svg'
 import svgPlay from 'shared/assets/svgs/play.svg'
 import svgVolumeHigh from 'shared/assets/svgs/volume-high.svg'

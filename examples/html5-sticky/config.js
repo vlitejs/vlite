@@ -10,8 +10,7 @@ Vlitejs.registerPlugin('sticky', VlitejsSticky, {
 	ratio: 16 / 9
 })
 
-/* eslint-disable no-unused-vars */
-const vlite = new Vlitejs('#player', {
+new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,
@@ -35,4 +34,3 @@ const vlite = new Vlitejs('#player', {
 		player.on('leavesticky', () => console.log('leavesticky'))
 	}
 })
-/* eslint-enable no-unused-vars */

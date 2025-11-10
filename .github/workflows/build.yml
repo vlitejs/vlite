@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [18, 20, 22]
+        node-version: [22, 24]
     uses: yoriiis/actions/.github/workflows/test-and-build.yml@main
     with:
       node-version: ${{ matrix.node-version }}

@@ -7,8 +7,7 @@ import Vlitejs from '../../dist/vlite.js'
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
-/* eslint-disable no-unused-vars */
-const vlite = new Vlitejs('#player', {
+new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,
@@ -44,4 +43,3 @@ const vlite = new Vlitejs('#player', {
 		player.on('ended', () => console.log('ended'))
 	}
 })
-/* eslint-enable no-unused-vars */

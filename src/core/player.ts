@@ -1,5 +1,5 @@
 import ControlBar from 'components/control-bar/control-bar.js'
-import type { Options, configEvent, playerParameters } from 'shared/assets/types/types.js'
+import type { configEvent, Options, playerParameters } from 'shared/assets/types/types.js'
 import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
 
 /**
@@ -478,10 +478,10 @@ export default abstract class Player {
 	requestFullscreen() {
 		const { requestFn } = this.Vlitejs.supportFullScreen
 
-		// @ts-ignore: Object is possibly 'null'.
+		// @ts-expect-error: Object is possibly 'null'.
 		if (this.media[requestFn]) {
 			// Request fullscreen on parentNode player, to display custom controls
-			// @ts-ignore: Object is possibly 'null'.
+			// @ts-expect-error: Object is possibly 'null'.
 			this.elements.container[requestFn]()
 			this.isFullScreen = true
 			this.elements.outerContainer.classList.add('v-fullscreen')
@@ -504,7 +504,6 @@ export default abstract class Player {
 		const { cancelFn } = this.Vlitejs.supportFullScreen
 
 		if (document[cancelFn]) {
-			// @ts-ignore: Object is possibly 'null'.
 			!escKey && document[cancelFn]()
 			this.isFullScreen = false
 

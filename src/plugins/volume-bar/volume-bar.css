@@ -6,7 +6,9 @@
 	}
 
 	&-volumeBar {
-		transition: width var(--vlite-transition), margin var(--vlite-transition);
+		transition:
+			width var(--vlite-transition),
+			margin var(--vlite-transition);
 		overflow: hidden;
 		width: 0;
 		height: 25px;

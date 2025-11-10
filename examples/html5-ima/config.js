@@ -11,8 +11,7 @@ Vlitejs.registerPlugin('ima', VlitejsIma, {
 	}
 })
 
-/* eslint-disable no-unused-vars */
-const vlite = new Vlitejs('#player', {
+new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,
@@ -37,4 +36,3 @@ const vlite = new Vlitejs('#player', {
 		player.on('adsrequest', (e) => console.log('adsrequest', e.detail))
 	}
 })
-/* eslint-enable no-unused-vars */

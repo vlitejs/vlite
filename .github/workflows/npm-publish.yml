@@ -15,4 +15,4 @@ jobs:
       id-token: write  # Required for OIDC
       contents: read
     with:
-      node-version: 20
+      node-version: 24

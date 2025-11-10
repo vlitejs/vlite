@@ -6,10 +6,10 @@ import '../../dist/plugins/airplay.css'
 import '../../dist/plugins/volume-bar.css'
 import VlitejsAirplay from '../../dist/plugins/airplay.js'
 import VlitejsCast from '../../dist/plugins/cast.js'
+import VlitejsHotkeys from '../../dist/plugins/hotkeys.js'
 import VlitejsPip from '../../dist/plugins/pip.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
-import VlitejsHotkeys from '../../dist/plugins/hotkeys.js'
 import Vlitejs from '../../dist/vlite.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
@@ -30,8 +30,7 @@ Vlitejs.registerPlugin('hotkeys', VlitejsHotkeys, {
 	volumeStep: 0.2
 })
 
-/* eslint-disable no-unused-vars */
-const vlite = new Vlitejs('#player', {
+new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,
@@ -67,4 +66,3 @@ const vlite = new Vlitejs('#player', {
 		player.on('castsessionended', () => console.log('castsessionended'))
 	}
 })
-/* eslint-enable no-unused-vars */

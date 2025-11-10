@@ -8,8 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const source = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
 	const video = document.querySelector('video')
 
-	/* eslint-disable no-unused-vars */
-	const vlite = new Vlitejs('#player', {
+	new Vlitejs('#player', {
 		options: {
 			controls: true,
 			autoplay: false,
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log(player)
 		}
 	})
-	/* eslint-enable no-unused-vars */
 
 	if (!Hls.isSupported()) {
 		video.src = source

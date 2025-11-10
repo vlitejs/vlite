@@ -9,7 +9,7 @@ Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
 })
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
-const vlite = new Vlitejs('#player', {
+new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,

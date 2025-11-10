@@ -7,8 +7,7 @@ import PosterTemplate from 'components/poster/poster.js'
 import { initializePlugins, registerPlugin } from 'plugins/plugin.js'
 import { getProviderInstance, registerProvider } from 'providers/provider.js'
 import type { FullScreenSupport, Options } from 'shared/assets/types/types.js'
-import { checkSupportFullScreen } from 'shared/utils/utils.js'
-import { isTouch } from 'shared/utils/utils.js'
+import { checkSupportFullScreen, isTouch } from 'shared/utils/utils.js'
 import validateTarget from 'validate-target'
 import Player from './player.js'
 
@@ -78,7 +77,6 @@ class Vlitejs {
 			options = {},
 			provider = 'html5',
 			plugins = [],
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			onReady = () => {}
 		}: {
 			options?: Options | object
@@ -89,7 +87,7 @@ class Vlitejs {
 	) {
 		// Detect the type of the selector (string or HTMLElement)
 		if (typeof selector === 'string') {
-			// @ts-ignore: Object is possibly 'null'.
+			// @ts-expect-error: Object is possibly 'null'.
 			this.media = document.querySelector(selector)
 		} else if (
 			selector instanceof HTMLVideoElement ||
@@ -112,9 +110,9 @@ class Vlitejs {
 		const htmlAttributes: string[] = ['autoplay', 'playsinline', 'muted', 'loop']
 		htmlAttributes.forEach((item: string) => {
 			if (this.media.hasAttribute(item)) {
-				// @ts-ignore
+				// @ts-expect-error
 				options[item] = true
-				// @ts-ignore
+				// @ts-expect-error
 			} else if (options[item]) {
 				this.media.setAttribute(item, '')
 			}
@@ -310,11 +308,11 @@ class Vlitejs {
 }
 
 // Expose the provider registration
-// @ts-ignore
+// @ts-expect-error
 Vlitejs.registerProvider = registerProvider
 
 // Expose the plugin registration
-// @ts-ignore
+// @ts-expect-error
 Vlitejs.registerPlugin = registerPlugin
 
 export default Vlitejs

@@ -534,7 +534,7 @@ export default class ImaPlugin {
 		this.player.loading(false)
 
 		this.onAdError({
-			// @ts-ignore
+			// @ts-expect-error
 			errorMessage: 'Timeout is reached'
 		})
 		this.playIsWaiting = false

@@ -209,7 +209,7 @@ export default class ControlBar {
 					window.matchMedia('(orientation:portrait)').matches &&
 					this.isOrientationApiAvailable()
 				) {
-					// @ts-ignore https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1615
+					// @ts-expect-error https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1615
 					window.screen.orientation.lock('landscape').catch(() => {
 						// Empty catch
 					})
@@ -226,7 +226,7 @@ export default class ControlBar {
 	isOrientationApiAvailable() {
 		return (
 			window.screen.orientation &&
-			// @ts-ignore
+			// @ts-expect-error
 			!window.screen.mozOrientation
 		)
 	}

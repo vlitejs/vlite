@@ -7,7 +7,7 @@ import Vlitejs from '../../dist/vlite.js'
 Vlitejs.registerProvider('vimeo', VlitejsVimeo)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
-const vlite = new Vlitejs('#player', {
+new Vlitejs('#player', {
 	options: {
 		controls: true,
 		autoplay: false,

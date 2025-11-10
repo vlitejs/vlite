@@ -1,18 +1,14 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+	"$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["**/node_modules", "**/examples", "**/config", "**/dist"]
+		"includes": ["**"]
 	},
-	"overrides": [
-		{
-			"include": ["package.json"],
-			"formatter": {
-				"lineWidth": 1
-			}
-		}
-	],
 	"formatter": {
 		"enabled": true,
 		"useEditorconfig": true,
@@ -24,13 +20,16 @@
 		"attributePosition": "auto",
 		"bracketSpacing": true
 	},
-	"organizeImports": { "enabled": true },
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
 			"complexity": { "noForEach": "off" },
-			"suspicious": { "noExplicitAny": "off" }
+			"suspicious": { "noExplicitAny": "off" },
+			"correctness": {
+				"noUnknownTypeSelector": "off"
+			}
 		}
 	},
 	"javascript": {

@@ -230,16 +230,15 @@ export default class Subtitle {
 			const cues = Array.from(this.activeTrack.cues)
 			const activeCues = this.activeTrack.activeCues
 
-			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			const _this = this
 
 			const onEnter = function () {
-				// @ts-ignore
+				// @ts-expect-error
 				_this.addCue(this)
 			}
 
 			const onExit = function () {
-				// @ts-ignore
+				// @ts-expect-error
 				_this.hideCue(this)
 			}
 
@@ -259,7 +258,7 @@ export default class Subtitle {
 	 * @param cue Current cue to add
 	 */
 	addCue(cue: TextTrackCue) {
-		// @ts-ignore
+		// @ts-expect-error
 		this.captions.innerHTML = cue.text
 		this.captions.classList.add('v-active')
 	}

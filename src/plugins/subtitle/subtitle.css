@@ -41,7 +41,9 @@
 		border-radius: 5px;
 		opacity: 0;
 		visibility: hidden;
-		transition: opacity var(--vlite-transition), visibility var(--vlite-transition);
+		transition:
+			opacity var(--vlite-transition),
+			visibility var(--vlite-transition);
 
 		&.v-active {
 			opacity: 1;

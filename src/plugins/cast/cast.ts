@@ -316,7 +316,7 @@ export default class CastPlugin {
 		const textTrackStyle = new window.chrome.cast.media.TextTrackStyle()
 		textTrackStyle.backgroundColor = '#ffffff00'
 		textTrackStyle.edgeColor = '#00000016'
-		// @ts-ignore
+		// @ts-expect-error
 		textTrackStyle.edgeType = 'DROP_SHADOW'
 		textTrackStyle.fontFamily = 'CASUAL'
 		textTrackStyle.fontScale = 1.0

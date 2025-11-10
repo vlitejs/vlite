@@ -22,7 +22,9 @@
 		z-index: 5;
 		display: flex;
 		align-items: center;
-		transition: opacity var(--vlite-transition), visibility var(--vlite-transition);
+		transition:
+			opacity var(--vlite-transition),
+			visibility var(--vlite-transition);
 	}
 
 	&-loaderContent {

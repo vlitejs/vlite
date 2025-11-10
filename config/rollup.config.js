@@ -2,10 +2,10 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import alias from '@rollup/plugin-alias'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import terser from '@rollup/plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
-import terser from '@rollup/plugin-terser'
 import { banner, plugins, providers } from './package.js'
 
 const __filename = fileURLToPath(import.meta.url)

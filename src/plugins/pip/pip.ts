@@ -87,7 +87,6 @@ export default class PiP {
 
 		try {
 			if (this.player.media !== document.pictureInPictureElement) {
-				// @ts-ignore
 				await this.player.media.requestPictureInPicture()
 			} else {
 				await document.exitPictureInPicture()

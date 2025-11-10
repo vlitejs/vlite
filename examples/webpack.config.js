@@ -8,7 +8,7 @@ import webpack from 'webpack'
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath)
 
-export default function webpackConfig(env, argv) {
+export default function webpackConfig(_env, argv) {
 	const isProduction = argv.mode === 'production'
 
 	const entries = [

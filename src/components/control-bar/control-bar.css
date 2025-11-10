@@ -25,7 +25,9 @@
 	}
 
 	&-progressBarStyle {
-		transition: height var(--vlite-transition), top var(--vlite-transition);
+		transition:
+			height var(--vlite-transition),
+			top var(--vlite-transition);
 		z-index: 1;
 		appearance: none;
 		-webkit-tap-highlight-color: transparent;
@@ -88,7 +90,9 @@
 	}
 
 	&-volumeButton {
-		transition: transform var(--vlite-transition), opacity var(--vlite-transition);
+		transition:
+			transform var(--vlite-transition),
+			opacity var(--vlite-transition);
 		flex-shrink: 0;
 	}
 
@@ -161,7 +165,7 @@
 @media (hover: hover) {
 	.v {
 		&-controlBar:hover {
-			opacity: 1 !important;
+			opacity: 1;
 		}
 	}
 }
