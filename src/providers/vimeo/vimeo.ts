@@ -129,7 +129,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get the player current time
-		 * @returns>} Current time of the video
+		 * @returns Current time of the video
 		 */
 		getCurrentTime(): Promise<number> {
 			return new window.Promise((resolve) => {
@@ -139,7 +139,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get the player duration
-		 * @returns>} Duration of the video
+		 * @returns Duration of the video
 		 */
 		getDuration(): Promise<number> {
 			return new window.Promise((resolve) => {
@@ -171,7 +171,7 @@ export default function VimeoProvider(Player: any) {
 
 		/**
 		 * Get volume method of the player
-		 * @returns>} Player volume
+		 * @returns Player volume
 		 */
 		methodGetVolume(): Promise<number> {
 			return new window.Promise((resolve) => {

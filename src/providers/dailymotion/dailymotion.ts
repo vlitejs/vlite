@@ -145,7 +145,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get the player current time
-		 * @returns>} Current time of the video
+		 * @returns Current time of the video
 		 */
 		getCurrentTime(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
@@ -155,7 +155,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get the player duration
-		 * @returns>} Duration of the video
+		 * @returns Duration of the video
 		 */
 		getDuration(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
@@ -187,7 +187,7 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 
 		/**
 		 * Get volume method of the player
-		 * @returns>} Player volume
+		 * @returns Player volume
 		 */
 		methodGetVolume(): Promise<number> {
 			return this.instance.getState().then((state: interfacePlayerState) => {
