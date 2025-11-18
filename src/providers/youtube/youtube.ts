@@ -179,6 +179,14 @@ export default function YoutubeProvider(Player: any) {
 		}
 
 		/**
+		 * Change source method of the player
+		 * {@link https://developers.google.com/youtube/iframe_api_reference#loadVideoById}
+		 */
+		methodSetSource(id: string) {
+			this.instance.loadVideoById(id)
+		}
+
+		/**
 		 * Play method of the player
 		 */
 		methodPlay() {

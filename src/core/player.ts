@@ -169,6 +169,13 @@ export default abstract class Player {
 	public abstract methodUnMute(): void
 
 	/**
+	 * methodSetSource
+	 * Extends by the provider
+	 * @abstract
+	 */
+	public abstract methodSetSource(videoId: string): void
+
+	/**
 	 * On the player is ready
 	 */
 	onReady() {
@@ -462,6 +469,23 @@ export default abstract class Player {
 		}
 
 		this.dispatchEvent('volumechange')
+	}
+
+	/**
+	 * Set the new source of the player
+	 * @param videoId Video ID
+	 */
+	setSource(videoId: string) {
+		// Prevent onMediaEnded to play
+		this.options.loop = false
+
+		this.pause()
+		this.onMediaEnded()
+		this.methodSetSource(videoId)
+		this.controlBar.onReady()
+		this.play()
+
+		this.dispatchEvent('sourcechange')
 	}
 
 	/**

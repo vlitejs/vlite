@@ -3,6 +3,7 @@ import '../../dist/plugins/volume-bar.css'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
 import VlitejsYoutube from '../../dist/providers/youtube.js'
 import Vlitejs from '../../dist/vlite.js'
+import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
@@ -34,6 +35,7 @@ new Vlitejs('#player', {
 		player.on('progress', () => console.log('progress'))
 		player.on('timeupdate', () => console.log('timeupdate'))
 		player.on('volumechange', () => console.log('volumechange'))
+		player.on('sourcechange', () => console.log('sourcechange'))
 		player.on('enterfullscreen', () => console.log('enterfullscreen'))
 		player.on('exitfullscreen', () => console.log('exitfullscreen'))
 		player.on('enterpip', () => console.log('enterpip'))
@@ -41,5 +43,7 @@ new Vlitejs('#player', {
 		player.on('trackenabled', () => console.log('trackenabled'))
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 		player.on('ended', () => console.log('ended'))
+
+		changeSourceEvent({ player })
 	}
 })

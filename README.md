@@ -269,6 +269,7 @@ new Vlitejs('#player', {
 | `progress`              | Sent periodically to inform interested parties of progress downloading the media.       |
 | `timeupdate`            | Sent when the `currentTime` of the media has changed                                    |
 | `volumechange`          | Sent when audio volume changes                                                          |
+| `sourcechange`          | Sent when source changes                                                                |
 | `enterfullscreen`&sup1; | Sent when the video switches to fullscreen mode                                         |
 | `exitfullscreen`&sup1;  | Sent when the video exits fullscreen mode                                               |
 | `ended`                 | Sent when playback completes                                                            |
@@ -303,6 +304,7 @@ The player instance exposes the following methods, accessible when the player is
 | `getDuration()`        |         -          | `Promise` | Get the duration                  |
 | `mute()`               |         -          |     -     | Mute the volume                   |
 | `unMute()`             |         -          |     -     | Unmute the volume                 |
+| `setSource(source)`    |      `String`      |     -     | Set the new media source          |
 | `seekTo(time)`         |      `Number`      |     -     | Seek to a current time in seconds |
 | `requestFullscreen()`  |         -          |     -     | Request the fullscreen            |
 | `exitFullscreen()`     |         -          |     -     | Exit the fullscreen               |

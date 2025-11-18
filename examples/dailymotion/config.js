@@ -3,6 +3,7 @@ import '../../dist/plugins/volume-bar.css'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
 import VlitejsDailymotion from '../../dist/providers/dailymotion.js'
 import Vlitejs from '../../dist/vlite.js'
+import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerProvider('dailymotion', VlitejsDailymotion, {
 	playerId: 'x9scg'
@@ -35,8 +36,11 @@ new Vlitejs('#player', {
 		player.on('progress', () => console.log('progress'))
 		player.on('timeupdate', () => console.log('timeupdate'))
 		player.on('volumechange', () => console.log('volumechange'))
+		player.on('sourcechange', () => console.log('sourcechange'))
 		player.on('enterfullscreen', () => console.log('enterfullscreen'))
 		player.on('exitfullscreen', () => console.log('exitfullscreen'))
 		player.on('ended', () => console.log('ended'))
+
+		changeSourceEvent({ player })
 	}
 })

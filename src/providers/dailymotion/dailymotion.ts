@@ -164,6 +164,14 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		}
 
 		/**
+		 * Change source method of the player
+		 * {@link https://developers.dailymotion.com/sdk/player-sdk/web/#player-methods}
+		 */
+		methodSetSource(id: string) {
+			this.instance.loadContent({ video: id })
+		}
+
+		/**
 		 * Play method of the player
 		 */
 		methodPlay() {
