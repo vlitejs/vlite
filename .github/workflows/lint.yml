@@ -14,8 +14,3 @@ on:
 jobs:
   lint:
     uses: yoriiis/actions/.github/workflows/lint.yml@main
-    with:
-      node-version: 24
-      eslint-status: false
-      stylelint-status: false
-      biome-status: true
