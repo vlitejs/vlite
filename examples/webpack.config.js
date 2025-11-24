@@ -102,7 +102,6 @@ export default function webpackConfig(_env, argv) {
 	}
 
 	if (!isProduction) {
-		config.plugins.push(new webpack.ProgressPlugin())
 		config.devServer = {
 			static: {
 				directory: resolveApp('examples')

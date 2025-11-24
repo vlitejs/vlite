@@ -228,7 +228,6 @@ export default class ControlBar {
 			typeof window.screen.orientation !== 'undefined' &&
 			// @ts-expect-error: Ignore TypeScript error for lock/unlock methods
 			typeof window.screen.orientation.lock === 'function' &&
-			// @ts-expect-error: Ignore TypeScript error for unlock method
 			typeof window.screen.orientation.unlock === 'function'
 		)
 	}
