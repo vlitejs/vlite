@@ -2,6 +2,7 @@ import '../../dist/vlite.css'
 import '../../dist/plugins/volume-bar.css'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
 import Vlitejs from '../../dist/vlite.js'
+import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
@@ -24,6 +25,9 @@ new Vlitejs('#player', {
 		player.on('progress', () => console.log('progress'))
 		player.on('timeupdate', () => console.log('timeupdate'))
 		player.on('volumechange', () => console.log('volumechange'))
+		player.on('sourcechange', () => console.log('sourcechange'))
 		player.on('ended', () => console.log('ended'))
+
+		changeSourceEvent({ player })
 	}
 })

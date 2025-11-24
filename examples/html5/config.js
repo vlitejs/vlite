@@ -11,6 +11,7 @@ import VlitejsPip from '../../dist/plugins/pip.js'
 import VlitejsSubtitle from '../../dist/plugins/subtitle.js'
 import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
 import Vlitejs from '../../dist/vlite.js'
+import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('pip', VlitejsPip)
@@ -55,6 +56,7 @@ new Vlitejs('#player', {
 		player.on('progress', () => console.log('progress'))
 		player.on('timeupdate', () => console.log('timeupdate'))
 		player.on('volumechange', () => console.log('volumechange'))
+		player.on('sourcechange', () => console.log('sourcechange'))
 		player.on('enterfullscreen', () => console.log('enterfullscreen'))
 		player.on('exitfullscreen', () => console.log('exitfullscreen'))
 		player.on('enterpip', () => console.log('enterpip'))
@@ -64,5 +66,7 @@ new Vlitejs('#player', {
 		player.on('ended', () => console.log('ended'))
 		player.on('castsessionstarted', () => console.log('castsessionstarted'))
 		player.on('castsessionended', () => console.log('castsessionended'))
+
+		changeSourceEvent({ player })
 	}
 })

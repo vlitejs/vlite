@@ -148,6 +148,14 @@ export default function VimeoProvider(Player: any) {
 		}
 
 		/**
+		 * Change source method of the player
+		 * {@link https://developer.vimeo.com/player/sdk/reference#load-a-new-video-into-a-player}
+		 */
+		methodSetSource(id: string) {
+			this.instance.loadVideo(id)
+		}
+
+		/**
 		 * Play method of the player
 		 */
 		methodPlay() {

@@ -17,12 +17,12 @@ export default function Html5Provider(Player: any) {
 			super(props)
 
 			this.events = [
-				{ type: 'timeupdate', listener: super.onTimeUpdate },
-				{ type: 'ended', listener: super.onMediaEnded },
-				{ type: 'playing', listener: this.onPlaying },
-				{ type: 'waiting', listener: this.onWaiting },
-				{ type: 'seeking', listener: this.onSeeking },
-				{ type: 'seeked', listener: this.onSeeked }
+				{ type: 'timeupdate', listener: super.onTimeUpdate.bind(this) },
+				{ type: 'ended', listener: super.onMediaEnded.bind(this) },
+				{ type: 'playing', listener: this.onPlaying.bind(this) },
+				{ type: 'waiting', listener: this.onWaiting.bind(this) },
+				{ type: 'seeking', listener: this.onSeeking.bind(this) },
+				{ type: 'seeked', listener: this.onSeeked.bind(this) }
 			]
 		}
 
@@ -135,6 +135,17 @@ export default function Html5Provider(Player: any) {
 		methodUnMute() {
 			this.media.muted = false
 			this.media.removeAttribute('muted')
+		}
+
+		/**
+		 * Set the media source
+		 * @param source New media source URL
+		 */
+		methodSetSource(source: string) {
+			this.media.src = source
+			this.media.load()
+			this.removeSpecificEvents()
+			this.init()
 		}
 
 		/**
