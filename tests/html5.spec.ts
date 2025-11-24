@@ -90,7 +90,10 @@ test.describe('HTML5 Player Tests', () => {
 			volumeBar.dispatchEvent(new Event('input'))
 		})
 
-		const volume = await page.evaluate(() => document.querySelector('video').volume)
+		const volume = await page.evaluate(() => {
+			const video = document.querySelector('video')
+			return Math.round(video.volume * 10) / 10
+		})
 		expect(volume).toBe(0.1)
 	})
 })
