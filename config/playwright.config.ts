@@ -7,14 +7,14 @@ export default defineConfig({
 		command: 'npm run build && npm run start:example',
 		url: 'http://localhost:3000',
 		timeout: 60 * 1000,
-		reuseExistingServer: !process.env.CI
+		reuseExistingServer: !process.env.GITHUB_ACTIONS
 	},
-	reporter: !process.env.GITHUB_ACTIONS
-		? [
+	reporter: process.env.GITHUB_ACTIONS
+		? [['github'], ['line'], ['html', { open: 'never' }]]
+		: [
 				['list', { printSteps: true, forceColor: true }],
 				['html', { open: 'never' }]
-			]
-		: 'html',
+			],
 	use: {
 		actionTimeout: 0,
 		trace: process.env.GITHUB_ACTIONS ? 'retain-on-failure' : 'on',
