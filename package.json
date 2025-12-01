@@ -73,6 +73,8 @@
 		"build:example": "rm -rf ./examples/dist/ && webpack --mode=production --config=./examples/webpack.config.js",
 		"clean": "rm -rf ./dist/ ./examples/dist/",
 		"dev:types": "tsc --noEmit --watch",
+		"e2e": "playwright test --config ./config/playwright.config.ts",
+		"e2e:ui": "playwright test --ui --config ./config/playwright.config.ts",
 		"pre:publish": "npm run build && npm run build:example && npm run test",
 		"start": "rm -rf ./dist/ && rollup --config ./config/rollup.config.js --environment ENV:development --watch --sourcemap",
 		"start:example": "rm -rf ./examples/dist/ && webpack serve --mode=development --config=./examples/webpack.config.js",
@@ -83,6 +85,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.4",
+		"@playwright/test": "^1.56.1",
 		"@rollup/plugin-alias": "^6.0.0",
 		"@rollup/plugin-buble": "^1.0.3",
 		"@rollup/plugin-node-resolve": "^16.0.3",
