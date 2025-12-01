@@ -4,7 +4,7 @@ export default defineConfig({
 	testDir: '../tests',
 	outputDir: '../test-results',
 	webServer: {
-		command: 'npm run build && npm run start:example',
+		command: 'npm run build && (cd ../examples && npm run dev)',
 		url: 'http://localhost:3000',
 		timeout: 60 * 1000,
 		reuseExistingServer: !process.env.GITHUB_ACTIONS

@@ -1,6 +1,6 @@
 {
 	"name": "vlitejs",
-	"version": "8.0.0",
+	"version": "8.0.1",
 	"description": "vLitejs is a fast and lightweight Javascript library for customizing video and audio player in Javascript with a minimalist theme (HTML5, Youtube, Vimeo, Dailymotion)",
 	"keywords": [
 		"video",
@@ -70,14 +70,10 @@
 		"biome:check": "biome check",
 		"biome:fix": "biome check --write",
 		"build": "rm -rf ./dist/ && rollup --config ./config/rollup.config.js --environment ENV:production",
-		"build:example": "rm -rf ./examples/dist/ && webpack --mode=production --config=./examples/webpack.config.js",
-		"clean": "rm -rf ./dist/ ./examples/dist/",
+		"dev": "rm -rf ./dist/ && rollup --config ./config/rollup.config.js --environment ENV:development --watch --sourcemap",
 		"dev:types": "tsc --noEmit --watch",
 		"e2e": "playwright test --config ./config/playwright.config.ts",
 		"e2e:ui": "playwright test --ui --config ./config/playwright.config.ts",
-		"pre:publish": "npm run build && npm run build:example && npm run test",
-		"start": "rm -rf ./dist/ && rollup --config ./config/rollup.config.js --environment ENV:development --watch --sourcemap",
-		"start:example": "rm -rf ./examples/dist/ && webpack serve --mode=development --config=./examples/webpack.config.js",
 		"test": "echo 'No local tests' && exit 0"
 	},
 	"dependencies": {
@@ -93,16 +89,9 @@
 		"@rollup/plugin-terser": "^0.4.4",
 		"@rollup/plugin-typescript": "^12.3.0",
 		"@types/chromecast-caf-sender": "^1.0.11",
-		"babel-loader": "^10.0.0",
-		"css-loader": "^7.1.2",
-		"css-minimizer-webpack-plugin": "^7.0.2",
-		"html-loader": "^5.1.0",
-		"html-webpack-plugin": "^5.6.4",
-		"mini-css-extract-plugin": "^2.9.4",
 		"postcss": "^8.5.6",
 		"postcss-custom-media": "^11.0.6",
 		"postcss-import": "^16.1.1",
-		"postcss-loader": "^8.2.0",
 		"postcss-nested": "^7.0.2",
 		"postcss-preset-env": "^10.4.0",
 		"postcss-url": "^10.1.1",
@@ -110,13 +99,8 @@
 		"rollup": "^4.52.5",
 		"rollup-plugin-postcss": "^4.0.2",
 		"rollup-plugin-svg": "^2.0.0",
-		"style-loader": "^4.0.0",
-		"terser-webpack-plugin": "^5.3.14",
-		"ts-loader": "^9.5.4",
-		"typescript": "^5.9.3",
-		"webpack": "^5.102.1",
-		"webpack-cli": "^6.0.1",
-		"webpack-dev-server": "^5.2.2"
+		"tslib": "^2.8.1",
+		"typescript": "^5.9.3"
 	},
 	"engines": {
 		"node": ">=22"

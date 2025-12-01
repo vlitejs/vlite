@@ -1,7 +1,7 @@
-import '../../dist/vlite.css'
-import '../../dist/plugins/sticky.css'
-import VlitejsSticky from '../../dist/plugins/sticky.js'
-import Vlitejs from '../../dist/vlite.js'
+import 'vlitejs/vlite.css'
+import 'vlitejs/plugins/sticky.css'
+import Vlitejs from 'vlitejs'
+import VlitejsSticky from 'vlitejs/plugins/sticky.js'
 
 Vlitejs.registerPlugin('sticky', VlitejsSticky, {
 	mode: 'instant',

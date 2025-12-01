@@ -32,18 +32,16 @@ export default function webpackConfig(_env, argv) {
 		},
 		devtool: isProduction ? false : 'source-map',
 		output: {
-			path: resolveApp('examples/dist/'),
+			path: resolveApp('dist/'),
 			filename: 'scripts/[name].js'
 		},
 		module: {
 			rules: [
 				{
-					test: /\.js$/,
-					include: [resolveApp('examples'), resolveApp('dist')]
+					test: /\.js$/
 				},
 				{
 					test: /\.css$/,
-					include: [resolveApp('examples'), resolveApp('dist')],
 					use: [
 						MiniCssExtractPlugin.loader,
 						{
@@ -104,7 +102,7 @@ export default function webpackConfig(_env, argv) {
 	if (!isProduction) {
 		config.devServer = {
 			static: {
-				directory: resolveApp('examples')
+				directory: resolveApp('./')
 			},
 			historyApiFallback: true,
 			port: 3000,
@@ -116,11 +114,11 @@ export default function webpackConfig(_env, argv) {
 	}
 
 	entries.forEach((key) => {
-		config.entry[key] = resolveApp(`examples/${key}/config.js`)
+		config.entry[key] = resolveApp(`./${key}/config.js`)
 		config.plugins.push(
 			new HtmlWebpackPlugin({
 				filename: key === 'home' ? 'index.html' : `${key}/index.html`,
-				template: resolveApp(`examples/${key}/index.html`),
+				template: resolveApp(`./${key}/index.html`),
 				chunks: [key],
 				minify: isProduction
 			})

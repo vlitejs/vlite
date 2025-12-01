@@ -1,7 +1,7 @@
-import '../../dist/vlite.css'
-import '../../dist/plugins/volume-bar.css'
-import VlitejsVolumeBar from '../../dist/plugins/volume-bar.js'
-import Vlitejs from '../../dist/vlite.js'
+import 'vlitejs/vlite.css'
+import 'vlitejs/plugins/volume-bar.css'
+import Vlitejs from 'vlitejs'
+import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar.js'
 import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)

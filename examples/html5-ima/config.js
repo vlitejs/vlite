@@ -1,7 +1,7 @@
-import '../../dist/vlite.css'
-import '../../dist/plugins/ima.css'
-import VlitejsIma from '../../dist/plugins/ima.js'
-import Vlitejs from '../../dist/vlite.js'
+import 'vlitejs/vlite.css'
+import 'vlitejs/plugins/ima.css'
+import Vlitejs from 'vlitejs'
+import VlitejsIma from 'vlitejs/plugins/ima.js'
 
 Vlitejs.registerPlugin('ima', VlitejsIma, {
 	adTagUrl:
