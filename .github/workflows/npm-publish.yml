@@ -5,14 +5,41 @@ on:
     types: [published]
 
 jobs:
+  build-root:
+    strategy:
+      matrix:
+        node-version: [22, 24]
+        os: [ubuntu-latest, windows-latest]
+    uses: yoriiis/actions/.github/workflows/test-and-build.yml@main
+    with:
+      node-version: ${{ matrix.node-version }}
+      os: ${{ matrix.os }}
+      upload-artifact: true
+      outDir: ./dist
+      artifact-name: build-artifact-${{ matrix.os }}-${{ matrix.node-version }}
+
+  build-example:
+    needs: build-root
+    strategy:
+      matrix:
+        node-version: [22, 24]
+        os: [ubuntu-latest, windows-latest]
+    uses: yoriiis/actions/.github/workflows/test-and-build.yml@main
+    with:
+      node-version: ${{ matrix.node-version }}
+      os: ${{ matrix.os }}
+      working-directory: ./examples
+      download-artifact: true
+      outDir: ./dist
+      artifact-name: build-artifact-${{ matrix.os }}-${{ matrix.node-version }}
+      command-install: npm ci --install-links
+
   lint:
     uses: vlitejs/vlite/.github/workflows/lint.yml@main
 
   npm:
-    needs: lint
+    needs: [build-root, build-example, lint]
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
     permissions:
       id-token: write  # Required for OIDC
       contents: read
-    with:
-      node-version: 24

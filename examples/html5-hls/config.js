@@ -1,6 +1,6 @@
-import '../../dist/vlite.css'
-import VlitejsPip from '../../dist/plugins/pip.js'
-import Vlitejs from '../../dist/vlite.js'
+import 'vlitejs/vlite.css'
+import Vlitejs from 'vlitejs'
+import VlitejsPip from 'vlitejs/plugins/pip.js'
 
 Vlitejs.registerPlugin('pip', VlitejsPip)
 

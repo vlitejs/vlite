@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
@@ -24,6 +28,14 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      # Build vlitejs before examples install with --install-links
+      - name: Build vlitejs
+        run: npm run build
+
+      - name: Install examples dependencies
+        run: npm ci --install-links
+        working-directory: examples
 
       # https://github.com/microsoft/playwright/issues/7249#issuecomment-1385567519
       - name: Store Playwright's Version
