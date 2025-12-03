@@ -1,6 +1,6 @@
 # vLitejs
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/vlitejs/vlite/build.yml?branch=main&style=for-the-badge)](https://github.com/vlitejs/vlite/actions/workflows/build.yml) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/vlitejs/vlite/build.yml?branch=main&style=for-the-badge)](https://github.com/vlitejs/vlite/actions/workflows/build.yml) [![Playwright Report](https://img.shields.io/badge/playwright-report-45ba4b?style=for-the-badge&logo=playwright)](https://vlitejs-playwright.netlify.app/) [![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/vlitejs?color=%23ff5627&style=for-the-badge)](https://www.jsdelivr.com/package/npm/vlitejs)
 
 <p align="center">
     <img src="https://yoriiis.github.io/cdn/static/vlitejs/logo.svg" alt="vLitejs logo" width="250" />

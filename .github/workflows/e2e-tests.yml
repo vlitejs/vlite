@@ -98,19 +98,27 @@ jobs:
       - name: Deploy to Netlify
         id: deploy
         run: |
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            DEPLOY_ENV="production"
+            PROD_FLAG="--prod"
+          else
+            DEPLOY_ENV="preview"
+            PROD_FLAG=""
+          fi
+          echo "Deploying to $DEPLOY_ENV..."
+
           json=$(npx netlify deploy \
             --json \
             --site ${{ secrets.NETLIFY_APP_ID }} \
             --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
-            --dir playwright-report)
+            --dir playwright-report \
+            $PROD_FLAG)
 
           echo "$json"
 
-          # Récupère l'URL du draft deploy
+          # Récupère l'URL du deploy
           url=$(echo "$json" | jq -r '.deploy_url')
 
           # Expose comme output du step
           echo "url=$url" >> $GITHUB_OUTPUT
-
-      - name: Debug
-        run: echo "URL = ${{ steps.deploy.outputs.url }}"
+          echo "Deployed to $DEPLOY_ENV: $url"
