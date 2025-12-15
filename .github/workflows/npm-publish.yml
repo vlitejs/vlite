@@ -40,6 +40,3 @@ jobs:
   npm:
     needs: [build-root, build-example, lint]
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
-    permissions:
-      id-token: write  # Required for OIDC
-      contents: read
