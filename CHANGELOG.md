@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 8.0.0
+
+### ⚠️ Breaking changes
+
+- Updates Node.js ([897ee9d](https://github.com/vlitejs/vlite/commit/897ee9def8a01ec4adbfb27b64d46631009c3f26))
+  - Minimum supported `Node.js` version is `22`
+  - Updates other packages
+- Add set source by [@rtritto](https://github.com/rtritto) and @yoriiis ([#186](https://github.com/vlitejs/vlite/pull/186))
+- Playwright setup ([#173](https://github.com/vlitejs/vlite/pull/173))
+- Fix types and use package inside demo ([#189](https://github.com/vlitejs/vlite/pull/189))
+
 ## 7.4.2
 
 ### Fixes
