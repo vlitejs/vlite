@@ -6,7 +6,6 @@ test.describe('PIP Plugin Tests', () => {
 
 	test.beforeEach(async ({ page }) => {
 		await page.goto('http://localhost:3000/html5')
-
 		await page.waitForFunction(() => document.querySelector('video')?.duration)
 	})
 
@@ -16,15 +15,12 @@ test.describe('PIP Plugin Tests', () => {
 			return
 		}
 
-		const pipButton = await page.$('.v-pipButton')
-		expect(pipButton).not.toBeNull()
-
-		const buttonClass = await pipButton?.getAttribute('class')
-		expect(buttonClass).toContain('v-controlButton')
+		const pipButton = page.locator('.v-pipButton')
+		await expect(pipButton).toBeVisible()
+		await expect(pipButton).toHaveClass(/v-controlButton/)
 	})
 
 	test('should enter PIP mode on button click', async ({ page, browserName }) => {
-		// Skip on WebKit (Safari) as PIP behavior is different and may require user gesture
 		test.skip(browserName === 'webkit', 'PIP has restrictions on Safari/WebKit')
 
 		if (!(await page.evaluate(checkIfPipAvailable))) {
@@ -33,7 +29,10 @@ test.describe('PIP Plugin Tests', () => {
 		}
 
 		await page.click('.v-bigPlay')
-		await page.waitForTimeout(500)
+		const video = page.locator('video')
+		const isPausedBefore = await video.evaluate((v) => v.paused)
+		expect(isPausedBefore).toBe(false)
+
 		await page.click('.v-pipButton')
 		await page.waitForFunction(() => document.pictureInPictureElement !== null, { timeout: 5000 })
 
@@ -42,7 +41,6 @@ test.describe('PIP Plugin Tests', () => {
 	})
 
 	test('should exit PIP mode on button click', async ({ page, browserName }) => {
-		// Skip on WebKit (Safari) as PIP behavior is different and may require user gesture
 		test.skip(browserName === 'webkit', 'PIP has restrictions on Safari/WebKit')
 
 		if (!(await page.evaluate(checkIfPipAvailable))) {
@@ -51,9 +49,13 @@ test.describe('PIP Plugin Tests', () => {
 		}
 
 		await page.click('.v-bigPlay')
-		await page.waitForTimeout(500)
+		const video = page.locator('video')
+		const isPausedBefore = await video.evaluate((v) => v.paused)
+		expect(isPausedBefore).toBe(false)
+
 		await page.click('.v-pipButton')
 		await page.waitForFunction(() => document.pictureInPictureElement !== null, { timeout: 5000 })
+
 		await page.click('.v-pipButton')
 		await page.waitForFunction(() => document.pictureInPictureElement === null, { timeout: 5000 })
 

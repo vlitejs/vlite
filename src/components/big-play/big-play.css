@@ -23,6 +23,11 @@
 			pointer-events: none;
 		}
 
+		&:focus-visible {
+			outline: 2px dashed var(--vlite-colorPrimary);
+			outline-offset: -4px;
+		}
+
 		svg {
 			fill: var(--vlite-controlsColor);
 			width: 100%;

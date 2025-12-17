@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test'
 test.describe('Accessibility Tests', () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto('http://localhost:3000/html5')
+		await page.waitForSelector('.v-bigPlay', { state: 'visible' })
 
 		await page.waitForFunction(() => {
 			const video = document.querySelector('video')
@@ -53,77 +54,52 @@ test.describe('Accessibility Tests', () => {
 
 		// Press Enter to activate
 		await page.keyboard.press('Enter')
-		await page.waitForTimeout(500)
 
 		const isPaused = await page.evaluate(() => document.querySelector('video')?.paused)
 		expect(isPaused).toBe(false)
 	})
 
 	test('should have proper ARIA labels on interactive elements', async ({ page }) => {
-		// Check play/pause button
-		const playPauseAriaLabel = await page.getAttribute('.v-playPauseButton', 'aria-label')
-		expect(playPauseAriaLabel).toBe('Play')
-
-		// Check progress bar
-		const progressBarAriaLabel = await page.getAttribute('.v-progressBar', 'aria-label')
-		expect(progressBarAriaLabel).toBe('Seek')
-
-		// Check volume bar
-		const volumeBarAriaLabel = await page.getAttribute('.v-volumeBar', 'aria-label')
-		expect(volumeBarAriaLabel).toBe('Volume')
-
-		// Check volume button
-		const volumeButtonAriaLabel = await page.getAttribute('.v-volumeButton', 'aria-label')
-		expect(volumeButtonAriaLabel).toBe('Mute')
+		await expect(page.locator('.v-playPauseButton')).toHaveAttribute('aria-label', 'Play')
+		await expect(page.locator('.v-progressBar')).toHaveAttribute('aria-label', 'Seek')
+		await expect(page.locator('.v-volumeBar')).toHaveAttribute('aria-label', 'Volume')
+		await expect(page.locator('.v-volumeButton')).toHaveAttribute('aria-label', 'Mute')
 	})
 
 	test('should update ARIA labels when state changes', async ({ page }) => {
+		const playPause = page.locator('.v-playPauseButton')
+
 		// Initial state: Play button
-		let playPauseAriaLabel = await page.getAttribute('.v-playPauseButton', 'aria-label')
-		expect(playPauseAriaLabel).toBe('Play')
+		await expect(playPause).toHaveAttribute('aria-label', 'Play')
 
 		// Click to play
 		await page.click('.v-bigPlay')
-		await page.waitForTimeout(500)
 
 		// Should change to Pause
-		playPauseAriaLabel = await page.getAttribute('.v-playPauseButton', 'aria-label')
-		expect(playPauseAriaLabel).toBe('Pause')
+		await expect(playPause).toHaveAttribute('aria-label', 'Pause')
+
+		const volumeButton = page.locator('.v-volumeButton')
 
 		// Initial state: Mute button
-		let volumeButtonAriaLabel = await page.getAttribute('.v-volumeButton', 'aria-label')
-		expect(volumeButtonAriaLabel).toBe('Mute')
+		await expect(volumeButton).toHaveAttribute('aria-label', 'Mute')
 
 		// Click to mute
 		await page.click('.v-volumeButton')
-		await page.waitForTimeout(300)
 
 		// Should change to Unmute
-		volumeButtonAriaLabel = await page.getAttribute('.v-volumeButton', 'aria-label')
-		expect(volumeButtonAriaLabel).toBe('Unmute')
+		await expect(volumeButton).toHaveAttribute('aria-label', 'Unmute')
 	})
 
 	test('should have proper ARIA roles and attributes', async ({ page }) => {
-		// Check progress bar has proper min/max values
-		const progressBarMin = await page.getAttribute('.v-progressBar', 'aria-valuemin')
-		expect(progressBarMin).toBe('0')
+		const progressBar = page.locator('.v-progressBar')
+		await expect(progressBar).toHaveAttribute('aria-valuemin', '0')
+		await expect(progressBar).toHaveAttribute('max', '100')
+		await expect(progressBar).toHaveAttribute('type', 'range')
 
-		const progressBarMax = await page.getAttribute('.v-progressBar', 'max')
-		expect(progressBarMax).toBe('100')
-
-		// Check volume bar has proper min/max values
-		const volumeBarMin = await page.getAttribute('.v-volumeBar', 'aria-valuemin')
-		expect(volumeBarMin).toBe('0')
-
-		const volumeBarMax = await page.getAttribute('.v-volumeBar', 'max')
-		expect(volumeBarMax).toBe('1')
-
-		// Check input types
-		const progressBarType = await page.getAttribute('.v-progressBar', 'type')
-		expect(progressBarType).toBe('range')
-
-		const volumeBarType = await page.getAttribute('.v-volumeBar', 'type')
-		expect(volumeBarType).toBe('range')
+		const volumeBar = page.locator('.v-volumeBar')
+		await expect(volumeBar).toHaveAttribute('aria-valuemin', '0')
+		await expect(volumeBar).toHaveAttribute('max', '1')
+		await expect(volumeBar).toHaveAttribute('type', 'range')
 	})
 
 	test('should support Shift+Tab for reverse navigation (desktop only)', async ({
@@ -138,7 +114,6 @@ test.describe('Accessibility Tests', () => {
 
 		// Start from subtitle button
 		await page.focus('.v-subtitleButton')
-
 		let focusedElement = await page.evaluate(() => document.activeElement?.className)
 		expect(focusedElement).toContain('v-subtitleButton')
 
@@ -153,7 +128,7 @@ test.describe('Accessibility Tests', () => {
 		expect(focusedElement).toContain('v-volumeButton')
 	})
 
-	test('should have proper focus indicators on all interactive elements (desktop only)', async ({
+	test('should have proper keyboard focus order and focus-visible styles (desktop only)', async ({
 		page
 	}) => {
 		const isTouch = await page.evaluate(
@@ -168,32 +143,31 @@ test.describe('Accessibility Tests', () => {
 			'.v-volumeButton',
 			'.v-volumeBar',
 			'.v-subtitleButton',
+			'.v-pipButton',
+			'.v-castButton',
 			'.v-fullscreenButton'
 		]
 
+		const verifyFocus = async (selector: string) => {
+			const control = page.locator(selector)
+			const focused = await control.evaluate((el) => el === document.activeElement)
+			expect(focused).toBe(true)
+
+			const hasFocusVisible = await control.evaluate((el) => el.matches(':focus-visible'))
+			expect(hasFocusVisible).toBe(true)
+		}
+
+		// Tab to reach the player
+		await page.keyboard.press('Tab')
+
 		for (const selector of controls) {
-			await page.focus(selector)
-
-			// Check if element has focus styles (outline or other focus indicators)
-			const _hasFocusStyle = await page.evaluate((sel) => {
-				const element = document.querySelector(sel) as HTMLElement
-				if (!element) return false
-
-				const styles = window.getComputedStyle(element)
-				// Check for common focus indicators
-				return (
-					styles.outline !== 'none' ||
-					styles.outlineWidth !== '0px' ||
-					element.matches(':focus-visible')
-				)
-			}, selector)
-
-			// At minimum, element should be focusable
-			const isFocused = await page.evaluate(
-				(sel) => document.activeElement === document.querySelector(sel),
-				selector
-			)
-			expect(isFocused).toBe(true)
+			const control = page.locator(selector)
+			if ((await control.count()) > 0) {
+				await page.keyboard.press('Tab')
+				await verifyFocus(selector)
+			} else {
+				console.log(`Optional element skipped: ${selector}`)
+			}
 		}
 	})
 })

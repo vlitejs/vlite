@@ -2,59 +2,56 @@ import { expect, test } from '@playwright/test'
 
 const providers = ['html5', 'youtube', 'vimeo', 'dailymotion', 'audio']
 
-async function checkElements({ page, isVideo = true }) {
-	const player = await page.$('.v-vlite')
-	expect(player).not.toBeNull()
+export async function checkElements({ page, isVideo = true }: { page: Page; isVideo?: boolean }) {
+	// Player container
+	const player = page.locator('.v-vlite')
+	await expect(player).toHaveCount(1)
 
-	const controlBar = await page.$('.v-controlBar')
-	expect(controlBar).not.toBeNull()
+	// Control bar
+	const controlBar = page.locator('.v-controlBar')
+	await expect(controlBar).toHaveCount(1)
 
-	const playPauseButton = await page.$('.v-playPauseButton')
-	expect(playPauseButton).not.toBeNull()
+	// Play/Pause
+	const playPauseButton = page.locator('.v-playPauseButton')
+	await expect(playPauseButton).toHaveCount(1)
 
-	const currentTime = await page.$('.v-currentTime')
-	expect(currentTime).not.toBeNull()
+	// Current time
+	const currentTime = page.locator('.v-currentTime')
+	await expect(currentTime).toHaveCount(1)
 
-	const progressBar = await page.$('.v-progressBar')
-	expect(progressBar).not.toBeNull()
+	// Progress bar
+	const progressBar = page.locator('.v-progressBar')
+	await expect(progressBar).toHaveCount(1)
+	await expect(progressBar).toHaveJSProperty('step', '0.01')
+	await expect(progressBar).toHaveJSProperty('value', '0')
 
-	const progressBarStep = await progressBar.getAttribute('step')
-	expect(progressBarStep).toBe('0.01')
+	// Volume
+	const volumeButton = page.locator('.v-volumeButton')
+	await expect(volumeButton).toHaveCount(1)
 
-	const progressBarValue = await progressBar.getAttribute('value')
-	expect(progressBarValue).toBe('0')
-
-	const volumeButton = await page.$('.v-volumeButton')
-	expect(volumeButton).not.toBeNull()
-
-	const volumeBar = await page.$('.v-volumeBar')
-	expect(volumeBar).not.toBeNull()
-
-	const volumeBarStep = await volumeBar.getAttribute('step')
-	expect(volumeBarStep).toBe('0.1')
-
-	const volumeBarValue = await volumeBar.getAttribute('value')
-	expect(volumeBarValue).toBe('1')
+	const volumeBar = page.locator('.v-volumeBar')
+	await expect(volumeBar).toHaveCount(1)
+	await expect(volumeBar).toHaveJSProperty('step', '0.1')
+	await expect(volumeBar).toHaveJSProperty('value', '1')
 
 	if (isVideo) {
-		const loader = await page.$('.v-loader')
-		expect(loader).not.toBeNull()
+		const loader = page.locator('.v-loader')
+		await expect(loader).toHaveCount(1)
 
-		const overlay = await page.$('.v-overlay')
-		expect(overlay).not.toBeNull()
+		const overlay = page.locator('.v-overlay')
+		await expect(overlay).toHaveCount(1)
 
-		const poster = await page.$('.v-poster')
-		expect(poster).not.toBeNull()
+		const poster = page.locator('.v-poster')
+		await expect(poster).toHaveCount(1)
 
-		const bigPlay = await page.$('.v-bigPlay')
-		expect(bigPlay).not.toBeNull()
+		const bigPlay = page.locator('.v-bigPlay')
+		await expect(bigPlay).toHaveCount(1)
 
-		const userAgent = await page.evaluate(() => navigator.userAgent)
-		const isIPhone = /(iPhone)/gi.test(userAgent)
-
+		// Fullscreen button sauf iPhone
+		const isIPhone = await page.evaluate(() => /iPhone/i.test(navigator.userAgent))
 		if (!isIPhone) {
-			const fullscreenButton = await page.$('.v-fullscreenButton')
-			expect(fullscreenButton).not.toBeNull()
+			const fullscreenButton = page.locator('.v-fullscreenButton')
+			await expect(fullscreenButton).toHaveCount(1)
 		}
 	}
 }
