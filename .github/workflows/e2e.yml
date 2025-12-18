@@ -1,0 +1,20 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    uses: yoriiis/actions/.github/workflows/e2e.yml@main
+    with:
+      working-directory-demo: examples
+    secrets:
+      NETLIFY_APP_ID: ${{ secrets.NETLIFY_APP_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
