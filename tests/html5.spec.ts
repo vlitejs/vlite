@@ -11,20 +11,14 @@ test.describe('HTML5 Player Tests', () => {
 	})
 
 	test('should check the required elements', async ({ page }) => {
-		const trackButtonOff = await page.$('.v-trackButton[data-language="off"]')
-		expect(trackButtonOff).not.toBeNull()
-
-		const trackButtonEn = await page.$('.v-trackButton[data-language="en"]')
-		expect(trackButtonEn).not.toBeNull()
-
-		const trackButtonFr = await page.$('.v-trackButton[data-language="fr"]')
-		expect(trackButtonFr).not.toBeNull()
-
-		const subtitleButton = await page.$('.v-subtitleButton')
-		expect(subtitleButton).not.toBeNull()
+		// Check DOM presence instead of visibility
+		await expect(page.locator('.v-trackButton[data-language="off"]')).toHaveCount(1)
+		await expect(page.locator('.v-trackButton[data-language="en"]')).toHaveCount(1)
+		await expect(page.locator('.v-trackButton[data-language="fr"]')).toHaveCount(1)
+		await expect(page.locator('.v-subtitleButton')).toHaveCount(1)
 	})
 
-	test('Test pause video on overlay click (desktop only)', async ({ page }, _testInfo) => {
+	test('Test pause video on overlay click (desktop only)', async ({ page }) => {
 		const isTouch = await page.evaluate(
 			() => 'ontouchstart' in window || navigator.maxTouchPoints > 0
 		)
@@ -33,10 +27,8 @@ test.describe('HTML5 Player Tests', () => {
 		await page.click('.v-bigPlay')
 		await page.click('.v-overlay')
 
-		const isPaused = await page.evaluate(() => {
-			const video = document.querySelector('video')
-			return video.paused
-		})
+		const video = page.locator('video')
+		const isPaused = await video.evaluate((v) => v.paused)
 		expect(isPaused).toBe(true)
 	})
 
@@ -44,10 +36,8 @@ test.describe('HTML5 Player Tests', () => {
 		await page.click('.v-bigPlay')
 		await page.click('.v-playPauseButton')
 
-		const isPaused = await page.evaluate(() => {
-			const video = document.querySelector('video')
-			return video.paused
-		})
+		const video = page.locator('video')
+		const isPaused = await video.evaluate((v) => v.paused)
 		expect(isPaused).toBe(true)
 	})
 
@@ -56,7 +46,6 @@ test.describe('HTML5 Player Tests', () => {
 		await page.click('.v-playPauseButton')
 
 		const duration = await page.evaluate(() => document.querySelector('video').duration)
-
 		const targetTimeInSeconds = 10
 		const percentageValue = (targetTimeInSeconds / duration) * 100
 
@@ -66,10 +55,7 @@ test.describe('HTML5 Player Tests', () => {
 			progressBar.dispatchEvent(new Event('input'))
 		}, percentageValue)
 
-		await page.waitForTimeout(100)
-
-		const currentTime = await page.evaluate(() => document.querySelector('video').currentTime)
-
+		const currentTime = await page.locator('video').evaluate((video) => video.currentTime)
 		expect(currentTime).toBeCloseTo(targetTimeInSeconds, 0)
 	})
 
@@ -77,8 +63,9 @@ test.describe('HTML5 Player Tests', () => {
 		await page.click('.v-bigPlay')
 		await page.click('.v-volumeButton')
 
-		const muted = await page.evaluate(() => document.querySelector('video').muted)
-		expect(muted).toBe(true)
+		const video = page.locator('video')
+		const isMuted = await video.evaluate((v) => v.muted)
+		expect(isMuted).toBe(true)
 	})
 
 	test('Test volume change on volume bar change', async ({ page }) => {
@@ -90,10 +77,9 @@ test.describe('HTML5 Player Tests', () => {
 			volumeBar.dispatchEvent(new Event('input'))
 		})
 
-		const volume = await page.evaluate(() => {
-			const video = document.querySelector('video')
-			return Math.round(video.volume * 10) / 10
-		})
+		const volume = await page
+			.locator('video')
+			.evaluate((video) => Math.round(video.volume * 10) / 10)
 		expect(volume).toBe(0.1)
 	})
 })
