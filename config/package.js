@@ -12,5 +12,6 @@ export const plugins = [
 	'ima',
 	'volume-bar',
 	'sticky',
-	'hotkeys'
+	'hotkeys',
+	'mobile'
 ]
