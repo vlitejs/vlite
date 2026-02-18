@@ -198,7 +198,9 @@ class Vlitejs {
 		if (this.type === 'video') {
 			this.container.addEventListener('click', this.onClickOnPlayer)
 			this.container.addEventListener('dblclick', this.onDoubleClickOnPlayer)
-			this.autoHideGranted && this.container.addEventListener('mousemove', this.onMousemove)
+			if (this.autoHideGranted && !this.player.isTouch) {
+				this.container.addEventListener('mousemove', this.onMousemove)
+			}
 			document.addEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
 	}
@@ -269,7 +271,7 @@ class Vlitejs {
 	 */
 	stopAutoHideTimer() {
 		if (this.type === 'video' && this.player.elements.controlBar) {
-			this.player.elements.controlBar.classList.remove('v-hidden')
+			this.player.elements.controlBar?.classList.remove('v-hidden')
 			clearTimeout(this.timerAutoHide)
 		}
 	}
@@ -292,7 +294,9 @@ class Vlitejs {
 		if (this.type === 'video') {
 			this.container.removeEventListener('click', this.onClickOnPlayer)
 			this.container.removeEventListener('dblclick', this.onDoubleClickOnPlayer)
-			this.autoHideGranted && this.container.removeEventListener('mousemove', this.onMousemove)
+			if (this.autoHideGranted && !this.player.isTouch) {
+				this.container.removeEventListener('mousemove', this.onMousemove)
+			}
 			window.removeEventListener(this.supportFullScreen.changeEvent, this.onChangeFullScreen)
 		}
 	}
