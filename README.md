@@ -97,7 +97,7 @@ yarn add vlitejs --dev
 ```
 
 > [!WARNING]
-> The minimum supported `Node.js` version is `16.20.0`.
+> The minimum supported `Node.js` version is `22`.
 
 ### CDN
 
