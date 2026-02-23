@@ -83,3 +83,52 @@ test.describe('HTML5 Player Tests', () => {
 		expect(volume).toBe(0.1)
 	})
 })
+
+test.describe('HTML5 Player Mobile Overlay Tests', () => {
+	test.beforeEach(async ({ page }) => {
+		// Force a touch-like environment before any script runs
+		await page.addInitScript(() => {
+			Object.defineProperty(navigator, 'maxTouchPoints', {
+				get() {
+					return 1
+				},
+				configurable: true
+			})
+		})
+
+		await page.goto('http://localhost:3000/html5')
+
+		await page.waitForFunction(() => {
+			const video = document.querySelector('video')
+			return video && video.duration > 0
+		})
+	})
+
+	test('should show control bar on first overlay tap and pause on second', async ({ page }) => {
+		const video = page.locator('video')
+		const controlBar = page.locator('.v-controlBar')
+
+		await page.click('.v-bigPlay')
+
+		// Wait long enough for auto-hide to hide the control bar (autoHideDelay = 3000ms)
+		await page.waitForTimeout(3500)
+
+		const initiallyHidden = await controlBar.evaluate((el) => el.classList.contains('v-hidden'))
+
+		// First overlay tap: should show the control bar but keep playback running
+		await page.click('.v-overlay')
+		const controlBarVisibleAfterFirstTap = await controlBar.evaluate((el) =>
+			el.classList.contains('v-hidden')
+		)
+		const pausedAfterFirstTap = await video.evaluate((v) => v.paused)
+
+		// Second overlay tap: should pause the video
+		await page.click('.v-overlay')
+		const pausedAfterSecondTap = await video.evaluate((v) => v.paused)
+
+		expect(initiallyHidden).toBe(true)
+		expect(controlBarVisibleAfterFirstTap).toBe(false)
+		expect(pausedAfterFirstTap).toBe(false)
+		expect(pausedAfterSecondTap).toBe(true)
+	})
+})

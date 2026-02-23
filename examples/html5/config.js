@@ -8,6 +8,7 @@ import Vlitejs from 'vlitejs'
 import VlitejsAirplay from 'vlitejs/plugins/airplay.js'
 import VlitejsCast from 'vlitejs/plugins/cast.js'
 import VlitejsHotkeys from 'vlitejs/plugins/hotkeys.js'
+import VlitejsMobile from 'vlitejs/plugins/mobile.js'
 import VlitejsPip from 'vlitejs/plugins/pip.js'
 import VlitejsSubtitle from 'vlitejs/plugins/subtitle.js'
 import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar.js'
@@ -30,6 +31,7 @@ Vlitejs.registerPlugin('hotkeys', VlitejsHotkeys, {
 	seekStep: 3,
 	volumeStep: 0.2
 })
+Vlitejs.registerPlugin('mobile', VlitejsMobile)
 
 new Vlitejs('#player', {
 	options: {
@@ -47,7 +49,7 @@ new Vlitejs('#player', {
 		muted: false,
 		autoHide: true
 	},
-	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar', 'hotkeys'],
+	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar', 'hotkeys', 'mobile'],
 	onReady: (player) => {
 		console.log(player)
 
