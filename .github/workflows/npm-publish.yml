@@ -21,4 +21,7 @@ jobs:
 
   npm:
     needs: [build, lint]
+    permissions:
+      id-token: write
+      contents: read
     uses: yoriiis/actions/.github/workflows/npm-publish.yml@main
