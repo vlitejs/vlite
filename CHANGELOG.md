@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 8.1.0
+
+### New features
+
+- Add `mobile` plugin ([#194](https://github.com/vlitejs/vlite/pull/194))
+
+### Updates
+
+- Update Playwright tests ([#191](https://github.com/vlitejs/vlite/pull/191))
+- Use reusable e2e workflow ([#192](https://github.com/vlitejs/vlite/pull/192))
+
 ## 8.0.0
 
 ### ⚠️ Breaking changes
