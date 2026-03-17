@@ -4,9 +4,9 @@ import alias from '@rollup/plugin-alias'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
 import typescript from '@rollup/plugin-typescript'
+import dts from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
-import dts from 'rollup-plugin-dts'
 import { banner, plugins, providers } from './package.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -60,16 +60,18 @@ const createConfig = ({ input, outputFile }) => {
 const createDtsConfig = ({ input, outputFile }) => {
 	return {
 		input,
-		output: [{
-			file: `${outputDirectory}/${outputFile.replace('.js', '.d.ts')}`,
-			format: 'es'
-		}],
+		output: [
+			{
+				file: `${outputDirectory}/${outputFile.replace('.js', '.d.ts')}`,
+				format: 'es'
+			}
+		],
 		plugins: [
 			aliasConfig, // Resolve absolute paths in types
 			dts()
 		],
 		// Ignore CSS and SVG files during type generation to avoid errors
-		external: [/\.css$/, /\.svg$/] 
+		external: [/\.css$/, /\.svg$/]
 	}
 }
 
@@ -91,10 +93,7 @@ providers.forEach((provider) => {
 		input: `./src/providers/${provider}/${provider}.ts`,
 		outputFile: `providers/${provider}.js`
 	}
-	configs.push(
-		createConfig(options),
-		createDtsConfig(options)
-	)
+	configs.push(createConfig(options), createDtsConfig(options))
 })
 
 // Plugins
@@ -103,10 +102,7 @@ plugins.forEach((plugin) => {
 		input: `./src/plugins/${plugin}/${plugin}.ts`,
 		outputFile: `plugins/${plugin}.js`
 	}
-	configs.push(
-		createConfig(options),
-		createDtsConfig(options)
-	)
+	configs.push(createConfig(options), createDtsConfig(options))
 })
 
 export default configs
