@@ -45,6 +45,7 @@
 			"import": "./dist/plugins/*.js"
 		},
 		"./plugins/*.css": {
+			"style": "./dist/plugins/*.css",
 			"import": "./dist/plugins/*.css"
 		},
 		"./providers/*": {
@@ -54,6 +55,7 @@
 			"import": "./dist/providers/*.js"
 		},
 		"./vlite.css": {
+			"style": "./dist/vlite.css",
 			"import": "./dist/vlite.css"
 		},
 		".": {
