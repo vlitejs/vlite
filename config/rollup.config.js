@@ -56,53 +56,29 @@ const createConfig = ({ input, outputFile }) => {
 	}
 }
 
-// TypeScript Declaration files (.d.ts)
-const createDtsConfig = ({ input, outputFile }) => {
-	return {
-		input,
-		output: [
-			{
-				file: `${outputDirectory}/${outputFile.replace('.js', '.d.ts')}`,
-				format: 'es'
-			}
-		],
-		plugins: [
-			aliasConfig, // Resolve absolute paths in types
-			dts()
-		],
-		// Ignore CSS and SVG files during type generation to avoid errors
-		external: [/\.css$/, /\.svg$/]
-	}
-}
+// TypeScript declaration files (.d.ts)
+const createDtsConfig = ({ input, outputFile }) => ({
+	input,
+	output: [
+		{
+			file: `${outputDirectory}/${outputFile.replace('.js', '.d.ts')}`,
+			format: 'es'
+		}
+	],
+	plugins: [aliasConfig, dts()],
+	external: [/\.css$/, /\.svg$/]
+})
 
-const configs = [
-	// Core
-	createConfig({
-		input: './src/core/vlite.ts',
-		outputFile: 'vlite.js'
-	}),
-	createDtsConfig({
-		input: './src/core/vlite.ts',
-		outputFile: 'vlite.js'
-	})
-]
-
-// Providers
-providers.forEach((provider) => {
-	const options = {
+const entries = [
+	...providers.map((provider) => ({
 		input: `./src/providers/${provider}/${provider}.ts`,
 		outputFile: `providers/${provider}.js`
-	}
-	configs.push(createConfig(options), createDtsConfig(options))
-})
-
-// Plugins
-plugins.forEach((plugin) => {
-	const options = {
+	})),
+	...plugins.map((plugin) => ({
 		input: `./src/plugins/${plugin}/${plugin}.ts`,
 		outputFile: `plugins/${plugin}.js`
-	}
-	configs.push(createConfig(options), createDtsConfig(options))
-})
+	})),
+	{ input: './src/core/vlite.ts', outputFile: 'vlite.js' }
+]
 
-export default configs
+export default entries.flatMap((entry) => [createConfig(entry), createDtsConfig(entry)])
