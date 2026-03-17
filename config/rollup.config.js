@@ -34,7 +34,8 @@ const createConfig = ({ input, outputFile }) => {
 			{
 				banner,
 				file: `${outputDirectory}/${outputFile}`,
-				format: 'es'
+				format: 'es',
+				sourcemap: !isProduction
 			}
 		],
 		plugins: [
