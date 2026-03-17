@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.1.1
+
+### Fixes
+
+- Add style to CSS exports by @rtritto in ([#201](https://github.com/vlitejs/vlite/pull/201))
+- Fix control bar not display on first tap without mobile plugin ([#204](https://github.com/vlitejs/vlite/pull/204))
+
 ## 8.1.0
 
 ### New features
