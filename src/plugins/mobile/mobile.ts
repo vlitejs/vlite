@@ -38,7 +38,9 @@ export default class Mobile {
 	 * Add event listeners
 	 */
 	addEvents() {
-		this.player.elements.container.addEventListener('click', this.onClickOnContainer)
+		this.player.elements.container.addEventListener('click', this.onClickOnContainer, {
+			capture: true
+		})
 	}
 
 	/**
@@ -77,6 +79,8 @@ export default class Mobile {
 	 * Destroy the plugin
 	 */
 	destroy() {
-		this.player.elements.container.removeEventListener('click', this.onClickOnContainer)
+		this.player.elements.container.removeEventListener('click', this.onClickOnContainer, {
+			capture: true
+		})
 	}
 }
