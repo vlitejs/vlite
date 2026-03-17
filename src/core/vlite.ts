@@ -222,6 +222,18 @@ class Vlitejs {
 			nodeName: ['div']
 		})
 
+		// Touch device: overlay tap shows the control bar when hidden (no regression without mobile plugin)
+		if (
+			validateTargetOverlay &&
+			isTouch() &&
+			this.autoHideGranted &&
+			this.player.elements.controlBar?.classList.contains('v-hidden')
+		) {
+			this.stopAutoHideTimer()
+			this.startAutoHideTimer()
+			return
+		}
+
 		// Touch device will not toggle playback, only display the control bar
 		if (validateTargetPlayPauseButton || (validateTargetOverlay && !isTouch())) {
 			this.player.controlBar.togglePlayPause(e)
