@@ -39,9 +39,11 @@
 	"type": "module",
 	"exports": {
 		"./plugins/*": {
+			"types": "./dist/plugins/*.d.ts",
 			"import": "./dist/plugins/*.js"
 		},
 		"./plugins/*.js": {
+			"types": "./dist/plugins/*.d.ts",
 			"import": "./dist/plugins/*.js"
 		},
 		"./plugins/*.css": {
@@ -49,9 +51,11 @@
 			"import": "./dist/plugins/*.css"
 		},
 		"./providers/*": {
+			"types": "./dist/providers/*.d.ts",
 			"import": "./dist/providers/*.js"
 		},
 		"./providers/*.js": {
+			"types": "./dist/providers/*.d.ts",
 			"import": "./dist/providers/*.js"
 		},
 		"./vlite.css": {
@@ -59,6 +63,7 @@
 			"import": "./dist/vlite.css"
 		},
 		".": {
+			"types": "./dist/vlite.d.ts",
 			"import": "./dist/vlite.js"
 		}
 	},
@@ -100,6 +105,7 @@
 		"postcss-url": "^10.1.1",
 		"prettier": "^3.6.2",
 		"rollup": "^4.52.5",
+		"rollup-plugin-dts": "^6.4.0",
 		"rollup-plugin-postcss": "^4.0.2",
 		"rollup-plugin-svg": "^2.0.0",
 		"tslib": "^2.8.1",
