@@ -78,9 +78,6 @@
 		"e2e:ui": "playwright test --ui --config ./config/playwright.config.ts",
 		"test": "echo 'No local tests' && exit 0"
 	},
-	"dependencies": {
-		"validate-target": "^3.1.1"
-	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.4",
 		"@playwright/test": "^1.56.1",
