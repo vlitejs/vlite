@@ -1,6 +1,6 @@
 import './control-bar.css'
 import { formatVideoTime } from 'shared/utils/utils.js'
-import validateTarget from 'validate-target'
+import validateTarget from '../../validate-target.js'
 import TemplateControlBar from './templates/control-bar.js'
 
 export default class ControlBar {
@@ -134,7 +134,7 @@ export default class ControlBar {
 	 * @param e Event data
 	 */
 	onClickOnControlBar(e: Event) {
-		const target = e.target
+		const target = e.target as HTMLElement
 
 		const validateTargetPlayPauseButton = validateTarget({
 			target,
