@@ -12,6 +12,7 @@
 		overflow: hidden;
 		width: 0;
 		height: 25px;
+		max-width: calc(var(--vlite-progressBarHeight) * 2);
 
 		&:focus-visible {
 			width: 52px;
