@@ -15,17 +15,14 @@ declare global {
  * @returns Formatted time
  */
 export function formatVideoTime(time: number): string {
-	const ms = time * 1000
-	const min = (ms / 1000 / 60) << 0
-	const sec = ((ms / 1000) % 60) << 0
-	let timeInString = ''
+	const hour = Math.floor(time / 3600)
+	const min = Math.floor((time % 3600) / 60)
+	const sec = Math.floor(time % 60)
 
-	timeInString += min < 10 ? '0' : ''
-	timeInString += `${min}:`
-	timeInString += sec < 10 ? '0' : ''
-	timeInString += sec
-
-	return timeInString
+	if (hour > 0) {
+		return hour + ':' + (min < 10 ? `0${min}` : min) + ':' + (sec < 10 ? `0${sec}` : sec)
+	}
+	return min + ':' + (sec < 10 ? `0${sec}` : sec)
 }
 
 /**
