@@ -1,10 +1,15 @@
-# Plugin: Cast
+---
+title: Cast
+description: Supports for Google Cast API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
 
 Supports for Google Cast API.
 
 ## Overview
 
-| <!-- -->         | <!-- -->                        |
+|                  |                                 |
 | ---------------- | ------------------------------- |
 | Name             | `cast`                          |
 | Path             | `vlitejs/plugins/cast`          |
@@ -76,7 +81,9 @@ Vlitejs.registerPlugin('cast', VlitejsCast, {
 });
 ```
 
-> [!NOTE]
-> The `images` field automatically displays the poster available in the [Vlitejs options](../../../README.md#Options).
+<Aside type="note">
+  The `images` field automatically displays the poster available in the [Vlitejs
+  options](../../../README.md#Options).
+</Aside>
 
 See the [Metadata](https://developers.google.com/cast/docs/reference/web_sender/chrome.cast.media.GenericMediaMetadata) reference for available fields.

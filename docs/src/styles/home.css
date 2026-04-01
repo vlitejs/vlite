@@ -1,0 +1,396 @@
+/* ============================================================
+   Home page custom styles
+   ============================================================ */
+
+/* ---------- Layout ---------- */
+.home {
+	--home-accent: #ff7f15;
+	--home-accent-glow: rgba(255, 127, 21, 0.18);
+	--home-radius: 14px;
+}
+
+/* Remove default content padding for full-width sections */
+.home {
+	margin: calc(-1 * var(--sl-content-pad-x));
+}
+
+/* ---------- HERO ---------- */
+.home-hero {
+	background:
+		radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255, 127, 21, 0.22) 0%, transparent 70%),
+		linear-gradient(180deg, #0b0b0f 0%, #111118 100%);
+	padding: 5rem 2rem 4rem;
+	text-align: center;
+	border-radius: 0 0 var(--home-radius) var(--home-radius);
+	position: relative;
+	overflow: hidden;
+}
+
+.home-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff7f15' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+	pointer-events: none;
+}
+
+.home-hero-logo {
+	display: block;
+	margin: 0 auto 1.5rem;
+	width: 80px;
+	height: 80px;
+}
+
+.home-hero-title {
+	font-size: clamp(3rem, 9vw, 5.5rem);
+	font-weight: 900;
+	line-height: 1;
+	margin: 0 0 1rem;
+	background: linear-gradient(135deg, #ff7f15 0%, #ffa849 50%, #ffcf7f 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	letter-spacing: -0.03em;
+}
+
+.home-hero-tagline {
+	font-size: clamp(1rem, 2.5vw, 1.2rem);
+	color: #9ca3af;
+	max-width: 520px;
+	margin: 0 auto 2rem;
+	line-height: 1.6;
+}
+
+.home-hero-badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-bottom: 2rem;
+}
+
+.home-hero-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.3rem 0.75rem;
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 999px;
+	font-size: 0.8rem;
+	color: #d1d5db;
+	font-weight: 500;
+	text-decoration: none;
+	transition:
+		border-color 0.2s,
+		background 0.2s;
+}
+
+.home-hero-badge:hover {
+	border-color: var(--home-accent);
+	background: rgba(255, 127, 21, 0.1);
+	color: var(--home-accent);
+}
+
+.home-hero-badge-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--home-accent);
+	flex-shrink: 0;
+}
+
+.home-hero-actions {
+	display: flex;
+	gap: 0.75rem;
+	justify-content: center;
+	margin-bottom: 2rem;
+	flex-wrap: wrap;
+}
+
+.home-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.65rem 1.5rem;
+	border-radius: 8px;
+	font-size: 0.95rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.2s;
+	border: 1.5px solid transparent;
+}
+
+.home-btn--primary {
+	background: var(--home-accent);
+	color: #fff;
+	border-color: var(--home-accent);
+}
+
+.home-btn--primary:hover {
+	background: #e8720f;
+	border-color: #e8720f;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 20px rgba(255, 127, 21, 0.4);
+}
+
+.home-btn--secondary {
+	background: transparent;
+	color: #d1d5db;
+	border-color: rgba(255, 255, 255, 0.15);
+}
+
+.home-btn--secondary:hover {
+	border-color: rgba(255, 255, 255, 0.35);
+	color: #fff;
+	transform: translateY(-1px);
+}
+
+.home-install {
+	display: inline-flex;
+	align-items: center;
+	gap: 0;
+	background: rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+	padding: 0.5rem 1rem;
+	font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+	font-size: 0.9rem;
+}
+
+.home-install-code {
+	color: #e5e7eb;
+	background: none;
+	border: none;
+	padding: 0;
+	font-size: inherit;
+	font-family: inherit;
+}
+
+.home-install-copy {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #6b7280;
+	margin-left: 0.75rem;
+	padding: 0;
+	line-height: 1;
+	transition: color 0.2s;
+	display: flex;
+}
+
+.home-install-copy:hover {
+	color: var(--home-accent);
+}
+
+/* ---------- Section header ---------- */
+.home-section-label {
+	text-align: center;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--home-accent);
+	margin: 0 0 0.5rem;
+}
+
+.home-section-title {
+	text-align: center;
+	font-size: clamp(1.6rem, 4vw, 2.2rem);
+	font-weight: 800;
+	margin: 0 0 2.5rem;
+	letter-spacing: -0.02em;
+}
+
+/* ---------- DEMO ---------- */
+.home-demo {
+	padding: 4rem 2rem;
+}
+
+.home-demo-tabs {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 1.5rem;
+}
+
+.home-demo-tab {
+	padding: 0.45rem 1rem;
+	border-radius: 6px;
+	border: 1.5px solid var(--sl-color-gray-5, rgba(255, 255, 255, 0.1));
+	background: transparent;
+	color: var(--sl-color-gray-2, #9ca3af);
+	cursor: pointer;
+	font-size: 0.85rem;
+	font-weight: 500;
+	transition: all 0.18s;
+	font-family: inherit;
+}
+
+.home-demo-tab:hover {
+	border-color: var(--home-accent);
+	color: var(--home-accent);
+}
+
+.home-demo-tab.is-active {
+	background: var(--home-accent);
+	border-color: var(--home-accent);
+	color: #fff;
+}
+
+.home-demo-player {
+	max-width: 780px;
+	margin: 0 auto;
+	border-radius: var(--home-radius);
+	overflow: hidden;
+	box-shadow:
+		0 0 0 1px rgba(255, 127, 21, 0.2),
+		0 0 60px rgba(255, 127, 21, 0.12),
+		0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.home-demo-player .v-vlite {
+	border-radius: var(--home-radius);
+}
+
+.home-demo-credit {
+	text-align: center;
+	font-size: 0.78rem;
+	color: var(--sl-color-gray-3, #6b7280);
+	margin-top: 1rem;
+}
+
+/* ---------- FEATURES ---------- */
+.home-features {
+	padding: 4rem 2rem;
+	background: var(--sl-color-bg-nav, rgba(0, 0, 0, 0.2));
+	border-radius: var(--home-radius);
+	margin: 0 0 0;
+}
+
+.home-features-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1rem;
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.home-feature-card {
+	background: var(--sl-color-bg, #fff);
+	border: 1px solid var(--sl-color-hairline, rgba(255, 255, 255, 0.08));
+	border-radius: 10px;
+	padding: 1.5rem;
+	transition:
+		border-color 0.2s,
+		transform 0.2s;
+}
+
+.home-feature-card:hover {
+	border-color: var(--home-accent);
+	transform: translateY(-2px);
+}
+
+.home-feature-icon {
+	font-size: 1.75rem;
+	margin-bottom: 0.75rem;
+	line-height: 1;
+}
+
+.home-feature-card h3 {
+	font-size: 1rem;
+	font-weight: 700;
+	margin: 0 0 0.4rem;
+	color: var(--sl-color-white, #fff);
+}
+
+.home-feature-card p {
+	font-size: 0.875rem;
+	color: var(--sl-color-gray-2, #9ca3af);
+	margin: 0;
+	line-height: 1.5;
+}
+
+/* ---------- COMPARISON ---------- */
+.home-comparison {
+	padding: 4rem 2rem;
+}
+
+.home-comparison-note {
+	text-align: center;
+	font-size: 0.85rem;
+	color: var(--sl-color-gray-3, #6b7280);
+	margin-bottom: 2rem;
+}
+
+.home-comparison-chart {
+	max-width: 640px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.home-comparison-row {
+	display: grid;
+	grid-template-columns: 80px 1fr;
+	align-items: center;
+	gap: 1rem;
+}
+
+.home-comparison-name {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--sl-color-gray-1, #e5e7eb);
+	text-align: right;
+}
+
+.home-comparison-track {
+	background: rgba(255, 255, 255, 0.06);
+	border-radius: 6px;
+	height: 32px;
+	overflow: hidden;
+}
+
+.home-comparison-bar {
+	height: 100%;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	padding: 0 0.6rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: #fff;
+	white-space: nowrap;
+	min-width: 52px;
+}
+
+.home-comparison-bar--vlitejs {
+	background: linear-gradient(90deg, #ff7f15, #ffaa55);
+}
+
+.home-comparison-bar--plyr {
+	background: #4b5563;
+}
+
+.home-comparison-bar--videojs {
+	background: #374151;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+	.home-hero {
+		padding: 3rem 1.5rem 2.5rem;
+	}
+
+	.home-demo,
+	.home-features,
+	.home-comparison {
+		padding: 3rem 1.5rem;
+	}
+
+	.home-comparison-row {
+		grid-template-columns: 70px 1fr;
+	}
+}

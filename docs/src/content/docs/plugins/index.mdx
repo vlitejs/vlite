@@ -1,0 +1,105 @@
+---
+title: Plugins
+description: Overview of the vLitejs Plugin API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The Plugin API extends vLitejs with additional behaviors. Plugins are loaded on demand and registered before player instantiation.
+
+---
+
+## Available plugins
+
+| Plugin                             | Description                      |
+| ---------------------------------- | -------------------------------- |
+| [Subtitle](/plugins/subtitle)      | Multiple caption tracks (VTT)    |
+| [Picture-in-Picture](/plugins/pip) | Picture-in-Picture browser API   |
+| [Volume Bar](/plugins/volume-bar)  | Draggable volume slider          |
+| [Cast](/plugins/cast)              | Google Cast / Chromecast         |
+| [AirPlay](/plugins/airplay)        | Apple AirPlay                    |
+| [IMA](/plugins/ima)                | Google IMA SDK (advertisements)  |
+| [Sticky](/plugins/sticky)          | Sticky floating player on scroll |
+| [Hotkeys](/plugins/hotkeys)        | Keyboard shortcuts               |
+
+---
+
+## Loading a plugin
+
+Register a plugin before instantiating the player using `Vlitejs.registerPlugin()`.
+
+```js
+import Vlitejs from 'vlitejs';
+import VlitejsSubtitle from 'vlitejs/plugins/subtitle.js';
+import 'vlitejs/plugins/subtitle.css';
+
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
+
+new Vlitejs('#player', {
+  plugins: ['subtitle']
+});
+```
+
+Some plugins accept a third argument for configuration options:
+
+```js
+Vlitejs.registerPlugin('sticky', VlitejsSticky, {
+  mode: 'instant',
+  width: 400
+});
+```
+
+---
+
+## Create a custom plugin
+
+The Plugin API lets you build custom behaviors that integrate directly with the player lifecycle.
+
+### Getting started
+
+Use the [sample plugin](https://github.com/vlitejs/vlite/blob/main/src/plugins/sample/sample-plugin.js) as a starting template. Refer to [subtitle.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/subtitle/subtitle.ts) and [pip.ts](https://github.com/vlitejs/vlite/blob/main/src/plugins/pip/pip.ts) for real-world examples.
+
+### Rules
+
+- The plugin must be an ES6 class.
+- `init()` is called automatically by vLitejs when the plugin is registered.
+- `onReady()` is called automatically by vLitejs when the player is ready.
+
+### Required methods
+
+|   Method    | Description                                        |
+| :---------: | -------------------------------------------------- |
+|  `init()`   | Initialize the plugin (DOM setup, event listeners) |
+| `onReady()` | Run code after the player is ready                 |
+
+### Player instance
+
+vLitejs exposes the player instance to the plugin constructor via `this.player`.
+
+| Property              |       Type        | Description                     |
+| --------------------- | :---------------: | ------------------------------- |
+| `player.media`        |   `HTMLElement`   | The media element               |
+| `player.elements`     |     `Object`      | Player DOM elements             |
+| `player.options`      |     `Object`      | Player options                  |
+| `player.isFullScreen` |     `Boolean`     | Is the player in fullscreen     |
+| `player.isMuted`      |     `Boolean`     | Is the player muted             |
+| `player.isPaused`     | `null \| Boolean` | Is the player paused            |
+| `player.isTouch`      |     `Boolean`     | Is a touch device               |
+| `player.type`         |     `String`      | `'video'` or `'audio'`          |
+| `player.plugins`      |     `Object`      | All registered plugin instances |
+| `player.Vlitejs`      |      `Class`      | The vLitejs constructor         |
+| `player.controlBar`   |      `Class`      | The control bar instance        |
+
+### Provider and media type declarations
+
+Declare which providers and media types the plugin supports via public class fields:
+
+```js
+class MyPlugin {
+  providers = ['html5', 'youtube']; // restrict to specific providers
+  types = ['video']; // 'video' | 'audio'
+
+  init() {}
+  onReady() {}
+}
+```

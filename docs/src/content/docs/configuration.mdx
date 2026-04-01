@@ -1,0 +1,117 @@
+---
+title: Configuration
+description: Full constructor reference for vLitejs.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `Vlitejs` constructor accepts two parameters: a **selector** and an optional **configuration object**.
+
+```js
+import 'vlitejs/vlite.css';
+import Vlitejs from 'vlitejs';
+
+new Vlitejs(selector, config);
+```
+
+---
+
+## Constructor parameters
+
+| Parameter  |          Type           | Default | Description                                    |
+| ---------- | :---------------------: | :-----: | ---------------------------------------------- |
+| `selector` | `String \| HTMLElement` |    —    | CSS selector string or `HTMLElement` to target |
+| `config`   |        `Object`         |  `{}`   | Optional configuration object (see below)      |
+
+---
+
+## Config object
+
+| Parameter  |        Type        |  Default  | Description                                               |
+| ---------- | :----------------: | :-------: | --------------------------------------------------------- |
+| `options`  |      `Object`      |   `{}`    | Player options — see [Options](/options)                  |
+| `onReady`  | `Function \| null` |  `null`   | Callback executed when the player is ready                |
+| `provider` |      `String`      | `'html5'` | Player provider — see [Providers](/providers)             |
+| `plugins`  |      `Array`       |   `[]`    | List of registered plugin names — see [Plugins](/plugins) |
+
+### Full example
+
+```js
+new Vlitejs('#player', {
+  options: {
+    autoHide: true,
+    poster: '/path/to/poster.jpg'
+  },
+  onReady: (player) => {
+    player.mute();
+  },
+  provider: 'html5',
+  plugins: ['subtitle', 'pip']
+});
+```
+
+---
+
+## `onReady`
+
+The `onReady` callback is executed when the player is ready to receive method calls.
+
+- **HTML5** video and audio: fires on the `canplay` or `loadedmetadata` event.
+- **YouTube, Vimeo, Dailymotion**: fires on the `onready` event from their respective SDK.
+
+The callback receives the **player instance** as its only argument, giving access to all [methods](/methods) and [events](/events).
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    // The player is ready — call any method here
+    player.mute();
+
+    player.on('play', () => {
+      console.log('Playback started');
+    });
+  }
+});
+```
+
+<Aside type="tip">
+  The `onReady` callback can be written as an arrow function or a regular function.
+</Aside>
+
+---
+
+## Using a provider
+
+Load a provider before instantiating the player. Each provider is a separate package entry.
+
+```js
+import Vlitejs from 'vlitejs';
+import VlitejsYoutube from 'vlitejs/providers/youtube.js';
+
+Vlitejs.registerProvider('youtube', VlitejsYoutube);
+
+new Vlitejs('#player', {
+  provider: 'youtube'
+});
+```
+
+See [Providers](/providers) for the full list of available providers.
+
+---
+
+## Using plugins
+
+Register plugins before instantiating the player. Plugins are separate package entries.
+
+```js
+import Vlitejs from 'vlitejs';
+import VlitejsSubtitle from 'vlitejs/plugins/subtitle.js';
+
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle);
+
+new Vlitejs('#player', {
+  plugins: ['subtitle']
+});
+```
+
+See [Plugins](/plugins) for the full list of available plugins.

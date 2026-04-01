@@ -1,0 +1,352 @@
+---
+title: Options
+description: Player options reference for vLitejs.
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+Player options are passed via the `options` key of the constructor's config object.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    // Options here
+  }
+});
+```
+
+---
+
+## controls
+
+```ts
+type controls = boolean;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `true`
+
+Display the control bar of the player. When set to `false`, all controls are hidden.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    controls: false
+  }
+});
+```
+
+<Aside type="note">
+  Vimeo provider requires a Plus or Pro account to use this feature (see [Vimeo
+  plans](https://vimeo.zendesk.com/hc/en-us/articles/228068968-Compare-Vimeo-plans)).
+</Aside>
+
+---
+
+## autoplay
+
+```ts
+type autoplay = boolean;
+```
+
+**Default:** `false`
+
+Enable autoplay when the player loads. Due to browser autoplay policies, enabling this option automatically activates [`muted`](#muted).
+
+```js
+new Vlitejs('#player', {
+  options: {
+    autoplay: true
+  }
+});
+```
+
+<Aside type="note">
+  See [Autoplay policy changes](https://developer.chrome.com/blog/autoplay) for more information.
+</Aside>
+
+---
+
+## playPause
+
+```ts
+type playPause = boolean;
+```
+
+**Default:** `true`
+
+Display the play/pause button in the control bar.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    playPause: false
+  }
+});
+```
+
+---
+
+## progressBar
+
+```ts
+type progressBar = boolean;
+```
+
+**Default:** `true`
+
+Display the progress bar in the control bar.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    progressBar: false
+  }
+});
+```
+
+---
+
+## time
+
+```ts
+type time = boolean;
+```
+
+**Default:** `true`
+
+Display the current time and duration in the control bar.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    time: false
+  }
+});
+```
+
+---
+
+## volume
+
+```ts
+type volume = boolean;
+```
+
+**Default:** `true`
+
+Display the volume button in the control bar.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    volume: false
+  }
+});
+```
+
+---
+
+## fullscreen
+
+```ts
+type fullscreen = boolean;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `true`
+
+Display the fullscreen button in the control bar.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    fullscreen: false
+  }
+});
+```
+
+<Aside type="note">Fullscreen API not yet supported on iPhone.</Aside>
+
+---
+
+## poster
+
+```ts
+type poster = string | null;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `null`
+
+URL of the poster image displayed before the video plays.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    poster: '/path/to/poster.jpg'
+  }
+});
+```
+
+---
+
+## bigPlay
+
+```ts
+type bigPlay = boolean;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `true`
+
+Display the large centered play button on the video poster.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    bigPlay: false
+  }
+});
+```
+
+---
+
+## playsinline
+
+```ts
+type playsinline = boolean;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `true`
+
+Add the `playsinline` attribute to the video element. Prevents the video from entering fullscreen automatically on iOS.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    playsinline: false
+  }
+});
+```
+
+---
+
+## loop
+
+```ts
+type loop = boolean;
+```
+
+**Default:** `false`
+
+Loop the media when playback reaches the end.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    loop: true
+  }
+});
+```
+
+---
+
+## muted
+
+```ts
+type muted = boolean;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `false`
+
+Mute the media on load. Automatically set to `true` when [`autoplay`](#autoplay) is enabled.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    muted: true
+  }
+});
+```
+
+---
+
+## autoHide
+
+```ts
+type autoHide = boolean;
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `false`
+
+Automatically hide the control bar after a period of inactivity. The controls reappear on mouse move or touch.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    autoHide: true
+  }
+});
+```
+
+---
+
+## autoHideDelay
+
+```ts
+type autoHideDelay = number; // milliseconds
+```
+
+**Media:** <Badge text="Video only" variant="note" />
+
+**Default:** `3000`
+
+Delay in milliseconds before the control bar hides when [`autoHide`](#autohide) is enabled.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    autoHideDelay: 5000
+  }
+});
+```
+
+---
+
+## providerParams
+
+```ts
+type providerParams = Record<string, unknown>;
+```
+
+**Default:** `{}`
+
+Override the embed parameters sent to the provider's API or SDK.
+
+```js
+new Vlitejs('#player', {
+  options: {
+    providerParams: {
+      // YouTube example: disable related videos
+      rel: 0
+    }
+  }
+});
+```
+
+<Aside type="note">
+  See [YouTube embed options](https://developers.google.com/youtube/player_parameters#Parameters)
+  and [Vimeo embed options](https://github.com/vimeo/player.js/#embed-options) for available
+  parameters.
+</Aside>

@@ -1,13 +1,17 @@
-# Provider: Vimeo
+---
+title: Vimeo
+description: Supports for Vimeo player with the Vimeo player SDK.
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components'
 
 Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.com/player/sdk/basics).
 
-> [!IMPORTANT]
-> The Vimeo SDK is automatically loaded by the provider.
+<Aside type="note">The Vimeo SDK is automatically loaded by the provider.</Aside>
 
 ## Overview
 
-| <!-- -->    | <!-- -->                     |
+|             |                              |
 | ----------- | ---------------------------- |
 | Name        | `vimeo`                      |
 | Path        | `vlitejs/providers/vimeo`    |
@@ -24,15 +28,15 @@ Supports for Vimeo player with the [Vimeo player SDK](https://developer.vimeo.co
 ### JavaScript
 
 ```js
-import 'vlitejs/vlite.css';
-import Vlitejs from 'vlitejs';
-import VlitejsVimeo from 'vlitejs/providers/vimeo.js';
+import 'vlitejs/vlite.css'
+import Vlitejs from 'vlitejs'
+import VlitejsVimeo from 'vlitejs/providers/vimeo.js'
 
-Vlitejs.registerProvider('vimeo', VlitejsVimeo);
+Vlitejs.registerProvider('vimeo', VlitejsVimeo)
 
 new Vlitejs('#player', {
-  provider: 'vimeo'
-});
+	provider: 'vimeo'
+})
 ```
 
 ## Demo
