@@ -1,13 +1,14 @@
 {
 	"name": "vlitejs-docs",
-	"type": "module",
 	"version": "0.0.1",
+	"type": "module",
 	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
+		"astro": "astro",
 		"build": "astro build",
+		"dev": "astro dev",
 		"preview": "astro preview",
-		"astro": "astro"
+		"start": "astro dev",
+		"test": "echo 'No local tests' && exit 0"
 	},
 	"dependencies": {
 		"@astrojs/starlight": "^0.37.0",
