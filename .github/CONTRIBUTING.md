@@ -1,67 +1,154 @@
-# Contributing to `vlitejs`
+# Contributing to vLite
 
-Thanks for being interesting on `vlitejs`! Before submitting your contribution, be sure to take a moment and read the following guide.
+Thanks for your interest in contributing.
 
-- [How to contribute to Open Source](https://opensource.guide/how-to-contribute)
-- [Building welcoming communities](https://opensource.guide/building-community)
+vLite is intentionally designed to stay **small, fast, and maintainable**.
+This guide defines how contributions are evaluated.
 
-## Installation
+---
 
-1. Make sure that minimum [Node.js](https://nodejs.org) version is `18.16.0` and npm is installed.
-2. After cloning the repository, run `npm install` at the root of the repository.
-3. To start the development server, run `npm run start`.
+## 🎯 Project philosophy
 
-List of npm scripts available:
+vLite follows a strict design philosophy:
 
-**Development**
+- Minimalism over feature completeness
+- Performance over abstraction
+- Stability over rapid feature growth
+- Extensibility through plugins and providers
 
-```bash
-# Run development server
-npm run start
+The goal is **not** to accumulate features in the core over time.
+Many features that seem useful belong in plugins instead.
 
-# Run example development server
-npm run start:example
-```
+---
 
-**Tests**
+## 🧱 Architecture guidelines
 
-Tests are run on a shared workflow.
+Before contributing, make sure your change fits the architecture:
 
-**Production**
+- The **core must remain minimal**
+- Features should be implemented as **plugins whenever possible**
+- Providers must stay **isolated and modular**
+- Avoid adding logic to the core if it can live elsewhere
 
-```bash
-# Build the source code for distribution
-npm run build
+> [!WARNING]
+> Changes that increase core complexity without strong justification will be rejected.
 
-# Run all build and test before publishing
-npm run pre:publish
-```
+---
 
-## Project structure
+## ⚡ Performance guidelines
 
-- `./config` - Contains configuration files for ESLint, Stylelint, postCSS, Prettier, Babel and Webpack.
-- `./src` - Contains the source code. The codebase is written in `ES2015` in TypeScript.
-- `./examples` - Contains the examples code.
+vLite is designed to be extremely lightweight.
 
-## Pull requests
+- Avoid adding dependencies
+- Keep bundle size minimal
+- Prefer native browser APIs
+- Any size or complexity increase must be justified
 
-You can learn how to work on your first pull request from this series of free video: [How to contribute to an open source project on GitHub](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
+> [!WARNING]
+> Contributions that significantly impact bundle size or performance will likely be rejected.
 
-To request a new feature or improvement, you can submit an issue with the [feature template](https://github.com/vlitejs/vlite/issues/new?template=feature_request.yml).
+---
 
-Keep the pull requests as small as possible, it's much easier to review. Make sure the PR only does one thing, otherwise please split it.
+## 🐛 Reporting bugs
 
-Make sure the following is done when submitting a pull request:
+Use the provided bug report template.
 
-1. Fork [the repository](https://github.com/vlitejs/vlite) and create your branch from `main`.
-2. Make sure to test your changes.
-3. Make sure test passes, run `npm run test`.
+A valid report includes:
 
-## Code conventions
+- Clear description
+- Steps to reproduce
+- Expected vs actual behavior
+- Environment details
+- Minimal reproduction when possible
 
-- Add comments [JSDoc](https://jsdoc.app) and annotations [TypeScript](https://www.typescriptlang.org) on all functions.
-- Use `camelCase` for the names and methods of public variables.
+Incomplete reports may be closed.
 
-## License
+---
 
-By contributing to `vlitejs`, you agree that your contributions will be licensed under its [MIT license](https://github.com/vlitejs/vlite/blob/main/LICENSE).
+## 🚀 Suggesting features
+
+Use the feature request template.
+
+Before submitting a feature:
+
+- Does it align with the project philosophy?
+- Can it be implemented as a plugin?
+- Is the benefit worth the added complexity?
+
+Feature requests without clear use cases or justification are unlikely to be accepted.
+
+---
+
+## 🔄 Contribution workflow
+
+For non-trivial changes:
+
+1. Open an issue
+2. Discuss the approach
+3. Submit a pull request
+
+> [!NOTE]
+> Large or complex changes without prior discussion may be closed.
+
+---
+
+## 🔀 Pull requests
+
+Pull requests must follow the provided template.
+
+A valid PR includes:
+
+- Clear problem description
+- Concise summary of changes
+- Steps to test
+- Identified risks or side effects
+
+PRs that do not meet these requirements may be closed.
+
+---
+
+## 🧪 Testing
+
+The project relies on **end-to-end tests (Playwright)**.
+
+- Ensure existing tests pass
+- Add or update tests when behavior changes
+- Manually verify changes when needed
+
+---
+
+## ⚠️ Breaking changes
+
+Breaking changes must:
+
+- Be clearly described
+- Be justified
+- Be discussed beforehand when possible
+
+---
+
+## 🤖 AI-generated code
+
+AI-assisted contributions are allowed.
+
+- You are fully responsible for the submitted code
+- You must review and validate it
+- Poorly understood or unverified code will be rejected
+
+---
+
+## 🚫 What is not accepted
+
+- Features that bloat the core unnecessarily
+- Changes that ignore the plugin architecture
+- Large PRs without prior discussion
+- Unclear issues or feature requests without use cases
+- Code that degrades performance without justification
+
+---
+
+## 🧠 Final note
+
+vLite has a clear direction.
+
+Contributions are welcome, but they must align with the project's principles.

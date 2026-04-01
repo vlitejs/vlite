@@ -1,57 +1,84 @@
 name: Bug report
-description: Create a report to help us improve Vlite.js
-labels: 'bug'
+description: Report a problem to help us improve vLite
+title: "[Bug]: "
+labels: ["bug"]
 body:
-  - type: textarea
-    validations:
-      required: true
+  - type: markdown
     attributes:
-      label: Describe the bug
-      description: A clear description of what the bug is.
-  - type: textarea
-    validations:
-      required: true
+      value: Thanks for taking the time to report a bug.
+
+  - type: markdown
     attributes:
-      label: Steps to reproduce
-      description: |
-        Steps to reproduce the problem.
-      placeholder: |
-        For example:
-        1. Enable plugin '...'
-        2. Click on the '...' button
-        3. See error
-  - type: textarea
+      value: |
+        Issues that don't follow this template will be closed.
+        Please provide as much detail as possible to help reproduce the issue.
+
+  - type: input
+    id: version
+    attributes:
+      label: vLite version
+      placeholder: "e.g. 5.0.0"
     validations:
       required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, device if relevant
+      placeholder: "Chrome 123 / macOS 14"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: Bug description
+      description: What is happening?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
     attributes:
       label: Expected behavior
-      description: A brief description of what should happen.
+    validations:
+      required: true
+
   - type: textarea
+    id: steps
     attributes:
-      label: Screenshots and recordings
-      description: |
-        If applicable, add screenshots to help explain your problem
-  - type: input
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
     validations:
       required: true
-    attributes:
-      label: Vlite.js
-      description: What version of the library are you using?
-      placeholder: e.g. 5.0.2
-  - type: input
-    validations:
-      required: true
-    attributes:
-      label: Browser
-      description: Which browser and which version are you using?
-      placeholder: e.g. Chrome 114
-  - type: input
-    validations:
-      required: true
-    attributes:
-      label: OS
-      placeholder: e.g. macOS 13.4
+
   - type: textarea
+    id: minimal_repro
+    attributes:
+      label: Minimal reproduction (code or link)
+      description: Provide a CodeSandbox / StackBlitz / snippet if possible
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - blocker
+        - critical
+        - medium
+        - low
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
     attributes:
       label: Additional context
-      description: Add any other context about the problem here. This can be providers, plugins, custom settings...
+    validations:
+      required: false

@@ -1,32 +1,114 @@
 name: Feature request
-description: Suggest a feature for Vlitejs
-labels: 'feature'
+description: Suggest an idea or improvement for vLite
+title: "[Feature]: "
+labels: ["feature"]
+
 body:
+  - type: markdown
+    attributes:
+      value: Thanks for suggesting a feature for vLite.
+
+  - type: markdown
+    attributes:
+      value: |
+        Issues that don't follow this template will be closed.
+        Please provide enough details to help evaluate its usefulness and feasibility.
+
   - type: input
+    id: name
     attributes:
-      label: If the feature request is for a plugin or provider, specify it here.
-      description: The name of the plugin or provider that you would like us to improve.
-      placeholder: e.g. Subtitle plugin, Youtube provider
-  - type: textarea
-    attributes:
-      label: If the feature solves a problem you have, specify it here.
-      description: A description of what the problem is.
-      placeholder: Ex. I'm always frustrated when...
-  - type: textarea
-    attributes:
-      label: Describe the proposed feature.
-      description: A description of what you want to happen. Be as specific as possible.
+      label: Feature name
+      placeholder: Short and descriptive title
     validations:
       required: true
-  - type: textarea
+
+  - type: dropdown
+    id: scope
     attributes:
-      label: Describe alternatives you've considered
-      description: A description of any alternative solutions or features you've considered. This can also include other plugins or providers.
+      label: Scope
+      description: Where does this feature apply?
+      options:
+        - Core
+        - Plugin
+        - Provider
+        - Build / tooling
+        - Docs
+    validations:
+      required: true
+
   - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: |
+        What problem does this feature solve?
+        Why is the current behavior insufficient?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: |
+        Describe your proposed solution:
+        - API design (if relevant)
+        - Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_cases
+    attributes:
+      label: Use cases
+      description: |
+        Provide concrete real-world scenarios where this feature is needed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: |
+        What other approaches or workarounds did you consider?
+        Why are they not sufficient?
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected impact
+      description: |
+        What benefits does this bring?
+        (performance, DX, accessibility, compatibility, etc.)
+    validations:
+      required: false
+
+  - type: dropdown
+    id: breaking
+    attributes:
+      label: Breaking change?
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+      description: |
+        What conditions must be met for this feature to be considered complete?
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
     attributes:
       label: Additional context
-      description: Add any other context or screenshots about the feature request here. Also if you have any PRs related to this issue that are already open that you would like us to look at.
-  - type: textarea
-    attributes:
-      label: Related issues
-      description: Is there any open or closed issues that is related to this feature request? If so please link them below!
+      description: Links, references, screenshots, etc.
+    validations:
+      required: false
