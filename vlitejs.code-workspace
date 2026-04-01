@@ -6,12 +6,12 @@
 	],
 	"settings": {
 		"editor.defaultFormatter": "biomejs.biome",
-		"[javascript][typescript][css][html][markdown][json][markdown]": {
+		"[javascript][typescript][css][html][markdown][json][markdown][mdx]": {
 			"editor.formatOnSave": true,
 			"editor.tabSize": 4,
 			"editor.rulers": [100]
 		},
-		"[markdown][html]": {
+		"[markdown][mdx][html]": {
 			"editor.formatOnSave": true,
 			"editor.defaultFormatter": "esbenp.prettier-vscode",
 			"editor.wordWrap": "off"

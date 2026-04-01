@@ -1,0 +1,104 @@
+---
+title: Getting Started
+description: Install and set up vLitejs in your project.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+## Installation
+
+<Aside type="caution">
+  vLitejs is ESM-only and uses the [Node.js package
+  `exports`](https://nodejs.org/api/packages.html#exports). The minimum supported Node.js version is
+  `22`.
+</Aside>
+
+### Package manager
+
+<Tabs syncKey="pkg">
+  <TabItem label="npm">```sh npm install vlitejs ```</TabItem>
+  <TabItem label="Yarn">```sh yarn add vlitejs ```</TabItem>
+  <TabItem label="pnpm">```sh pnpm add vlitejs ```</TabItem>
+</Tabs>
+
+### CDN
+
+You can also load vLitejs directly from a CDN as an ES module.
+
+```html
+<link href="https://cdn.jsdelivr.net/npm/vlitejs@8/dist/vlite.css" rel="stylesheet" crossorigin />
+<script type="module">
+  import Vlitejs from 'https://cdn.jsdelivr.net/npm/vlitejs@8/dist/vlite.js';
+</script>
+```
+
+<Aside type="tip">
+  Browse all files from the npm package at
+  [jsdelivr.com/package/npm/vlitejs](https://www.jsdelivr.com/package/npm/vlitejs).
+</Aside>
+
+---
+
+## HTML setup
+
+Place the media element in your HTML. vLitejs supports multiple providers — each requires a specific HTML element.
+
+### HTML5 Video
+
+```html
+<video id="player" src="/path/to/video.mp4"></video>
+```
+
+### HTML5 Audio
+
+```html
+<audio id="player" src="/path/to/audio.mp3"></audio>
+```
+
+### YouTube
+
+```html
+<div id="player" data-youtube-id="<video_id>"></div>
+```
+
+### Vimeo
+
+```html
+<div id="player" data-vimeo-id="<video_id>"></div>
+```
+
+### Dailymotion
+
+```html
+<div id="player" data-dailymotion-id="<video_id>"></div>
+```
+
+---
+
+## Initialize the player
+
+Import the stylesheet and instantiate the player with a CSS selector string or an `HTMLElement`.
+
+```js
+import 'vlitejs/vlite.css';
+import Vlitejs from 'vlitejs';
+
+// With a CSS selector
+new Vlitejs('#player');
+
+// Or with an HTMLElement
+new Vlitejs(document.querySelector('#player'));
+```
+
+The constructor accepts an optional second argument for [configuration](/configuration).
+
+```js
+new Vlitejs('#player', {
+  options: { autoHide: true },
+  onReady: (player) => {
+    console.log('Player is ready', player);
+  }
+});
+```
+
+---

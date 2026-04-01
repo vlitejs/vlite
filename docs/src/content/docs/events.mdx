@@ -1,0 +1,172 @@
+---
+title: Events
+description: Events reference for vLitejs.
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+vLitejs dispatches native `Event` instances on the `.v-vlite` element. All events are standardized across providers — the same event names work for HTML5, YouTube, Vimeo and Dailymotion.
+
+Listen to events via [`player.on()`](/methods/#on) inside the `onReady` callback.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.on('play', () => {
+      console.log('Playback started');
+    });
+  }
+});
+```
+
+<Aside type="note">
+  Each plugin also defines its own events, documented in the respective plugin page.
+</Aside>
+
+---
+
+## play
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent when the playback state changes from paused to playing — after a call to `play()` or when autoplay starts.
+
+```js
+player.on('play', () => {
+  console.log('Playing');
+});
+```
+
+---
+
+## pause
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent when the playback state is changed to paused.
+
+```js
+player.on('pause', () => {
+  console.log('Paused');
+});
+```
+
+---
+
+## progress
+
+**Providers:** <Badge text="HTML5" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent periodically as the browser downloads the media. Useful for tracking buffering progress.
+
+```js
+player.on('progress', () => {
+  console.log('Buffering...');
+});
+```
+
+---
+
+## timeupdate
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent when `currentTime` changes during playback.
+
+```js
+player.on('timeupdate', () => {
+  player.getCurrentTime().then((time) => {
+    console.log('Current time:', time);
+  });
+});
+```
+
+---
+
+## volumechange
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent when the audio volume changes, including mute and unmute.
+
+```js
+player.on('volumechange', () => {
+  player.getVolume().then((volume) => {
+    console.log('Volume:', volume);
+  });
+});
+```
+
+---
+
+## sourcechange
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent when the media source changes via [`setSource()`](/methods/#setsource).
+
+```js
+player.on('sourcechange', () => {
+  console.log('Source changed');
+});
+```
+
+---
+
+## enterfullscreen
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video only" variant="note" />
+
+Sent when the player enters fullscreen mode.
+
+```js
+player.on('enterfullscreen', () => {
+  console.log('Entered fullscreen');
+});
+```
+
+---
+
+## exitfullscreen
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video only" variant="note" />
+
+Sent when the player exits fullscreen mode.
+
+```js
+player.on('exitfullscreen', () => {
+  console.log('Exited fullscreen');
+});
+```
+
+---
+
+## ended
+
+**Providers:** <Badge text="All" variant="note" />
+
+**Media:** <Badge text="Video" variant="note" />, <Badge text="Audio" variant="note" />
+
+Sent when playback reaches the end of the media.
+
+```js
+player.on('ended', () => {
+  console.log('Playback ended');
+});
+```
