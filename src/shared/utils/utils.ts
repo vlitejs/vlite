@@ -20,9 +20,10 @@ export function formatVideoTime(time: number): string {
 	const sec = Math.floor(time % 60)
 
 	if (hour > 0) {
-		return hour + ':' + (min < 10 ? `0${min}` : min) + ':' + (sec < 10 ? `0${sec}` : sec)
+		return `${hour}:${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
 	}
-	return min + ':' + (sec < 10 ? `0${sec}` : sec)
+
+	return `${min}:${sec < 10 ? `0${sec}` : sec}`
 }
 
 /**
