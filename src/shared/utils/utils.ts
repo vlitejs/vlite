@@ -10,7 +10,14 @@ declare global {
 }
 
 /**
- * Convert video time second to 00:00 display
+ * Convert video time second to 0:00 display
+ * 
+ * E.g.:
+ * - 0 → 0:00
+ * - 65 → 1:05
+ * - 3600 → 1:00:00
+ * - 3665 → 1:01:05
+ * - 96520 → 26:48:40
  * @param time Current time
  * @returns Formatted time
  */
