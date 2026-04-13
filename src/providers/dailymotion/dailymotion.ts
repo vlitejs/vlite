@@ -25,16 +25,23 @@ type interfacePlayerState = {
  * @param Player
  * @returns Provider class extended from vLitejs Player
  */
-export default function DailymotionProvider(Player: any, options: interfaceProvidersOptions) {
+export default function DailymotionProvider(Player: any, options?: interfaceProvidersOptions) {
 	const providerObjectName = 'dailymotion'
 	window.VlitejsDailymotionQueue = window.VlitejsDailymotionQueue || []
+
+	const playerId = options?.playerId
+	if (typeof playerId === 'undefined' || playerId === '') {
+		throw new Error(
+			'vlitejs :: Dailymotion provider requires options.playerId (pass it as the third argument to Vlitejs.registerProvider)'
+		)
+	}
 
 	// Load the player API if it is not available
 	if (typeof window[providerObjectName] === 'undefined') {
 		const script = document.createElement('script')
 		script.async = true
 		script.type = 'text/javascript'
-		script.src = `https://geo.dailymotion.com/libs/player/${options.playerId}.js`
+		script.src = `https://geo.dailymotion.com/libs/player/${playerId}.js`
 
 		script.onload = () => {
 			// Run the queue when the provider API is ready
