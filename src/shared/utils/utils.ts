@@ -11,7 +11,7 @@ declare global {
 
 /**
  * Convert video time second to 0:00 display
- * 
+ *
  * E.g.:
  * - 0 → 0:00
  * - 65 → 1:05
