@@ -67,6 +67,7 @@
 			"import": "./dist/vlite.js"
 		}
 	},
+	"types": "./dist/vlite.d.ts",
 	"main": "dist/vlite.js",
 	"module": "dist/vlite.js",
 	"files": [
