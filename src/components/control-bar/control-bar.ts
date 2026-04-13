@@ -1,6 +1,6 @@
 import './control-bar.css'
 import { formatVideoTime } from 'shared/utils/utils.js'
-import validateTarget from '../../validate-target.js'
+import validateTarget from 'shared/utils/validate-target.js'
 import TemplateControlBar from './templates/control-bar.js'
 
 export default class ControlBar {

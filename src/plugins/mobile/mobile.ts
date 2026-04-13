@@ -1,5 +1,5 @@
 import type Player from 'core/player.js'
-import validateTarget from '../../validate-target.js'
+import validateTarget from 'shared/utils/validate-target.js'
 
 type pluginParameter = {
 	player: Player

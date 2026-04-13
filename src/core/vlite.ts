@@ -8,7 +8,7 @@ import { initializePlugins, registerPlugin } from 'plugins/plugin.js'
 import { getProviderInstance, registerProvider } from 'providers/provider.js'
 import type { FullScreenSupport, Options } from 'shared/assets/types/types.js'
 import { checkSupportFullScreen, isTouch } from 'shared/utils/utils.js'
-import validateTarget from '../validate-target.js'
+import validateTarget from 'shared/utils/validate-target.js'
 import Player from './player.js'
 
 export type interfaceDefaultOptions = Record<string, Record<string, any>>

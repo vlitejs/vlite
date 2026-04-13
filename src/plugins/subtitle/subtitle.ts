@@ -3,7 +3,7 @@ import svgCheck from 'shared/assets/svgs/check.svg'
 import svgSubtitleOff from 'shared/assets/svgs/subtitle-off.svg'
 import svgSubtitleOn from 'shared/assets/svgs/subtitle-on.svg'
 import type { pluginParameter } from 'shared/assets/types/types.js'
-import validateTarget from '../../validate-target.js'
+import validateTarget from 'shared/utils/validate-target.js'
 
 /**
  * Vlitejs Subtitle plugin
