@@ -1,12 +1,17 @@
+import type Player from 'core/player.js'
+import type {
+	playerParameters,
+	RegisterProviderOptions,
+	VliteProviderFactory
+} from 'shared/assets/types/types.js'
 import PlayerHtml5 from './html5/html5.js'
 
-type interfaceVliteProviders = Record<string, any>
-type interfaceProvidersOptions = Record<string, any>
+type interfaceVliteProviders = Record<string, VliteProviderFactory>
 
 const vliteProviders: interfaceVliteProviders = {
 	html5: PlayerHtml5
 }
-const providersOptions: interfaceProvidersOptions = {}
+const providersOptions: RegisterProviderOptions = {}
 
 /**
  * Get provider instance from the registered list
@@ -14,10 +19,17 @@ const providersOptions: interfaceProvidersOptions = {}
  * @param Player Player parent class
  * @returns Provider class
  */
-export function getProviderInstance(provider: string, Player: any): any {
-	const ProviderInstance: any = vliteProviders[provider]
+export function getProviderInstance(
+	provider: string,
+	Player: abstract new (...args: never[]) => Player
+): new (
+	args: playerParameters
+) => Player {
+	const ProviderInstance = vliteProviders[provider]
 	if (ProviderInstance) {
-		return ProviderInstance(Player, providersOptions[provider])
+		return ProviderInstance(Player, providersOptions[provider]) as new (
+			args: playerParameters
+		) => Player
 	}
 	throw new Error(`vlitejs :: Unknown provider "${provider}"`)
 }
@@ -29,7 +41,11 @@ export function getProviderInstance(provider: string, Player: any): any {
  * @param options Provider options
  * @returns No value to return
  */
-export function registerProvider(id: string, instance: any, options: interfaceProvidersOptions) {
+export function registerProvider(
+	id: string,
+	instance: VliteProviderFactory,
+	options?: RegisterProviderOptions
+) {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vliteProviders).includes(id)) {
 			vliteProviders[id] = instance
