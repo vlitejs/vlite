@@ -1,0 +1,88 @@
+---
+title: Providers
+description: Overview of the vLitejs Provider API.
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The Provider API extends vLitejs to support media platforms other than the native HTML5 player. HTML5 video and audio are built-in. Additional providers are loaded on demand.
+
+---
+
+## Available providers
+
+| Provider | Description |
+|---|---|
+| [HTML5](/providers/html5) | Native HTML5 `<video>` and `<audio>` (built-in) |
+| [YouTube](/providers/youtube) | YouTube player API |
+| [Vimeo](/providers/vimeo) | Vimeo player SDK |
+| [Dailymotion](/providers/dailymotion) | Dailymotion player API |
+
+---
+
+## Loading a provider
+
+Register a provider before instantiating the player using `Vlitejs.registerProvider()`.
+
+```js
+import Vlitejs from 'vlitejs'
+import VlitejsYoutube from 'vlitejs/providers/youtube.js'
+
+Vlitejs.registerProvider('youtube', VlitejsYoutube)
+
+new Vlitejs('#player', {
+  provider: 'youtube'
+})
+```
+
+---
+
+## Create a custom provider
+
+The Provider API lets you build support for any media platform not covered by the official providers.
+
+### Getting started
+
+Use the [sample provider](https://github.com/vlitejs/vlite/blob/main/src/providers/sample/sample-provider.js) as a starting template. You can also refer to the [youtube.ts](https://github.com/vlitejs/vlite/blob/main/src/providers/youtube/youtube.ts) and [vimeo.ts](https://github.com/vlitejs/vlite/blob/main/src/providers/vimeo/vimeo.ts) implementations.
+
+### Rules
+
+- The provider file must export a function that receives `Player` as its argument and returns a class extending `Player`.
+- vLitejs must be loaded before the provider.
+- Do not rename the methods exposed by the sample — vLitejs calls them by name.
+- Call `super.onReady()` once the player is fully initialized.
+
+### Required methods
+
+| Method | Parameters | Returns | Description |
+|---|:---:|:---:|---|
+| `init()` | — | — | Initialize the provider |
+| `waitUntilVideoIsReady()` | — | `Promise` | Wait for the player API to be ready |
+| `initPlayer()` | — | `Promise` | Initialize the player instance |
+| `getVolume()` | — | — | Get current volume |
+| `getInstance()` | — | — | Return the player instance |
+| `getCurrentTime()` | — | `Promise` | Get current playback time |
+| `getDuration()` | — | `Promise` | Get media duration |
+| `methodPlay()` | — | — | Trigger play |
+| `methodPause()` | — | — | Trigger pause |
+| `methodMute()` | — | — | Trigger mute |
+| `methodUnMute()` | — | — | Trigger unmute |
+| `methodSeekTo(time)` | `Number` | — | Seek to given time (seconds) |
+| `removeInstance()` | — | — | Clean up the player instance |
+
+### API loading pattern
+
+Providers that rely on an external SDK should handle two scenarios:
+
+1. **SDK already loaded** → call `initPlayer()` immediately.
+2. **SDK not yet loaded** → push the instance to the `providerQueue` to initialize after the SDK loads.
+
+```js
+// At the end of the provider file
+if (window.YT && window.YT.Player) {
+  initPlayer()
+} else {
+  window.providerQueue = window.providerQueue || []
+  window.providerQueue.push(instance)
+}
+```

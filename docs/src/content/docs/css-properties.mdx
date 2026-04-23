@@ -1,0 +1,130 @@
+---
+title: CSS Properties
+description: CSS custom properties for customizing the vLitejs player design.
+---
+
+The player exposes CSS custom properties scoped to the `.v-vlite` selector. Override them to customize the look of the player without touching the JavaScript.
+
+## vlite-colorPrimary
+
+**Default:** `#ff7f15`
+
+Primary accent color used for the progress bar fill, active states and interactive highlights.
+
+```css
+.v-vlite {
+  --vlite-colorPrimary: #6366f1; /* indigo */
+}
+```
+
+---
+
+## vlite-transition
+
+**Default:** `0.25s ease`
+
+Transition timing applied to interactive control elements (hover states, visibility changes).
+
+```css
+.v-vlite {
+  --vlite-transition: 0.15s ease-out;
+}
+```
+
+---
+
+## vlite-controlBarHeight
+
+**Default:** `50px`
+
+Height of the control bar at the bottom of the video player.
+
+```css
+.v-vlite {
+  --vlite-controlBarHeight: 60px;
+}
+```
+
+---
+
+## vlite-controlBarHorizontalPadding
+
+**Default:** `10px`
+
+Left and right padding inside the control bar.
+
+```css
+.v-vlite {
+  --vlite-controlBarHorizontalPadding: 16px;
+}
+```
+
+---
+
+## vlite-controlBarBackground
+
+**Default:** `linear-gradient(to top, #000 -50%, transparent)`
+
+Background of the control bar. The default is a gradient that fades to transparent, making controls readable over video content.
+
+```css
+.v-vlite {
+  --vlite-controlBarBackground: rgba(0, 0, 0, 0.6);
+}
+```
+
+---
+
+## vlite-controlsColor
+
+**Default:** `#fff` (video) · `#000` (audio)
+
+Color of control icons and text inside the control bar.
+
+```css
+.v-vlite {
+  --vlite-controlsColor: #f9fafb;
+}
+```
+
+---
+
+## vlite-controlsOpacity
+
+**Default:** `0.9`
+
+Opacity of the control icons.
+
+```css
+.v-vlite {
+  --vlite-controlsOpacity: 1;
+}
+```
+
+---
+
+## vlite-progressBarHeight
+
+**Default:** `5px`
+
+Height of the progress bar track.
+
+```css
+.v-vlite {
+  --vlite-progressBarHeight: 3px;
+}
+```
+
+---
+
+## vlite-progressBarBackground
+
+**Default:** `rgba(0 0 0 / 25%)`
+
+Background color of the unfilled part of the progress bar.
+
+```css
+.v-vlite {
+  --vlite-progressBarBackground: rgba(255 255 255 / 20%);
+}
+```

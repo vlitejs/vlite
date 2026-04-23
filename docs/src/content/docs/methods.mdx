@@ -1,0 +1,346 @@
+---
+title: Methods
+description: Player instance methods reference for vLitejs.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Methods are available on the player instance exposed by the [`onReady`](/configuration/#onready) callback.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.mute();
+  }
+});
+```
+
+---
+
+## play
+
+```ts
+play(): void
+```
+
+Start or resume playback.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.play();
+  }
+});
+```
+
+---
+
+## pause
+
+```ts
+pause(): void
+```
+
+Pause playback.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.pause();
+  }
+});
+```
+
+---
+
+## setVolume
+
+```ts
+setVolume(volume: number): void
+```
+
+Set the volume. Accepts a number between `0` (silent) and `1` (full volume).
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.setVolume(0.5);
+  }
+});
+```
+
+---
+
+## getVolume
+
+```ts
+getVolume(): Promise<number>
+```
+
+Get the current volume as a number between `0` and `1`.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.getVolume().then((volume) => {
+      console.log('Volume:', volume); // e.g. 0.8
+    });
+  }
+});
+```
+
+---
+
+## getCurrentTime
+
+```ts
+getCurrentTime(): Promise<number>
+```
+
+Get the current playback position in seconds.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.getCurrentTime().then((time) => {
+      console.log('Current time:', time); // e.g. 42.5
+    });
+  }
+});
+```
+
+---
+
+## getDuration
+
+```ts
+getDuration(): Promise<number>
+```
+
+Get the total duration of the media in seconds.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.getDuration().then((duration) => {
+      console.log('Duration:', duration); // e.g. 120
+    });
+  }
+});
+```
+
+---
+
+## mute
+
+```ts
+mute(): void
+```
+
+Mute the player.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.mute();
+  }
+});
+```
+
+---
+
+## unMute
+
+```ts
+unMute(): void
+```
+
+Unmute the player.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.unMute();
+  }
+});
+```
+
+---
+
+## setSource
+
+```ts
+setSource(source: string): void
+```
+
+Change the media source without destroying and recreating the player.
+
+- For **HTML5** providers: pass the URL of the new media file.
+- For **YouTube, Vimeo, Dailymotion**: pass the video ID (the value of `data-youtube-id`, `data-vimeo-id` or `data-dailymotion-id`).
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    // HTML5
+    player.setSource('/path/to/new-video.mp4');
+
+    // YouTube
+    player.setSource('dQw4w9WgXcQ');
+  }
+});
+```
+
+<Aside type="note">
+  `source` parameter accept video ID for providers (e.g. `data-youtube-id` attribute value) or
+  source url for HTML5 providers (e.g. `src` attribute value).
+</Aside>
+
+---
+
+## seekTo
+
+```ts
+seekTo(time: number): void
+```
+
+Seek to a specific position in the media. The `time` argument is in seconds.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.seekTo(30); // Jump to 30 seconds
+  }
+});
+```
+
+---
+
+## requestFullscreen
+
+```ts
+requestFullscreen(): void
+```
+
+Request fullscreen mode for the player.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.requestFullscreen();
+  }
+});
+```
+
+---
+
+## exitFullscreen
+
+```ts
+exitFullscreen(): void
+```
+
+Exit fullscreen mode.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.exitFullscreen();
+  }
+});
+```
+
+---
+
+## getInstance
+
+```ts
+getInstance(): HTMLVideoElement | HTMLAudioElement | object
+```
+
+Get the underlying player instance. Returns the native HTML element for HTML5, or the provider SDK instance for YouTube, Vimeo and Dailymotion.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    const instance = player.getInstance();
+  }
+});
+```
+
+---
+
+## loading
+
+```ts
+loading(status: boolean): void
+```
+
+Toggle the loading state of the player UI.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.loading(true); // show loader
+    player.loading(false); // hide loader
+  }
+});
+```
+
+---
+
+## on
+
+```ts
+on(event: string, handler: EventListener): void
+```
+
+Add an event listener on the player element. See [Events](/events) for all available event names.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.on('play', () => {
+      console.log('Playback started');
+    });
+  }
+});
+```
+
+---
+
+## off
+
+```ts
+off(event: string, handler: EventListener): void
+```
+
+Remove a previously added event listener.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    const onPlay = () => console.log('play');
+
+    player.on('play', onPlay);
+    player.off('play', onPlay); // removes the listener
+  }
+});
+```
+
+---
+
+## destroy
+
+```ts
+destroy(): void
+```
+
+Destroy the player instance and remove all event listeners. Clean up before removing the player element from the DOM.
+
+```js
+new Vlitejs('#player', {
+  onReady: (player) => {
+    player.destroy();
+  }
+});
+```

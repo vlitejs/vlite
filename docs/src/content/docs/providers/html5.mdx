@@ -1,4 +1,9 @@
-# Provider: HTML5 video and audio
+---
+title: HTML5
+description: Supports for HTML5 video and audio player.
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components'
 
 Supports for HTML5 video and audio player.
 
@@ -25,14 +30,15 @@ The provider is already inludes in `vLitejs`.
 ### JavaScript
 
 ```js
-import 'vlitejs/vlite.css';
-import Vlitejs from 'vlitejs';
+import 'vlitejs/vlite.css'
+import Vlitejs from 'vlitejs'
 
-new Vlitejs('#player');
+new Vlitejs('#player')
 ```
 
-> [!IMPORTANT]
-> The `provider` parameter on the `Vlitejs` constructor is `html5` by default.
+<Aside type="note">
+	The `provider` parameter on the `Vlitejs` constructor is `html5` by default.
+</Aside>
 
 ## Demo
 
