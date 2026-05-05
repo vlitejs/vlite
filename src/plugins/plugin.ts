@@ -1,13 +1,16 @@
-export type interfaceVlitePlugins = Record<string, any>
+import type Player from 'core/player.js'
+import type { VlitePluginConstructor } from 'shared/assets/types/types.js'
+
+export type interfaceVlitePlugins = Record<string, VlitePluginConstructor>
 
 export type interfacePluginsInstance = {
 	id: string
-	Plugin: any
-	options: any
+	Plugin: VlitePluginConstructor
+	options: unknown
 }
 
 const vlitePlugins: interfaceVlitePlugins = {}
-const pluginsOptions: any = {}
+const pluginsOptions: Record<string, unknown> = {}
 
 /**
  * Get plugins instances from the registered list
@@ -40,7 +43,11 @@ export function getPluginInstance(plugins: string[]): interfacePluginsInstance[]
  * @param options Plugin options
  * @returns No value to return
  */
-export function registerPlugin(id: string, instance: any, options: any): undefined {
+export function registerPlugin(
+	id: string,
+	instance: VlitePluginConstructor,
+	options?: unknown
+): undefined {
 	if (typeof instance !== 'undefined') {
 		if (!Object.keys(vlitePlugins).includes(id)) {
 			vlitePlugins[id] = instance
@@ -69,25 +76,23 @@ export function initializePlugins({
 	type,
 	player
 }: {
-	plugins: any[]
+	plugins: string[]
 	provider: string
 	type: string
-	player: any
+	player: Player
 }) {
-	getPluginInstance(plugins).forEach(
-		({ id, Plugin, options }: { id: string; Plugin: any; options: any }) => {
-			const plugin = new Plugin({ player, options })
+	getPluginInstance(plugins).forEach(({ id, Plugin, options }: interfacePluginsInstance) => {
+		const plugin = new Plugin({ player, options })
 
-			// Store the plugin instance on the player
-			player.plugins[id] = plugin
+		// Store the plugin instance on the player
+		player.plugins[id] = plugin
 
-			if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
-				plugin.init()
-			} else {
-				throw new Error(
-					`vlitejs :: The "${id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
-				)
-			}
+		if (plugin.providers.includes(provider) && plugin.types.includes(type)) {
+			plugin.init()
+		} else {
+			throw new Error(
+				`vlitejs :: The "${id}" plugin is only compatible with providers:"${plugin.providers}" and types:"${plugin.types}"`
+			)
 		}
-	)
+	})
 }
