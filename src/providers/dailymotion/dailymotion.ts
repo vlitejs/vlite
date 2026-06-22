@@ -78,7 +78,8 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 				{ type: 'timeupdate', listener: super.onTimeUpdate },
 				{ type: 'end', listener: super.onMediaEnded },
 				{ type: 'playing', listener: this.onPlaying },
-				{ type: 'waiting', listener: this.onWaiting }
+				{ type: 'waiting', listener: this.onWaiting },
+				{ type: 'subtitlesavailable', listener: this.onSubtitlesAvailable }
 			]
 		}
 
@@ -289,6 +290,14 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 */
 		methodSeekTo(newTime: number) {
 			this.instance.seek(newTime)
+		}
+
+		/**
+		 * Function executed when subtitles become available
+		 * Subtitles load asynchronously after playback starts
+		 */
+		onSubtitlesAvailable() {
+			this.dispatchEvent('texttracksready')
 		}
 
 		/**
