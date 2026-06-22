@@ -1,5 +1,15 @@
 import type { configEvent, playerParameters } from 'shared/assets/types/types.js'
 
+/**
+ * Normalized text track shape shared across providers.
+ */
+type NormalizedTextTrack = {
+	language: string
+	label: string
+	kind: string
+	mode: string
+}
+
 declare global {
 	interface Window {
 		Vlitejs: {
@@ -141,6 +151,62 @@ export default function DailymotionProvider(Player: any, options: interfaceProvi
 		 */
 		getInstance(): any {
 			return this.instance
+		}
+
+		/**
+		 * Get the available text tracks
+		 * @returns Normalized text tracks
+		 */
+		getTextTracks(): Promise<NormalizedTextTrack[]> {
+			return new window.Promise((resolve) => {
+				this.instance.getState().then((state: any) => {
+					const codes: string[] = state.videoSubtitlesList || []
+					let displayNames: any = null
+					try {
+						displayNames = new (Intl as any).DisplayNames([navigator.language], {
+							type: 'language'
+						})
+					} catch {
+						displayNames = null
+					}
+					resolve(
+						codes.map((code) => {
+							let label = code
+							if (displayNames) {
+								try {
+									label = displayNames.of(code) || code
+								} catch {
+									label = code
+								}
+							}
+							return {
+								language: code,
+								label,
+								kind: 'subtitles',
+								mode: state.videoSubtitles === code ? 'showing' : 'disabled'
+							}
+						})
+					)
+				})
+			})
+		}
+
+		/**
+		 * Enable a text track by language
+		 * @param language Language code of the track
+		 * @param kind Optional track kind
+		 */
+		enableTextTrack(language: string, _kind?: string): Promise<void> {
+			this.instance.setSubtitles(language)
+			return window.Promise.resolve()
+		}
+
+		/**
+		 * Disable all text tracks
+		 */
+		disableTextTrack(): Promise<void> {
+			this.instance.setSubtitles(null)
+			return window.Promise.resolve()
 		}
 
 		/**
