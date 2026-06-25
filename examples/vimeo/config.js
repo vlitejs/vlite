@@ -1,11 +1,14 @@
 import 'vlitejs/vlite.css'
 import 'vlitejs/plugins/volume-bar.css'
+import 'vlitejs/plugins/subtitle.css'
 import Vlitejs from 'vlitejs'
+import VlitejsSubtitle from 'vlitejs/plugins/subtitle.js'
 import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar.js'
 import VlitejsVimeo from 'vlitejs/providers/vimeo.js'
 import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerProvider('vimeo', VlitejsVimeo)
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
 new Vlitejs('#player', {
@@ -26,7 +29,7 @@ new Vlitejs('#player', {
 		providerParams: {}
 	},
 	provider: 'vimeo',
-	plugins: ['volume-bar'],
+	plugins: ['subtitle', 'volume-bar'],
 	onReady: (player) => {
 		console.log(player)
 
@@ -39,6 +42,8 @@ new Vlitejs('#player', {
 		player.on('enterfullscreen', () => console.log('enterfullscreen'))
 		player.on('exitfullscreen', () => console.log('exitfullscreen'))
 		player.on('ended', () => console.log('ended'))
+		player.on('trackenabled', () => console.log('trackenabled'))
+		player.on('trackdisabled', () => console.log('trackdisabled'))
 
 		changeSourceEvent({ player })
 	}
