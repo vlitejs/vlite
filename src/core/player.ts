@@ -1,5 +1,10 @@
 import ControlBar from 'components/control-bar/control-bar.js'
-import type { configEvent, Options, playerParameters } from 'shared/assets/types/types.js'
+import type {
+	configEvent,
+	Options,
+	PlayerEventName,
+	playerParameters
+} from 'shared/assets/types/types.js'
 import { formatVideoTime, isTouch } from 'shared/utils/utils.js'
 
 /**
@@ -218,7 +223,7 @@ export default abstract class Player {
 	 * @param type Event type
 	 * @param listener Event listener
 	 */
-	on(type: string, listener: EventListener) {
+	on(type: PlayerEventName, listener: EventListener) {
 		if (listener instanceof Function) {
 			this.playerEvents.push({ type, listener })
 			this.elements.container.addEventListener(type, listener)
@@ -230,7 +235,7 @@ export default abstract class Player {
 	 * @param type Event type
 	 * @param listener Event listener
 	 */
-	off(type: string, listener: EventListener) {
+	off(type: PlayerEventName, listener: EventListener) {
 		if (listener instanceof Function) {
 			this.elements.container.removeEventListener(type, listener)
 		}
@@ -241,7 +246,7 @@ export default abstract class Player {
 	 * @param type Event type
 	 * @param detail Event detail
 	 */
-	dispatchEvent(type: string, detail?: unknown) {
+	dispatchEvent(type: PlayerEventName, detail?: unknown) {
 		this.elements.container.dispatchEvent(
 			new window.CustomEvent(type, {
 				detail
