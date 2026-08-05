@@ -1,6 +1,15 @@
 import 'vlitejs/vlite.css'
-import Vlitejs from 'vlitejs'
+import Vlitejs, { type Player } from 'vlitejs'
 import VlitejsPip from 'vlitejs/plugins/pip.js'
+
+/** Chargé via CDN dans index.html (hls.js). */
+declare const Hls: {
+	isSupported(): boolean
+	new (): {
+		loadSource(url: string): void
+		attachMedia(media: HTMLMediaElement): void
+	}
+}
 
 Vlitejs.registerPlugin('pip', VlitejsPip)
 
@@ -25,10 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			autoHide: true
 		},
 		plugins: ['pip'],
-		onReady: (player) => {
+		onReady: (player: Player) => {
 			console.log(player)
 		}
 	})
+
+	if (!video) {
+		return
+	}
 
 	if (!Hls.isSupported()) {
 		video.src = source

@@ -11,7 +11,15 @@ import { checkSupportFullScreen, isTouch } from 'shared/utils/utils.js'
 import validateTarget from 'shared/utils/validate-target.js'
 import Player from './player.js'
 
-export type interfaceDefaultOptions = Record<string, Record<string, any>>
+type interfaceDefaultOptions = Record<string, Record<string, any>>
+
+export { Player }
+export type {
+	Options,
+	PlayerEventName,
+	VlitePluginConstructor,
+	VliteProviderFactory
+} from 'shared/assets/types/types.js'
 
 const DEFAULT_OPTIONS: interfaceDefaultOptions = {
 	audio: {
@@ -47,9 +55,12 @@ const DEFAULT_OPTIONS: interfaceDefaultOptions = {
  * @module vLite/entrypoint
  */
 class Vlitejs {
+	static registerPlugin = registerPlugin
+	static registerProvider = registerProvider
+
 	media: HTMLVideoElement | HTMLAudioElement | HTMLDivElement
 	provider: string
-	onReady: () => void
+	onReady: (player: Player) => void
 	type: string
 	supportFullScreen: FullScreenSupport
 	options: Options
@@ -58,8 +69,6 @@ class Vlitejs {
 	container: HTMLElement
 	player: Player
 	controlBar: any
-	registerPlugin!: () => void
-	registerProvider!: () => void
 	timerAutoHide!: number
 
 	/**
@@ -82,7 +91,7 @@ class Vlitejs {
 			options?: Options | object
 			provider?: string
 			plugins?: string[]
-			onReady?: () => void
+			onReady?: (player: Player) => void
 		} = {}
 	) {
 		// Detect the type of the selector (string or HTMLElement)
@@ -322,13 +331,5 @@ class Vlitejs {
 		this.player.controlBar.destroy()
 	}
 }
-
-// Expose the provider registration
-// @ts-expect-error
-Vlitejs.registerProvider = registerProvider
-
-// Expose the plugin registration
-// @ts-expect-error
-Vlitejs.registerPlugin = registerPlugin
 
 export default Vlitejs

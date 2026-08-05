@@ -1,5 +1,7 @@
 node_modules/
-dist
+dist/*
+examples/dist
+!dist/vlite.d.ts
 lib
 test-results
 playwright-report

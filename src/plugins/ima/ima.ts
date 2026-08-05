@@ -4,7 +4,7 @@ import type { Constructable } from 'shared/assets/types/types.js'
 
 type pluginParameter = {
 	player: Player
-	options: {
+	options?: {
 		adTagUrl?: string
 		adsRenderingSettings?: {
 			restoreCustomPlaybackStateOnAdBreakComplete: boolean

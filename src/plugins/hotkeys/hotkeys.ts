@@ -2,7 +2,7 @@ import type Player from 'core/player.js'
 
 type pluginParameter = {
 	player: Player
-	options: {
+	options?: {
 		seekTime?: number
 		volumeStep?: number
 	}

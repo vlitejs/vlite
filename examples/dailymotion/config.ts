@@ -1,6 +1,6 @@
 import 'vlitejs/vlite.css'
 import 'vlitejs/plugins/volume-bar.css'
-import Vlitejs from 'vlitejs'
+import Vlitejs, { type Player } from 'vlitejs'
 import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar.js'
 import VlitejsDailymotion from 'vlitejs/providers/dailymotion.js'
 import { changeSourceEvent } from '../shared/utils.js'
@@ -28,7 +28,7 @@ new Vlitejs('#player', {
 	},
 	provider: 'dailymotion',
 	plugins: ['volume-bar'],
-	onReady: (player) => {
+	onReady: (player: Player) => {
 		console.log(player)
 
 		player.on('play', () => console.log('play'))

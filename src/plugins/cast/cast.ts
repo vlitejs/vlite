@@ -17,7 +17,7 @@ type CastEvent = {
 
 type pluginParameter = {
 	player: Player
-	options: {
+	options?: {
 		textTrackStyle?: unknown
 		metadata?: unknown
 	}

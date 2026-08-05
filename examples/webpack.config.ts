@@ -38,6 +38,14 @@ export default function webpackConfig(_env, argv) {
 		module: {
 			rules: [
 				{
+					test: /\.ts$/,
+					use: [
+						{
+							loader: 'ts-loader'
+						}
+					]
+				},
+				{
 					test: /\.js$/
 				},
 				{
@@ -52,7 +60,7 @@ export default function webpackConfig(_env, argv) {
 			]
 		},
 		resolve: {
-			extensions: ['.js', '.css']
+			extensions: ['.ts', '.js', '.css']
 		},
 		context: appDirectory,
 		plugins: [
@@ -114,7 +122,7 @@ export default function webpackConfig(_env, argv) {
 	}
 
 	entries.forEach((key) => {
-		config.entry[key] = resolveApp(`./${key}/config.js`)
+		config.entry[key] = resolveApp(`./${key}/config.ts`)
 		config.plugins.push(
 			new HtmlWebpackPlugin({
 				filename: key === 'home' ? 'index.html' : `${key}/index.html`,
