@@ -1,11 +1,14 @@
 import 'vlitejs/vlite.css'
 import 'vlitejs/plugins/volume-bar.css'
+import 'vlitejs/plugins/subtitle.css'
 import Vlitejs from 'vlitejs'
+import VlitejsSubtitle from 'vlitejs/plugins/subtitle.js'
 import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar.js'
 import VlitejsYoutube from 'vlitejs/providers/youtube.js'
 import { changeSourceEvent } from '../shared/utils.js'
 
 Vlitejs.registerProvider('youtube', VlitejsYoutube)
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
 
 new Vlitejs('#player', {
@@ -26,7 +29,7 @@ new Vlitejs('#player', {
 		providerParams: {}
 	},
 	provider: 'youtube',
-	plugins: ['volume-bar'],
+	plugins: ['subtitle', 'volume-bar'],
 	onReady: (player) => {
 		console.log(player)
 
