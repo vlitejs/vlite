@@ -4,6 +4,7 @@ import alias from '@rollup/plugin-alias'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
 import typescript from '@rollup/plugin-typescript'
+import dts from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
 import { banner, plugins, providers } from './package.js'
@@ -14,6 +15,18 @@ const __dirname = path.dirname(__filename)
 const isProduction = process.env.ENV === 'production'
 const outputDirectory = path.resolve(__dirname, '../dist')
 
+// Extracted alias to be reused in both JS and DTS
+const aliasConfig = alias({
+	entries: [
+		{ find: 'shared', replacement: path.resolve('src/shared') },
+		{ find: 'components', replacement: path.resolve('src/components') },
+		{ find: 'providers', replacement: path.resolve('src/providers') },
+		{ find: 'plugins', replacement: path.resolve('src/plugins') },
+		{ find: 'core', replacement: path.resolve('src/core') }
+	]
+})
+
+// JavaScript files (.js)
 const createConfig = ({ input, outputFile }) => {
 	return {
 		input,
@@ -21,7 +34,8 @@ const createConfig = ({ input, outputFile }) => {
 			{
 				banner,
 				file: `${outputDirectory}/${outputFile}`,
-				format: 'es'
+				format: 'es',
+				sourcemap: !isProduction
 			}
 		],
 		plugins: [
@@ -37,34 +51,35 @@ const createConfig = ({ input, outputFile }) => {
 				extract: true,
 				minimize: isProduction
 			}),
-			alias({
-				entries: [
-					{ find: 'shared', replacement: path.resolve('src/shared') },
-					{ find: 'components', replacement: path.resolve('src/components') },
-					{ find: 'providers', replacement: path.resolve('src/providers') },
-					{ find: 'plugins', replacement: path.resolve('src/plugins') }
-				]
-			}),
+			aliasConfig,
 			...(isProduction ? [terser()] : [])
 		]
 	}
 }
 
-export default [
-	...providers.map((provider) =>
-		createConfig({
-			input: `./src/providers/${provider}/${provider}.ts`,
-			outputFile: `providers/${provider}.js`
-		})
-	),
-	...plugins.map((plugin) =>
-		createConfig({
-			input: `./src/plugins/${plugin}/${plugin}.ts`,
-			outputFile: `plugins/${plugin}.js`
-		})
-	),
-	createConfig({
-		input: './src/core/vlite.ts',
-		outputFile: 'vlite.js'
-	})
+// TypeScript declaration files (.d.ts)
+const createDtsConfig = ({ input, outputFile }) => ({
+	input,
+	output: [
+		{
+			file: `${outputDirectory}/${outputFile.replace('.js', '.d.ts')}`,
+			format: 'es'
+		}
+	],
+	plugins: [aliasConfig, dts()],
+	external: [/\.css$/, /\.svg$/]
+})
+
+const entries = [
+	...providers.map((provider) => ({
+		input: `./src/providers/${provider}/${provider}.ts`,
+		outputFile: `providers/${provider}.js`
+	})),
+	...plugins.map((plugin) => ({
+		input: `./src/plugins/${plugin}/${plugin}.ts`,
+		outputFile: `plugins/${plugin}.js`
+	})),
+	{ input: './src/core/vlite.ts', outputFile: 'vlite.js' }
 ]
+
+export default entries.flatMap((entry) => [createConfig(entry), createDtsConfig(entry)])
