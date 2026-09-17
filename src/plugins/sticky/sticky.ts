@@ -9,7 +9,7 @@ type WindowSizes = {
 
 type pluginParameter = {
 	player: Player
-	options: {
+	options?: {
 		mode?: string
 		width?: number
 		offset?: number

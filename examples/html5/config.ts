@@ -1,12 +1,37 @@
 import 'vlitejs/vlite.css'
+import 'vlitejs/plugins/subtitle.css'
+import 'vlitejs/plugins/pip.css'
+import 'vlitejs/plugins/cast.css'
+import 'vlitejs/plugins/airplay.css'
 import 'vlitejs/plugins/volume-bar.css'
-import Vlitejs from 'vlitejs'
+import Vlitejs, { type Player } from 'vlitejs'
+import VlitejsAirplay from 'vlitejs/plugins/airplay.js'
+import VlitejsCast from 'vlitejs/plugins/cast.js'
+import VlitejsHotkeys from 'vlitejs/plugins/hotkeys.js'
+import VlitejsMobile from 'vlitejs/plugins/mobile.js'
+import VlitejsPip from 'vlitejs/plugins/pip.js'
+import VlitejsSubtitle from 'vlitejs/plugins/subtitle.js'
 import VlitejsVolumeBar from 'vlitejs/plugins/volume-bar.js'
-import VlitejsYoutube from 'vlitejs/providers/youtube.js'
 import { changeSourceEvent } from '../shared/utils.js'
 
-Vlitejs.registerProvider('youtube', VlitejsYoutube)
+Vlitejs.registerPlugin('subtitle', VlitejsSubtitle)
+Vlitejs.registerPlugin('pip', VlitejsPip)
+Vlitejs.registerPlugin('cast', VlitejsCast, {
+	textTrackStyle: {
+		backgroundColor: '#21212190'
+	},
+	metadata: {
+		title: 'The Jungle Book',
+		subtitle: 'Walt Disney Animation Studios'
+	}
+})
+Vlitejs.registerPlugin('airplay', VlitejsAirplay)
 Vlitejs.registerPlugin('volume-bar', VlitejsVolumeBar)
+Vlitejs.registerPlugin('hotkeys', VlitejsHotkeys, {
+	seekStep: 3,
+	volumeStep: 0.2
+})
+Vlitejs.registerPlugin('mobile', VlitejsMobile)
 
 new Vlitejs('#player', {
 	options: {
@@ -22,12 +47,10 @@ new Vlitejs('#player', {
 		playsinline: true,
 		loop: false,
 		muted: false,
-		autoHide: true,
-		providerParams: {}
+		autoHide: true
 	},
-	provider: 'youtube',
-	plugins: ['volume-bar'],
-	onReady: (player) => {
+	plugins: ['subtitle', 'pip', 'cast', 'airplay', 'volume-bar', 'hotkeys', 'mobile'],
+	onReady: (player: Player) => {
 		console.log(player)
 
 		player.on('play', () => console.log('play'))
@@ -43,6 +66,8 @@ new Vlitejs('#player', {
 		player.on('trackenabled', () => console.log('trackenabled'))
 		player.on('trackdisabled', () => console.log('trackdisabled'))
 		player.on('ended', () => console.log('ended'))
+		player.on('castsessionstarted', () => console.log('castsessionstarted'))
+		player.on('castsessionended', () => console.log('castsessionended'))
 
 		changeSourceEvent({ player })
 	}
