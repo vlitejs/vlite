@@ -6,19 +6,33 @@ import type { pluginParameter } from 'shared/assets/types/types.js'
 import validateTarget from 'shared/utils/validate-target.js'
 
 /**
+ * Normalized text track shape used across HTML5 and provider paths.
+ */
+type NormalizedTextTrack = {
+	language: string
+	label: string
+	kind: string
+	mode: string
+	cues?: TextTrackCueList | null
+	activeCues?: TextTrackCueList | null
+}
+
+/**
  * Vlitejs Subtitle plugin
  * @module Vlitejs/plugins/subtitle
  */
 export default class Subtitle {
 	player: any
-	tracks: TextTrack[]
-	activeTrack!: TextTrack | null
+	tracks: NormalizedTextTrack[]
+	activeTrack: NormalizedTextTrack | null
+	supportsProviderTextTracks: boolean
+	providerTracksInitialized: boolean
 	captions!: HTMLElement
 	subtitleButton!: HTMLElement
 	subtitlesList!: HTMLElement
 	subtitlesListCssTransitionDuration: number
 
-	providers = ['html5']
+	providers = ['html5', 'vimeo', 'dailymotion', 'youtube']
 	types = ['video']
 
 	/**
@@ -28,7 +42,19 @@ export default class Subtitle {
 	 */
 	constructor({ player }: pluginParameter) {
 		this.player = player
-		this.tracks = Array.from(this.player.media.textTracks)
+		this.supportsProviderTextTracks =
+			typeof this.player.getTextTracks === 'function' &&
+			typeof this.player.enableTextTrack === 'function'
+		this.providerTracksInitialized = false
+
+		if (this.supportsProviderTextTracks) {
+			this.tracks = []
+			this.activeTrack = null
+		} else {
+			this.tracks = Array.from(this.player.media.textTracks) as NormalizedTextTrack[]
+			this.activeTrack = null
+		}
+
 		this.subtitlesListCssTransitionDuration = 0
 
 		this.onClickOnSubtitleButton = this.onClickOnSubtitleButton.bind(this)
@@ -37,24 +63,31 @@ export default class Subtitle {
 	}
 
 	/**
+	 * Cache DOM elements and compute the subtitles list transition duration
+	 */
+	cacheDomElements() {
+		this.captions = this.player.elements.container.querySelector('.v-captions') as HTMLElement
+		this.subtitleButton = this.player.elements.container.querySelector(
+			'.v-subtitleButton'
+		) as HTMLElement
+		this.subtitlesList = this.player.elements.container.querySelector(
+			'.v-subtitlesList'
+		) as HTMLElement
+		this.subtitlesListCssTransitionDuration =
+			Number.parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
+	}
+
+	/**
 	 * Initialize
 	 */
 	init() {
-		if (this.tracks.length && this.player.options.controls) {
-			this.activeTrack = this.getActiveTrack()
+		if (!this.supportsProviderTextTracks && this.tracks.length && this.player.options.controls) {
+			this.activeTrack = this.getActiveTrack() ?? null
 
 			this.hideTracks()
 			this.render()
 
-			this.captions = this.player.elements.container.querySelector('.v-captions') as HTMLElement
-			this.subtitleButton = this.player.elements.container.querySelector(
-				'.v-subtitleButton'
-			) as HTMLElement
-			this.subtitlesList = this.player.elements.container.querySelector(
-				'.v-subtitlesList'
-			) as HTMLElement
-			this.subtitlesListCssTransitionDuration =
-				Number.parseFloat(window.getComputedStyle(this.subtitlesList).transitionDuration) * 1000
+			this.cacheDomElements()
 
 			this.addEvents()
 		}
@@ -64,14 +97,43 @@ export default class Subtitle {
 	 * On player ready
 	 */
 	onReady() {
-		this.enableTrack()
+		if (this.supportsProviderTextTracks) {
+			this.initProviderTextTracks()
+			this.player.on('texttracksready', () => {
+				if (!this.providerTracksInitialized) {
+					this.initProviderTextTracks()
+				}
+			})
+		} else {
+			this.enableTrack()
+		}
+	}
+
+	/**
+	 * Initialize provider-backed text tracks (Vimeo SDK)
+	 * Fetches tracks asynchronously, then renders the UI if tracks are available
+	 */
+	initProviderTextTracks() {
+		this.player.getTextTracks().then((tracks: NormalizedTextTrack[]) => {
+			if (this.providerTracksInitialized) return
+
+			this.tracks = tracks
+
+			if (this.tracks.length && this.player.options.controls) {
+				this.render()
+				this.cacheDomElements()
+				this.addEvents()
+				this.enableTrack()
+				this.providerTracksInitialized = true
+			}
+		})
 	}
 
 	/**
 	 * Get the default track or the first one if no match
 	 * @returns Active track
 	 */
-	getActiveTrack(): TextTrack {
+	getActiveTrack(): NormalizedTextTrack | undefined {
 		return this.tracks.find((track) => track.mode === 'showing') || this.tracks[0]
 	}
 
@@ -131,27 +193,27 @@ export default class Subtitle {
 	 */
 	getTemplate(): string {
 		return `
-				<div class="v-subtitle">
-					<button class="v-subtitleButton v-controlButton v-controlPressed">
-						${svgSubtitleOn}${svgSubtitleOff}
-					</button>
-					<div class="v-subtitlesList">
-						<ul>
-							<li>
-								<button class="v-trackButton v-active" data-language="off">${svgCheck}Off</button>
-							</li>
-							${this.tracks
-								.map(
-									(track) =>
-										`<li>
-											<button class="v-trackButton" data-language="${track.language}">${svgCheck}${track.label}</button>
-										</li>`
-								)
-								.join(' ')}
-						</ul>
-					</div>
+			<div class="v-subtitle">
+				<button class="v-subtitleButton v-controlButton v-controlPressed">
+					${svgSubtitleOn}${svgSubtitleOff}
+				</button>
+				<div class="v-subtitlesList">
+					<ul>
+						<li>
+							<button class="v-trackButton v-active" data-language="off">${svgCheck}Off</button>
+						</li>
+						${this.tracks
+							.map(
+								(track) =>
+									`<li>
+										<button class="v-trackButton" data-language="${track.language}">${svgCheck}${track.label}</button>
+									</li>`
+							)
+							.join(' ')}
+					</ul>
 				</div>
-			`
+			</div>
+		`
 	}
 
 	/**
@@ -160,7 +222,9 @@ export default class Subtitle {
 	addEvents() {
 		this.subtitleButton.addEventListener('click', this.onClickOnSubtitleButton)
 		this.subtitlesList.addEventListener('click', this.onClickOnSubtitlesList)
-		this.player.media.addEventListener('ended', this.onMediaEnded)
+		if (!this.supportsProviderTextTracks) {
+			this.player.media.addEventListener('ended', this.onMediaEnded)
+		}
 	}
 
 	/**
@@ -196,13 +260,26 @@ export default class Subtitle {
 
 			if (language === 'off') {
 				this.subtitleButton.classList.add('v-controlPressed')
-				this.captions.classList.remove('v-active')
-				this.captions.innerHTML = ''
-				this.activeTrack && this.updateCues({ isDisabled: true })
+				if (this.supportsProviderTextTracks) {
+					this.player.disableTextTrack()
+					this.player.dispatchEvent('trackdisabled')
+				} else {
+					this.captions.classList.remove('v-active')
+					this.captions.innerHTML = ''
+					this.activeTrack && this.updateCues({ isDisabled: true })
+				}
 			} else {
 				this.subtitleButton.classList.remove('v-controlPressed')
-				this.activeTrack = this.getTrackByLanguage(language)
-				this.activeTrack && this.updateCues()
+				if (this.supportsProviderTextTracks) {
+					this.activeTrack = this.getTrackByLanguage(language)
+					if (this.activeTrack) {
+						this.player.enableTextTrack(this.activeTrack.language, this.activeTrack.kind)
+						this.player.dispatchEvent('trackenabled')
+					}
+				} else {
+					this.activeTrack = this.getTrackByLanguage(language)
+					this.activeTrack && this.updateCues()
+				}
 			}
 
 			triggerPlayerFocus && this.player.elements.container.focus()
@@ -216,7 +293,7 @@ export default class Subtitle {
 	 * @param language Language of the track
 	 * @returns TextTrack for the current language
 	 */
-	getTrackByLanguage(language: string): TextTrack | null {
+	getTrackByLanguage(language: string): NormalizedTextTrack | null {
 		return this.tracks.find((track) => track.language === language) || null
 	}
 
@@ -227,7 +304,7 @@ export default class Subtitle {
 	 */
 	updateCues({ isDisabled = false }: { isDisabled?: boolean } = {}) {
 		if (this.activeTrack?.cues?.length) {
-			const cues = Array.from(this.activeTrack.cues)
+			const cues = Array.from(this.activeTrack.cues) as TextTrackCue[]
 			const activeCues = this.activeTrack.activeCues
 
 			const _this = this

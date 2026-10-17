@@ -1,5 +1,15 @@
 import type { configEvent, playerParameters } from 'shared/assets/types/types.js'
 
+/**
+ * Normalized text track shape shared across providers.
+ */
+type NormalizedTextTrack = {
+	language: string
+	label: string
+	kind: string
+	mode: string
+}
+
 declare global {
 	interface Window {
 		Vlitejs: {
@@ -125,6 +135,41 @@ export default function VimeoProvider(Player: any) {
 		 */
 		getInstance(): any {
 			return this.instance
+		}
+
+		/**
+		 * Get the available text tracks
+		 * @returns Normalized text tracks
+		 */
+		getTextTracks(): Promise<NormalizedTextTrack[]> {
+			return new window.Promise((resolve) => {
+				this.instance.getTextTracks().then((tracks: any[]) => {
+					resolve(
+						tracks.map((track) => ({
+							language: track.language || '',
+							label: track.label || track.language || '',
+							kind: track.kind || 'subtitles',
+							mode: track.mode || 'disabled'
+						}))
+					)
+				})
+			})
+		}
+
+		/**
+		 * Enable a text track by language
+		 * @param language Language code of the track
+		 * @param kind Optional track kind
+		 */
+		enableTextTrack(language: string, kind?: string): Promise<void> {
+			return this.instance.enableTextTrack(language, kind)
+		}
+
+		/**
+		 * Disable all text tracks
+		 */
+		disableTextTrack(): Promise<void> {
+			return this.instance.disableTextTrack()
 		}
 
 		/**

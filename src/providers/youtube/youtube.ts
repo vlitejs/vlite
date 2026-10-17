@@ -1,5 +1,15 @@
 import type { playerParameters } from 'shared/assets/types/types.js'
 
+/**
+ * Normalized text track shape shared across providers.
+ */
+type NormalizedTextTrack = {
+	language: string
+	label: string
+	kind: string
+	mode: string
+}
+
 declare global {
 	interface Window {
 		Vlitejs: {
@@ -55,6 +65,8 @@ export default function YoutubeProvider(Player: any) {
 	return class PlayerYoutube extends Player {
 		params: object
 		instance: any
+		captionsModuleReady: Promise<any>
+		captionsModuleResolve!: (value: any) => void
 
 		constructor(props: playerParameters) {
 			super(props)
@@ -69,6 +81,9 @@ export default function YoutubeProvider(Player: any) {
 				wmode: 'transparent'
 			}
 			this.params = { ...DEFAULT_PARAMS, ...this.options.providerParams }
+			this.captionsModuleReady = new window.Promise((resolve) => {
+				this.captionsModuleResolve = resolve
+			})
 		}
 
 		/**
@@ -111,7 +126,8 @@ export default function YoutubeProvider(Player: any) {
 							this.media = data.target.getIframe()
 							resolve()
 						},
-						onStateChange: (e: Event) => this.onPlayerStateChange(e)
+						onStateChange: (e: Event) => this.onPlayerStateChange(e),
+						onApiChange: () => this.onApiChange()
 					}
 				})
 			})
@@ -158,8 +174,57 @@ export default function YoutubeProvider(Player: any) {
 		 * Get the player instance
 		 * @returns Youtube API instance
 		 */
-		getInstance(): unknown {
+		getInstance(): any {
 			return this.instance
+		}
+
+		/**
+		 * Function executed when the player API modules change (e.g. captions module loaded)
+		 * Resolves the captions module promise so text tracks can be queried
+		 */
+		onApiChange() {
+			const modules = this.instance.getOptions()
+			if (modules && modules.indexOf('captions') !== -1) {
+				this.captionsModuleResolve(true)
+				this.dispatchEvent('texttracksready')
+			}
+		}
+
+		/**
+		 * Get the available text tracks
+		 * @returns Normalized text tracks
+		 */
+		getTextTracks(): Promise<NormalizedTextTrack[]> {
+			return window.Promise.race([
+				this.captionsModuleReady,
+				new window.Promise((resolve) => setTimeout(() => resolve([]), 5000))
+			]).then(() => {
+				const tracklist = this.instance.getOption('captions', 'tracklist') || []
+				return tracklist.map((track: any) => ({
+					language: track.languageCode || '',
+					label: track.displayName || track.languageName || track.languageCode || '',
+					kind: track.kind || 'subtitles',
+					mode: track.is_default ? 'showing' : 'disabled'
+				}))
+			})
+		}
+
+		/**
+		 * Enable a text track by language
+		 * @param language Language code of the track
+		 * @param kind Optional track kind
+		 */
+		enableTextTrack(language: string, _kind?: string): Promise<void> {
+			this.instance.setOption('captions', 'track', { languageCode: language })
+			return window.Promise.resolve()
+		}
+
+		/**
+		 * Disable all text tracks
+		 */
+		disableTextTrack(): Promise<void> {
+			this.instance.setOption('captions', 'track', {})
+			return window.Promise.resolve()
 		}
 
 		/**
